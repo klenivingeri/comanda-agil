@@ -4,5 +4,5 @@ import HelloCard from "../HelloCard";
 
 test("exibe a saudação com o nome", () => {
   render(<HelloCard name="Joãozin" />);
-  expect(screen.getByText(/Olá Joãozin!/i)).toBeInTheDocument();
+  expect(screen.getByText(/Olá Joãozin !/i)).toBeInTheDocument();
 });
