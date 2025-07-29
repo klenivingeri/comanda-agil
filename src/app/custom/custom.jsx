@@ -1,7 +1,7 @@
 "use client";
 import { useComanda } from "../context/ComandaContext";
 
-export default function Atendimento() {
+export default function Custom() {
   const { comanda, setComanda } = useComanda();
 
   // Exemplo: criar nova comanda
@@ -22,7 +22,7 @@ export default function Atendimento() {
       ) : (
         <>
           <button onClick={criarComanda}>Abrir nova comanda</button>
-          <h2>Comanda #{comanda.id}</h2>
+          <h2 className="dark:bg-red-700 dark:text-black bg-amber-200 text-white">Comanda #{comanda.id}</h2>
         </>
       )}
     </section>

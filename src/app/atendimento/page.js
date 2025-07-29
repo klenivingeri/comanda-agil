@@ -1,13 +1,9 @@
-import { ComandaProvider } from "../context/ComandaContext";
-import Atendimento from "./Atendimento";
+import { Container } from "@/components/layout/Container";
 
-export default function PaginaAtendimento() {
+export default function Atendimento() {
   return (
-    <ComandaProvider>
-      <main>
-        <h1>Página de atendimento</h1>
-        <Atendimento />
-      </main>
-    </ComandaProvider>
+    <>
+      <Container clasName=""></Container>
+    </>
   );
 }
