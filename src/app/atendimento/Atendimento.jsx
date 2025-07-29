@@ -6,12 +6,13 @@ export default function Atendimento() {
 
   // Exemplo: criar nova comanda
   const criarComanda = async () => {
-    const res = await fetch(`/api/comandas/${comanda.id}/add`, {
-      method: "POST",
+    const res = await fetch(`/api/itens`, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome: nomeItem }),
     });
-    setComanda(novaComanda);
+    const novaComanda = await res.json();
+
+    console.log(novaComanda);
   };
 
   return (
@@ -20,6 +21,7 @@ export default function Atendimento() {
         <button onClick={criarComanda}>Abrir nova comanda</button>
       ) : (
         <>
+          <button onClick={criarComanda}>Abrir nova comanda</button>
           <h2>Comanda #{comanda.id}</h2>
         </>
       )}
