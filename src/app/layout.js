@@ -23,7 +23,39 @@ export default function RootLayout({ children }) {
     <html lang="pt">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${poppins.variable} ${roboto.variable} antialiased`}>
-        {children}
+        <div className="flex justify-center min-h-screen bg-gray-200">
+          <div className="flex w-full md:max-w-[800px] min-h-screen bg-gray-100 shadow-lg">
+            <aside className="hidden md:flex w-24 bg-gray-200 text-black flex-col p-4">
+              <nav className="flex w-full  flex-col gap-0.5">
+                <a
+                  href="#"
+                  className=" bg-gray-100 h-[75px] flex items-center justify-center  text-sm"
+                >
+                  Caixa
+                </a>
+                <a
+                  href="#"
+                  className="bg-gray-100 h-[75px] flex items-center justify-center  text-sm"
+                >
+                  Comandas
+                </a>
+                <a
+                  href="#"
+                  className="bg-gray-100 border-gray-300 h-[75px] flex items-center justify-center  text-sm"
+                >
+                  Atendimento
+                </a>
+                <a
+                  href="#"
+                  className="bg-gray-100 border-gray-300 h-[75px] flex items-center justify-center  text-sm"
+                >
+                  Config
+                </a>
+              </nav>
+            </aside>
+            <main className="flex-1 p-4">{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );
