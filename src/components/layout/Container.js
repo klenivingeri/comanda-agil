@@ -1,3 +1,3 @@
 export const Container = ({ children }) => {
-  return <div className="flex h-full relative ">{children}</div>;
+  return <div className="flex flex-col min-h-screen">{children}</div>;
 };

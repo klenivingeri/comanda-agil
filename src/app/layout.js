@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
             id="container"
             className="flex w-full md:max-w-[768px] min-h-screen bg-gray-100 shadow-lg relative"
           >
-            <main className="flex-1 p-4">{children}</main>
+            <main className="flex-1">{children}</main>
           </div>
 
           {/* Menu fixo na lateral do container */}
