@@ -1,5 +1,6 @@
 import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
+import { MenuLateral } from "@/components/menu/lateral/MenuLateral";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,7 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="pt" className="overflow-y-scroll">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${poppins.variable} ${roboto.variable} antialiased`}>
-        <div className="flex justify-center min-h-screen bg-red-200 relative">
+        <div className="flex justify-center min-h-screen">
           {/* Container central */}
           <div
             id="container"
@@ -33,37 +34,7 @@ export default function RootLayout({ children }) {
           </div>
 
           {/* Menu fixo na lateral do container */}
-          <div
-            className="hidden md:flex fixed top-0 h-screen w-24 bg-blue-500 text-white"
-            style={{ left: "calc(50% - 768px/2 - 96px)" }}
-          >
-            <nav className="flex flex-col h-full w-full">
-              <a
-                href="#"
-                className="flex items-center justify-center h-[75px] hover:bg-blue-600"
-              >
-                Caixa
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center h-[75px] hover:bg-blue-600"
-              >
-                Comandas
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center h-[75px] hover:bg-blue-600"
-              >
-                Atendimento
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center h-[75px] hover:bg-blue-600"
-              >
-                Config
-              </a>
-            </nav>
-          </div>
+          <MenuLateral />
         </div>
       </body>
     </html>
