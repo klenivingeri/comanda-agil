@@ -23,12 +23,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="overflow-y-scroll">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <body className={`${poppins.variable} ${roboto.variable} antialiased`}>
+      <body
+        className={`${poppins.variable} ${roboto.variable} antialiased select-none`}
+      >
         <div className="flex justify-center min-h-screen">
           {/* Container central */}
           <div
             id="container"
-            className="flex w-full md:max-w-[768px] min-h-screen bg-gray-100 shadow-lg relative"
+            className="flex w-full md:max-w-[768px] min-h-screen relative"
           >
             <main className="flex-1">{children}</main>
           </div>

@@ -1,4 +1,4 @@
-export const Content = ({ isLoading }) => {
+export const Content = ({ isLoading, children }) => {
   if (isLoading) {
     return (
       <div>
@@ -6,58 +6,5 @@ export const Content = ({ isLoading }) => {
       </div>
     );
   }
-  return (
-    <div className="bg-amber-700">
-      <h2>asasaaasasasaasa</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>{" "}
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>{" "}
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo da sua página personalizada.</p>
-    </div>
-  );
+  return <div className="bg-white rounded p-2">{children}</div>;
 };

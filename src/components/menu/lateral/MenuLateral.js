@@ -13,12 +13,12 @@ import Link from "next/link";
 import { menu } from "./constant";
 
 const icons = {
-  IconMoney: <IconMoney size="h-[24px] w-[24px]" />,
-  IconCommand: <IconCommand size="h-[20px] w-[20px]" />,
-  IconShoppingCart: <IconShoppingCart size="h-[20px] w-[20px]" />,
-  IconGear: <IconGear size="h-[25px] w-[25px]" />,
-  IconUsers: <IconUsers size="h-[20px] w-[20px]" />,
-  IconPercent: <IconPercent size="h-[20px] w-[20px]" />,
+  IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
+  IconCommand: <IconCommand size="h-[30px] w-[30px]" />,
+  IconShoppingCart: <IconShoppingCart size="h-[30px] w-[30px]" />,
+  IconGear: <IconGear size="h-30px] w-[30px]" />,
+  IconUsers: <IconUsers size="h-[30px] w-[30px]" />,
+  IconPercent: <IconPercent size="h-[30px] w-[30px]" />,
   IconCreate: <IconCreate size="h-[20px] w-[20px]" />,
   IconSearch: <IconSearch size="h-[20px] w-[20px]" />,
   IconChart: <IconChart size="h-[20px] w-[20px]" />,
@@ -30,8 +30,8 @@ const WrapperLink = ({
   text,
   path = "",
   children,
-  h = "h-[50px]",
-  w = "w-[50px]",
+  h = "h-[60px]",
+  w = "w-[60px]",
   handleActiveLink,
   isSublink,
   active,
@@ -136,13 +136,13 @@ export const MenuLateral = () => {
               m.sublink.map((s, subIdx) => (
                 <div
                   key={s.title + subIdx}
-                  className="flex flex-col w-full pr-2 mt-2"
+                  className="flex flex-col w-full pr-3 mt-2"
                 >
                   <WrapperLink
                     text={s.title}
                     path={`${m.path}${s.path}`}
-                    h="h-[35px]"
-                    w="w-[35px]"
+                    h="h-[40px]"
+                    w="w-[40px]"
                     handleActiveLink={setSubActiveLink}
                     activeLink={subActiveLink}
                     active={subActiveLink === `${m.path}${s.path}`}
