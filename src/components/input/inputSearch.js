@@ -5,14 +5,27 @@ import { IconKeyBoard } from "../../../public/icons/KeyBoard";
 import { IconKeyBoardNumeric } from "../../../public/icons/KeyBoardNumeric";
 import { IconX } from "../../../public/icons/X";
 
-export const InputSearch = () => {
-  const [isNumeric, setIsNumeric] = useState();
-
-  const handlerNumeric = () => {
-    setIsNumeric(!isNumeric);
-  };
-  // Ref para o input
+export const InputSearch = ({ setInputText }) => {
+  const [isNumeric, setIsNumeric] = useState(false);
+  const [text, setText] = useState(false);
   const inputRef = useRef(null);
+  const debounceTimeout = useRef(null);
+
+  const handleInputText = (e) => {
+    const text = e.target.value;
+    setText(text);
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+    debounceTimeout.current = setTimeout(() => {
+      setInputText(text);
+    }, 500);
+  };
+
+  const handlerClearText = () => {
+    setText("");
+    setInputText("");
+  };
 
   const handleFocusInput = () => {
     if (inputRef.current) {
@@ -21,7 +34,7 @@ export const InputSearch = () => {
   };
 
   const handleNumericAndFocus = () => {
-    handlerNumeric();
+    setIsNumeric(!isNumeric);
     setTimeout(handleFocusInput, 0);
   };
 
@@ -32,10 +45,12 @@ export const InputSearch = () => {
       </span>
 
       <input
-        autocomplete="off"
+        autoComplete="off"
         ref={inputRef}
         type={isNumeric ? "tel" : "text"}
         placeholder="Pesquisar..."
+        onChange={handleInputText}
+        value={text || ""}
         className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
       />
       <span
@@ -48,7 +63,10 @@ export const InputSearch = () => {
           <IconKeyBoardNumeric size="h-[18px] w-[18px]" />
         )}
       </span>
-      <span className="absolute inset-y-0 right-[40px] flex items-center pr-3">
+      <span
+        onClick={handlerClearText}
+        className="absolute inset-y-0 right-[40px] flex items-center pr-3"
+      >
         <IconX size="h-[15px] w-[15px]" />
       </span>
     </div>

@@ -1,8 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import HelloCard from "../HelloCard";
+
+import { Header } from "../layout/Header";
 
 test("exibe a saudação com o nome", () => {
-  render(<HelloCard name="Joãozin" />);
+  render(<Header>Olá Joãozin! </Header>);
   expect(screen.getByText(/Olá Joãozin!/i)).toBeInTheDocument();
 });

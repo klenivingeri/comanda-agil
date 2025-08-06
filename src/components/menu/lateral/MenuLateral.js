@@ -129,7 +129,7 @@ export const MenuLateral = () => {
             >
               {getIcons(m.icon)}
             </WrapperLink>
-            {console.log(isOpen, activeLink, m.path)}
+
             {isOpen &&
               activeLink === m.path &&
               Array.isArray(m.sublink) &&

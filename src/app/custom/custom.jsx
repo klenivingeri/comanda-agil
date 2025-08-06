@@ -12,7 +12,6 @@ export default function Custom() {
     });
     const novaComanda = await res.json();
 
-    console.log(novaComanda);
   };
 
   return (

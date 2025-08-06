@@ -23,7 +23,7 @@ export default function Atendimento() {
   useEffect(() => {
     criarComanda();
   }, []);
-  console.log(items);
+
   return (
     <Container>
       <Header>Consultar</Header>
