@@ -7,7 +7,7 @@ export async function GET(request) {
     // Exemplo: pegar o valor de uma query chamada "id"
     const id = searchParams.get("id");
     const isTest = id === "test";
-    esperar();
+    esperar(3000);
     return Response.json({ records: isTest ? items : {} }, { status: 200 });
   } catch {
     return Response.json({ message: "Rotas de items" }, { status: 500 });

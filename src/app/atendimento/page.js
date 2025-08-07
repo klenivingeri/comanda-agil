@@ -50,7 +50,7 @@ export default function Atendimento() {
           </div>
         </div>
       </Header>
-      <div className="mt-[80px] mb-[50px] h-flex">
+      <div className="mt-[80px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading}>
           <ItemList items={items} inputText={inputText} />
         </Content>
