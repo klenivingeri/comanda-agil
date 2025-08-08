@@ -4,6 +4,38 @@ import { IconArrowRight } from "../../../public/icons/ArrowRight";
 import { IconArrowDown } from "../../../public/icons/ArrowDown";
 import { currency } from "../utils/currency";
 
+const SelectQuantity = ({ handleAdd, handleRemove, value }) => {
+  return (
+    <div className="flex items-center justify-end">
+      {value !== 0 && (
+        <>
+          <div style={{ width: "40px" }}>
+            <button
+              className="flex w-full h-10 justify-center items-center border-x-2 border-x-gray-400 border-t-2 border-b-2 border-t-gray-300 border-b-gray-500 rounded-md"
+              onClick={handleRemove}
+            >
+              -
+            </button>
+          </div>
+          <div style={{ width: "40px" }}>
+            <div className="flex w-full h-10 justify-center items-center text-4xl ">
+              {value}
+            </div>
+          </div>
+        </>
+      )}
+      <div style={{ width: "40px" }}>
+        <button
+          className="flex w-full h-10 text-white justify-center items-center border-t-2 border-b-4 border-t-gray-500 bg-gray-700 border-b-gray-800 rounded-md"
+          onClick={handleAdd}
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const Item = ({ item }) => {
   const [value, setValue] = useState(0);
 
@@ -18,31 +50,16 @@ const Item = ({ item }) => {
     });
   };
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-9">
-        <div className="truncate mr-2">{`${item.id} - ${item.name}`}</div>
-        <div>{currency(item.price)}</div>
+    <div className="flex my-2 content-center bg-white items-center justify-between border-2 border-white border-l-4 rounded-md shadow-lg shadow-gray-100/50">
+      <div className="truncate w-full flex flex-col">
+        <span className="font-semibold truncate mr-2">{item.name}</span>
+        <span className="">{currency(item.price)}</span>
       </div>
-      <div className="col-span-3">
-        <div className="grid grid-cols-3 bg-amber-600">
-          <button
-            className="flex justify-center items-center col-span-1"
-            onClick={handleRemove}
-          >
-            -
-          </button>
-          <div className="flex justify-center items-center col-span-1">
-            {" "}
-            {value}{" "}
-          </div>
-          <button
-            className="flex justify-center items-center col-span-1"
-            onClick={handleAdd}
-          >
-            +
-          </button>
-        </div>
-      </div>
+      <SelectQuantity
+        handleAdd={handleAdd}
+        handleRemove={handleRemove}
+        value={value}
+      />
     </div>
   );
 };
@@ -97,7 +114,7 @@ export const ItemList = ({ items, inputText }) => {
                 className="font-bold cursor-pointer select-none flex w-full"
                 onClick={() => setOpenType(isOpen ? null : type)}
               >
-                <div className="grid grid-cols-12 w-full border-b-1 border-gray-200 p-2">
+                <div className="grid grid-cols-12 w-full border-b-1 border-gray-200 shadow-md shadow-gray-200/50  px-2 py-4">
                   <div className="col-span-11">{typeLabels[type]}</div>
                   <div className="flex col-span-1 justify-end content-center items-center">
                     {isOpen ? <IconArrowDown /> : <IconArrowRight />}

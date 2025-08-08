@@ -6,5 +6,9 @@ export const Content = ({ isLoading, children }) => {
       </div>
     );
   }
-  return <div className="bg-white rounded p-2 h-full">{children}</div>;
+  return (
+    <div className="grid grid-cols-1 bg-white rounded p-2 h-full">
+      {children}
+    </div>
+  );
 };
