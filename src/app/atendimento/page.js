@@ -27,6 +27,13 @@ export default function Atendimento() {
     criarComanda();
   }, []);
 
+  const [isPinging, setIsPinging] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsPinging(true);
+    setTimeout(() => setIsPinging(false), 500); // dura ~0.5s, ajuste conforme necessário
+  };
+
   return (
     <Container>
       <Header>
@@ -55,7 +62,23 @@ export default function Atendimento() {
           <ItemList items={items} inputText={inputText} />
         </Content>
       </div>
-      <Footer>Test de Footer fixo</Footer>
+      <Footer>
+        <div className="flex justify-center items-center w-full">
+          <div className="relative w-full flex justify-center">
+            {isPinging && (
+              <span className="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <span className="w-full h-full rounded-md bg-blue-400 opacity-50 animate-ping"></span>
+              </span>
+            )}
+            <button
+              className="p-2 text-white mx-2 w-full rounded-lg border-t-2 border-b-4 border-t-blue-300 bg-blue-400 border-b-blue-500 relative z-10"
+              onClick={handleButtonClick}
+            >
+              LANÇAR ITEMS NA COMANDA
+            </button>
+          </div>
+        </div>
+      </Footer>
     </Container>
   );
 }

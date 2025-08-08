@@ -1,9 +1,50 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { IconArrowRight } from "../../../public/icons/ArrowRight";
 import { IconArrowDown } from "../../../public/icons/ArrowDown";
+import { currency } from "../utils/currency";
 
-const Item = ({ children }) => {
-  return <div className="p-2">{children}</div>;
+const Item = ({ item }) => {
+  const [value, setValue] = useState(0);
+
+  const handleAdd = () => {
+    setValue((value) => value + 1);
+  };
+  const handleRemove = () => {
+    setValue((value) => {
+      const result = value - 1;
+
+      return result <= 0 ? 0 : result;
+    });
+  };
+  return (
+    <div className="grid grid-cols-12">
+      <div className="col-span-9">
+        <div className="truncate mr-2">{`${item.id} - ${item.name}`}</div>
+        <div>{currency(item.price)}</div>
+      </div>
+      <div className="col-span-3">
+        <div className="grid grid-cols-3 bg-amber-600">
+          <button
+            className="flex justify-center items-center col-span-1"
+            onClick={handleRemove}
+          >
+            -
+          </button>
+          <div className="flex justify-center items-center col-span-1">
+            {" "}
+            {value}{" "}
+          </div>
+          <button
+            className="flex justify-center items-center col-span-1"
+            onClick={handleAdd}
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export const ItemList = ({ items, inputText }) => {
@@ -43,8 +84,8 @@ export const ItemList = ({ items, inputText }) => {
                 .toLowerCase()
                 .includes(inputText.toLowerCase())
             )
-            .map((i, idx) => (
-              <Item key={idx}>{`${i.id} - ${i.name}`}</Item>
+            .map((item, idx) => (
+              <Item key={idx} item={item} />
             ))}
         </div>
       ) : (
@@ -72,8 +113,8 @@ export const ItemList = ({ items, inputText }) => {
                 }}
               >
                 <div className="">
-                  {items.map((i, idx) => (
-                    <Item key={idx}>{`${i.id} - ${i.name}`}</Item>
+                  {items.map((item, idx) => (
+                    <Item key={idx} item={item} />
                   ))}
                 </div>
               </div>

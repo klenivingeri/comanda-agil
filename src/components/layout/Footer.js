@@ -1,11 +1,14 @@
 export const Footer = ({ children }) => {
   return (
-    <div id="Footer" className="fixed inset-x-0 bottom-0 w-full z-50">
+    <footer
+      id="Footer"
+      className="fixed inset-x-0 bottom-0 w-full z-50 border-t-4 border-[var(--background)]"
+    >
       <div className="flex justify-center">
-        <div className="flex w-full md:max-w-[768px] shadow-lg bg-amber-400 h-[50px]">
+        <div className="flex w-full md:max-w-[768px] shadow-lg bg-white h-[60px]">
           {children}
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
