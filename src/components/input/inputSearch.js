@@ -7,7 +7,7 @@ import { IconX } from "../../../public/icons/X";
 
 export const InputSearch = ({ setInputText }) => {
   const [isNumeric, setIsNumeric] = useState(false);
-  const [text, setText] = useState(false);
+  const [text, setText] = useState("");
   const inputRef = useRef(null);
   const debounceTimeout = useRef(null);
 
@@ -51,8 +51,16 @@ export const InputSearch = ({ setInputText }) => {
         placeholder="Pesquisar..."
         onChange={handleInputText}
         value={text || ""}
-        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
       />
+      {!!text.length && (
+        <span
+          onClick={handlerClearText}
+          className="absolute inset-y-0 right-[40px] flex items-center pr-3"
+        >
+          <IconX size="h-[15px] w-[15px]" />
+        </span>
+      )}
       <span
         onClick={handleNumericAndFocus}
         className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 w-10"
@@ -62,12 +70,6 @@ export const InputSearch = ({ setInputText }) => {
         ) : (
           <IconKeyBoardNumeric size="h-[18px] w-[18px]" />
         )}
-      </span>
-      <span
-        onClick={handlerClearText}
-        className="absolute inset-y-0 right-[40px] flex items-center pr-3"
-      >
-        <IconX size="h-[15px] w-[15px]" />
       </span>
     </div>
   );

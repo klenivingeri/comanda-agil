@@ -43,8 +43,8 @@ const WrapperLink = ({
         <span
           className={` ${
             active
-              ? "opacity-100 translate-x-[0px]"
-              : "opacity-0 translate-x-[10px]"
+              ? "opacity-100 translate-x-[0px] "
+              : "opacity-0 translate-x-[10px] "
           } mr-2 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-[0px]`}
         >
           {text}
@@ -53,7 +53,7 @@ const WrapperLink = ({
           href={isSublink ? "" : path}
           className={`${
             active ? "bg-black text-white" : "bg-white text-black"
-          } flex items-center justify-center rounded-[10px] ${h} ${w} hover:bg-black hover:text-white`}
+          } flex items-center justify-center rounded-[10px] ${h} ${w} hover:bg-black hover:text-white transition delay-100 duration-300 ease-in-out`}
           alt={text}
           onClick={() => {
             handleActiveLink(path, isSublink);
