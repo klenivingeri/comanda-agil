@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { currency } from "../utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
 

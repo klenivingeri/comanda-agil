@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef } from "react";
+
+import React, { useState, useRef } from "react";
 import { MagnifyingGlass } from "../../../public/icons/MagnifyingGlass";
 import { IconKeyBoard } from "../../../public/icons/KeyBoard";
 import { IconKeyBoardNumeric } from "../../../public/icons/KeyBoardNumeric";

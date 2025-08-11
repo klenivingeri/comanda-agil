@@ -1,3 +1,4 @@
+import React from "react";
 export const IconX = ({ size }) => (
   <svg
     className={`${size} cursor-pointer hover:text-gray-600`}

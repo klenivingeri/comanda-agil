@@ -1,11 +1,11 @@
-export const IconArrowDown = ({ size }) => (
+import React from "react";
+export const IconArrowDown = () => (
   <svg
     width="12px"
     height="7px"
     viewBox="0 0 12 7"
     version="1.1"
     stroke="currentColor"
-    className={size}
   >
     <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Rounded" transform="translate(-616.000000, -2467.000000)">

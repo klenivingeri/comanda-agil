@@ -1,3 +1,4 @@
+import React from "react";
 export const SelectQuantity = ({ handleAdd, handleRemove, value }) => {
   return (
     <div className="flex items-center justify-end mr-2">

@@ -1,3 +1,4 @@
+import React from "react";
 export const MagnifyingGlass = ({ size }) => (
   <svg fill="none" stroke="currentColor" className={size} viewBox="0 0 24 24">
     <path

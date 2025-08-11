@@ -1,3 +1,4 @@
+import React from "react";
 export const Content = ({ isLoading, children }) => {
   if (isLoading) {
     return (

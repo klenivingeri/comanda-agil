@@ -1,10 +1,11 @@
 "use client";
-import { InputSearch } from "@/components/input/inputSearch";
-import { Container } from "@/components/layout/Container";
-import { Content } from "@/components/layout/Content";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { useEffect, useState } from "react";
+
+import React, { useEffect, useState } from "react";
+import { InputSearch } from "../../components/input/inputSearch";
+import { Container } from "../../components/layout/Container";
+import { Content } from "../../components/layout/Content";
+import { Footer } from "../../components/layout/Footer";
+import { Header } from "../../components/layout/Header";
 import { ItemList } from "./ItemList";
 import { IconFilter, IconFilterX } from "../../../public/icons/Filter";
 import { IconMenuList } from "../../../public/icons/MenuList";
@@ -15,6 +16,7 @@ export default function Atendimento() {
   const [inputText, setInputText] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   const [itemsSelected, setItemsSelected] = useState([]);
+
   const getList = async () => {
     const res = await fetch(`/api/items?id=test`, {
       method: "GET",

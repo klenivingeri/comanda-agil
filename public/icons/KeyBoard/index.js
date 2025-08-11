@@ -1,3 +1,4 @@
+import React from "react";
 export const IconKeyBoard = ({ size }) => (
   <svg
     width="800px"
