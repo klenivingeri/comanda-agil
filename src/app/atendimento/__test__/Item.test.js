@@ -12,6 +12,7 @@ test("exibe nome e preço do item", () => {
       handleRemoveTotalItemsInTheCategiry={() => {}}
       handleRemoveItemsSelected={() => {}}
       handleUpdateItemsSelected={() => {}}
+      itemsSelected={[]}
     />
   );
   expect(screen.getByText(/Coca-Cola/i)).toBeInTheDocument();

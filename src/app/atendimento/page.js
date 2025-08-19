@@ -7,8 +7,28 @@ import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
 import { Header } from "../../components/layout/Header";
 import { ItemList } from "./ItemList";
-import { IconFilter, IconFilterX } from "../../../public/icons/Filter";
+
 import { IconMenuList } from "../../../public/icons/MenuList";
+
+const ModalComanda = ({ handleFilter, isFilter }) => {
+  return (
+    <div
+      className={`
+        absolute inset-y-0 right-0 h-full bg-[var(--background)] z-[100]
+        transform transition-all duration-500 ease-in-out
+        ${
+          isFilter
+            ? "translate-x-0 w-full opacity-100"
+            : "translate-x-full w-0 hidden  opacity-0"
+        }
+      `}
+    >
+      <div onClick={handleFilter} className="p-4">
+        asdasdasdas
+      </div>
+    </div>
+  );
+};
 
 export default function Atendimento() {
   const [items, setItems] = useState([]);
@@ -16,6 +36,7 @@ export default function Atendimento() {
   const [inputText, setInputText] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   const [itemsSelected, setItemsSelected] = useState([]);
+  const [totalSelect, setTotalSelect] = useState(0);
 
   const getList = async () => {
     const res = await fetch(`/api/items?id=test`, {
@@ -74,8 +95,8 @@ export default function Atendimento() {
   return (
     <Container>
       <Header>
-        <div className="flex flex-col w-full gap-2">
-          <div className="w-full grid grid-cols-12 px-2 h-[50px]">
+        <div className="flex flex-col w-full gap-2 justify-start">
+          <div className="w-full grid grid-cols-12 px-2 h-[40px]">
             <div className="col-span-1 flex items-center pt-2">
               <div className="px-3 font-bold text-white rounded-3xl border-t-2 border-b-2 bg-[var(--button)]">
                 123
@@ -93,26 +114,22 @@ export default function Atendimento() {
             </div>
           </div>
           <div className="w-full grid grid-cols-12 px-2 gap-2">
-            <div className="col-span-9 flex items-center">
+            <div className="col-span-10 flex items-center">
               <InputSearch setInputText={setInputText} />
             </div>
-            <div className="col-span-3 flex items-center justify-end">
+            <div className="col-span-2 flex items-center justify-end">
               <div className="grid grid-cols-2 w-full h-full gap-2">
-                <div className="col-span-1 flex justify-center items-center">
+                <div className="col-span-2 flex justify-center items-center">
                   <button
                     onClick={handleFilter}
-                    className="shadow-sm w-full text-white bg-[var(--button)] hover:bg-[var(--buttonHover)] h-full rounded-md flex justify-center items-center"
+                    className=" relative shadow-sm w-full text-white bg-[var(--button)] hover:bg-[var(--buttonHover)] h-full rounded-md flex justify-center items-center "
                   >
-                    {!isFilter ? (
-                      <IconFilter size="h-[25px] w-[25px]" />
-                    ) : (
-                      <IconFilterX size="h-[25px] w-[25px]" />
-                    )}
-                  </button>
-                </div>
-                <div className="col-span-1 flex justify-center items-center">
-                  <button className="shadow-sm w-full text-white bg-[var(--button)] hover:bg-[var(--buttonHover)] h-full rounded-md flex justify-center items-center ">
                     <IconMenuList size="h-[25px] w-[25px]" />
+                    {!!totalSelect && (
+                      <div className="absolute h-5 w-5 bg-green-600 top-[-7px] right-[-5px] rounded-full flex justify-center items-center leading-none">
+                        {totalSelect}
+                      </div>
+                    )}
                   </button>
                 </div>
               </div>
@@ -120,13 +137,15 @@ export default function Atendimento() {
           </div>
         </div>
       </Header>
-      <div className="mt-[90px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[85px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading}>
           <ItemList
             items={items}
             inputText={inputText}
             handleUpdateItemsSelected={handleUpdateItemsSelected}
             handleRemoveItemsSelected={handleRemoveItemsSelected}
+            setTotalSelect={setTotalSelect}
+            itemsSelected={itemsSelected}
           />
         </Content>
       </div>
@@ -142,6 +161,8 @@ export default function Atendimento() {
           </div>
         </div>
       </Footer>
+
+      <ModalComanda handleFilter={handleFilter} isFilter={isFilter} />
     </Container>
   );
 }

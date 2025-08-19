@@ -13,6 +13,8 @@ function SubTitle({
   onToggle,
   handleRemoveItemsSelected,
   handleUpdateItemsSelected,
+  setTotalSelect,
+  itemsSelected,
 }) {
   const [height, setHeight] = useState(0);
   const [totalItemsInTheCategory, setTotalItemsInTheCategory] = useState(0);
@@ -20,10 +22,12 @@ function SubTitle({
 
   const handleAddTotalItemsInTheCategiry = () => {
     setTotalItemsInTheCategory((value) => value + 1);
+    setTotalSelect((value) => value + 1);
   };
 
   const handleRemoveTotalItemsInTheCategiry = () => {
     setTotalItemsInTheCategory((value) => value - 1);
+    setTotalSelect((value) => value - 1);
   };
 
   useEffect(() => {
@@ -72,6 +76,7 @@ function SubTitle({
             <Item
               key={idx}
               item={item}
+              itemsSelected={itemsSelected}
               handleAddTotalItemsInTheCategiry={
                 handleAddTotalItemsInTheCategiry
               }
@@ -93,6 +98,8 @@ export const ItemList = ({
   items,
   handleRemoveItemsSelected,
   handleUpdateItemsSelected,
+  setTotalSelect,
+  itemsSelected,
 }) => {
   const [openType, setOpenType] = useState(null);
 
@@ -128,6 +135,8 @@ export const ItemList = ({
           onToggle={() => setOpenType(openType === type ? null : type)}
           handleRemoveItemsSelected={handleRemoveItemsSelected}
           handleUpdateItemsSelected={handleUpdateItemsSelected}
+          setTotalSelect={setTotalSelect}
+          itemsSelected={itemsSelected}
         />
       ))}
     </div>

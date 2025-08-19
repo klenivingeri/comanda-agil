@@ -20,6 +20,7 @@ test("renderiza categorias e itens", () => {
       inputText=""
       handleRemoveItemsSelected={() => {}}
       handleUpdateItemsSelected={() => {}}
+      itemsSelected={[]}
     />
   );
   expect(screen.getByText(/Bebidas/i)).toBeInTheDocument();

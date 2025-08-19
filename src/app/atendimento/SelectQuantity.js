@@ -1,8 +1,13 @@
 import React from "react";
-export const SelectQuantity = ({ handleAdd, handleRemove, value }) => {
+export const SelectQuantity = ({
+  handleAdd,
+  handleRemove,
+  value,
+  hide = false,
+}) => {
   return (
     <div className="flex items-center justify-end mr-2">
-      {value !== 0 && (
+      {value > 0 && (
         <>
           <div style={{ width: "40px" }}>
             <button
@@ -12,11 +17,15 @@ export const SelectQuantity = ({ handleAdd, handleRemove, value }) => {
               -
             </button>
           </div>
-          <div style={{ width: "40px" }}>
-            <div className="flex w-full h-10 justify-center items-center text-4xl">
-              {value}
+          {!hide ? (
+            <div style={{ width: "40px" }}>
+              <div className="flex w-full h-10 justify-center items-center text-4xl">
+                {value}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ width: "6px" }}></div>
+          )}
         </>
       )}
       <div style={{ width: "40px" }}>
