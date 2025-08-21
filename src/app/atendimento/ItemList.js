@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { IconArrowRight } from "../../../public/icons/ArrowRight";
 import { IconArrowDown } from "../../../public/icons/ArrowDown";
 import { Item } from "./Item";
@@ -13,28 +13,26 @@ function SubTitle({
   onToggle,
   handleRemoveItemsSelected,
   handleUpdateItemsSelected,
-  setTotalSelect,
-  itemsSelected,
 }) {
   const [height, setHeight] = useState(0);
-  const [totalItemsInTheCategory, setTotalItemsInTheCategory] = useState(0);
   const contentRef = useRef(null);
-
-  const handleAddTotalItemsInTheCategiry = () => {
-    setTotalItemsInTheCategory((value) => value + 1);
-    setTotalSelect((value) => value + 1);
-  };
-
-  const handleRemoveTotalItemsInTheCategiry = () => {
-    setTotalItemsInTheCategory((value) => value - 1);
-    setTotalSelect((value) => value - 1);
-  };
 
   useEffect(() => {
     if (isOpen && contentRef.current) {
       setHeight(contentRef.current.scrollHeight);
     }
   }, [isOpen, items]);
+
+  const total = useMemo(() => {
+    return items
+      .filter((item) => item.type === type)
+      .reduce((acc, item) => {
+        if (item?.quantity) {
+          return acc + item?.quantity;
+        }
+        return acc;
+      }, 0); // garante número
+  }, [items, type]);
 
   return (
     <div className="w-full">
@@ -48,12 +46,10 @@ function SubTitle({
               <span className="text-2xl">{typeLabel}</span>
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
-              {totalItemsInTheCategory ? (
+              {!!total && (
                 <div className="text-white px-4 mr-3 rounded-3xl bg-[var(--button)]">
-                  {totalItemsInTheCategory}
+                  {total}
                 </div>
-              ) : (
-                ""
               )}
               <div className="w-4 h-4 flex justify-center items-center">
                 <span>{isOpen ? <IconArrowDown /> : <IconArrowRight />}</span>
@@ -76,13 +72,6 @@ function SubTitle({
             <Item
               key={idx}
               item={item}
-              itemsSelected={itemsSelected}
-              handleAddTotalItemsInTheCategiry={
-                handleAddTotalItemsInTheCategiry
-              }
-              handleRemoveTotalItemsInTheCategiry={
-                handleRemoveTotalItemsInTheCategiry
-              }
               handleRemoveItemsSelected={handleRemoveItemsSelected}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
             />
@@ -98,8 +87,6 @@ export const ItemList = ({
   items,
   handleRemoveItemsSelected,
   handleUpdateItemsSelected,
-  setTotalSelect,
-  itemsSelected,
 }) => {
   const [openType, setOpenType] = useState(null);
 
@@ -135,8 +122,6 @@ export const ItemList = ({
           onToggle={() => setOpenType(openType === type ? null : type)}
           handleRemoveItemsSelected={handleRemoveItemsSelected}
           handleUpdateItemsSelected={handleUpdateItemsSelected}
-          setTotalSelect={setTotalSelect}
-          itemsSelected={itemsSelected}
         />
       ))}
     </div>

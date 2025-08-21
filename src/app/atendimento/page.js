@@ -1,42 +1,52 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
 import { Header } from "../../components/layout/Header";
+import { ModalRight } from "../../components/modal/ModaLRight";
 import { ItemList } from "./ItemList";
-
 import { IconMenuList } from "../../../public/icons/MenuList";
+import { Item } from "./Item";
 
-const ModalComanda = ({ handleFilter, isFilter }) => {
-  return (
-    <div
-      className={`
-        absolute inset-y-0 right-0 h-full bg-[var(--background)] z-[100]
-        transform transition-all duration-500 ease-in-out
-        ${
-          isFilter
-            ? "translate-x-0 w-full opacity-100"
-            : "translate-x-full w-0 hidden  opacity-0"
-        }
-      `}
-    >
-      <div onClick={handleFilter} className="p-4">
-        asdasdasdas
-      </div>
-    </div>
-  );
-};
+const itemsComanda = [
+  {
+    id: "000",
+    name: "Pastel de carne",
+    price: 20,
+    type: "fritos",
+    typeLabel: "Fritos",
+  },
+  {
+    id: "000",
+    name: "Pastel de queijo",
+    price: 1.5,
+    type: "fritos",
+    typeLabel: "Fritos",
+  },
+  {
+    id: "000",
+    name: "Pastel de pizza",
+    price: 11,
+    type: "fritos",
+    typeLabel: "Fritos",
+  },
+  {
+    id: "000",
+    name: "Pastel de carne com queijo de carne com queijo",
+    price: 4.6,
+    type: "fritos",
+    typeLabel: "Fritos",
+  },
+];
 
 export default function Atendimento() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState("");
-  const [isFilter, setIsFilter] = useState(false);
-  const [itemsSelected, setItemsSelected] = useState([]);
-  const [totalSelect, setTotalSelect] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   const getList = async () => {
     const res = await fetch(`/api/items?id=test`, {
@@ -57,39 +67,34 @@ export default function Atendimento() {
     setIsPinging(true);
   };
 
-  const handleFilter = () => {
-    setIsFilter(!isFilter);
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
   };
 
   const handleUpdateItemsSelected = (item, value) => {
-    let hasItem = false;
-    const newArray = itemsSelected.map((i) => {
-      if (i.id !== item.id) return i;
-      hasItem = true;
+    console.log("aaaaaaaaaa");
+    const newArray = items.map((i) => {
+      if (i.id == item.id) {
+        return { ...i, quantity: value };
+      }
 
-      return {
-        ...i,
-        quantity: value,
-      };
+      return i;
     });
 
-    if (hasItem) {
-      setItemsSelected(newArray);
-    } else {
-      setItemsSelected((arr) => [
-        ...arr,
-        {
-          ...item,
-          quantity: value,
-        },
-      ]);
-    }
+    setItems(newArray);
   };
+
+  const total = useMemo(() =>
+    items.reduce((acc, item) => {
+      if (item?.quantity) {
+        return acc + item?.quantity;
+      }
+      return acc;
+    }, 0)
+  );
 
   const handleRemoveItemsSelected = (id) => {
     //Atualizar pra UUID
-    const newArray = itemsSelected.filter((i) => i.id !== id);
-    setItemsSelected(newArray);
   };
 
   return (
@@ -121,13 +126,13 @@ export default function Atendimento() {
               <div className="grid grid-cols-2 w-full h-full gap-2">
                 <div className="col-span-2 flex justify-center items-center">
                   <button
-                    onClick={handleFilter}
+                    onClick={handleOpenModal}
                     className=" relative shadow-sm w-full text-white bg-[var(--button)] hover:bg-[var(--buttonHover)] h-full rounded-md flex justify-center items-center "
                   >
                     <IconMenuList size="h-[25px] w-[25px]" />
-                    {!!totalSelect && (
+                    {!!total && (
                       <div className="absolute h-5 w-5 bg-green-600 top-[-7px] right-[-5px] rounded-full flex justify-center items-center leading-none">
-                        {totalSelect}
+                        {total}
                       </div>
                     )}
                   </button>
@@ -144,8 +149,6 @@ export default function Atendimento() {
             inputText={inputText}
             handleUpdateItemsSelected={handleUpdateItemsSelected}
             handleRemoveItemsSelected={handleRemoveItemsSelected}
-            setTotalSelect={setTotalSelect}
-            itemsSelected={itemsSelected}
           />
         </Content>
       </div>
@@ -162,7 +165,27 @@ export default function Atendimento() {
         </div>
       </Footer>
 
-      <ModalComanda handleFilter={handleFilter} isFilter={isFilter} />
+      <ModalRight handleOpenModal={handleOpenModal} openModal={openModal}>
+        <div>
+          {itemsComanda.map((item, idx) => (
+            <Item
+              key={idx}
+              item={item}
+              handleAddTotalItemsInTheCategiry={() => {}}
+              handleRemoveTotalItemsInTheCategiry={() => {}}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              handleRemoveItemsSelected={handleRemoveItemsSelected}
+              hiddeSelectQuantity
+            />
+          ))}
+          <ItemList
+            items={items}
+            inputText="abc"
+            handleUpdateItemsSelected={handleUpdateItemsSelected}
+            handleRemoveItemsSelected={handleRemoveItemsSelected}
+          />
+        </div>
+      </ModalRight>
     </Container>
   );
 }
