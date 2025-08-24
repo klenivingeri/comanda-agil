@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { currency } from "../utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
 
 export const Item = ({
   item,
-  handleRemoveItemsSelected,
   handleUpdateItemsSelected,
+  hiddeSelectQuantity,
+  itemInNote = false,
+  hideValue,
 }) => {
   const handleAdd = () => {
     if (item?.quantity) {
@@ -23,6 +25,13 @@ export const Item = ({
 
   return (
     <div className=" flex my-2 content-center bg-white items-center justify-between border-2 border-white border-l-4 rounded-md shadow-lg shadow-gray-100/50">
+      {itemInNote ? (
+        <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md flex justify-center content-center">
+          {item?.quantity}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="truncate w-full flex flex-col px-2 py-1 ">
         <span className="font-semibold truncate text-lg mr-2">
           {item.id} - {item.name}
@@ -31,11 +40,14 @@ export const Item = ({
           {currency(item.price)}
         </span>
       </div>
-      <SelectQuantity
-        handleAdd={handleAdd}
-        handleRemove={handleRemove}
-        value={item?.quantity || 0}
-      />
+      {!hiddeSelectQuantity && (
+        <SelectQuantity
+          handleAdd={handleAdd}
+          handleRemove={handleRemove}
+          value={item?.quantity || 0}
+          hideValue={hideValue}
+        />
+      )}
     </div>
   );
 };

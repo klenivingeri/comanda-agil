@@ -8,13 +8,19 @@
   --button: #155DFC;
   --buttonHover: #1447E6;
   --bg-subTitle: white; 
+  --bg-alert: #51A2FF;
+  --text: #eeeeee;
 }
 
 .dark body {
   --background: #0a0a0a;
   --foreground: #ededed;
   --button: #7F22FE;
-  --bg-subTitle: white; 
+  --buttonHover: #5D0EC0;
+  --bg-subTitle: black; 
+  --bg-alert: #C4B4FF;
+  --text: #eeeeee;
+
 }
 
 body, input, textarea, button {

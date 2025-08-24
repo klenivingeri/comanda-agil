@@ -11,15 +11,15 @@ function SubTitle({
   items,
   isOpen,
   onToggle,
-  handleRemoveItemsSelected,
   handleUpdateItemsSelected,
+  showListComanda,
 }) {
   const [height, setHeight] = useState(0);
   const contentRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen && contentRef.current) {
-      setHeight(contentRef.current.scrollHeight);
+    if (contentRef.current) {
+      setHeight(contentRef.current.scrollHeight || 0);
     }
   }, [isOpen, items]);
 
@@ -47,11 +47,11 @@ function SubTitle({
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
               {!!total && (
-                <div className="text-white px-4 mr-3 rounded-3xl bg-[var(--button)]">
+                <div className="text-[var(--text)] px-3 mr-3 rounded-3xl bg-[var(--bg-alert)] shadow-md">
                   {total}
                 </div>
               )}
-              <div className="w-4 h-4 flex justify-center items-center">
+              <div className="w-4 h-4 flex justify-center items-center ">
                 <span>{isOpen ? <IconArrowDown /> : <IconArrowRight />}</span>
               </div>
             </div>
@@ -68,14 +68,21 @@ function SubTitle({
         }}
       >
         <div>
-          {items.map((item, idx) => (
-            <Item
-              key={idx}
-              item={item}
-              handleRemoveItemsSelected={handleRemoveItemsSelected}
-              handleUpdateItemsSelected={handleUpdateItemsSelected}
-            />
-          ))}
+          {items
+            .filter((item) => {
+              if (!inputText.length) return true;
+              return `${item.id} - ${item.name}`
+                .toLowerCase()
+                .includes(inputText.trim().toLowerCase());
+            })
+            .map((item, idx) => (
+              <Item
+                key={item.id}
+                item={item}
+                handleUpdateItemsSelected={handleUpdateItemsSelected}
+                showListComanda={showListComanda}
+              />
+            ))}
         </div>
       </div>
     </div>
@@ -85,9 +92,10 @@ function SubTitle({
 export const ItemList = ({
   inputText,
   items,
-  handleRemoveItemsSelected,
   handleUpdateItemsSelected,
+  showListComanda,
 }) => {
+  if (items.length <= 0) return;
   const [openType, setOpenType] = useState(null);
 
   const groupedItems = items.reduce((acc, item) => {
@@ -120,8 +128,8 @@ export const ItemList = ({
           items={items}
           isOpen={openType === type}
           onToggle={() => setOpenType(openType === type ? null : type)}
-          handleRemoveItemsSelected={handleRemoveItemsSelected}
           handleUpdateItemsSelected={handleUpdateItemsSelected}
+          showListComanda={showListComanda}
         />
       ))}
     </div>

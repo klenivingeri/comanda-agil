@@ -18,7 +18,6 @@ test("renderiza categorias e itens", () => {
     <ItemList
       items={items}
       inputText=""
-      handleRemoveItemsSelected={() => {}}
       handleUpdateItemsSelected={() => {}}
       itemsSelected={[]}
     />

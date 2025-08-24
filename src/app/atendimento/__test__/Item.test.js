@@ -10,7 +10,6 @@ test("exibe nome e preço do item", () => {
       item={mockItem}
       handleAddTotalItemsInTheCategiry={() => {}}
       handleRemoveTotalItemsInTheCategiry={() => {}}
-      handleRemoveItemsSelected={() => {}}
       handleUpdateItemsSelected={() => {}}
       itemsSelected={[]}
     />

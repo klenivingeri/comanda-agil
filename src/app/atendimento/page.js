@@ -10,6 +10,8 @@ import { ModalRight } from "../../components/modal/ModaLRight";
 import { ItemList } from "./ItemList";
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
+import { IconDotMenu } from "../../../public/icons/DotMenu";
+import { IconMenuSquare } from "../../../public/icons/MenuSquare";
 
 const itemsComanda = [
   {
@@ -18,6 +20,7 @@ const itemsComanda = [
     price: 20,
     type: "fritos",
     typeLabel: "Fritos",
+    quantity: 1,
   },
   {
     id: "000",
@@ -25,6 +28,7 @@ const itemsComanda = [
     price: 1.5,
     type: "fritos",
     typeLabel: "Fritos",
+    quantity: 2,
   },
   {
     id: "000",
@@ -32,6 +36,7 @@ const itemsComanda = [
     price: 11,
     type: "fritos",
     typeLabel: "Fritos",
+    quantity: 3,
   },
   {
     id: "000",
@@ -39,6 +44,7 @@ const itemsComanda = [
     price: 4.6,
     type: "fritos",
     typeLabel: "Fritos",
+    quantity: 4,
   },
 ];
 
@@ -63,16 +69,11 @@ export default function Atendimento() {
     getList();
   }, []);
 
-  const handleButtonClick = () => {
-    setIsPinging(true);
-  };
-
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
 
   const handleUpdateItemsSelected = (item, value) => {
-    console.log("aaaaaaaaaa");
     const newArray = items.map((i) => {
       if (i.id == item.id) {
         return { ...i, quantity: value };
@@ -84,60 +85,56 @@ export default function Atendimento() {
     setItems(newArray);
   };
 
-  const total = useMemo(() =>
-    items.reduce((acc, item) => {
-      if (item?.quantity) {
-        return acc + item?.quantity;
-      }
-      return acc;
-    }, 0)
-  );
+  const totalItems = useMemo(() => {
+    return items.filter((item) => item?.quantity > 0);
+  }, [items]);
 
-  const handleRemoveItemsSelected = (id) => {
-    //Atualizar pra UUID
-  };
+  const itemsSelected = useMemo(() => {
+    return items.filter((item) => item?.quantity > 0);
+  }, [items]);
+
+  const totalComanda = useMemo(() => {
+    return itemsSelected
+      .concat(itemsComanda)
+      .reduce((acc, item) => acc + (item?.quantity * item.price || 0), 0);
+  }, [itemsComanda, itemsSelected]);
 
   return (
     <Container>
       <Header>
         <div className="flex flex-col w-full gap-2 justify-start">
           <div className="w-full grid grid-cols-12 px-2 h-[40px]">
-            <div className="col-span-1 flex items-center pt-2">
-              <div className="px-3 font-bold text-white rounded-3xl border-t-2 border-b-2 bg-[var(--button)]">
-                123
-              </div>
+            <div className="col-span-2 flex items-center pt-2 gap-1">
+              <IconMenuSquare size="h-[26px] w-[26px]" />
+              <div className="font-bold text-lg text-black">123</div>
             </div>
-            <div className="col-span-10 flex items-end">
+            <div className="col-span-8 flex items-center">
               <div className="w-full flex justify-center">
-                <span className="text-shadow-md text-2xl font-bold">
+                <span className="text-shadow-md text-md font-bold">
                   Cardapio
                 </span>
               </div>
             </div>
-            <div className="col-span-1 flex items-end pt-1">
-              <div className="h-[35px] w-[35px]  shadow-sm rounded-full bg-[url(https://yt3.googleusercontent.com/ytc/AIdro_nVCCXkptyc7S3f6cWhUf_VQc36D6wFeg679ckPMA=s900-c-k-c0x00ffffff-no-rj)]  bg-center bg-cover bg-no-repeat"></div>
+            <div className="col-span-2 flex items-end justify-end pt-1">
+              <IconDotMenu size="h-[32px] w-[32px]" />
             </div>
           </div>
           <div className="w-full grid grid-cols-12 px-2 gap-2">
-            <div className="col-span-10 flex items-center">
+            <div className="col-span-12 flex items-center gap-2">
               <InputSearch setInputText={setInputText} />
-            </div>
-            <div className="col-span-2 flex items-center justify-end">
-              <div className="grid grid-cols-2 w-full h-full gap-2">
-                <div className="col-span-2 flex justify-center items-center">
-                  <button
-                    onClick={handleOpenModal}
-                    className=" relative shadow-sm w-full text-white bg-[var(--button)] hover:bg-[var(--buttonHover)] h-full rounded-md flex justify-center items-center "
-                  >
-                    <IconMenuList size="h-[25px] w-[25px]" />
-                    {!!total && (
-                      <div className="absolute h-5 w-5 bg-green-600 top-[-7px] right-[-5px] rounded-full flex justify-center items-center leading-none">
-                        {total}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              </div>
+              <button
+                onClick={handleOpenModal}
+                className="relative text-black rounded-md flex justify-center items-center h-[40px] px-2"
+              >
+                <span>
+                  <IconMenuList size="h-[32px] w-[32px]" />
+                </span>
+                {!!totalItems.length && (
+                  <div className="absolute text-xs text-white h-4 w-4 bg-[var(--button)] top-[-1px] right-[10px] rounded-full flex justify-center items-center leading-none">
+                    {totalItems.length}
+                  </div>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -148,24 +145,24 @@ export default function Atendimento() {
             items={items}
             inputText={inputText}
             handleUpdateItemsSelected={handleUpdateItemsSelected}
-            handleRemoveItemsSelected={handleRemoveItemsSelected}
           />
         </Content>
       </div>
       <Footer>
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
-            <button
-              className="text-white shadow-sm font-bold py-2 px-4 rounded w-full m-2 bg-[var(--button)] hover:bg-[var(--buttonHover)]"
-              onClick={handleButtonClick}
-            >
+            <button className="text-white shadow-sm font-bold py-2 px-4 rounded w-full m-2 bg-[var(--button)] hover:bg-[var(--buttonHover)]">
               <span className=""> LANÇAR ITEMS NA COMANDA</span>
             </button>
           </div>
         </div>
       </Footer>
 
-      <ModalRight handleOpenModal={handleOpenModal} openModal={openModal}>
+      <ModalRight
+        handleOpenModal={handleOpenModal}
+        openModal={openModal}
+        totalComanda={totalComanda}
+      >
         <div>
           {itemsComanda.map((item, idx) => (
             <Item
@@ -174,16 +171,21 @@ export default function Atendimento() {
               handleAddTotalItemsInTheCategiry={() => {}}
               handleRemoveTotalItemsInTheCategiry={() => {}}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
-              handleRemoveItemsSelected={handleRemoveItemsSelected}
               hiddeSelectQuantity
+              itemInNote
             />
           ))}
-          <ItemList
-            items={items}
-            inputText="abc"
-            handleUpdateItemsSelected={handleUpdateItemsSelected}
-            handleRemoveItemsSelected={handleRemoveItemsSelected}
-          />
+          {itemsSelected.map((item, idx) => (
+            <Item
+              key={idx}
+              item={item}
+              handleAddTotalItemsInTheCategiry={() => {}}
+              handleRemoveTotalItemsInTheCategiry={() => {}}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              itemInNote
+              hideValue
+            />
+          ))}
         </div>
       </ModalRight>
     </Container>
