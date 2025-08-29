@@ -6,8 +6,8 @@ import { IconKeyBoard } from "../../../public/icons/KeyBoard";
 import { IconKeyBoardNumeric } from "../../../public/icons/KeyBoardNumeric";
 import { IconX } from "../../../public/icons/X";
 
-export const InputSearch = ({ setInputText }) => {
-  const [isNumeric, setIsNumeric] = useState(false);
+export const InputSearch = ({ setInputText, _isNumeric = false }) => {
+  const [isNumeric, setIsNumeric] = useState(_isNumeric);
   const [text, setText] = useState("");
   const inputRef = useRef(null);
   const debounceTimeout = useRef(null);

@@ -12,6 +12,7 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconMenuSquare } from "../../../public/icons/MenuSquare";
+import Link from "next/link";
 
 const itemsComanda = [
   {
@@ -104,15 +105,16 @@ export default function Atendimento() {
       <Header>
         <div className="flex flex-col w-full gap-2 justify-start">
           <div className="w-full grid grid-cols-12 px-2 h-[40px]">
-            <div className="col-span-2 flex items-center pt-2 gap-1">
+            <Link
+              href="/comandas"
+              className="col-span-2 flex items-center pt-2 gap-1"
+            >
               <IconMenuSquare size="h-[26px] w-[26px]" />
               <div className="font-bold text-lg text-black">123</div>
-            </div>
+            </Link>
             <div className="col-span-8 flex items-center">
               <div className="w-full flex justify-center">
-                <span className="text-shadow-md text-md font-bold">
-                  Cardapio
-                </span>
+                <span className="text-md font-bold">Cardapio</span>
               </div>
             </div>
             <div className="col-span-2 flex items-end justify-end pt-1">

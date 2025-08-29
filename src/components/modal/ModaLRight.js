@@ -67,9 +67,7 @@ export const ModalRight = ({
             </div>
             <div className="col-span-8 flex items-center mt-1">
               <div className="w-full flex justify-center">
-                <span className="text-shadow-md text-md font-bold">
-                  Comanda
-                </span>
+                <span className="text-md font-bold">Comanda</span>
               </div>
             </div>
             <div className="col-span-2 flex items-end pt-1"></div>
@@ -79,7 +77,7 @@ export const ModalRight = ({
               Quant
             </div>
             <div className="w-full flex ">
-              <span className=" text-md font-bold pl-2">Items</span>
+              <span className="text-md font-bold pl-2">Items</span>
             </div>
           </div>
         </div>

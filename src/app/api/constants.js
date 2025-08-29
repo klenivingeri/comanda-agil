@@ -273,3 +273,105 @@ export const items = [
     typeLabel: "Vitaminas",
   },
 ];
+
+export const comandas = [
+  {
+    id: "001",
+    name: "001",
+    total: 100.4,
+    date: new Date(),
+  },
+  {
+    id: "002",
+    name: "002",
+    total: 1.5,
+    date: new Date(),
+  },
+  {
+    id: "011",
+    name: "011",
+    total: 11,
+    date: new Date(),
+  },
+  {
+    id: "077",
+    name: "77",
+    total: 4.6,
+    type: "fritos",
+    date: new Date(),
+  },
+  {
+    id: "001",
+    name: "001",
+    total: 100.4,
+    date: new Date(),
+  },
+  {
+    id: "002",
+    name: "002",
+    total: 1.5,
+    date: new Date(),
+  },
+  {
+    id: "011",
+    name: "011",
+    total: 11,
+
+    date: new Date(),
+  },
+  {
+    id: "077",
+    name: "77",
+    total: 4.6,
+    date: new Date(),
+  },
+  {
+    id: "001",
+    name: "001",
+    total: 100.4,
+    date: new Date(),
+  },
+  {
+    id: "002",
+    name: "002",
+    total: 1.5,
+    date: new Date(),
+  },
+  {
+    id: "011",
+    name: "011",
+    total: 11,
+    date: new Date(),
+  },
+  {
+    id: "077",
+    name: "77",
+    total: 4.6,
+    date: new Date(),
+  },
+  {
+    id: "001",
+    name: "001",
+    total: 100.4,
+    date: new Date(),
+  },
+  {
+    id: "002",
+    name: "002",
+    total: 1.5,
+    date: new Date(),
+  },
+  {
+    id: "011",
+    name: "011",
+    total: 11,
+
+    date: new Date(),
+  },
+  {
+    id: "077",
+    name: "77",
+    total: 4.6,
+    date: new Date(),
+  },
+];

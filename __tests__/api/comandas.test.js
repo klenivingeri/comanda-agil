@@ -12,7 +12,7 @@ describe("GET /api/items", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toHaveProperty("message", "Rotas de items");
+    expect(body).toHaveProperty("records", []);
   });
 
   it("should return 200 and message when called with id query param", async () => {
@@ -23,7 +23,7 @@ describe("GET /api/items", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toHaveProperty("message", "Rotas de items");
+    expect(body).toHaveProperty("records", []);
   });
 
   it("should return 500 if an error occurs", async () => {
