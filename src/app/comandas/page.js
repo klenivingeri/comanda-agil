@@ -70,9 +70,9 @@ export default function Comandas() {
                 style={{ textDecoration: "none" }}
                 className={`relative ${
                   inputText.length > 0 && !hasComanda
-                    ? "text-black"
-                    : "text-gray-400"
-                } rounded-md flex justify-center items-center h-[40px] px-2`}
+                    ? "bg-[var(--button)] "
+                    : "bg-gray-400"
+                } rounded-md flex justify-center items-center h-[40px] px-3  text-white`}
               >
                 <IconCreate size="h-[32px] w-[32px]" />
               </Link>
