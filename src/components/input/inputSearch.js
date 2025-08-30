@@ -36,7 +36,7 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
 
   const handleNumericAndFocus = () => {
     setIsNumeric(!isNumeric);
-    setTimeout(handleFocusInput, 0);
+    setTimeout(handleFocusInput, 100);
   };
 
   return (

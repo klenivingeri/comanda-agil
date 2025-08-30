@@ -6,7 +6,7 @@ import { GET } from "../../src/app/api/comandas/route.js";
 describe("GET /api/items", () => {
   it("should return 200 and message when called without query params", async () => {
     // Mock request object with a URL (no query params)
-    const request = { url: "http://localhost/api/comandas" };
+    const request = { url: "http://localhost/api/comandas?id=123" };
 
     const response = await GET(request);
     const body = await response.json();

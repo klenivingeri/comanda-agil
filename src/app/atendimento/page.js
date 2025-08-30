@@ -13,61 +13,48 @@ import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconMenuSquare } from "../../../public/icons/MenuSquare";
 import Link from "next/link";
-
-const itemsComanda = [
-  {
-    id: "000",
-    name: "Pastel de carne",
-    price: 20,
-    type: "fritos",
-    typeLabel: "Fritos",
-    quantity: 1,
-  },
-  {
-    id: "000",
-    name: "Pastel de queijo",
-    price: 1.5,
-    type: "fritos",
-    typeLabel: "Fritos",
-    quantity: 2,
-  },
-  {
-    id: "000",
-    name: "Pastel de pizza",
-    price: 11,
-    type: "fritos",
-    typeLabel: "Fritos",
-    quantity: 3,
-  },
-  {
-    id: "000",
-    name: "Pastel de carne com queijo de carne com queijo",
-    price: 4.6,
-    type: "fritos",
-    typeLabel: "Fritos",
-    quantity: 4,
-  },
-];
+import { useSearchParams } from "next/navigation";
+import { isEmpty } from "../utils/empty";
 
 export default function Atendimento() {
   const [items, setItems] = useState([]);
+  const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
-  const getList = async () => {
-    const res = await fetch(`/api/items?id=test`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const itemsDaComanda = await res.json();
-
-    setItems(itemsDaComanda.records);
-    setIsLoading(false);
-  };
+  const searchParams = useSearchParams();
+  const idComanda = searchParams?.get("id");
 
   useEffect(() => {
-    getList();
+    const fetchData = async () => {
+      try {
+        const [itemsRes, comandasRes] = await Promise.all([
+          fetch(`/api/items?id=test`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }),
+          fetch(`/api/comandas?id=${idComanda}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }),
+        ]);
+
+        const [itemsData, comandasData] = await Promise.all([
+          itemsRes.json(),
+          comandasRes.json(),
+        ]);
+
+        setItems(itemsData.records);
+        setComanda(comandasData.records[0]);
+      } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleOpenModal = () => {
@@ -96,9 +83,9 @@ export default function Atendimento() {
 
   const totalComanda = useMemo(() => {
     return itemsSelected
-      .concat(itemsComanda)
-      .reduce((acc, item) => acc + (item?.quantity * item.price || 0), 0);
-  }, [itemsComanda, itemsSelected]);
+      .concat(comanda?.items)
+      .reduce((acc, item) => acc + (item?.quantity * item?.price || 0), 0);
+  }, [comanda?.items, itemsSelected]);
 
   return (
     <Container>
@@ -143,11 +130,15 @@ export default function Atendimento() {
       </Header>
       <div className="mt-[85px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading}>
-          <ItemList
-            items={items}
-            inputText={inputText}
-            handleUpdateItemsSelected={handleUpdateItemsSelected}
-          />
+          {isEmpty(idComanda) ? (
+            <div>Selecione uma comanda antes de adiconar os produtos</div>
+          ) : (
+            <ItemList
+              items={items}
+              inputText={inputText}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+            />
+          )}
         </Content>
       </div>
       <Footer>
@@ -166,7 +157,7 @@ export default function Atendimento() {
         totalComanda={totalComanda}
       >
         <div>
-          {itemsComanda.map((item, idx) => (
+          {comanda?.items?.map((item, idx) => (
             <Item
               key={idx}
               item={item}

@@ -5,4 +5,7 @@ export default {
     "^.+\\.[jt]sx?$": ["babel-jest", { configFile: "./babel-test.config.js" }],
   },
   moduleFileExtensions: ["js", "jsx"],
+  moduleNameMapper: {
+    "\\.css$": "identity-obj-proxy",
+  },
 };

@@ -12,7 +12,7 @@ export const getProducts = async (request) => {
     //    await connectToDatabase();
     //    const allProducts = await product.find({});
     //    console.log(allProducts);
-    esperar(3000);
+    esperar(6000);
 
     return Response.json({ records: isTest ? items : {} }, { status: 200 });
   } catch {

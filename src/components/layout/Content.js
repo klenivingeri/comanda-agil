@@ -1,9 +1,10 @@
 import React from "react";
+import { Loading } from "../loading/Loading";
 export const Content = ({ isLoading, children }) => {
   if (isLoading) {
     return (
       <div className="flex rounded p-2 h-full w-full justify-center items-center">
-        <p>Carregando conteudo;</p>
+        <Loading isLoading style="style3" />
       </div>
     );
   }

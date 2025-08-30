@@ -1,6 +1,6 @@
 "use client";
 import dayjs from "dayjs";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
@@ -8,40 +8,17 @@ import { Header } from "../../components/layout/Header";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { currency } from "../utils/currency";
 import { IconMenuList } from "../../../public/icons/MenuList";
-import { ModalBot } from "@/components/modal/ModalBot";
 
 import { IconCreate } from "../../../public/icons/Create";
-import { LoadingFullScreen } from "@/components/loading/LoadingFullScreen";
 import Link from "next/link";
 
 export default function Comandas() {
   const [comandas, setComandas] = useState([]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
-  const [text, setText] = useState("");
-  const inputRef = useRef(null);
-
-  const handleFocusInput = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
-  const handleInputText = (e) => {
-    const text = e.target.value;
-    setText(text);
-  };
-
-  const handleOpenModal = () => {
-    setOpenModal(!openModal);
-    if (!openModal) {
-      //setTimeout(handleFocusInput, 1000);
-    }
-  };
 
   const getComandas = async () => {
-    const res = await fetch(`/api/comandas?id=test`, {
+    const res = await fetch(`/api/comandas`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -54,6 +31,8 @@ export default function Comandas() {
   useEffect(() => {
     getComandas();
   }, []);
+
+  const hasComanda = comandas?.some((c) => c.id === inputText);
 
   return (
     <Container>
@@ -73,12 +52,21 @@ export default function Comandas() {
           <div className="w-full grid grid-cols-12 px-2 gap-2">
             <div className="col-span-12 flex items-center gap-2">
               <InputSearch setInputText={setInputText} _isNumeric />
-              <button
-                onClick={handleOpenModal}
-                className="relative text-black rounded-md flex justify-center items-center h-[40px] px-2"
+              <Link
+                href={
+                  inputText.length > 0 && !hasComanda
+                    ? `/atendimento?id=${inputText}`
+                    : ""
+                }
+                style={{ textDecoration: "none" }}
+                className={`relative ${
+                  inputText.length > 0 && !hasComanda
+                    ? "text-black"
+                    : "text-gray-400"
+                } rounded-md flex justify-center items-center h-[40px] px-2`}
               >
                 <IconCreate size="h-[32px] w-[32px]" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -123,7 +111,6 @@ export default function Comandas() {
           </div>
         </Content>
       </div>
-      <LoadingFullScreen isLoading={openModal} />
     </Container>
   );
 }
