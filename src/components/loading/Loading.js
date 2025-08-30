@@ -126,7 +126,11 @@ const LoadingDots = ({ color = "white", size = 16, speed = 0.3 }) => {
 };
 
 const Circle = () => {
-  return <div id="loader" className="spinner"></div>;
+  return (
+    <div className="bg-black/10 pl-1 rounded-full w-[70px] h-[70px] flex justify-center items-center shadow-2xl">
+      <div id="loader" className="spinner"></div>;
+    </div>
+  );
 };
 
 const LOADING_STYLE = {
@@ -140,7 +144,7 @@ export const Loading = ({ isLoading, style = "style1" }) => {
   const ComponentLoading = LOADING_STYLE[style];
   return (
     isLoading && (
-      <div className=" h-[50px] w-[300px] flex justify-center items-center">
+      <div className="h-[50px] w-[300px] flex justify-center items-center">
         <ComponentLoading text="Criando&nbsp;comanda!" />
       </div>
     )

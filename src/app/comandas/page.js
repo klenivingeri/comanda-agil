@@ -89,12 +89,18 @@ export default function Comandas() {
                   href={`/atendimento?id=${c.id}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
-                  className="relative h-30 w-28 border-2 p-3 rounded-2xl shadow-lg bg-blue-400 shadow-blue-200 text-white flex flex-col justify-between"
+                  className="relative h-30 w-28 border-1 border-r-3 border-b-4 p-3 rounded-2xl shadow-lg bg-blue-400 shadow-blue-200 text-white flex flex-col justify-between"
                 >
                   <div className="flex justify-end text-sm leading-none">
-                    {currency(c.total)}
+                    {currency(
+                      c?.items?.reduce(
+                        (acc, item) =>
+                          acc + (item?.quantity * item?.price || 0),
+                        0
+                      )
+                    )}
                   </div>
-                  <div className="flex justify-center text-lg font-bold leading-none">
+                  <div className="flex justify-center text-3xl font-bold leading-none">
                     {c.name}
                   </div>
                   <div className="flex justify-start text-sm leading-none">
@@ -104,7 +110,7 @@ export default function Comandas() {
                     style={{ color: "#8EC5FF" }}
                     className="absolute bottom-2 right-0 "
                   >
-                    <IconMenuList size="h-[50px] w-[50px]" />
+                    <IconMenuList size="h-[40px] w-[40px]" />
                   </span>
                 </Link>
               ))}

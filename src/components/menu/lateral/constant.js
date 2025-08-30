@@ -6,7 +6,7 @@ export const menu = [
   },
   {
     title: "Comanda",
-    path: "/comanda",
+    path: "/comandas",
     icon: "IconCommand",
   },
   {
