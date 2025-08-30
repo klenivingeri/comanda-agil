@@ -24,9 +24,9 @@ export const Item = ({
   };
 
   return (
-    <div className=" flex my-2 content-center bg-white items-center justify-between border-2 border-white border-l-4 rounded-md shadow-lg shadow-gray-100/50">
+    <div className=" flex my-2 content-center bg-[var(--bg-subTitle)] items-center justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
       {itemInNote ? (
-        <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md flex justify-center content-center">
+        <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md shadow-[var(--bg-subTitle)]/50 flex justify-center content-center">
           {item?.quantity}
         </div>
       ) : (

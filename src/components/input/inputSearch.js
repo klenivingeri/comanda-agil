@@ -52,7 +52,7 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
         placeholder="Pesquisar..."
         onChange={handleInputText}
         value={text || ""}
-        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button)] focus:border-[var(--button)] outline-none bg-[var(--background)]"
       />
       {!!text.length && (
         <span

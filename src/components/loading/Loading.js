@@ -86,7 +86,7 @@ const AnimatedText = ({
   );
 };
 
-const LoadingDots = ({ color = "white", size = 16, speed = 0.3 }) => {
+const LoadingDots = ({ color = "silver", size = 16, speed = 0.3 }) => {
   const dotStyle = {
     width: `${size}px`,
     height: `${size}px`,
@@ -127,7 +127,7 @@ const LoadingDots = ({ color = "white", size = 16, speed = 0.3 }) => {
 
 const Circle = () => {
   return (
-    <div className="bg-black/10 pl-1 rounded-full w-[70px] h-[70px] flex justify-center items-center shadow-2xl">
+    <div className="pl-1 rounded-full w-[70px] h-[70px] flex justify-center items-center">
       <div id="loader" className="spinner"></div>;
     </div>
   );
@@ -144,7 +144,7 @@ export const Loading = ({ isLoading, style = "style1" }) => {
   const ComponentLoading = LOADING_STYLE[style];
   return (
     isLoading && (
-      <div className="h-[50px] w-[300px] flex justify-center items-center">
+      <div className="flex justify-center items-center">
         <ComponentLoading text="Criando&nbsp;comanda!" />
       </div>
     )

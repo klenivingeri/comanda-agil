@@ -41,7 +41,7 @@ function SubTitle({
           className="font-bold cursor-pointer select-none flex w-full my-1"
           onClick={onToggle}
         >
-          <div className="bg-[var(--bg-subTitle)] grid grid-cols-12 w-full border-b-1 border-gray-200 shadow-md shadow-gray-200/50  px-2 py-4">
+          <div className="bg-[var(--bg-subTitle)] grid grid-cols-12 w-full border-b-1 border-[var(--text)] shadow-md shadow-[var(--text)]/50 px-2 py-4">
             <div className="col-span-9">
               <span className="text-2xl">{typeLabel}</span>
             </div>

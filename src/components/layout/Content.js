@@ -3,8 +3,8 @@ import { Loading } from "../loading/Loading";
 export const Content = ({ isLoading, children }) => {
   if (isLoading) {
     return (
-      <div className="flex rounded p-2 h-full w-full justify-center items-center">
-        <Loading isLoading style="style3" />
+      <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--backgroun)]">
+        <Loading isLoading style="style4" />
       </div>
     );
   }

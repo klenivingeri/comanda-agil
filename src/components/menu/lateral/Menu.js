@@ -1,0 +1,113 @@
+import React, { useState, useEffect } from "react";
+import { IconCommand } from "../../../../public/icons/Command";
+import { IconGear } from "../../../../public/icons/Gear";
+import { IconMoney } from "../../../../public/icons/Money";
+import { IconPercent } from "../../../../public/icons/Percent";
+import { IconShoppingCart } from "../../../../public/icons/ShoppingCart";
+import { IconUsers } from "../../../../public/icons/User";
+import { IconCreate } from "../../../../public/icons/Create";
+import { IconSearch } from "../../../../public/icons/Search";
+import { IconChart } from "../../../../public/icons/Chart";
+
+import Link from "next/link";
+import { menu } from "./constant";
+
+const icons = {
+  IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
+  IconCommand: <IconCommand size="h-[30px] w-[30px]" />,
+  IconShoppingCart: <IconShoppingCart size="h-[30px] w-[30px]" />,
+  IconGear: <IconGear size="h-30px] w-[30px]" />,
+  IconUsers: <IconUsers size="h-[30px] w-[30px]" />,
+  IconPercent: <IconPercent size="h-[30px] w-[30px]" />,
+  IconCreate: <IconCreate size="h-[20px] w-[20px]" />,
+  IconSearch: <IconSearch size="h-[20px] w-[20px]" />,
+  IconChart: <IconChart size="h-[20px] w-[20px]" />,
+};
+
+const Menu = () => {
+  const [activeLink, setActiveLink] = useState("");
+  const [subActiveLink, setSubActiveLink] = useState("");
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const pathParts = window.location.pathname.split("/").filter(Boolean);
+
+      if (pathParts.length > 0) {
+        setActiveLink("/" + pathParts[0]);
+      }
+
+      if (pathParts.length > 1) {
+        setSubActiveLink("/" + pathParts[0] + "/" + pathParts[1]);
+        setOpenDropdown("/" + pathParts[0]); // abre o dropdown automaticamente
+      }
+    }
+  }, []);
+
+  const toggleDropdown = (path) => {
+    setOpenDropdown(openDropdown === path ? null : path);
+  };
+
+  return (
+    <nav>
+      <ul className="list-none p-0 m-0">
+        {menu.map((item) => (
+          <li key={item.path} className="mb-2">
+            {item.sublink ? (
+              // Item com submenu -> não navega, só abre/fecha
+              <div
+                className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
+                  activeLink === item.path
+                    ? "bg-[var(--text)] font-bold"
+                    : "hover:bg-[var(--text)]/50"
+                }`}
+                onClick={() => toggleDropdown(item.path)}
+              >
+                <span className="pl-6">{icons[item.icon]}</span>
+                {item.title}
+                <span className="ml-auto">
+                  {openDropdown === item.path ? "▲" : "▼"}
+                </span>
+              </div>
+            ) : (
+              <Link
+                href={item.path}
+                className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
+                  activeLink === item.path
+                    ? "bg-[var(--text)] font-bold"
+                    : "hover:bg-[var(--text)]/50"
+                }`}
+              >
+                <span className="pl-6">{icons[item.icon]}</span>
+                {item.title}
+              </Link>
+            )}
+
+            {/* Submenu */}
+            {item.sublink && openDropdown === item.path && (
+              <ul className="list-none pl-18 mt-1">
+                {item.sublink.map((sub) => (
+                  <li key={sub.path}>
+                    <Link
+                      href={item.path + sub.path}
+                      className={`flex items-center p-1.5 rounded transition-colors ${
+                        subActiveLink === item.path + sub.path
+                          ? "bg-[var(--text)] font-bold"
+                          : "hover:bg-[var(--text)]/50"
+                      }`}
+                    >
+                      <span className="mr-2">{icons[sub.icon]}</span>
+                      {sub.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
+export default Menu;

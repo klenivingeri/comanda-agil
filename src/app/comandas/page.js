@@ -11,11 +11,17 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 
 import { IconCreate } from "../../../public/icons/Create";
 import Link from "next/link";
+import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 
 export default function Comandas() {
   const [comandas, setComandas] = useState([]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const handleOpenMenuMobile = () => {
+    setOpenMenuMobile(!openMenuMobile);
+  };
 
   const getComandas = async () => {
     const res = await fetch(`/api/comandas`, {
@@ -45,7 +51,10 @@ export default function Comandas() {
                 <span className="text-md font-bold">Comandas</span>
               </div>
             </div>
-            <div className="col-span-2 flex items-end justify-end pt-1">
+            <div
+              onClick={handleOpenMenuMobile}
+              className="col-span-2 flex items-end justify-end pt-1"
+            >
               <IconDotMenu size="h-[32px] w-[32px]" />
             </div>
           </div>
@@ -89,7 +98,7 @@ export default function Comandas() {
                   href={`/atendimento?id=${c.id}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
-                  className="relative h-30 w-28 border-1 border-r-3 border-b-4 p-3 rounded-2xl shadow-lg bg-blue-400 shadow-blue-200 text-white flex flex-col justify-between"
+                  className="relative h-30 w-28 border-1 border-[var(--bg-subTitle)] p-3 rounded-2xl bg-[var(--button)] text-white flex flex-col justify-between"
                 >
                   <div className="flex justify-end text-sm leading-none">
                     {currency(
@@ -106,10 +115,7 @@ export default function Comandas() {
                   <div className="flex justify-start text-sm leading-none">
                     {dayjs(c.date).format("DD/MM")}
                   </div>
-                  <span
-                    style={{ color: "#8EC5FF" }}
-                    className="absolute bottom-2 right-0 "
-                  >
+                  <span className="text-[var(--bg-alert)] absolute bottom-2 right-0">
                     <IconMenuList size="h-[40px] w-[40px]" />
                   </span>
                 </Link>
@@ -117,6 +123,10 @@ export default function Comandas() {
           </div>
         </Content>
       </div>
+      <MenuMobile
+        handleOpenModal={handleOpenMenuMobile}
+        openModal={openMenuMobile}
+      />
     </Container>
   );
 }

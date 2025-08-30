@@ -1,27 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { IconX } from "../../../public/icons/X";
-import { Footer } from "../layout/Footer";
-import { Header } from "../layout/Header";
-import { currency } from "../../app/utils/currency";
-import { IconCircleMoney } from "../../../public/icons/CircleMoney";
-
-const ShowValue = ({ totalComanda }) => {
-  const [show, setShow] = useState(false);
-
-  return (
-    <div
-      className={`${
-        show ? "w-[300px] " : "pr-2"
-      } flex text-2xl gap-2 pl-3 items-center font-bold `}
-    >
-      <span onClick={() => setShow(!show)}>
-        <IconCircleMoney size="h-[25px] w-[25px]" />
-      </span>
-      {show && <span style={{ lineHeight: 0 }}>{currency(totalComanda)}</span>}
-    </div>
-  );
-};
 
 export const ModalBot = ({
   handleOpenModal,

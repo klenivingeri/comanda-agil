@@ -13,13 +13,13 @@
 }
 
 .dark body {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --button: #7F22FE;
-  --buttonHover: #5D0EC0;
-  --bg-subTitle: black; 
-  --bg-alert: #C4B4FF;
-  --text: #eeeeee;
+  --background: #171717;     /* fundo escuro */
+  --foreground: #F3F3F3;     /* texto principal claro */
+  --button: #7B2CBF;         /* roxo médio (substitui azul #155DFC) */
+  --buttonHover: #5A189A;    /* roxo mais escuro para hover */
+  --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
+  --bg-alert: #9D4EDD;       /* roxo vibrante (substitui #51A2FF) */
+  --text: #111111; 
 
 }
 

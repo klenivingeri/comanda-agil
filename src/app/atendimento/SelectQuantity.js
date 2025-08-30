@@ -34,7 +34,7 @@ export const SelectQuantity = ({
         className=" flex justify-center content-center"
         onClick={handleAdd}
       >
-        <button className="flex  w-8 h-8 text-white text-xl justify-center items-center border-t-2 border-b-4 border-t-gray-500 bg-gray-700 border-b-gray-800 rounded-md">
+        <button className="flex  w-8 h-8 text-[var(--background)] text-xl justify-center items-center border-t-2 border-b-4 border-t-[var(--foreground)]/70 bg-[var(--foreground)]/80 border-b-[var(--foreground)]/90 rounded-md">
           +
         </button>
       </div>

@@ -12,9 +12,11 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconMenuSquare } from "../../../public/icons/MenuSquare";
+
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { isEmpty } from "../utils/empty";
+import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 
 export default function Atendimento() {
   const [items, setItems] = useState([]);
@@ -22,6 +24,7 @@ export default function Atendimento() {
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
   const searchParams = useSearchParams();
   const idComanda = searchParams?.get("id");
@@ -59,6 +62,10 @@ export default function Atendimento() {
 
   const handleOpenModal = () => {
     setOpenModal(!openModal);
+  };
+
+  const handleOpenMenuMobile = () => {
+    setOpenMenuMobile(!openMenuMobile);
   };
 
   const handleUpdateItemsSelected = (item, value) => {
@@ -104,7 +111,10 @@ export default function Atendimento() {
                 <span className="text-md font-bold">Cardapio</span>
               </div>
             </div>
-            <div className="col-span-2 flex items-end justify-end pt-1">
+            <div
+              className="col-span-2 flex items-end justify-end pt-1"
+              onClick={handleOpenMenuMobile}
+            >
               <IconDotMenu size="h-[32px] w-[32px]" />
             </div>
           </div>
@@ -181,6 +191,10 @@ export default function Atendimento() {
           ))}
         </div>
       </ModalRight>
+      <MenuMobile
+        handleOpenModal={handleOpenMenuMobile}
+        openModal={openMenuMobile}
+      />
     </Container>
   );
 }

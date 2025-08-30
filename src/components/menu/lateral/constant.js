@@ -5,13 +5,8 @@ export const menu = [
     icon: "IconMoney",
   },
   {
-    title: "Comanda",
+    title: "Comandas",
     path: "/comandas",
-    icon: "IconCommand",
-  },
-  {
-    title: "Atendimento",
-    path: "/atendimento",
     icon: "IconCommand",
   },
   {
