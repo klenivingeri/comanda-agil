@@ -89,7 +89,7 @@ export default function Comandas() {
                   href={`/atendimento?id=${c.id}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
-                  className="relative h-30 w-40 border-2 p-3 rounded-2xl shadow-lg bg-blue-400 shadow-blue-200 text-white flex flex-col justify-between"
+                  className="relative h-30 w-28 border-2 p-3 rounded-2xl shadow-lg bg-blue-400 shadow-blue-200 text-white flex flex-col justify-between"
                 >
                   <div className="flex justify-end text-sm leading-none">
                     {currency(c.total)}

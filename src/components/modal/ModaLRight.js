@@ -11,11 +11,12 @@ const ShowValue = ({ totalComanda }) => {
 
   return (
     <div
+      onClick={() => setShow(!show)}
       className={`${
         show ? "w-[300px] " : "pr-2"
-      } flex text-2xl gap-2 pl-3 items-center font-bold `}
+      } flex text-2xl gap-2 pl-3 py-2 items-center font-bold`}
     >
-      <span onClick={() => setShow(!show)}>
+      <span>
         <IconCircleMoney size="h-[25px] w-[25px]" />
       </span>
       {show && <span style={{ lineHeight: 0 }}>{currency(totalComanda)}</span>}
