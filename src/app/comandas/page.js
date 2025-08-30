@@ -64,7 +64,7 @@ export default function Comandas() {
               <Link
                 href={
                   inputText.length > 0 && !hasComanda
-                    ? `/atendimento?id=${inputText}`
+                    ? `/atendimento/${inputText}`
                     : ""
                 }
                 style={{ textDecoration: "none" }}
@@ -95,7 +95,7 @@ export default function Comandas() {
               })
               .map((c, idx) => (
                 <Link
-                  href={`/atendimento?id=${c.id}`}
+                  href={`/atendimento/${c.id}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
                   className="relative h-30 w-28 border-1 border-[var(--bg-subTitle)] p-3 rounded-2xl bg-[var(--button)] text-white flex flex-col justify-between"

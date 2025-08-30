@@ -1,24 +1,25 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState, useMemo, Suspense } from "react";
-import { InputSearch } from "../../components/input/inputSearch";
-import { Container } from "../../components/layout/Container";
-import { Content } from "../../components/layout/Content";
-import { Footer } from "../../components/layout/Footer";
-import { Header } from "../../components/layout/Header";
-import { ModalRight } from "../../components/modal/ModaLRight";
+
+import React, { useEffect, useState, useMemo, Suspense, use } from "react";
+import { InputSearch } from "../../../components/input/inputSearch";
+import { Container } from "../../../components/layout/Container";
+import { Content } from "../../../components/layout/Content";
+import { Footer } from "../../../components/layout/Footer";
+import { Header } from "../../../components/layout/Header";
+import { ModalRight } from "../../../components/modal/ModaLRight";
 import { ItemList } from "./ItemList";
-import { IconMenuList } from "../../../public/icons/MenuList";
+import { IconMenuList } from "../../../../public/icons/MenuList";
 import { Item } from "./Item";
-import { IconDotMenu } from "../../../public/icons/DotMenu";
-import { IconMenuSquare } from "../../../public/icons/MenuSquare";
+import { IconDotMenu } from "../../../../public/icons/DotMenu";
+import { IconMenuSquare } from "../../../../public/icons/MenuSquare";
 
 import Link from "next/link";
 
-import { isEmpty } from "../utils/empty";
-import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+import { isEmpty } from "../../utils/empty";
+import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 
-export default function Atendimento() {
+export default function Atendimento({ params }) {
+  const { uuid } = use(params);
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +27,7 @@ export default function Atendimento() {
   const [openModal, setOpenModal] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
-  const searchParams = useSearchParams();
-  const idComanda = searchParams?.get("id");
+  const idComanda = uuid;
 
   useEffect(() => {
     const fetchData = async () => {

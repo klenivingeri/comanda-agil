@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { SelectQuantity } from "../SelectQuantity";
+import { SelectQuantity } from "../[uuid]/SelectQuantity";
 
 test("renderiza botão de adicionar", () => {
   render(<SelectQuantity value={0} />);
