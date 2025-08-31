@@ -1,7 +1,7 @@
 import React from "react";
 import { jest } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import Atendimento from "../[uuid]/page";
+import { Atendimento } from "../Atendimento";
 
 describe("Atendimento", () => {
   beforeAll(() => {

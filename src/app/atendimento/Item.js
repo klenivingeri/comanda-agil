@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { currency } from "../../utils/currency";
+import { currency } from "../../app/utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
 
 export const Item = ({
