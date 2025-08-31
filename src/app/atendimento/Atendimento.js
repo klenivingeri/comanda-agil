@@ -101,7 +101,7 @@ export const Atendimento = ({ idComanda }) => {
               className="col-span-2 flex items-center pt-2 gap-1"
             >
               <IconMenuSquare size="h-[26px] w-[26px]" />
-              <div className="font-bold text-lg text-black">123</div>
+              <div className="font-bold text-lg text-black">{idComanda}</div>
             </Link>
             <div className="col-span-8 flex items-center">
               <div className="w-full flex justify-center">
@@ -120,13 +120,15 @@ export const Atendimento = ({ idComanda }) => {
               <InputSearch setInputText={setInputText} />
               <button
                 onClick={handleOpenModal}
-                className="relative text-black rounded-md flex justify-center items-center h-[40px] px-2"
+                className={`relative ${
+                  !isEmpty(totalComanda) ? "bg-[var(--button)] " : "bg-gray-400"
+                } rounded-md flex justify-center items-center h-[40px] pl-4 pr-2  text-white`}
               >
                 <span>
                   <IconMenuList size="h-[32px] w-[32px]" />
                 </span>
                 {!!totalItems.length && (
-                  <div className="absolute text-xs text-white h-4 w-4 bg-[var(--button)] top-[-1px] right-[10px] rounded-full flex justify-center items-center leading-none">
+                  <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
                     {totalItems.length}
                   </div>
                 )}

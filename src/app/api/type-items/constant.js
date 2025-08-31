@@ -16,7 +16,7 @@ export const menu = [
     sublink: [
       {
         title: "Cadastrar",
-        path: "/cadastrar/create",
+        path: "/cadastrar",
         icon: "IconCreate",
       },
       {
