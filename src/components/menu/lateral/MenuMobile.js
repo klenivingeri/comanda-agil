@@ -1,18 +1,36 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
+import { isEmpty } from "../../../app/utils/empty";
 
-export const MenuMobile = ({ handleOpenModal, openModal, children }) => {
+export const MenuMobile = ({ handleOpenModal, openModal }) => {
   const [isDark, setIsDark] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
 
-  // Carrega preferência do usuário ao iniciar
+  const getMenu = async () => {
+    const res = await fetch(`/api/menu`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const menuItems = await res.json();
+    setMenuItems(menuItems.records);
+    localStorage.setItem("menu", JSON.stringify(menuItems.records));
+  };
+
   useEffect(() => {
+    const saveMenuItems = localStorage.getItem("menu");
+    if (isEmpty(saveMenuItems)) {
+      getMenu();
+    } else {
+      setMenuItems(JSON.parse(saveMenuItems));
+    }
+
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") setIsDark(true);
   }, []);
 
   useEffect(() => {
-    const root = window.document.documentElement; // <html>
+    const root = window.document.documentElement;
     if (isDark) {
       root.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -58,7 +76,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, children }) => {
               openModal ? "opacity-100" : "opacity-0"
             } relative w-full h-full flex flex-col overflow-auto transition-opacity duration-3000`}
           >
-            <Menu />
+            <Menu menuItems={menuItems} />
           </div>
         </div>
       </div>

@@ -10,7 +10,6 @@ import { IconSearch } from "../../../../public/icons/Search";
 import { IconChart } from "../../../../public/icons/Chart";
 
 import Link from "next/link";
-import { menu } from "./constant";
 
 const icons = {
   IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
@@ -24,7 +23,7 @@ const icons = {
   IconChart: <IconChart size="h-[20px] w-[20px]" />,
 };
 
-const Menu = () => {
+const Menu = ({ menuItems }) => {
   const [activeLink, setActiveLink] = useState("");
   const [subActiveLink, setSubActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -51,10 +50,9 @@ const Menu = () => {
   return (
     <nav>
       <ul className="list-none p-0 m-0">
-        {menu.map((item) => (
+        {menuItems.map((item) => (
           <li key={item.path} className="mb-2">
             {item.sublink ? (
-              // Item com submenu -> não navega, só abre/fecha
               <div
                 className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
@@ -83,7 +81,6 @@ const Menu = () => {
               </Link>
             )}
 
-            {/* Submenu */}
             {item.sublink && openDropdown === item.path && (
               <ul className="list-none pl-18 mt-1">
                 {item.sublink.map((sub) => (
