@@ -1,6 +1,5 @@
 import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
-import { MenuLateral } from "@/components/menu/lateral/MenuLateral";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +26,7 @@ export default function RootLayout({ children }) {
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
       />
       <body
-        className={`${poppins.variable} ${roboto.variable} antialiased select-none`}
+        className={`${poppins.variable} ${roboto.variable} antialiased `} //select-none
       >
         <div className="flex justify-center min-h-screen">
           {/* Container central */}

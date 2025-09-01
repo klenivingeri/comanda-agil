@@ -1,7 +1,6 @@
 import { Loading } from "./Loading";
 
 export const LoadingFullScreen = ({ isLoading }) => {
-  console.log(isLoading);
   return (
     isLoading && (
       <div

@@ -50,7 +50,7 @@ export const ProdutoCadastrar = ({ productUUID }) => {
 
   return (
     <Container>
-      <Header>
+      <Header h="h-[40px]">
         <div className="flex flex-col w-full gap-2 justify-start">
           <div className="w-full grid grid-cols-12 px-2 h-[40px]">
             <div className="col-span-2"></div>
@@ -68,12 +68,11 @@ export const ProdutoCadastrar = ({ productUUID }) => {
           </div>
         </div>
       </Header>
-      <div className="mt-[85px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
         <Content>
           <FormComponent />
         </Content>
       </div>
-      <Footer>Test de Footer fixo</Footer>
       <MenuMobile
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}

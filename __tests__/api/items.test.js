@@ -3,6 +3,7 @@
  */
 
 import { GET } from "../../src/app/api/items/route.js";
+import { items } from "../../src/app/api/constants.js";
 
 describe("GET /api/items", () => {
   it("should return 200 and message when called without query params", async () => {
@@ -13,18 +14,26 @@ describe("GET /api/items", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toHaveProperty("records", {});
+    expect(body).toHaveProperty("records", items);
   });
 
   it("should return 200 and message when called with id query param", async () => {
     // Mock request object with a URL containing id param
-    const request = { url: "http://localhost/api/items?id=123" };
+    const request = { url: "http://localhost/api/items?id=001" };
 
     const response = await GET(request);
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toHaveProperty("records", {});
+    expect(body).toHaveProperty("records", [
+      {
+        id: "001",
+        name: "Pastel de carne",
+        price: 20,
+        type: "fritos",
+        typeLabel: "Fritos",
+      },
+    ]);
   });
 
   it("should return 500 if an error occurs", async () => {
