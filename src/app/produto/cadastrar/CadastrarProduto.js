@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 
 import { Container } from "../../../components/layout/Container";
-import { Footer } from "../../../components/layout/Footer";
 import { Header } from "../../../components/layout/Header";
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 import { Content } from "../../../components/layout/Content";
-import { FormComponent } from "../../../components/form/FormComponent";
+import { FormComponent } from "./FormComponent";
 
 const Input = () => {};
 

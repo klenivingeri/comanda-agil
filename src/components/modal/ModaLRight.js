@@ -35,9 +35,9 @@ export const ModalRight = ({
 
   useEffect(() => {
     if (openModal) {
+      window.scrollTo({ top: 0 });
       setHidden(false);
 
-      // espera um tick antes de animar (pra tirar o hidden primeiro)
       const t = setTimeout(() => setAnimating(true), 50);
       return () => clearTimeout(t);
     } else {
