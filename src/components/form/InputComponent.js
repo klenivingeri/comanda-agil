@@ -1,3 +1,4 @@
+import { currency } from "../../app/utils/currency";
 import { useState } from "react";
 
 export const InputComponent = ({
@@ -6,16 +7,30 @@ export const InputComponent = ({
   setValue = () => {},
   id,
   required = false,
+  isCurrency = false,
 }) => {
   const [error, setError] = useState("");
 
   const handleBlur = () => {
-    if (required && !value.trim()) {
+    if (required && !String(value).trim()) {
       setError(`O campo "${label}" é obrigatório`);
     } else {
       setError("");
     }
   };
+
+  const handleSetValue = (id, value) => {
+    if (isCurrency) {
+      const onlyNumbers = value.replace(/\D/g, "");
+      const numericValue = Number(onlyNumbers) / 100;
+
+      setValue(id, numericValue);
+    } else {
+      setValue(id, value);
+    }
+  };
+
+  const displayValue = isCurrency ? currency(value) : value;
 
   return (
     <div className="mb-5">
@@ -27,11 +42,11 @@ export const InputComponent = ({
       </label>
       <div className="relative">
         <input
-          onChange={(e) => setValue(id, e.target.value)}
+          onChange={(e) => handleSetValue(id, e.target.value)}
           onBlur={handleBlur}
           type="text"
           id={id}
-          className={`block w-full p-4 ps-10 text-sm text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+          className={`block w-full p-3 ps-5 text-sm text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
             ${
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -39,7 +54,7 @@ export const InputComponent = ({
             }
           `}
           placeholder={label}
-          value={value}
+          value={displayValue}
         />
         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
       </div>

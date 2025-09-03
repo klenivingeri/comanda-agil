@@ -6,6 +6,7 @@ export const SelectComponent = ({
   setValue = () => {},
   id,
   required = false,
+  options = [],
 }) => {
   const [error, setError] = useState("");
 
@@ -30,18 +31,20 @@ export const SelectComponent = ({
         onChange={(e) => setValue(id, e.target.value)}
         onBlur={handleBlur}
         id={id}
-        className={`block w-full pl-8 py-3 text-base text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+        className={`block w-full pl-5 py-3 text-base text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
           ${
             error
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"
               : "border-gray-300 dark:border-gray-600"
           }`}
       >
+        {" "}
         <option value="seleted">Selecione a categoria</option>
-        <option value="US">United States</option>
-        <option value="CA">Canada</option>
-        <option value="FR">France</option>
-        <option value="DE">Germany</option>
+        {options.map((op) => (
+          <option key={op.type} value={op.type}>
+            {op.name}
+          </option>
+        ))}
       </select>
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>

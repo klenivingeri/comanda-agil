@@ -4,29 +4,38 @@ import { InputFileComponent } from "../../../components/form/InputFileComponent"
 import { TextareaComponent } from "../../../components/form/TextareaComponent";
 import { SelectComponent } from "../../../components/form/SelectComponent";
 
-export const FormComponent = () => {
+const fetchData = async (formDetails) => {
+  const resp = await fetch(`/api/items`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formDetails),
+  });
+  const result = await resp.json();
+
+  console.log(result);
+};
+
+export const FormComponent = ({ typeItems }) => {
   const [formDetails, setFormDetails] = useState({});
-  const [send, setSend] = useState({});
 
   const handleFormDetails = (id, value) => {
     setFormDetails({ ...formDetails, [id]: value });
   };
 
   const handleSend = () => {
-    console.log(formDetails);
     const allFilled = Object.values(formDetails).every(
       (value) => value && value !== "seleted"
     );
 
     if (allFilled) {
-      console.log("✅ Todos os campos preenchidos");
+      fetchData(formDetails);
     } else {
       console.log("❌ Existem campos vazios");
     }
   };
 
   return (
-    <form className=" w-full max-w-[500px] mx-auto p-3">
+    <form className=" w-full max-w-[500px] mx-auto px-3">
       <InputFileComponent id="file" setValue={handleFormDetails} />
       <InputComponent
         id="codigo"
@@ -40,7 +49,6 @@ export const FormComponent = () => {
         value={formDetails?.name || ""}
         setValue={handleFormDetails}
         label="Nome do produto"
-        send={send}
         required
       />
       <InputComponent
@@ -49,7 +57,6 @@ export const FormComponent = () => {
         setValue={handleFormDetails}
         isCurrency
         label="Preço do produto"
-        send={send}
         required
       />
       <TextareaComponent
@@ -57,7 +64,6 @@ export const FormComponent = () => {
         value={formDetails?.description || ""}
         setValue={handleFormDetails}
         label="Descrição do produto"
-        send={send}
       />
       <SelectComponent
         id="category"
@@ -65,6 +71,7 @@ export const FormComponent = () => {
         setValue={handleFormDetails}
         label="Categoria do produto"
         required
+        options={typeItems}
       />
 
       <div className="flex justify-center items-center w-full">

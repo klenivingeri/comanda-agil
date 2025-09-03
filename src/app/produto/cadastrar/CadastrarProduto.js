@@ -12,7 +12,7 @@ const Input = () => {};
 
 export const ProdutoCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [type, setType] = useState(true);
+  const [typeItems, setTypeItems] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
   const criarComanda = async () => {
@@ -34,17 +34,18 @@ export const ProdutoCadastrar = ({ productUUID }) => {
     criarComanda();
   };
 
-  const getType = async () => {
+  const getTypeItems = async () => {
     const res = await fetch(`/api/type-items`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     const typeItems = await res.json();
-    setType(typeItems.records);
+    setTypeItems(typeItems.records);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    getType();
+    getTypeItems(isLoading);
   }, []);
 
   return (
@@ -68,8 +69,8 @@ export const ProdutoCadastrar = ({ productUUID }) => {
         </div>
       </Header>
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
-        <Content>
-          <FormComponent />
+        <Content isLoading={isLoading}>
+          <FormComponent typeItems={typeItems} />
         </Content>
       </div>
       <MenuMobile

@@ -23,3 +23,18 @@ export const getProducts = async (request) => {
     return Response.json({ message: "Rotas de items" }, { status: 500 });
   }
 };
+
+export const postProducts = async (request) => {
+  try {
+    const body = await request.json();
+    console.log(body);
+    await esperar(3000);
+
+    return Response.json({ message: "sucesso" }, { status: 200 });
+  } catch {
+    return Response.json(
+      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { status: 500 }
+    );
+  }
+};
