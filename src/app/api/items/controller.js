@@ -28,10 +28,19 @@ export const postProducts = async (request) => {
   try {
     const body = await request.json();
     console.log(body);
-    await esperar(3000);
+    //     {
+    //   code: '001',
+    //   name: 'Pastel de vento',
+    //   category: 'frito',
+    //   description: 'Pastel com nada dentro',
+    //   price: 10
+    // }
 
+    await connectToDatabase();
+    await product.create(body);
     return Response.json({ message: "sucesso" }, { status: 200 });
-  } catch {
+  } catch (e) {
+    console.log(e);
     return Response.json(
       { message: "Ocorreu um erro ao Fazer o cadastro do item" },
       { status: 500 }

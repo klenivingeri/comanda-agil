@@ -1,11 +1,12 @@
-let mongoose;
+import mongoose from "mongoose";
+
 const MONGO_URI = process.env.DB_CONNECT_STRING;
 
 if (!MONGO_URI) {
   console.log("A variavel de ambiente MONGO_URI não está Definida");
 }
 
-let cache = global?.mongose || { conn: null, promise: null };
+let cache = global?.mongoose || { conn: null, promise: null };
 
 export const connectToDatabase = async () => {
   if (cache.conn) {

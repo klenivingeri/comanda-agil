@@ -19,13 +19,17 @@ export const FormComponent = ({ typeItems }) => {
   const [formDetails, setFormDetails] = useState({});
 
   const handleFormDetails = (id, value) => {
+    console.log({ [id]: value });
     setFormDetails({ ...formDetails, [id]: value });
   };
 
   const handleSend = () => {
-    const allFilled = Object.values(formDetails).every(
-      (value) => value && value !== "seleted"
-    );
+    const allFilled = Object.values(formDetails).every((value) => {
+      if (value.name) {
+        return value.name && value.name !== "seleted";
+      }
+      return value && value !== "seleted";
+    });
 
     if (allFilled) {
       fetchData(formDetails);
@@ -35,11 +39,11 @@ export const FormComponent = ({ typeItems }) => {
   };
 
   return (
-    <form className=" w-full max-w-[500px] mx-auto px-3">
+    <div className=" w-full max-w-[500px] mx-auto px-3">
       <InputFileComponent id="file" setValue={handleFormDetails} />
       <InputComponent
-        id="codigo"
-        value={formDetails?.codigo || ""}
+        id="code"
+        value={formDetails?.code || ""}
         setValue={handleFormDetails}
         label="Código do produto"
         required
@@ -84,6 +88,6 @@ export const FormComponent = ({ typeItems }) => {
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 };

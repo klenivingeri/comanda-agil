@@ -18,6 +18,11 @@ export const SelectComponent = ({
     }
   };
 
+  const handleSetValue = (id, value) => {
+    const obj = options.find((op) => op.type === value);
+    setValue(id, obj);
+  };
+
   return (
     <div className="mb-6">
       <label
@@ -27,8 +32,8 @@ export const SelectComponent = ({
         {label}
       </label>
       <select
-        value={value}
-        onChange={(e) => setValue(id, e.target.value)}
+        value={value.type}
+        onChange={(e) => handleSetValue(id, e.target.value)}
         onBlur={handleBlur}
         id={id}
         className={`block w-full pl-5 py-3 text-base text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
