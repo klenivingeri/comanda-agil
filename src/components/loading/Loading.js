@@ -142,7 +142,7 @@ const LOADING_STYLE = {
   style4: LoadingDots,
 };
 
-export const Loading = ({ isLoading, style = "style1" }) => {
+export const Loading = ({ isLoading, style = "style4" }) => {
   const ComponentLoading = LOADING_STYLE[style];
   return (
     isLoading && (

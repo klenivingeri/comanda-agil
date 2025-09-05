@@ -30,10 +30,6 @@ export const ProdutoCadastrar = ({ productUUID }) => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const handleCreateComanda = () => {
-    criarComanda();
-  };
-
   const getTypeItems = async () => {
     const res = await fetch(`/api/type-items`, {
       method: "GET",

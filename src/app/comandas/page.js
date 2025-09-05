@@ -70,8 +70,8 @@ export default function Comandas() {
                 style={{ textDecoration: "none" }}
                 className={`relative ${
                   inputText.length > 0 && !hasComanda
-                    ? "bg-[var(--button)] "
-                    : "bg-gray-400"
+                    ? "bg-[var(--button-default)]"
+                    : "bg-[var(--button-hover)]"
                 } rounded-md flex justify-center items-center h-[40px] px-3  text-white`}
               >
                 <IconCreate size="h-[32px] w-[32px]" />
@@ -98,7 +98,7 @@ export default function Comandas() {
                   href={`/atendimento/${c.id}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
-                  className="relative h-30 w-28 border-1 border-[var(--bg-subTitle)] p-3 rounded-2xl bg-[var(--button)] text-white flex flex-col justify-between"
+                  className="relative h-30 w-28 border-1 border-[var(--bg-subTitle)] p-3 rounded-2xl bg-[var(--button-default)] text-white flex flex-col justify-between"
                 >
                   <div className="flex justify-end text-sm leading-none">
                     {currency(
@@ -115,7 +115,7 @@ export default function Comandas() {
                   <div className="flex justify-start text-sm leading-none">
                     {dayjs(c.date).format("DD/MM")}
                   </div>
-                  <span className="text-[var(--bg-alert)] absolute bottom-2 right-0">
+                  <span className="text-[var(--button-disabled)] absolute bottom-2 right-0">
                     <IconMenuList size="h-[40px] w-[40px]" />
                   </span>
                 </Link>

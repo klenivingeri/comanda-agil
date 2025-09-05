@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
 import { isEmpty } from "../../../app/utils/empty";
+import { SideModal } from "../../../components/modal/SideModal";
 
 export const MenuMobile = ({ handleOpenModal, openModal }) => {
   const [isDark, setIsDark] = useState(false);
@@ -41,45 +42,26 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
   }, [isDark]);
 
   return (
-    openModal && (
-      <div
-        id="container"
-        className={`absolute right-0 top-0 h-full z-[100] flex justify-end w-full`}
-      >
-        {/* Overlay atrás do menu */}
-        <div
-          className="absolute inset-0 bg-black/20"
-          onClick={handleOpenModal}
-        ></div>
-
-        {/* Menu */}
-        <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-4xl shadow-2xl m-2 bg-[var(--bg-subTitle)]">
-          <div className="w-full grid grid-cols-12 px-2 h-[200px]">
-            <div className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">
-              <div className="rounded-full border-1 p-[1px] mb-4">
-                <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
-              </div>
-              <span className="px-2 shadow-2xl font-bold ">Fulano Silva</span>
-              <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
+    <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
+      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-4xl shadow-2xl m-2 bg-[var(--bg-subTitle)]">
+        <div className="w-full grid grid-cols-12 px-2 h-[200px]">
+          <div className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">
+            <div className="rounded-full border-1 p-[1px] mb-4">
+              <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
             </div>
-            <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
-              <button onClick={() => setIsDark(!isDark)} className="p-3">
-                {isDark ? "🌙" : "☀️"}
-              </button>
-            </div>
-
-            <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
+            <span className="px-2 shadow-2xl font-bold ">Fulano Silva</span>
+            <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
+          </div>
+          <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
+            <button onClick={() => setIsDark(!isDark)} className="p-3">
+              {isDark ? "🌙" : "☀️"}
+            </button>
           </div>
 
-          <div
-            className={`${
-              openModal ? "opacity-100" : "opacity-0"
-            } relative w-full h-full flex flex-col overflow-auto transition-opacity duration-3000`}
-          >
-            <Menu menuItems={menuItems} />
-          </div>
+          <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
         </div>
+        <Menu menuItems={menuItems} />
       </div>
-    )
+    </SideModal>
   );
 };

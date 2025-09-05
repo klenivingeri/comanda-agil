@@ -5,21 +5,36 @@
 :root {
   --background: #F3F3F3;
   --foreground: #171717;
-  --button: #155DFC;
-  --buttonHover: #1447E6;
   --bg-subTitle: white; 
   --bg-alert: #51A2FF;
   --text: #eeeeee;
+
+  --button-default:  #155DFC; /* azul padrão */
+  --button-hover:    #1447E6; /* um pouco mais escuro */
+  --button-focus:    #3C77FF; /* mais claro e vibrante */
+  --button-pressed:  #0F35C9; /* bem mais escuro */
+  --button-disabled: #A8BFF9; /* azul bem claro e apagado */
+  --button-progress: #4D89FF; /* tom intermediário para feedback */
+
+
+
+  
+
 }
 
 .dark body {
   --background: #171717;     /* fundo escuro */
-  --foreground: #F3F3F3;     /* texto principal claro */
-  --button: #7B2CBF;         /* roxo médio (substitui azul #155DFC) */
-  --buttonHover: #5A189A;    /* roxo mais escuro para hover */
+  --foreground: #F3F3F3;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
   --bg-alert: #9D4EDD;       /* roxo vibrante (substitui #51A2FF) */
   --text: #111111; 
+
+  --button-default:  #3C77FF; /* azul mais claro e vibrante */
+  --button-hover:    #5C8EFF; /* mais claro no hover */
+  --button-focus:    #82A9FF; /* destaque acessível */
+  --button-pressed:  #2E5ED6; /* mais escuro, mas ainda visível */
+  --button-disabled: #4C5A80; /* azul acinzentado, apagado */
+  --button-progress: #699BFF; /* intermediário, suave pra loading */
 
 }
 

@@ -121,7 +121,9 @@ export const Atendimento = ({ idComanda }) => {
               <button
                 onClick={handleOpenModal}
                 className={`relative ${
-                  !isEmpty(totalComanda) ? "bg-[var(--button)] " : "bg-gray-400"
+                  !isEmpty(totalComanda)
+                    ? "bg-[var(--button-default)]"
+                    : "bg-[var(--button-disabled)]"
                 } rounded-md flex justify-center items-center h-[40px] pl-4 pr-2  text-white`}
               >
                 <span>
@@ -153,7 +155,7 @@ export const Atendimento = ({ idComanda }) => {
       <Footer>
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
-            <button className="text-white shadow-sm font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button)] hover:bg-[var(--buttonHover)]">
+            <button className="text-white shadow-sm font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]">
               <span className=""> LANÇAR ITEMS NA COMANDA</span>
             </button>
           </div>

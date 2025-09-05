@@ -26,18 +26,12 @@ export const getProducts = async (request) => {
 
 export const postProducts = async (request) => {
   try {
+    await esperar(6000);
     const body = await request.json();
     console.log(body);
-    //     {
-    //   code: '001',
-    //   name: 'Pastel de vento',
-    //   category: 'frito',
-    //   description: 'Pastel com nada dentro',
-    //   price: 10
-    // }
 
-    await connectToDatabase();
-    await product.create(body);
+    // await connectToDatabase();
+    // await product.create(body);
     return Response.json({ message: "sucesso" }, { status: 200 });
   } catch (e) {
     console.log(e);
