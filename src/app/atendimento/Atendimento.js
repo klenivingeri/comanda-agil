@@ -30,7 +30,7 @@ export const Atendimento = ({ idComanda }) => {
     const fetchData = async () => {
       try {
         const [itemsRes, comandasRes] = await Promise.all([
-          fetch(`/api/items?id=test`, {
+          fetch(`/api/items`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           }),
@@ -67,7 +67,7 @@ export const Atendimento = ({ idComanda }) => {
 
   const handleUpdateItemsSelected = (item, value) => {
     const newArray = items.map((i) => {
-      if (i.id == item.id) {
+      if (i._id == item._id) {
         return { ...i, quantity: value };
       }
 
@@ -161,7 +161,6 @@ export const Atendimento = ({ idComanda }) => {
           </div>
         </div>
       </Footer>
-
       <ModalRight
         handleOpenModal={handleOpenModal}
         openModal={openModal}

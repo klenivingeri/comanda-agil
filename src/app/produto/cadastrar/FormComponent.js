@@ -4,10 +4,8 @@ import { InputFileComponent } from "../../../components/form/InputFileComponent"
 import { TextareaComponent } from "../../../components/form/TextareaComponent";
 import { SelectComponent } from "../../../components/form/SelectComponent";
 import { Loading } from "../../../components/loading/Loading";
-import { SideModal } from "../../../components/modal/SideModal";
 
 const fetchCreateItem = async (formDetails) => {
-  const [open, setOpen] = useState(false);
   const resp = await fetch(`/api/items`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -17,12 +15,10 @@ const fetchCreateItem = async (formDetails) => {
 };
 
 export const FormComponent = ({ typeItems }) => {
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({});
 
   const handleFormDetails = (id, value) => {
-    console.log({ [id]: value });
     setFormDetails({ ...formDetails, [id]: value });
   };
 
@@ -44,6 +40,7 @@ export const FormComponent = ({ typeItems }) => {
   if (isLoading) {
     return <Loading isLoading={isLoading} />;
   }
+
   return (
     <div className=" w-full max-w-[500px] mx-auto px-3">
       <InputFileComponent id="file" setValue={handleFormDetails} />
@@ -94,24 +91,6 @@ export const FormComponent = ({ typeItems }) => {
           </button>
         </div>
       </div>
-
-      <button
-        onClick={() => setOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded"
-      >
-        Abrir Modal
-      </button>
-
-      <SideModal isOpen={open} onClose={() => setOpen(false)}>
-        <h2 className="text-lg font-bold">Título do Modal</h2>
-        <p className="mt-2 text-gray-600">Aqui vai o conteúdo do modal.</p>
-        <button
-          onClick={() => setOpen(false)}
-          className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Fechar
-        </button>
-      </SideModal>
     </div>
   );
 };

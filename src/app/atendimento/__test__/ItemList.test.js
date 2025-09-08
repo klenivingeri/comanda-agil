@@ -4,13 +4,29 @@ import { ItemList } from "../ItemList";
 
 const items = [
   {
-    id: "1",
-    name: "Coca-Cola",
-    price: 5.5,
-    type: "bebida",
-    typeLabel: "Bebidas",
+    _id: "68b90477e7b0db3283a8d274",
+    name: "Pastel de vento",
+    description: "pastel sem nada dentro",
+    code: "001",
+    price: 10,
+    category: {
+      type: "frito",
+      name: "Fritos",
+      _id: "68b90477e7b0db3283a8d274",
+    },
   },
-  { id: "2", name: "Água", price: 3.0, type: "bebida", typeLabel: "Bebidas" },
+  {
+    _id: "68b90477e7b0db3283a8d271",
+    name: "Esfirra de vento",
+    description: "Assado de vento",
+    code: "002",
+    price: 10,
+    category: {
+      type: "assados",
+      name: "Assados",
+      _id: "68b90477e7b0db3283a8d271",
+    },
+  },
 ];
 
 test("renderiza categorias e itens", () => {
@@ -22,7 +38,7 @@ test("renderiza categorias e itens", () => {
       itemsSelected={[]}
     />
   );
-  expect(screen.getByText(/Bebidas/i)).toBeInTheDocument();
-  expect(screen.getByText(/Coca-Cola/i)).toBeInTheDocument();
-  expect(screen.getByText(/Água/i)).toBeInTheDocument();
+  expect(screen.getByText(/Fritos/i)).toBeInTheDocument();
+  expect(screen.getByText(/Pastel de vento/i)).toBeInTheDocument();
+  expect(screen.getByText(/Assados/i)).toBeInTheDocument();
 });

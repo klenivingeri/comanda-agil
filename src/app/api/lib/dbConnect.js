@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
 const MONGO_URI = process.env.DB_CONNECT_STRING;
+const show_log = process.env.SHOW_LOG;
 
-if (!MONGO_URI) {
+if (!MONGO_URI && show_log) {
   console.log("A variavel de ambiente MONGO_URI não está Definida");
 }
 
@@ -16,11 +17,13 @@ export const connectToDatabase = async () => {
   if (!cache.promise) {
     cache.promise = mongoose.connect(MONGO_URI);
 
-    mongoose.connection.on("error", (erro) =>
-      console.error("Error de conexão", erro)
+    mongoose.connection.on(
+      "error",
+      (erro) => show_log && console.error("Error de conexão", erro)
     );
-    mongoose.connection.once("open", () =>
-      console.log("Conexão feita com sucesso")
+    mongoose.connection.once(
+      "open",
+      () => show_log && console.log("Conexão feita com sucesso")
     );
   }
 };

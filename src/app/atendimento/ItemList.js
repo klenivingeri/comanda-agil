@@ -25,7 +25,7 @@ function SubTitle({
 
   const total = useMemo(() => {
     return items
-      .filter((item) => item.type === type)
+      .filter((item) => item.category.type === type)
       .reduce((acc, item) => {
         if (item?.quantity) {
           return acc + item?.quantity;
@@ -77,7 +77,7 @@ function SubTitle({
             })
             .map((item, idx) => (
               <Item
-                key={item.id}
+                key={item._id}
                 item={item}
                 handleUpdateItemsSelected={handleUpdateItemsSelected}
                 showListComanda={showListComanda}
@@ -99,15 +99,15 @@ export const ItemList = ({
   const [openType, setOpenType] = useState(null);
 
   const groupedItems = items.reduce((acc, item) => {
-    if (!acc[item.type]) acc[item.type] = [];
-    acc[item.type].push(item);
+    if (!acc[item.category.type]) acc[item.category.type] = [];
+    acc[item.category.type].push(item);
     return acc;
   }, {});
 
   const typeLabels = {};
   items.forEach((item) => {
-    if (!typeLabels[item.type]) {
-      typeLabels[item.type] = item.typeLabel;
+    if (!typeLabels[item.category.type]) {
+      typeLabels[item.category.type] = item.category.name;
     }
   });
 
@@ -119,19 +119,21 @@ export const ItemList = ({
 
   return (
     <div className="h-full w-full">
-      {Object.entries(groupedItems).map(([type, items]) => (
-        <SubTitle
-          inputText={inputText}
-          key={type}
-          type={type}
-          typeLabel={typeLabels[type]}
-          items={items}
-          isOpen={openType === type}
-          onToggle={() => setOpenType(openType === type ? null : type)}
-          handleUpdateItemsSelected={handleUpdateItemsSelected}
-          showListComanda={showListComanda}
-        />
-      ))}
+      {Object.entries(groupedItems).map(([type, items]) => {
+        return (
+          <SubTitle
+            inputText={inputText}
+            key={type}
+            type={type}
+            typeLabel={typeLabels[type]}
+            items={items}
+            isOpen={openType === type}
+            onToggle={() => setOpenType(openType === type ? null : type)}
+            handleUpdateItemsSelected={handleUpdateItemsSelected}
+            showListComanda={showListComanda}
+          />
+        );
+      })}
     </div>
   );
 };

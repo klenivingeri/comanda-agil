@@ -1,40 +1,44 @@
-import { items } from "../constants";
-import { esperar } from "../utils/esperar";
-import { connectToDatabase } from "../lib/dbConnect";
-import { product } from "./productModel";
+import { isEmpty } from "../../utils/empty";
 
-export const getProducts = async (request) => {
+export const getProducts = async (connectToDatabase, product, id) => {
   try {
-    const { searchParams } = new URL(request.url);
-    // Exemplo: pegar o valor de uma query chamada "id"
-    const id = searchParams.get("id");
+    await connectToDatabase();
+    let response;
 
-    const item = items.find((item) => item.id == id);
-    //    await connectToDatabase();
-    //    const allProducts = await product.find({});
-    //    console.log(allProducts);
-    esperar(6000);
+    if (id) {
+      response = await product.findOne({ _id: new ObjectId(id) });
+    } else {
+      response = await product.find({});
+    }
+
+    if (!isEmpty(response)) {
+      return Response.json(
+        {
+          records: response,
+        },
+        { status: 200 }
+      );
+    }
 
     return Response.json(
-      { records: item?.id ? [item] : items },
-      { status: 200 }
+      { message: "Nenhum item encontrado" },
+      { status: 404 }
     );
   } catch {
-    return Response.json({ message: "Rotas de items" }, { status: 500 });
+    return Response.json(
+      { message: "Erro ao processar os itens" },
+      { status: 500 }
+    );
   }
 };
 
-export const postProducts = async (request) => {
+export const postProducts = async (connectToDatabase, product, body) => {
   try {
-    await esperar(6000);
-    const body = await request.json();
-    console.log(body);
+    await connectToDatabase();
+    await product.create(body);
 
-    // await connectToDatabase();
-    // await product.create(body);
-    return Response.json({ message: "sucesso" }, { status: 200 });
+    return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (e) {
-    console.log(e);
     return Response.json(
       { message: "Ocorreu um erro ao Fazer o cadastro do item" },
       { status: 500 }

@@ -2,7 +2,18 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { Item } from "../Item";
 
-const mockItem = { id: "1", name: "Coca-Cola", price: 5.5 };
+const mockItem = {
+  _id: "68b90477e7b0db3283a8d274",
+  name: "Pastel de vento",
+  description: "pastel sem nada dentro",
+  code: "001",
+  price: 10,
+  category: {
+    type: "frito",
+    name: "Fritos",
+    _id: "68b90477e7b0db3283a8d274",
+  },
+};
 
 test("exibe nome e preço do item", () => {
   render(
@@ -14,7 +25,7 @@ test("exibe nome e preço do item", () => {
       itemsSelected={[]}
     />
   );
-  expect(screen.getByText(/Coca-Cola/i)).toBeInTheDocument();
-  expect(screen.getByText(/1 - Coca-Cola/i)).toBeInTheDocument();
-  expect(screen.getByText(/R\$ 5,50/i)).toBeInTheDocument();
+  expect(screen.getByText(/Pastel de vento/i)).toBeInTheDocument();
+  expect(screen.getByText(/001 - Pastel de vento/i)).toBeInTheDocument();
+  expect(screen.getByText(/R\$ 10,00/i)).toBeInTheDocument();
 });

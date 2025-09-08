@@ -1,5 +1,4 @@
 export const setCookie = (token) => {
-  console.log(token);
   document.cookie = `ml2=${token}; path=/; max-age=3600; samesite=strict`;
 };
 

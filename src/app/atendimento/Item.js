@@ -34,7 +34,7 @@ export const Item = ({
       )}
       <div className="truncate w-full flex flex-col px-2 py-1 ">
         <span className="font-semibold truncate text-lg mr-2">
-          {item.id} - {item.name}
+          {item.code} - {item.name}
         </span>
         <span className="text-sm mt-[-2px] text-gray-500">
           {currency(item.price)}

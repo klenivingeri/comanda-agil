@@ -71,7 +71,7 @@ export default function Comandas() {
                 className={`relative ${
                   inputText.length > 0 && !hasComanda
                     ? "bg-[var(--button-default)]"
-                    : "bg-[var(--button-hover)]"
+                    : "bg-[var(--button-disabled)]"
                 } rounded-md flex justify-center items-center h-[40px] px-3  text-white`}
               >
                 <IconCreate size="h-[32px] w-[32px]" />
