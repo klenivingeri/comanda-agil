@@ -5,7 +5,7 @@ import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
-import { Header } from "../../components/layout/Header";
+import { Header, HeaderGrid } from "../../components/layout/Header";
 import { ModalRight } from "../../components/modal/ModaLRight";
 import { ItemList } from "./ItemList";
 import { IconMenuList } from "../../../public/icons/MenuList";
@@ -94,50 +94,44 @@ export const Atendimento = ({ idComanda }) => {
   return (
     <Container>
       <Header>
-        <div className="flex flex-col w-full gap-2 justify-start">
-          <div className="w-full grid grid-cols-12 px-2 h-[40px]">
-            <Link
-              href="/comandas"
-              className="col-span-2 flex items-center pt-2 gap-1"
-            >
-              <IconMenuSquare size="h-[26px] w-[26px]" />
-              <div className="font-bold text-lg text-black">{idComanda}</div>
-            </Link>
-            <div className="col-span-8 flex items-center">
-              <div className="w-full flex justify-center">
-                <span className="text-md font-bold">Cardapio</span>
-              </div>
-            </div>
-            <div
-              className="col-span-2 flex items-end justify-end pt-1"
-              onClick={handleOpenMenuMobile}
-            >
-              <IconDotMenu size="h-[32px] w-[32px]" />
+        <HeaderGrid>
+          <div className="col-span-2" onClick={handleOpenMenuMobile}>
+            <IconDotMenu size="h-[32px] w-[32px]" />
+          </div>
+          <div className="col-span-8 flex items-center">
+            <div className="w-full flex justify-center">
+              <span className="text-md font-bold">Cardapio</span>
             </div>
           </div>
-          <div className="w-full grid grid-cols-12 px-2 gap-2">
-            <div className="col-span-12 flex items-center gap-2">
-              <InputSearch setInputText={setInputText} />
-              <button
-                onClick={handleOpenModal}
-                className={`relative ${
-                  !isEmpty(totalComanda)
-                    ? "bg-[var(--button-default)]"
-                    : "bg-[var(--button-disabled)]"
-                } rounded-md flex justify-center items-center h-[40px] pl-4 pr-2  text-white`}
-              >
-                <span>
-                  <IconMenuList size="h-[32px] w-[32px]" />
-                </span>
-                {!!totalItems.length && (
-                  <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-                    {totalItems.length}
-                  </div>
-                )}
-              </button>
-            </div>
+          <Link
+            href="/comandas"
+            className="col-span-2 flex items-center justify-end "
+          >
+            <div className="font-bold text-xl text-black">{idComanda}</div>
+          </Link>
+        </HeaderGrid>
+        <HeaderGrid>
+          <div className="col-span-12 flex items-center gap-2">
+            <InputSearch setInputText={setInputText} />
+            <button
+              onClick={handleOpenModal}
+              className={`relative ${
+                !isEmpty(totalComanda)
+                  ? "bg-[var(--button-default)]"
+                  : "bg-[var(--button-disabled)]"
+              } rounded-md flex justify-center items-center h-[40px] pl-4 pr-2  text-white`}
+            >
+              <span>
+                <IconMenuList size="h-[32px] w-[32px]" />
+              </span>
+              {!!totalItems.length && (
+                <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
+                  {totalItems.length}
+                </div>
+              )}
+            </button>
           </div>
-        </div>
+        </HeaderGrid>
       </Header>
       <div className="mt-[85px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading}>

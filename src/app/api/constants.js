@@ -60,6 +60,7 @@ export const comandas = [
         name: "Pastel de vento",
         description: "pastel sem nada dentro",
         code: "001",
+        quantity: 1,
         price: 10,
         category: {
           type: "frito",
@@ -73,6 +74,7 @@ export const comandas = [
         description: "Assado de vento",
         code: "002",
         price: 10,
+        quantity: 1,
         category: {
           type: "assados",
           name: "Assados",
@@ -85,6 +87,7 @@ export const comandas = [
         description: "Suco de vento",
         code: "003",
         price: 22,
+        quantity: 1,
         category: {
           type: "sucos",
           name: "Sucos",
@@ -96,6 +99,7 @@ export const comandas = [
         name: "Coca-cola 1tl",
         code: "005",
         price: 15,
+        quantity: 2,
         category: {
           type: "refrigerantes",
           name: "Refrigerantes",
