@@ -25,6 +25,7 @@ export const Atendimento = ({ idComanda }) => {
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +49,7 @@ export const Atendimento = ({ idComanda }) => {
         setItems(itemsData.records);
         setComanda(comandasData.records[0]);
       } catch (err) {
-        console.error("Erro ao buscar dados:", err);
+        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -93,7 +94,7 @@ export const Atendimento = ({ idComanda }) => {
 
   return (
     <Container>
-      <Header>
+      <Header divider>
         <HeaderGrid>
           <div className="col-span-2" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
@@ -103,11 +104,10 @@ export const Atendimento = ({ idComanda }) => {
               <span className="text-md font-bold">Cardapio</span>
             </div>
           </div>
-          <Link
-            href="/comandas"
-            className="col-span-2 flex items-center justify-end "
-          >
-            <div className="font-bold text-xl text-black">{idComanda}</div>
+          <Link href="/comandas" className="col-span-2 flex justify-end">
+            <div className="flex font-bold text-xl text-black h-[32px] w-full justify-center items-center rounded-r-full rounded-l-full bg-[var(--button-disabled)]">
+              {idComanda}
+            </div>
           </Link>
         </HeaderGrid>
         <HeaderGrid>
@@ -133,8 +133,8 @@ export const Atendimento = ({ idComanda }) => {
           </div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[85px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading}>
+      <div className="mt-[95px] mb-[50px] flex-1 flex flex-col">
+        <Content isLoading={isLoading} error={error}>
           {isEmpty(idComanda) ? (
             <div>Selecione uma comanda antes de adiconar os produtos</div>
           ) : (

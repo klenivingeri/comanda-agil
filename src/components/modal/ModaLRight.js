@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { IconX } from "../../../public/icons/X";
 import { Footer } from "../layout/Footer";
-import { Header } from "../layout/Header";
+import { Header, HeaderGrid } from "../layout/Header";
 import { currency } from "../../app/utils/currency";
 import { IconCircleMoney } from "../../../public/icons/CircleMoney";
 
@@ -57,35 +57,31 @@ export const ModalRight = ({
         if (!openModal) setHidden(true);
       }}
     >
-      <Header>
-        <div className="flex flex-col w-full gap-2 justify-start">
-          <div className="w-full grid grid-cols-12 px-2 h-[40px]">
-            <div
-              className="col-span-2 flex items-center pt-2"
-              onClick={handleOpenModal}
-            >
-              <IconX size="h-[30px] w-[30px]" />
-            </div>
-            <div className="col-span-8 flex items-center mt-1">
-              <div className="w-full flex justify-center">
-                <span className="text-md font-bold">Comanda</span>
-              </div>
-            </div>
-            <div className="col-span-2 flex items-end pt-1"></div>
+      <Header h="h-[65px]" divider>
+        <HeaderGrid>
+          <div
+            className="col-span-2 flex items-center"
+            onClick={handleOpenModal}
+          >
+            <IconX size="h-[30px] w-[30px]" />
           </div>
-          <div className="w-full h-full flex px-2 gap-2 items-center">
-            <div className="pl-2 font-bold min-w-[50px] max-w-[50px]">
-              Quant
+          <div className="col-span-8 flex items-center">
+            <div className="w-full flex justify-center pt-2">
+              <span className="text-md font-bold">Comanda</span>
             </div>
-            <div className="w-full flex ">
-              <span className="text-md font-bold pl-2">Items</span>
-            </div>
+          </div>
+          <div className="col-span-2 flex items-end pt-1"></div>
+        </HeaderGrid>
+        <div className="w-full h-full flex px-2 gap-2 items-center">
+          <div className="pl-2 font-bold min-w-[50px] max-w-[50px]">Quant</div>
+          <div className="w-full flex ">
+            <span className="text-md font-bold pl-2">Items</span>
           </div>
         </div>
       </Header>
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div className="flex-1 overflow-auto mt-[85px] mb-[50px] p-2">
+        <div className="flex-1 overflow-auto mt-[60px] mb-[50px] p-2">
           {children}
         </div>
       </div>

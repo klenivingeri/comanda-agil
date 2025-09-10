@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 
 import { Container } from "../components/layout/Container";
 import { Content } from "../components/layout/Content";
 import Link from "next/link";
+import { toggleFullScreen } from "./utils/fullScreen";
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
               <div className="relative w-full h-full flex justify-center items-center">
                 <Link
                   href="/comandas"
+                  onClick={() => toggleFullScreen()}
                   className="text-white shadow-sm flex justify-center font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]"
                 >
                   <span className="">Iniciar</span>

@@ -6,12 +6,14 @@ export const HeaderGrid = ({ children }) => {
   );
 };
 
-export const Header = ({ children, h = "h-[95px]" }) => {
+export const Header = ({ children, divider, h = "h-[97px]" }) => {
   return (
     <header id="Header" className="fixed inset-x-0 w-full z-10">
       <div className="flex justify-center">
         <div
-          className={`flex flex-col justify-start pt-2 w-full max-w-[768px] ${h} bg-[var(--background)]`}
+          className={`flex flex-col justify-start pt-2 w-full max-w-[768px] ${h} bg-[var(--background)] ${
+            divider && "shadow"
+          }`}
         >
           {children}
         </div>

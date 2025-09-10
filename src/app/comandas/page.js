@@ -1,22 +1,26 @@
 "use client";
-import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import dayjs from "dayjs";
+
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Header, HeaderGrid } from "../../components/layout/Header";
-import { IconDotMenu } from "../../../public/icons/DotMenu";
-import { currency } from "../utils/currency";
-import { IconMenuList } from "../../../public/icons/MenuList";
-
-import { IconCreate } from "../../../public/icons/Create";
-import Link from "next/link";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+
+import { IconMenuList } from "../../../public/icons/MenuList";
+import { IconDotMenu } from "../../../public/icons/DotMenu";
+import { IconCreate } from "../../../public/icons/Create";
+
+import { currency } from "../utils/currency";
+import { isEmpty } from "../utils/empty";
 
 export default function Comandas() {
   const [comandas, setComandas] = useState([]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const handleOpenMenuMobile = () => {
@@ -28,10 +32,16 @@ export default function Comandas() {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
+
     const itemsDaComanda = await res.json();
+    setIsLoading(false);
+
+    if (isEmpty(itemsDaComanda?.records)) {
+      setError(true);
+      return;
+    }
 
     setComandas(itemsDaComanda.records);
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -42,7 +52,7 @@ export default function Comandas() {
 
   return (
     <Container>
-      <Header>
+      <Header divider>
         <HeaderGrid>
           <div onClick={handleOpenMenuMobile} className="col-span-2">
             <IconDotMenu size="h-[32px] w-[32px]" />
@@ -77,7 +87,7 @@ export default function Comandas() {
         </HeaderGrid>
       </Header>
       <div className="mt-[95px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading}>
+        <Content isLoading={isLoading} error={error}>
           <div
             className="flex flex-wrap justify-center gap-4"
             style={{ alignContent: "flex-start" }}

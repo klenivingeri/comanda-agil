@@ -7,11 +7,13 @@ import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
+import { isEmpty } from "../../utils/empty";
 
 export const ProdutoCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [typeItems, setTypeItems] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
@@ -23,8 +25,12 @@ export const ProdutoCadastrar = ({ productUUID }) => {
       headers: { "Content-Type": "application/json" },
     });
     const typeItems = await res.json();
-    setTypeItems(typeItems.records);
     setIsLoading(false);
+    if (isEmpty(typeItems.records)) {
+      setError(true);
+      return;
+    }
+    setTypeItems(typeItems.records);
   };
 
   useEffect(() => {
@@ -35,22 +41,20 @@ export const ProdutoCadastrar = ({ productUUID }) => {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2"></div>
+          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
+            <IconDotMenu size="h-[32px] w-[32px]" />
+          </div>
+
           <div className="col-span-8 flex items-center">
             <div className="w-full flex justify-center">
               <span className="text-md font-bold">Cadastrar Produto</span>
             </div>
           </div>
-          <div
-            className="col-span-2 flex items-end justify-end pt-1"
-            onClick={handleOpenMenuMobile}
-          >
-            <IconDotMenu size="h-[32px] w-[32px]" />
-          </div>
+          <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading}>
+        <Content isLoading={isLoading} error={error}>
           <FormComponent typeItems={typeItems} />
         </Content>
       </div>

@@ -9,6 +9,7 @@
   --bg-alert: #51A2FF;
   --text: #eeeeee;
 
+  --input-default: white;
   --button-default:  #155DFC; /* azul padrão */
   --button-hover:    #1447E6; /* um pouco mais escuro */
   --button-focus:    #3C77FF; /* mais claro e vibrante */
