@@ -103,6 +103,9 @@ const Menu = ({ menuItems }) => {
           </li>
         ))}
       </ul>
+      <div id="version" className="text-[12px] ml-10 pb-2 text-gray-500">
+        version: 0.0.10
+      </div>
     </nav>
   );
 };

@@ -9,7 +9,7 @@ import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { Construction } from "../../../components/construction";
 
-export default function ConsultarProdutos() {
+export default function ConsultarFuncionarios() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);

@@ -19,12 +19,13 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
   };
 
   useEffect(() => {
-    const saveMenuItems = localStorage.getItem("menu");
-    if (isEmpty(saveMenuItems)) {
-      getMenu();
-    } else {
-      setMenuItems(JSON.parse(saveMenuItems));
-    }
+    getMenu(); //sempre buscar o menu pra teste
+    // const saveMenuItems = localStorage.getItem("menu");
+    // if (isEmpty(saveMenuItems)) {
+    //   getMenu();
+    // } else {
+    //   setMenuItems(JSON.parse(saveMenuItems));
+    // }
 
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") setIsDark(true);

@@ -38,7 +38,7 @@ export const menu = [
     sublink: [
       {
         title: "Cadastrar",
-        path: "/cadastrar",
+        path: "/cadastrar/create",
         icon: "IconCreate",
       },
       {
@@ -60,7 +60,7 @@ export const menu = [
     sublink: [
       {
         title: "Cadastrar",
-        path: "/cadastrar",
+        path: "/cadastrar/create",
         icon: "IconCreate",
       },
       {

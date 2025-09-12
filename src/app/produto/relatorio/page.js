@@ -1,36 +1,50 @@
 "use client";
-import { Container } from "@/components/layout/Container";
-import { Content } from "@/components/layout/Content";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function Atendimento() {
-  const [items, setItems] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+import { IconDotMenu } from "../../../../public/icons/DotMenu";
+import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 
-  const criarComanda = async () => {
-    const res = await fetch(`/api/items?id=test`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const itemsDaComanda = await res.json();
+import { Container } from "../../../components/layout/Container";
+import { Content } from "../../../components/layout/Content";
+import { Header, HeaderGrid } from "../../../components/layout/Header";
+import { Construction } from "../../../components/construction";
 
-    setItems(itemsDaComanda);
-    setIsLoading(false);
+export default function RelatorioProdutos() {
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
+
+  const handleOpenMenuMobile = () => {
+    setOpenMenuMobile(!openMenuMobile);
   };
-
-  useEffect(() => {
-    criarComanda();
-  }, []);
 
   return (
     <Container>
-      <Header>Relatorio</Header>
-      <div className="mt-[50px] mb-[50px]">
-        <Content isLoading={isLoading} />
+      <Header h="h-[40px]">
+        <HeaderGrid>
+          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
+            <IconDotMenu size="h-[32px] w-[32px]" />
+          </div>
+
+          <div className="col-span-8 flex items-center">
+            <div className="w-full flex justify-center">
+              <span className="text-md font-bold">
+                Relatorio de Funcionarios
+              </span>
+            </div>
+          </div>
+          <div className="col-span-2"></div>
+        </HeaderGrid>
+      </Header>
+      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
+        <Content isLoading={isLoading} error={error}>
+          <Construction />
+        </Content>
       </div>
-      <Footer>Test de Footer fixo</Footer>
+      <MenuMobile
+        handleOpenModal={handleOpenMenuMobile}
+        openModal={openMenuMobile}
+      />
     </Container>
   );
 }

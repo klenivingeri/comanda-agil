@@ -9,7 +9,7 @@ import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { Construction } from "../../../components/construction";
 
-export default function ConsultarProdutos() {
+export default function RelatorioPromocoes() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
@@ -28,7 +28,7 @@ export default function ConsultarProdutos() {
 
           <div className="col-span-8 flex items-center">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Consultar Funcionario</span>
+              <span className="text-md font-bold">Relatorio de Promoções</span>
             </div>
           </div>
           <div className="col-span-2"></div>
