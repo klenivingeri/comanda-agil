@@ -12,15 +12,15 @@ export default function Home() {
         <Content padding="-">
           <div className="w-full h-full flex flex-col justify-between bg-black">
             <div className="text-5xl flex justify-center items-center text-white h-[20%] ">
-              Login
+              Pagina inicial
             </div>
             <div className="h-[80%] rounded-tl-[100px] bg-white">
               <div className="relative w-full h-full flex justify-center items-center">
                 <Link
-                  href="/comandas"
+                  href="/login/smartcommand"
                   className="text-white shadow-sm flex justify-center font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]"
                 >
-                  <span className="">Iniciar</span>
+                  <span className="">Ir para area de login</span>
                 </Link>
               </div>
             </div>

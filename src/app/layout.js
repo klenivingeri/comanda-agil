@@ -19,16 +19,12 @@ export const metadata = {
   manifest: "/manifest.json",
 };
 
-// Exporta o viewport separadamente
 export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: "no",
 };
-
-// Exporta o themeColor separadamente
-export const themeColor = "#9333ea";
 
 export default function RootLayout({ children }) {
   return (
