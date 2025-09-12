@@ -1,4 +1,4 @@
-import { esperar } from "../utils/esperar";
+import { esperar } from "../../utils/esperar";
 import bcrypt from "bcrypt";
 
 const saltRounds = 5;
