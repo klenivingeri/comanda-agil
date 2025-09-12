@@ -112,7 +112,7 @@ export const comandas = [
     id: "002",
     name: "002",
     total: 1.5,
-    date: new Date(),
+    date: "2025-09-12T01:44:33.637Z",
   },
   {
     id: "011",

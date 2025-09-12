@@ -1,13 +1,9 @@
 import { comandas } from "../constants";
 import { esperar } from "../utils/esperar";
 
-export const getComandas = async (request, xTenant) => {
+export const getComandas = async (id, xTenant) => {
   try {
     esperar(3000);
-
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
     if (!id) {
       return Response.json({ records: comandas }, { status: 200 });
     }
