@@ -9,10 +9,17 @@ function sign(value) {
   return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
 }
 
-export const postLogin = async (request) => {
+export const postLogin = async (connectToDatabase, users, email, password) => {
   try {
-    const body = await request.json();
-    const { email, password } = body;
+    await connectToDatabase();
+    let response;
+
+    if (email && password) {
+      response = await users.findOne({ email, active: true });
+    } else {
+      response = await users.find({});
+    }
+    console.log(response);
 
     // Aqui você validaria o usuário no DB
     // Exemplo: usuário fixo para teste
