@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
+import { Button } from "src/components/button/Button";
 
 export default function Login({ store }) {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export default function Login({ store }) {
               <div className="relative w-full h-full flex justify-center items-center">
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col justify-center items-center gap-2"
+                  className="flex flex-col justify-center items-center gap-2 relative"
                 >
                   <input
                     type="email"
@@ -53,12 +54,7 @@ export default function Login({ store }) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Senha"
                   />
-                  <button
-                    type="submit"
-                    className="text-white shadow-sm flex justify-center font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]"
-                  >
-                    Login
-                  </button>
+                  <Button type="submit">Entrar</Button>
                 </form>
               </div>
             </div>

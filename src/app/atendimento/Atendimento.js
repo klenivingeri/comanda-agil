@@ -149,7 +149,7 @@ export const Atendimento = ({ idComanda }) => {
       <Footer>
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
-            <Button>
+            <Button margin="mx-2 mb-2">
               <span className="">LANÇAR ITEMS NA COMANDA</span>
             </Button>
           </div>

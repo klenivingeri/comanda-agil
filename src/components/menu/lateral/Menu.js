@@ -31,7 +31,6 @@ const Menu = ({ menuItems }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const pathParts = window.location.pathname.split("/").filter(Boolean);
-      console.log(pathParts);
 
       if (pathParts.length > 0) {
         setActiveLink("/" + pathParts[0]);

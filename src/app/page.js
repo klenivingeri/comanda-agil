@@ -4,6 +4,7 @@ import React from "react";
 import { Container } from "../components/layout/Container";
 import { Content } from "../components/layout/Content";
 import Link from "next/link";
+import { Button } from "src/components/button/Button";
 
 export default function Home() {
   return (
@@ -16,12 +17,9 @@ export default function Home() {
             </div>
             <div className="h-[80%] rounded-tl-[100px] bg-white">
               <div className="relative w-full h-full flex justify-center items-center">
-                <Link
-                  href="/login/smartcommand"
-                  className="text-white shadow-sm flex justify-center font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]"
-                >
+                <Button href="/login/smartcommand">
                   <span className="">Ir para area de login</span>
-                </Link>
+                </Button>
               </div>
             </div>
           </div>
