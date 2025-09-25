@@ -10,6 +10,7 @@ export const Button = React.memo(
     onClick = () => {},
     children,
     wFull = "",
+    hFull = "",
     margin = "",
     disabled = false,
   }) => {
@@ -19,18 +20,19 @@ export const Button = React.memo(
     if (!disabled) {
       attrButton.onClick = onClick;
       attrButton.type = type;
-
-      if (!isEmpty(href)) {
-        attrButton.href = href;
-      }
+      attrButton.disabled = disabled;
+    }
+    if (!isEmpty(href)) {
+      attrButton.href = href;
     }
     const isDesktop = false;
-
+    console.log(attrButton);
     const Element = type || isEmpty(href) ? "button" : Link;
 
     return (
       <div
-        className={`flex flex-col justify-end h-11 content 
+        className={`flex flex-col justify-end  content 
+          ${!hFull ? "h-11" : hFull}
           ${!wFull ? "w-full" : wFull}
           ${margin ? margin : ""}`}
       >
@@ -61,7 +63,11 @@ export const Button = React.memo(
           `}
           {...attrButton}
         >
-          <div className="border-b-1 w-full border-[var(--button-disabled)] flex justify-center items-center h-11 rounded-md">
+          <div
+            className={`border-b-1 w-full border-[var(--button-disabled)] flex justify-center items-center ${
+              !hFull ? "h-11" : hFull
+            } rounded-md`}
+          >
             {!isEmpty(text) ? text : children}
           </div>
         </Element>
