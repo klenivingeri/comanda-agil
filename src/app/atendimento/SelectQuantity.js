@@ -14,7 +14,7 @@ export const SelectQuantity = ({
             className=" flex justify-center content-center"
             onClick={handleRemove}
           >
-            <button className="flex w-8 h-8 text-xl justify-center items-center border-x-2 border-x-gray-400 border-t-2 border-b-2 border-t-gray-300 border-b-gray-500 rounded-md ">
+            <button className="flex w-8 h-8  text-[var(--text-default)] text-xl justify-center items-center border-1 border-[var(--button-disabled)] ring-1 ring-[var(--button-focus)]/50 rounded-md ">
               -
             </button>
           </div>
@@ -34,7 +34,7 @@ export const SelectQuantity = ({
         className=" flex justify-center content-center"
         onClick={handleAdd}
       >
-        <button className="flex  w-8 h-8 text-[var(--background)] text-xl justify-center items-center border-t-2 border-b-4 border-t-[var(--foreground)]/70 bg-[var(--foreground)]/80 border-b-[var(--foreground)]/90 rounded-md">
+        <button className="flex w-8 h-8 text-white text-xl justify-center items-center bg-[var(--button-default)] rounded-md hover:bg-[var(--button-hover)] border-1 border-[var(--button-disabled)] ring-1 ring-[var(--button-focus)]/50">
           +
         </button>
       </div>

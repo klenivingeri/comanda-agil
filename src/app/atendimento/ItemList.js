@@ -35,19 +35,29 @@ function SubTitle({
   }, [items, type]);
 
   return (
-    <div className="w-full">
+    <div
+      className={`w-full ${
+        isOpen
+          ? "bg-[var(--bg-component)] shadow-md shadow-[var(--text-default)]/50"
+          : ""
+      }`}
+    >
       {!inputText && (
         <div
           className="font-bold cursor-pointer select-none flex w-full my-1"
           onClick={onToggle}
         >
-          <div className="bg-[var(--bg-subTitle)] grid grid-cols-12 w-full border-b-1 border-[var(--text)] shadow-md shadow-[var(--text)]/50 px-2 py-4">
+          <div
+            className={`bg-[var(--bg-component)] grid grid-cols-12 w-full ${
+              isOpen ? "pt-4" : "shadow-md shadow-[var(--text-default)]/50 py-4"
+            } px-2 `}
+          >
             <div className="col-span-9">
               <span className="text-2xl">{typeLabel}</span>
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
               {!!total && (
-                <div className="text-[var(--text)] px-3 mr-3 rounded-3xl bg-[var(--bg-alert)] shadow-md">
+                <div className="text-[var(--text-default)] px-3 mr-3 rounded-3xl bg-[var(--bg-alert)] shadow-md">
                   {total}
                 </div>
               )}
@@ -60,6 +70,7 @@ function SubTitle({
       )}
       <div
         ref={contentRef}
+        className="mx-2"
         style={{
           maxHeight: isOpen || inputText ? `${height || 999}px` : "0px",
           overflow: inputText ? "" : "hidden",
@@ -71,11 +82,11 @@ function SubTitle({
           {items
             .filter((item) => {
               if (!inputText.length) return true;
-              return `${item.id} - ${item.name}`
+              return `${item.code} - ${item.name}`
                 .toLowerCase()
                 .includes(inputText.trim().toLowerCase());
             })
-            .map((item, idx) => (
+            .map((item) => (
               <Item
                 key={item._id}
                 item={item}

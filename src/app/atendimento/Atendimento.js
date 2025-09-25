@@ -11,12 +11,12 @@ import { ItemList } from "./ItemList";
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
-import { IconMenuSquare } from "../../../public/icons/MenuSquare";
 
 import Link from "next/link";
 
 import { isEmpty } from "../utils/empty";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+import { Button } from "../../components/button/Button";
 
 export const Atendimento = ({ idComanda }) => {
   const [items, setItems] = useState([]);
@@ -105,7 +105,7 @@ export const Atendimento = ({ idComanda }) => {
             </div>
           </div>
           <Link href="/comandas" className="col-span-2 flex justify-end">
-            <div className="flex font-bold text-xl text-black h-[32px] w-full justify-center items-center rounded-r-full rounded-l-full bg-[var(--button-disabled)]">
+            <div className="flex font-bold text-xl text-[var(--bg-subTitle)] h-[32px] w-full justify-center items-center rounded-r-full rounded-l-full bg-[var(--text-default)]">
               {idComanda}
             </div>
           </Link>
@@ -149,9 +149,9 @@ export const Atendimento = ({ idComanda }) => {
       <Footer>
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
-            <button className="text-white shadow-sm font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)]">
-              <span className=""> LANÇAR ITEMS NA COMANDA</span>
-            </button>
+            <Button>
+              <span className="">LANÇAR ITEMS NA COMANDA</span>
+            </Button>
           </div>
         </div>
       </Footer>

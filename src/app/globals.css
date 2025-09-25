@@ -3,35 +3,38 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #F3F3F3;
-  --foreground: #171717;
+  --background: #D8DDE9;
+  --foreground:  #F2F7FA;
+  --bg-component: #FFFFFF;
+  --text-default: black;
   --bg-subTitle: white; 
-  --bg-alert: #51A2FF;
-  --text: #eeeeee;
+  --bg-alert: #FFDDAA;
 
   --input-default: white;
-  --button-default:  #155DFC; /* azul padrão */
-  --button-hover:    #1447E6; /* um pouco mais escuro */
-  --button-focus:    #3C77FF; /* mais claro e vibrante */
-  --button-pressed:  #0F35C9; /* bem mais escuro */
-  --button-disabled: #A8BFF9; /* azul bem claro e apagado */
-  --button-progress: #4D89FF; /* tom intermediário para feedback */
+  --button-default: #FF9900;
+  --button-hover: #FFB84D;
+  --button-focus: #CC7A00;
+  --button-pressed: #D98500;
+  --button-disabled: #FFDDAA;
+  --button-progress: #FFC066;
   
 }
 
 .dark body {
-  --background: #171717;     /* fundo escuro */
-  --foreground: #F3F3F3;     /* texto principal claro */ /* roxo mais escuro para hover */
+  --background: #282841;     /* fundo escuro */
+  --foreground: #18172C;
+  --bg-component: #1F1E31;
+  --text-default: white;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
-  --bg-alert: #9D4EDD;       /* roxo vibrante (substitui #51A2FF) */
-  --text: #111111; 
+  --bg-alert: #FFDDAA;       /* roxo vibrante (substitui #51A2FF) */
 
-  --button-default:  #3C77FF; /* azul mais claro e vibrante */
-  --button-hover:    #5C8EFF; /* mais claro no hover */
-  --button-focus:    #82A9FF; /* destaque acessível */
-  --button-pressed:  #2E5ED6; /* mais escuro, mas ainda visível */
-  --button-disabled: #4C5A80; /* azul acinzentado, apagado */
-  --button-progress: #699BFF; /* intermediário, suave pra loading */
+
+  --button-default: #FF9900;
+  --button-hover: #FFB84D;
+  --button-focus: #CC7A00;
+  --button-pressed: #D98500;
+  --button-disabled: #FFDDAA;
+  --button-progress: #FFC066;
 
 }
 
@@ -41,7 +44,7 @@ body, input, textarea, button {
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-default);
   font-family: 'Roboto', sans-serif;
 }
 

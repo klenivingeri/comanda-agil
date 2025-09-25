@@ -20,6 +20,7 @@ export default function Comandas() {
   const [comandas, setComandas] = useState([]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [hasComanda, setHasComanda] = useState(true);
   const [error, setError] = useState(false);
 
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
@@ -48,7 +49,14 @@ export default function Comandas() {
     getComandas();
   }, []);
 
-  const hasComanda = comandas?.some((c) => c.name === inputText);
+  useEffect(() => {
+    if (inputText.length) {
+      const hasMatch = comandas?.some((c) => {
+        return c.id.toLowerCase().includes(inputText.trim().toLowerCase());
+      });
+      setHasComanda(hasMatch);
+    }
+  }, [comandas, inputText]);
 
   return (
     <Container>
@@ -69,14 +77,10 @@ export default function Comandas() {
           <div className="col-span-12 flex items-center gap-2">
             <InputSearch setInputText={setInputText} _isNumeric />
             <Link
-              href={
-                inputText.length > 0 && !hasComanda
-                  ? `/atendimento/${inputText}`
-                  : ""
-              }
+              href={!hasComanda ? `/atendimento/${inputText}` : ""}
               style={{ textDecoration: "none" }}
               className={`relative ${
-                inputText.length > 0 && !hasComanda
+                !hasComanda
                   ? "bg-[var(--button-default)]"
                   : "bg-[var(--button-disabled)]"
               } rounded-md flex justify-center items-center h-[40px] px-3  text-white`}
@@ -104,7 +108,7 @@ export default function Comandas() {
                   href={`/atendimento/${c.name}`}
                   style={{ textDecoration: "none" }}
                   key={idx}
-                  className="relative h-30 w-28 border-1 border-[var(--bg-subTitle)] p-3 rounded-2xl bg-[var(--button-default)] text-white flex flex-col justify-between"
+                  className="relative h-30 w-28 border-1 border-[var(--button-disabled)] ring-1 ring-[var(--button-focus)]/50 p-3 rounded-md bg-[var(--button-default)] text-white flex flex-col justify-between"
                 >
                   <div className="flex justify-end text-sm leading-none">
                     {currency(

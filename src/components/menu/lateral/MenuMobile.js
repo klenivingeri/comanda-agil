@@ -44,7 +44,7 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
 
   return (
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
-      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-4xl shadow-2xl m-2 bg-[var(--bg-subTitle)]">
+      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-2xl m-2 bg-[var(--foreground)]">
         <div className="w-full grid grid-cols-12 px-2 h-[200px]">
           <div className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">
             <div className="rounded-full border-1 p-[1px] mb-4">

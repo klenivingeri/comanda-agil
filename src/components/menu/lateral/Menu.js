@@ -31,13 +31,14 @@ const Menu = ({ menuItems }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const pathParts = window.location.pathname.split("/").filter(Boolean);
+      console.log(pathParts);
 
       if (pathParts.length > 0) {
         setActiveLink("/" + pathParts[0]);
       }
 
       if (pathParts.length > 1) {
-        setSubActiveLink("/" + pathParts[0] + "/" + pathParts[1]);
+        setSubActiveLink("/" + pathParts.join("/"));
         setOpenDropdown("/" + pathParts[0]); // abre o dropdown automaticamente
       }
     }
@@ -56,14 +57,14 @@ const Menu = ({ menuItems }) => {
               <div
                 className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
-                    ? "bg-[var(--text)] font-bold"
-                    : "hover:bg-[var(--text)]/50"
+                    ? "bg-[var(--button-default)] font-bold"
+                    : "hover:bg-[var(--button-hover)]"
                 }`}
                 onClick={() => toggleDropdown(item.path)}
               >
                 <span className="pl-6">{icons[item.icon]}</span>
                 {item.title}
-                <span className="ml-auto">
+                <span className="ml-auto pr-6">
                   {openDropdown === item.path ? "▲" : "▼"}
                 </span>
               </div>
@@ -72,8 +73,8 @@ const Menu = ({ menuItems }) => {
                 href={item.path}
                 className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
-                    ? "bg-[var(--text)] font-bold"
-                    : "hover:bg-[var(--text)]/50"
+                    ? "bg-[var(--button-default)] font-bold"
+                    : "hover:bg-[var(--button-hover)]"
                 }`}
               >
                 <span className="pl-6">{icons[item.icon]}</span>
@@ -82,15 +83,15 @@ const Menu = ({ menuItems }) => {
             )}
 
             {item.sublink && openDropdown === item.path && (
-              <ul className="list-none pl-18 mt-1">
+              <ul className="list-none mt-1">
                 {item.sublink.map((sub) => (
                   <li key={sub.path}>
                     <Link
                       href={item.path + sub.path}
-                      className={`flex items-center p-1.5 rounded transition-colors ${
+                      className={`flex pl-18 items-center p-1.5 rounded transition-colors ${
                         subActiveLink === item.path + sub.path
-                          ? "bg-[var(--text)] font-bold"
-                          : "hover:bg-[var(--text)]/50"
+                          ? "bg-[var(--button-hover)] font-bold"
+                          : "hover:bg-[var(--button-hover)]/50"
                       }`}
                     >
                       <span className="mr-2">{icons[sub.icon]}</span>
