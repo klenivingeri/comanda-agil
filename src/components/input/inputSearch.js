@@ -40,7 +40,7 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-12">
       <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-black">
         <MagnifyingGlass size="h-[25px] w-[25px]" />
       </span>
@@ -52,7 +52,7 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
         placeholder="Pesquisar..."
         onChange={handleInputText}
         value={text || ""}
-        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+        className="w-full pl-10 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
       />
       {!!text.length && (
         <span

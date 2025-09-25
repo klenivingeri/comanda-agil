@@ -111,17 +111,14 @@ export const Atendimento = ({ idComanda }) => {
           </Link>
         </HeaderGrid>
         <HeaderGrid>
-          <div className="col-span-12 flex items-center gap-2">
+          <div className="col-span-12 flex items-end gap-2">
             <InputSearch setInputText={setInputText} />
-            <button
+            <Button
               onClick={handleOpenModal}
-              className={`relative ${
-                !isEmpty(totalComanda)
-                  ? "bg-[var(--button-default)]"
-                  : "bg-[var(--button-disabled)]"
-              } rounded-md flex justify-center items-center h-[40px] pl-4 pr-2  text-white`}
+              disabled={isEmpty(totalItems.length)}
+              wFull="w-[50px]"
             >
-              <span>
+              <span className="pl-1">
                 <IconMenuList size="h-[32px] w-[32px]" />
               </span>
               {!!totalItems.length && (
@@ -129,11 +126,11 @@ export const Atendimento = ({ idComanda }) => {
                   {totalItems.length}
                 </div>
               )}
-            </button>
+            </Button>
           </div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[95px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[104px] mb-[60px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           {isEmpty(idComanda) ? (
             <div>Selecione uma comanda antes de adiconar os produtos</div>
@@ -147,13 +144,7 @@ export const Atendimento = ({ idComanda }) => {
         </Content>
       </div>
       <Footer>
-        <div className="flex justify-center items-center w-full">
-          <div className="relative w-full flex justify-center items-center">
-            <Button margin="mx-2 mb-2">
-              <span className="">LANÇAR ITEMS NA COMANDA</span>
-            </Button>
-          </div>
-        </div>
+        <Button margin="mx-2 mb-2" text="LANÇAR ITEMS NA COMANDA" />
       </Footer>
       <ModalRight
         handleOpenModal={handleOpenModal}

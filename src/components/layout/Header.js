@@ -6,7 +6,7 @@ export const HeaderGrid = ({ children }) => {
   );
 };
 
-export const Header = ({ children, divider, h = "h-[97px]" }) => {
+export const Header = ({ children, divider, h = "h-[104px]" }) => {
   return (
     <header id="Header" className="fixed inset-x-0 w-full z-10">
       <div className="flex justify-center">
