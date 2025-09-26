@@ -3,8 +3,7 @@ import React from "react";
 
 import { Container } from "../components/layout/Container";
 import { Content } from "../components/layout/Content";
-import Link from "next/link";
-import { Button } from "src/components/button/Button";
+import { Button } from "../components/button/Button";
 
 export default function Home() {
   return (

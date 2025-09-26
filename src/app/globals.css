@@ -18,6 +18,26 @@
   --button-disabled: #FFDDAA;
   --button-progress: #FFC066;
   
+  --button-red-default: #E74C3C; /* Vermelho Cereja */
+  --button-red-hover: #EC7063;
+  --button-red-focus: #C0392B;
+  --button-red-pressed: #CD4235;
+  --button-red-disabled: #FADBD8;
+  --button-red-progress: #E56357;
+
+  --button-green-default: #2ECC71; /* Verde Esmeralda */
+  --button-green-hover: #58D683;
+  --button-green-focus: #27AE60;
+  --button-green-pressed: #28B463;
+  --button-green-disabled: #A9DFBF;
+  --button-green-progress: #52BE80;
+
+  --button-gray-default: #95A5A6; /* Cinza Neutro */
+  --button-gray-hover: #AABEB2;
+  --button-gray-focus: #7F8C8D;
+  --button-gray-pressed: #88999A;
+  --button-gray-disabled: #D5DBDB;
+  --button-gray-progress: #BFC9CA;
 }
 
 .dark body {
@@ -26,15 +46,7 @@
   --bg-component: #1F1E31;
   --text-default: white;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
-  --bg-alert: #FFDDAA;       /* roxo vibrante (substitui #51A2FF) */
-
-
-  --button-default: #FF9900;
-  --button-hover: #FFB84D;
-  --button-focus: #CC7A00;
-  --button-pressed: #D98500;
-  --button-disabled: #FFDDAA;
-  --button-progress: #FFC066;
+  --bg-alert: #FFDDAA;
 
 }
 

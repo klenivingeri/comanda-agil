@@ -5,6 +5,7 @@ import { Footer } from "../layout/Footer";
 import { Header, HeaderGrid } from "../layout/Header";
 import { currency } from "../../app/utils/currency";
 import { IconCircleMoney } from "../../../public/icons/CircleMoney";
+import { Button } from "../button/Button";
 
 const ShowValue = ({ totalComanda }) => {
   const [show, setShow] = useState(false);
@@ -13,8 +14,8 @@ const ShowValue = ({ totalComanda }) => {
     <div
       onClick={() => setShow(!show)}
       className={`${
-        show ? "w-[300px] " : "pr-2"
-      } flex text-2xl gap-2 pl-3 py-2 items-center font-bold`}
+        show ? "w-[250px] " : "pr-2"
+      } transition-all duration-70 ease-in-out flex text-2xl gap-2 pl-3 py-2 items-center font-bold text-[var(--text-default)]`}
     >
       <span>
         <IconCircleMoney size="h-[25px] w-[25px]" />
@@ -90,9 +91,7 @@ export const ModalRight = ({
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
             <ShowValue totalComanda={totalComanda} />
-            <button className="text-white shadow-sm font-bold py-3 px-4 rounded-3xl w-full m-2 bg-[var(--button-default)] hover:bg-[var(--button-hover)] truncate">
-              <span className=""> LANÇAR ITEMS NA COMANDA </span>
-            </button>
+            <Button text="LANÇAR ITEMS NA COMANDA" margin="mx-2" />
           </div>
         </div>
       </Footer>

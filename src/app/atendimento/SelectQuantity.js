@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../../components/button/Button";
 export const SelectQuantity = ({
   handleAdd,
   handleRemove,
@@ -11,12 +12,10 @@ export const SelectQuantity = ({
         <>
           <div
             style={{ width: "40px" }}
-            className=" flex justify-center content-center"
+            className="flex justify-center content-center"
             onClick={handleRemove}
           >
-            <button className="flex w-8 h-8  text-[var(--text-default)] text-xl justify-center items-center border-1 border-[var(--button-disabled)] ring-1 ring-[var(--button-focus)]/50 rounded-md ">
-              -
-            </button>
+            <Button wFull="w-9" hFull="h-8" text="-" padding="py-4" inline />
           </div>
           {!hideValue ? (
             <div style={{ width: "40px" }}>
@@ -31,12 +30,10 @@ export const SelectQuantity = ({
       )}
       <div
         style={{ width: "40px" }}
-        className=" flex justify-center content-center"
+        className=" flex justify-center content-center mt-1"
         onClick={handleAdd}
       >
-        <button className="flex w-8 h-8 text-white text-xl justify-center items-center bg-[var(--button-default)] rounded-md hover:bg-[var(--button-hover)] border-1 border-[var(--button-disabled)] ring-1 ring-[var(--button-focus)]/50">
-          +
-        </button>
+        <Button wFull="w-9" hFull="h-8" text="+" />
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ export const IconCircleMoney = ({ size }) => (
       <g>
         <line
           fill="none"
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"
@@ -18,7 +17,6 @@ export const IconCircleMoney = ({ size }) => (
         />
         <line
           fill="none"
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"
@@ -31,7 +29,6 @@ export const IconCircleMoney = ({ size }) => (
         <path
           d="    M14,20h3c1.1,0,2-0.9,2-2s-0.9-2-2-2h-2c-1.1,0-2-0.9-2-2s0.9-2,2-2h3"
           fill="none"
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"
@@ -40,7 +37,6 @@ export const IconCircleMoney = ({ size }) => (
         <path
           d="    M16,6c5.5,0,10,4.5,10,10s-4.5,10-10,10S6,21.5,6,16v-3"
           fill="none"
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"
@@ -49,7 +45,6 @@ export const IconCircleMoney = ({ size }) => (
         <polyline
           fill="none"
           points="    10,17 6,13 2,17   "
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"
@@ -58,7 +53,6 @@ export const IconCircleMoney = ({ size }) => (
         <path
           d="    M16,2c7.7,0,14,6.3,14,14s-6.3,14-14,14"
           fill="none"
-          stroke="#000000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeMiterlimit="10"

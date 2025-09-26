@@ -2,6 +2,44 @@ import React, { useState } from "react";
 import { isEmpty } from "../../app/utils/empty";
 import Link from "next/link";
 
+const colors = (_color = "-") => {
+  const color = _color !== "-" ? `-${_color}-` : "-";
+  return {
+    default: `--button${color}default`,
+    hover: `--button${color}hover`,
+    focus: `--button${color}focus`,
+    pressed: `--button${color}pressed`,
+    disabled: `--button${color}disabled`,
+    progress: `--button${color}progress`,
+  };
+};
+
+const getButtonStyles = (disabled, isPressed, color) => {
+  const c = colors(color);
+  console.log(c);
+  if (disabled) {
+    return {
+      background: `var(${c.disabled})`,
+      borderBottom: `4px solid var(${c.progress})`,
+      borderDivider: `var(${c.disabled})`,
+    };
+  }
+
+  if (isPressed) {
+    return {
+      background: `var(${c.hover})`,
+      borderBottom: `2px solid var(${c.pressed})`,
+      borderDivider: `var(${c.progress})`,
+    };
+  }
+
+  return {
+    background: `var(${c.default})`,
+    borderBottom: `4px solid var(${c.pressed})`,
+    borderDivider: `var(${c.progress})`,
+  };
+};
+
 export const Button = React.memo(
   ({
     text = null,
@@ -12,61 +50,67 @@ export const Button = React.memo(
     wFull = "",
     hFull = "",
     margin = "",
+    padding = "",
     disabled = false,
+    color,
+    inline = false,
   }) => {
     const [isPressed, setIsPressed] = useState(false);
-    const attrButton = {};
+    const Element = type || isEmpty(href) ? "button" : Link;
+    const attrButton = { onClick, disabled, type };
 
-    if (!disabled) {
-      attrButton.onClick = onClick;
-      attrButton.type = type;
-      attrButton.disabled = disabled;
-    }
+    const handleSetIsPressed = (pressed) => {
+      if (isPressed !== pressed) {
+        setIsPressed(pressed);
+      }
+    };
+
     if (!isEmpty(href)) {
       attrButton.href = href;
     }
-    const isDesktop = false;
-    console.log(attrButton);
-    const Element = type || isEmpty(href) ? "button" : Link;
+
+    const buttonStyles = getButtonStyles(disabled, isPressed, color);
+
+    if (inline) {
+      return (
+        <Element
+          style={{ border: `1px solid ${buttonStyles.background}` }}
+          className={`${!hFull ? "h-11" : hFull}
+          ${!wFull ? "w-full" : wFull}
+          ${padding ? padding : ""}
+          ${
+            margin ? margin : ""
+          } flex text-[var(--text-default)] text-xl justify-center items-center rounded-md `}
+        >
+          {text}
+        </Element>
+      );
+    }
 
     return (
       <div
-        className={`flex flex-col justify-end  content 
+        className={`flex flex-col justify-end content 
           ${!hFull ? "h-11" : hFull}
           ${!wFull ? "w-full" : wFull}
           ${margin ? margin : ""}`}
       >
         <Element
-          onTouchStart={() => setIsPressed(true)}
-          onMouseDown={() => setIsPressed(true)}
-          onMouseUp={() => setIsPressed(false)}
-          onMouseLeave={() => setIsPressed(false)}
-          onTouchEnd={() => setIsPressed(false)}
-          className={`relative
-          text-white font-bold rounded-md shadow-sm
-            ${!wFull ? "w-full" : wFull}
-            ${
-              disabled
-                ? "bg-[var(--button-disabled)] border-b-4 border-b-[var(--button-progress)]"
-                : `
-            ${
-              isDesktop ? "hover:bg-[var(--button-hover)] hover:border-b-2" : ""
-            }
-            ${
-              isPressed
-                ? "bg-[var(--button-hover)] border-b-2 border-b-[var(--button-focus)]"
-                : "bg-[var(--button-default)] border-b-4 border-b-[var(--button-focus)]"
-            }
-            transition-all duration-70 ease-in-out
-            `
-            }
-          `}
+          onTouchStart={() => handleSetIsPressed(true)}
+          onTouchEnd={() => handleSetIsPressed(false)}
+          onMouseDown={() => handleSetIsPressed(true)}
+          onMouseUp={() => handleSetIsPressed(false)}
+          onMouseLeave={() => handleSetIsPressed(false)}
+          className={`relative text-white font-bold rounded-md shadow-sm transition-all duration-70 ease-in-out cursor-pointer ${
+            !wFull ? "w-full" : wFull
+          }`}
+          style={buttonStyles}
           {...attrButton}
         >
           <div
-            className={`border-b-1 w-full border-[var(--button-disabled)] flex justify-center items-center ${
+            className={`border-b w-full flex justify-center items-center ${
               !hFull ? "h-11" : hFull
             } rounded-md`}
+            style={{ borderColor: buttonStyles.borderDivider }}
           >
             {!isEmpty(text) ? text : children}
           </div>

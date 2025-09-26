@@ -8,6 +8,7 @@ import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Header, HeaderGrid } from "../../components/layout/Header";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+import { Button } from "../../components/button/Button";
 
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
@@ -15,7 +16,6 @@ import { IconCreate } from "../../../public/icons/Create";
 
 import { currency } from "../utils/currency";
 import { isEmpty } from "../utils/empty";
-import { Button } from "src/components/button/Button";
 
 export default function Comandas() {
   const [comandas, setComandas] = useState([]);

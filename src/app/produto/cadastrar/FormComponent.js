@@ -4,7 +4,7 @@ import { InputFileComponent } from "../../../components/form/InputFileComponent"
 import { TextareaComponent } from "../../../components/form/TextareaComponent";
 import { SelectComponent } from "../../../components/form/SelectComponent";
 import { Loading } from "../../../components/loading/Loading";
-import { Button } from "src/components/button/Button";
+import { Button } from "../../../components/button/Button";
 
 const fetchCreateItem = async (formDetails) => {
   const resp = await fetch(`/api/items`, {
@@ -31,7 +31,7 @@ export const FormComponent = ({ typeItems }) => {
       return value && value !== "seleted";
     });
 
-    if (allFilled) {
+    if (!allFilled) {
       setIsLoading(true);
       await fetchCreateItem(formDetails);
       setIsLoading(false);
@@ -44,51 +44,47 @@ export const FormComponent = ({ typeItems }) => {
 
   return (
     <div className="w-full max-w-[500px] mx-auto">
-      <div className="px-3">
-        <InputFileComponent id="file" setValue={handleFormDetails} />
-        <InputComponent
-          id="code"
-          value={formDetails?.code || ""}
-          setValue={handleFormDetails}
-          label="Código do produto"
-          required
-        />
-        <InputComponent
-          id="name"
-          value={formDetails?.name || ""}
-          setValue={handleFormDetails}
-          label="Nome do produto"
-          required
-        />
-        <InputComponent
-          id="price"
-          value={formDetails?.price || ""}
-          setValue={handleFormDetails}
-          isCurrency
-          label="Preço do produto"
-          required
-        />
-        <TextareaComponent
-          id="description"
-          value={formDetails?.description || ""}
-          setValue={handleFormDetails}
-          label="Descrição do produto"
-        />
-        <SelectComponent
-          id="category"
-          value={formDetails?.category}
-          setValue={handleFormDetails}
-          label="Categoria do produto"
-          required
-          options={typeItems}
-        />
-      </div>
+      <InputFileComponent id="file" setValue={handleFormDetails} />
+      <InputComponent
+        id="code"
+        value={formDetails?.code || ""}
+        setValue={handleFormDetails}
+        label="Código do produto"
+        required
+      />
+      <InputComponent
+        id="name"
+        value={formDetails?.name || ""}
+        setValue={handleFormDetails}
+        label="Nome do produto"
+        required
+      />
+      <InputComponent
+        id="price"
+        value={formDetails?.price || ""}
+        setValue={handleFormDetails}
+        isCurrency
+        label="Preço do produto"
+        required
+      />
+      <TextareaComponent
+        id="description"
+        value={formDetails?.description || ""}
+        setValue={handleFormDetails}
+        label="Descrição do produto"
+      />
+      <SelectComponent
+        id="category"
+        value={formDetails?.category}
+        setValue={handleFormDetails}
+        label="Categoria do produto"
+        required
+        options={typeItems}
+      />
 
       <div className="flex justify-center items-center w-full">
         <div className="relative w-full flex justify-center items-center">
-          <Button onClick={handleSend}>
-            <span className="">Cadastrar Produto</span>
-          </Button>
+          <Button onClick={handleSend} text="Cadastrar Produto" />
         </div>
       </div>
     </div>

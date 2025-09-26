@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
-import { Button } from "src/components/button/Button";
+import { Button } from "../../components/button/Button";
 
 export default function Login({ store }) {
   const [email, setEmail] = useState("");
