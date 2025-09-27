@@ -1,61 +1,64 @@
 import { serialize } from "cookie";
-import crypto from "crypto";
+import crypto, { randomUUID } from "crypto";
 
-// Segredo para assinatura do cookie
-const SECRET = process.env.COOKIE_SECRET || "uma_senha_muito_forte";
+const SECRET = process.env.COOKIE_SECRET;
+
+function generateSignature(value) {
+  return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
+}
+
+export function createCookie(tenantId, userId, position) {
+  // adiciona timestamp ou nonce para tornar o cookie único
+  const timestamp = Date.now();
+  const nonce = randomUUID(); // ou só o timestamp já dá
+
+  const data = [tenantId, userId, position, timestamp, nonce].join(".");
+  const signature = generateSignature(data);
+
+  const cookieValue = `${tenantId}.${userId}.${position}.${timestamp}.${nonce}.${signature}`;
+
+  return serialize("x-tenant", cookieValue, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 16 * 60 * 60, // 16 hrs
+  });
+}
 
 // Função para assinar o valor
 function sign(value) {
   return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
 }
-
 export const postLogin = async (connectToDatabase, users, email, password) => {
   try {
     await connectToDatabase();
-    let response;
 
-    if (email && password) {
-      response = await users.findOne({ email, active: true });
-    } else {
-      response = await users.find({});
-    }
-    console.log(response);
+    const user = await users.findOne({ email, active: true });
+    if (!user)
+      return new Response(
+        JSON.stringify({ message: "Credenciais inválidas" }),
+        { status: 401 }
+      );
 
-    // Aqui você validaria o usuário no DB
-    // Exemplo: usuário fixo para teste
-    const user = {
-      email: "erick@loja.com",
-      passwordHash: "$2b$05$FqK2qH8m7t92pSgXy5m2jOn",
-      tenantId: "loja123",
-    };
-
-    // Para teste, vamos ignorar validação de senha
-    // if (email !== user.email) {
-    //   return Response.json(
-    //     { message: "Credenciais inválidas" },
-    //     { status: 401 }
-    //   );
-    // }
-
-    // Criando cookie x-tenant assinado
-    const signature = sign(user.tenantId);
-    const cookieValue = `${user.tenantId}.${signature}`;
+    const match = user.password === password;
+    if (!match)
+      return new Response(
+        JSON.stringify({ message: "Credenciais inválidas" }),
+        { status: 401 }
+      );
 
     return new Response(JSON.stringify({ message: "Login bem-sucedido" }), {
       status: 200,
       headers: {
-        "Set-Cookie": serialize("x-tenant", cookieValue, {
-          httpOnly: true, // impede acesso via JS
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          path: "/",
-          //maxAge: 60 * 60 * 24, // 1 dia
-        }),
+        "Set-Cookie": createCookie(user.tenant._id, user._id, user.position),
         "Content-Type": "application/json",
       },
     });
   } catch (err) {
     console.error(err);
-    return Response.json({ message: "Erro no login" }, { status: 500 });
+    return new Response(JSON.stringify({ message: "Erro no login" }), {
+      status: 500,
+    });
   }
 };

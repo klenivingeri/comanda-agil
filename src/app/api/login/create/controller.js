@@ -12,8 +12,6 @@ async function createUser(email, password) {
     tenantId: "loja123", // exemplo de tenant
   };
 
-  // Aqui você salvaria no banco
-  console.log("Usuário criado:", user);
   return user;
 }
 

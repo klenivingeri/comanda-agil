@@ -1,7 +1,7 @@
 import { parse } from "cookie";
 import crypto from "crypto";
 
-const SECRET = process.env.COOKIE_SECRET || "uma_senha_muito_forte";
+const SECRET = process.env.COOKIE_SECRET;
 
 function sign(value) {
   return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
@@ -20,13 +20,20 @@ export const getStoreXTenant = (request) => {
     return xTenant;
   }
 
-  const [tenant, signature] = cookieValue.split(".");
-  if (sign(tenant) !== signature) {
+  const [tenantId, userId, position, timestamp, nonce, signature] =
+    cookieValue.split(".");
+  if (
+    sign(`${tenantId}.${userId}.${position}.${timestamp}.${nonce}`) !==
+    signature
+  ) {
     xTenant.status = 401;
     xTenant.message = "x-tenant invalido";
     return xTenant;
   }
 
-  xTenant.name = tenant;
+  xTenant.id = tenantId;
+  xTenant.user = userId;
+  xTenant.position = position;
+
   return xTenant;
 };

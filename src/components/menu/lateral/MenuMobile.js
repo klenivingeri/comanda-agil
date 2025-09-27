@@ -32,7 +32,6 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
   }, []);
 
   const handleSetTheme = (color) => {
-    console.log(color);
     const root = window.document.documentElement;
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme !== color) {

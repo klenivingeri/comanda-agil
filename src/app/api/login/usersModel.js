@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 
-const usersSchema = mongoose.Schema(
+import { tenantSchema } from "./create/tenantModel";
+
+const usersSchema = new mongoose.Schema(
   {
-    id: { type: mongoose.Schema.Types.ObjectId },
-    name: { type: mongoose.Schema.Types.String },
-    email: { type: mongoose.Schema.Types.String, required: true },
-    password: { type: mongoose.Schema.Types.String, required: true },
-    position: { type: mongoose.Schema.Types.String },
-    enterprise: { type: mongoose.Schema.Types.String },
-    active: { type: mongoose.Schema.Types.Boolean },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    position: {
+      type: String,
+      enum: ["master", "admin", "gm", "user"],
+      default: "user",
+    },
+    tenant: tenantSchema,
+    active: { type: Boolean, default: true },
   },
   { versionKey: false }
 );
