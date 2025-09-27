@@ -24,6 +24,7 @@ export const Button = React.memo(
     margin = "",
     padding = "",
     disabled = false,
+    press = false,
     inline = false,
   }) => {
     const { hasVibrate } = useConfig();
@@ -59,9 +60,8 @@ export const Button = React.memo(
         disabled
           ? "bg-[var(--button-disabled)] border-b-4 border-b-[var(--button-progress)]"
           : `
-      ${!isMobile ? "hover:bg-[var(--button-hover)] hover:border-b-2" : ""}
       ${
-        isPressed
+        isPressed || press
           ? "bg-[var(--button-hover)] border-b-2 border-b-[var(--button-focus)]"
           : "bg-[var(--button-default)] border-b-4 border-b-[var(--button-focus)]"
       }
@@ -78,7 +78,7 @@ export const Button = React.memo(
           ${padding ? padding : ""}
           ${
             margin ? margin : ""
-          } flex text-[var(--text-default)] text-xl justify-center items-center rounded-md border-1 border-[var(--button-disabled)]`}
+          } flex text-[var(--text-default)] justify-center font-bold items-center rounded-md border-1 border-[var(--button-disabled)]`}
         >
           {text}
         </Element>

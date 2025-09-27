@@ -9,6 +9,7 @@ import { Header, HeaderGrid } from "../../components/layout/Header";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Content } from "../../components/layout/Content";
+import { Button } from "src/components/button/Button";
 
 const optionsColors = [
   { type: "btn-blue", name: "Azul" },
@@ -24,10 +25,6 @@ export default function Configuracao() {
   const [isLoading, setIsLoading] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
-  const [responseTouch, setResponseTouch] = useState({
-    type: "",
-    name: "",
-  });
 
   const [error, setError] = useState(false);
 
@@ -56,9 +53,12 @@ export default function Configuracao() {
     setItemDefault(value);
   };
 
-  const handleResponseTouch = (id, value) => {
-    handleVibrate(value.type);
-    setResponseTouch(value);
+  const handleResponseTouchOn = () => {
+    handleVibrate("on");
+  };
+
+  const handleResponseTouchOff = () => {
+    handleVibrate("off");
   };
 
   if (isLoading) {
@@ -66,11 +66,6 @@ export default function Configuracao() {
   }
   useEffect(() => {
     const themeButton = localStorage.getItem("theme-button");
-    setResponseTouch(
-      hasVibrate === "on"
-        ? { type: "on", name: "Sim" }
-        : { type: "off", name: "Não" }
-    );
     if (themeButton) {
       const colorCurrent = optionsColors.find((op) => op.type === themeButton);
       setItemDefault(colorCurrent);
@@ -96,8 +91,8 @@ export default function Configuracao() {
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           <div className="w-full max-w-[500px] mx-auto">
-            <div className="flex justify-between">
-              <div className="mt-4">Cor dos Botões</div>
+            <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+              <div className="pt-3.5 ">Cor dos Botões</div>
               <SelectComponent
                 id="colors"
                 value={itemDefault}
@@ -107,19 +102,24 @@ export default function Configuracao() {
                 options={optionsColors}
               />
             </div>
-            <div className="flex justify-between ">
-              <div className="mt-4">Resposta tatil</div>
-              <SelectComponent
-                id="colors"
-                value={responseTouch}
-                setValue={handleResponseTouch}
-                required
-                itemDefault={responseTouch}
-                options={[
-                  { type: "on", name: "Sim" },
-                  { type: "off", name: "Não" },
-                ]}
-              />
+            <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
+              <div className="mt-3.5">Resposta tatil</div>
+              <div className="flex items-center gap-2 ml-4">
+                <Button
+                  wFull="w-12"
+                  hFull="h-8"
+                  text="Sim"
+                  press={hasVibrate === "on"}
+                  onClick={handleResponseTouchOn}
+                />
+                <Button
+                  wFull="w-13"
+                  hFull="h-8"
+                  text="Não"
+                  press={hasVibrate === "off"}
+                  onClick={handleResponseTouchOff}
+                />
+              </div>
             </div>
           </div>
         </Content>
