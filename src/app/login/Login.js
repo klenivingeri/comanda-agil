@@ -42,7 +42,7 @@ export default function Login({ store }) {
                 >
                   <input
                     type="email"
-                    className="border-1 py-1 rounded-sm px-2"
+                    className="w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
@@ -50,7 +50,7 @@ export default function Login({ store }) {
                   <input
                     type="password"
                     value={password}
-                    className="border-1 py-1 rounded-sm px-2"
+                    className="w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Senha"
                   />

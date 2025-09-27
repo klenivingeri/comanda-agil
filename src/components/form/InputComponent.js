@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export const InputComponent = ({
   label = "Input",
+  placeholder = "",
   value,
   setValue = () => {},
   id,
@@ -53,7 +54,7 @@ export const InputComponent = ({
                 : "border-gray-300 dark:border-gray-600"
             }
           `}
-          placeholder={label}
+          placeholder={placeholder || label}
           value={displayValue}
         />
         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
