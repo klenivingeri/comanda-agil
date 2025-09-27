@@ -10,13 +10,19 @@ export const SelectComponent = ({
   itemDefault = "Selecione a categoria",
 }) => {
   const [error, setError] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
 
   const handleBlur = () => {
+    setIsFocus(false);
     if (required && (value === "seleted" || !value)) {
       setError(`O campo "${label}" é obrigatório`);
     } else {
       setError("");
     }
+  };
+
+  const handleFocus = () => {
+    setIsFocus(true);
   };
 
   const handleSetValue = (id, value) => {
@@ -36,6 +42,8 @@ export const SelectComponent = ({
         value={value.type}
         onChange={(e) => handleSetValue(id, e.target.value)}
         onBlur={handleBlur}
+        onFocus={handleFocus}
+        placeholder={itemDefault.name}
         id={id}
         className={`block w-full pl-5 py-3 text-base text-gray-900 border rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
           ${
@@ -44,8 +52,9 @@ export const SelectComponent = ({
               : "border-gray-300 dark:border-gray-600"
           }`}
       >
-        {" "}
-        <option value="seleted">{itemDefault}</option>
+        {!isFocus && (
+          <option value={itemDefault.type}>{itemDefault.name}</option>
+        )}
         {options.map((op) => (
           <option key={op.type} value={op.type}>
             {op.name}

@@ -1,6 +1,16 @@
 import React, { useState } from "react";
+import { useConfig } from "../../app/context/ConfigContext";
+import { isMobile } from "react-device-detect";
 import { isEmpty } from "../../app/utils/empty";
 import Link from "next/link";
+
+const vibrate = () => {
+  // Verifica se a API de Vibração é suportada pelo navegador
+  if (window.navigator.vibrate) {
+    // Vibra por 50 milissegundos
+    window.navigator.vibrate(50);
+  }
+};
 
 export const Button = React.memo(
   ({
@@ -16,9 +26,21 @@ export const Button = React.memo(
     disabled = false,
     inline = false,
   }) => {
+    const { hasVibrate } = useConfig();
     const [isPressed, setIsPressed] = useState(false);
     const Element = type || isEmpty(href) ? "button" : Link;
-    const attrButton = { onClick, disabled, type };
+
+    const handlerClick = (e) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+      hasVibrate === "on" && vibrate();
+
+      onClick(e);
+    };
+
+    const attrButton = { onClick: handlerClick, disabled, type };
 
     const handleSetIsPressed = (pressed) => {
       if (isPressed !== pressed) {
@@ -29,7 +51,7 @@ export const Button = React.memo(
     if (!isEmpty(href)) {
       attrButton.href = href;
     }
-    const isDesktop = true;
+
     const buttonStyles = `
       relative text-white font-bold rounded-md shadow-sm
       ${!wFull ? "w-full" : wFull}
@@ -37,7 +59,7 @@ export const Button = React.memo(
         disabled
           ? "bg-[var(--button-disabled)] border-b-4 border-b-[var(--button-progress)]"
           : `
-      ${isDesktop ? "hover:bg-[var(--button-hover)] hover:border-b-2" : ""}
+      ${!isMobile ? "hover:bg-[var(--button-hover)] hover:border-b-2" : ""}
       ${
         isPressed
           ? "bg-[var(--button-hover)] border-b-2 border-b-[var(--button-focus)]"
@@ -50,6 +72,7 @@ export const Button = React.memo(
     if (inline) {
       return (
         <Element
+          {...attrButton}
           className={`${!hFull ? "h-11" : hFull}
           ${!wFull ? "w-full" : wFull}
           ${padding ? padding : ""}
