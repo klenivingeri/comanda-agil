@@ -1,4 +1,5 @@
 import { Roboto, Poppins } from "next/font/google";
+import { ConfigProvider } from "./context/ConfigContext";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -38,7 +39,9 @@ export default function RootLayout({ children }) {
             id="container"
             className="flex w-full md:max-w-[768px] min-h-screen relative"
           >
-            <main className="flex-1">{children}</main>
+            <ConfigProvider>
+              <main className="flex-1">{children}</main>
+            </ConfigProvider>
           </div>
         </div>
       </body>

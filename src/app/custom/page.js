@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ComandaProvider } from "../context/ComandaContext";
+import { ComandaProvider } from "../context/ConfigContext";
 import Custom from "./custom";
 
 export default function PaginaCustom() {

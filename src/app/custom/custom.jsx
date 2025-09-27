@@ -1,5 +1,5 @@
 "use client";
-import { useComanda } from "../context/ComandaContext";
+import { useComanda } from "../context/ConfigContext";
 
 export default function Custom() {
   const { comanda, setComanda } = useComanda();

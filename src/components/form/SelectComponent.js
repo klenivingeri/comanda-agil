@@ -7,6 +7,7 @@ export const SelectComponent = ({
   id,
   required = false,
   options = [],
+  itemDefault = "Selecione a categoria",
 }) => {
   const [error, setError] = useState("");
 
@@ -44,7 +45,7 @@ export const SelectComponent = ({
           }`}
       >
         {" "}
-        <option value="seleted">Selecione a categoria</option>
+        <option value="seleted">{itemDefault}</option>
         {options.map((op) => (
           <option key={op.type} value={op.type}>
             {op.name}

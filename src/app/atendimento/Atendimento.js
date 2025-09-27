@@ -111,8 +111,9 @@ export const Atendimento = ({ idComanda }) => {
           </Link>
         </HeaderGrid>
         <HeaderGrid>
-          <div className="col-span-12 flex items-end gap-2">
-            <InputSearch setInputText={setInputText} />
+          <div className="relative col-span-12 flex items-end gap-2">
+            <Button href="/comandas" wFull="w-[50px]" text={idComanda}></Button>
+            <InputSearch setInputText={setInputText} mini />
             <Button
               onClick={handleOpenModal}
               disabled={isEmpty(totalItems.length)}

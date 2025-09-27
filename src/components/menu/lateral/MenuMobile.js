@@ -5,7 +5,7 @@ import { isEmpty } from "../../../app/utils/empty";
 import { SideModal } from "../../../components/modal/SideModal";
 
 export const MenuMobile = ({ handleOpenModal, openModal }) => {
-  const [isDark, setIsDark] = useState(false);
+  const [themeCurrent, setThemeCurrent] = useState("");
   const [menuItems, setMenuItems] = useState([]);
 
   const getMenu = async () => {
@@ -28,19 +28,20 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
     // }
 
     const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") setIsDark(true);
+    setThemeCurrent(savedTheme);
   }, []);
 
-  useEffect(() => {
+  const handleSetTheme = (color) => {
+    console.log(color);
     const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme !== color) {
+      root.classList.remove(savedTheme);
     }
-  }, [isDark]);
+    setThemeCurrent(color);
+    root.classList.add(color);
+    localStorage.setItem("theme", color);
+  };
 
   return (
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
@@ -54,9 +55,15 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
           </div>
           <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
-            <button onClick={() => setIsDark(!isDark)} className="p-3">
-              {isDark ? "🌙" : "☀️"}
-            </button>
+            {themeCurrent === "dark" ? (
+              <button onClick={() => handleSetTheme("light")} className="p-3">
+                🌙
+              </button>
+            ) : (
+              <button onClick={() => handleSetTheme("dark")} className="p-3">
+                ☀️
+              </button>
+            )}
           </div>
 
           <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
