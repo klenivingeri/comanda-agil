@@ -43,8 +43,7 @@ export const Button = React.memo(
           ? "bg-[var(--button-hover)] border-b-2 border-b-[var(--button-focus)]"
           : "bg-[var(--button-default)] border-b-4 border-b-[var(--button-focus)]"
       }
-      transition-all duration-70 ease-in-out
-      `
+      transition-all duration-70 ease-in-out`
       }
     `;
 
