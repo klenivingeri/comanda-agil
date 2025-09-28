@@ -15,7 +15,7 @@ export default function Login({ store }) {
     const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, tenantId: store }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (res.ok) {

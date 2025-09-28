@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 
-import { categorySchema } from "../category/categoryModel";
-
 const productSchema = mongoose.Schema(
   {
     name: { type: mongoose.Schema.Types.String, required: true },
     description: { type: mongoose.Schema.Types.String },
     code: { type: mongoose.Schema.Types.String },
     price: { type: mongoose.Schema.Types.Number },
-    category: categorySchema,
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "categories",
+      required: true,
+    },
     active: { type: mongoose.Schema.Types.Boolean },
   },
   { versionKey: false }

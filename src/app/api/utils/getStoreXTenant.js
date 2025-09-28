@@ -32,7 +32,7 @@ export const getStoreXTenant = (request) => {
   }
 
   xTenant.id = tenantId;
-  xTenant.user = userId;
+  xTenant.userId = userId;
   xTenant.position = position;
 
   return xTenant;

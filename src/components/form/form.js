@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "../button/Button";
 
 const musculos = [
   "Adutor curto",
@@ -67,7 +68,15 @@ const musculos = [
   "Transverso do abdômen",
 ];
 
-export const Input = ({ name, id, setText, placeholder, value }) => {
+export const Input = ({
+  name,
+  id,
+  setText,
+  placeholder,
+  value,
+  error,
+  isValid = false,
+}) => {
   return (
     <div>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
@@ -79,9 +88,18 @@ export const Input = ({ name, id, setText, placeholder, value }) => {
         id={id}
         value={value}
         name={id}
-        className="w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+        className={`w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
+            ${
+              isValid && error
+                ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                : "border-gray-300 dark:border-gray-600"
+            }
+          `}
         placeholder={placeholder}
       />
+      {isValid && error && (
+        <p className="mt-1 text-sm text-red-500">{`O campo "${placeholder}" é obrigatório`}</p>
+      )}
     </div>
   );
 };
@@ -323,13 +341,7 @@ export const Form = ({ children, create }) => {
       className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
     >
       {children}
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        onClick={handleSubmit}
-      >
-        Cadastrar
-      </button>
+      <Button onClick={handleSubmit} text="Cadastrar Categoria" />
     </form>
   );
 };

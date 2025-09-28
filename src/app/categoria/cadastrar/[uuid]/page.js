@@ -5,7 +5,7 @@ export default function Page({ params }) {
   const { uuid } = use(params);
   return (
     <Suspense>
-      <CategoriaCadastrar productUUID={uuid} />
+      <CategoriaCadastrar categoryUUID={uuid} />
     </Suspense>
   );
 }

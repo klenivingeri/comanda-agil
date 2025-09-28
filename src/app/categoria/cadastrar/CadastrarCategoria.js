@@ -9,9 +9,9 @@ import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
 
-export const CategoriaCadastrar = ({ productUUID }) => {
+export const CategoriaCadastrar = ({ categoryUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [typeItems, setTypeItems] = useState([]);
+  const [category, setCategory] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
 
@@ -19,22 +19,27 @@ export const CategoriaCadastrar = ({ productUUID }) => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const getTypeItems = async () => {
+  const getCategoryItems = async () => {
     const res = await fetch(`/api/category`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const typeItems = await res.json();
-    setIsLoading(false);
-    if (isEmpty(typeItems.records)) {
-      setError(true);
+    const resJSON = await res.json();
+
+    if (isEmpty(resJSON.records)) {
+      setIsLoading(false);
       return;
     }
-    setTypeItems(typeItems.records);
+
+    setCategory(resJSON.records);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    getTypeItems(isLoading);
+    if (categoryUUID !== "create") {
+      getCategoryItems(isLoading);
+    }
+    setIsLoading(false);
   }, []);
 
   return (
@@ -55,7 +60,7 @@ export const CategoriaCadastrar = ({ productUUID }) => {
       </Header>
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
-          <FormComponent typeItems={typeItems} />
+          <FormComponent category={category} />
         </Content>
       </div>
       <MenuMobile
