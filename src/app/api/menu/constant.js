@@ -10,6 +10,28 @@ export const menu = [
     icon: "IconCommand",
   },
   {
+    title: "Categoria",
+    path: "/categoria",
+    icon: "IconShoppingCart",
+    sublink: [
+      {
+        title: "Cadastrar",
+        path: "/cadastrar/create",
+        icon: "IconCreate",
+      },
+      {
+        title: "Consultar",
+        path: "/consultar",
+        icon: "IconSearch",
+      },
+      {
+        title: "Relatório",
+        path: "/relatorio",
+        icon: "IconChart",
+      },
+    ],
+  },
+  {
     title: "Produto",
     path: "/produto",
     icon: "IconShoppingCart",

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const typesSchema = mongoose.Schema(
+const categorySchema = mongoose.Schema(
   {
     type: { type: mongoose.Schema.Types.String, required: true },
     name: { type: mongoose.Schema.Types.String, required: true },
@@ -9,6 +9,6 @@ const typesSchema = mongoose.Schema(
 );
 
 const category =
-  mongoose.models?.category || mongoose.model("category", typesSchema);
+  mongoose.models?.categories || mongoose.model("categories", categorySchema);
 
-export { category, typesSchema };
+export { category, categorySchema };

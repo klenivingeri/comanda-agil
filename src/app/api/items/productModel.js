@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { typesSchema } from "../type-items/typeModel";
+import { categorySchema } from "../category/categoryModel";
 
 const productSchema = mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const productSchema = mongoose.Schema(
     description: { type: mongoose.Schema.Types.String },
     code: { type: mongoose.Schema.Types.String },
     price: { type: mongoose.Schema.Types.Number },
-    category: typesSchema,
+    category: categorySchema,
     active: { type: mongoose.Schema.Types.Boolean },
   },
   { versionKey: false }

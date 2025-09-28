@@ -9,7 +9,7 @@ import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
 
-export const ProdutoCadastrar = ({ productUUID }) => {
+export const CategoriaCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [typeItems, setTypeItems] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);

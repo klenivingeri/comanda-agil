@@ -7,7 +7,6 @@ import { Loading } from "../../../components/loading/Loading";
 import { Button } from "../../../components/button/Button";
 
 const fetchCreateItem = async (formDetails) => {
-  console.log("aaaaa");
   const resp = await fetch(`/api/items`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -32,7 +31,7 @@ export const FormComponent = ({ typeItems }) => {
       return value && value !== "seleted";
     });
 
-    if (allFilled) {
+    if (!allFilled) {
       setIsLoading(true);
       await fetchCreateItem(formDetails);
       setIsLoading(false);

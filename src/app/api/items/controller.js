@@ -36,7 +36,7 @@ export const postProducts = async (connectToDatabase, product, body) => {
   try {
     await connectToDatabase();
     await product.create(body);
-
+    console.log(body);
     return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (e) {
     return Response.json(
