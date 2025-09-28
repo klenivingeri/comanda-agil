@@ -7,12 +7,16 @@ const usersSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    position: {
+    role: {
       type: String,
       enum: ["master", "admin", "gm", "user"],
       default: "user",
     },
-    tenant: tenantSchema,
+    tenant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "tenants",
+      required: true,
+    },
     active: { type: Boolean, default: true },
   },
   { versionKey: false }

@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const tenantSchema = mongoose.Schema(
+const tenantsSchema = mongoose.Schema(
   {
     name: { type: mongoose.Schema.Types.String, required: true },
   },
   { versionKey: false }
 );
 
-const tenant =
-  mongoose.models?.tenant || mongoose.model("tenant", tenantSchema);
+const tenants =
+  mongoose.models?.tenants || mongoose.model("tenants", tenantsSchema);
 
-export { tenant, tenantSchema };
+export { tenants, tenantsSchema };

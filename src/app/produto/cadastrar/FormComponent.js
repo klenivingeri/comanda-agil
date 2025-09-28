@@ -7,7 +7,6 @@ import { Loading } from "../../../components/loading/Loading";
 import { Button } from "../../../components/button/Button";
 
 const fetchCreateItem = async (formDetails) => {
-  console.log("aaaaa");
   const resp = await fetch(`/api/items`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

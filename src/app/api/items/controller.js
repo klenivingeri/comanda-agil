@@ -36,9 +36,9 @@ export const postProducts = async (connectToDatabase, product, body) => {
   try {
     await connectToDatabase();
     await product.create(body);
-    console.log(body);
+
     return Response.json({ message: "Sucesso" }, { status: 200 });
-  } catch (e) {
+  } catch (_) {
     return Response.json(
       { message: "Ocorreu um erro ao Fazer o cadastro do item" },
       { status: 500 }

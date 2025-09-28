@@ -18,7 +18,7 @@ export const FormComponent = ({ category }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formDetails),
     });
-    console.log(resp);
+
     const result = await resp.json();
     setIsLoading(false);
   };
@@ -31,7 +31,7 @@ export const FormComponent = ({ category }) => {
     setIsValid(false);
     fetchCreateItem({ name });
   };
-  console.log("aaaaaaaaaaaaaaaaa");
+
   return (
     <div className="w-full max-w-[500px] mx-auto">
       <Form method="POST" create={handleSend}>

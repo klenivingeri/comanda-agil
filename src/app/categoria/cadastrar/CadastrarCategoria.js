@@ -37,7 +37,7 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
 
   useEffect(() => {
     if (categoryUUID !== "create") {
-      getCategoryItems(isLoading);
+      getCategoryItems();
     }
     setIsLoading(false);
   }, []);

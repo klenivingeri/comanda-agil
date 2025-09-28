@@ -1,5 +1,6 @@
 import { serialize } from "cookie";
 import crypto, { randomUUID } from "crypto";
+import { tenants } from "../login/create/tenantModel";
 
 const SECRET = process.env.COOKIE_SECRET;
 
@@ -26,15 +27,14 @@ export function createCookie(tenantId, userId, position) {
   });
 }
 
-// Função para assinar o valor
-function sign(value) {
-  return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
-}
 export const postLogin = async (connectToDatabase, users, email, password) => {
   try {
     await connectToDatabase();
 
-    const user = await users.findOne({ email, active: true });
+    const user = await users
+      .findOne({ email, active: true })
+      .populate({ path: "tenant", model: tenants, select: "name" });
+
     if (!user)
       return new Response(
         JSON.stringify({ message: "Credenciais inválidas" }),
