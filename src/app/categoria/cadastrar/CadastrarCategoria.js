@@ -19,8 +19,8 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const getCategoryItems = async () => {
-    const res = await fetch(`/api/category`, {
+  const getCategoryItems = async (categoryUUID) => {
+    const res = await fetch(`/api/category?id=${categoryUUID}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -37,7 +37,7 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
 
   useEffect(() => {
     if (categoryUUID !== "create") {
-      getCategoryItems();
+      getCategoryItems(categoryUUID);
     }
     setIsLoading(false);
   }, []);

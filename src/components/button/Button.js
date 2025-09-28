@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useConfig } from "../../app/context/ConfigContext";
-import { isMobile } from "react-device-detect";
 import { isEmpty } from "../../app/utils/empty";
 import Link from "next/link";
+import { getButtonStyles } from "./constants";
 
 const vibrate = () => {
   // Verifica se a API de Vibração é suportada pelo navegador
@@ -26,6 +26,7 @@ export const Button = React.memo(
     disabled = false,
     press = false,
     inline = false,
+    style = "buttonDefault",
   }) => {
     const { hasVibrate } = useConfig();
     const [isPressed, setIsPressed] = useState(false);
@@ -53,21 +54,13 @@ export const Button = React.memo(
       attrButton.href = href;
     }
 
-    const buttonStyles = `
-      relative text-white font-bold rounded-md shadow-sm
-      ${!wFull ? "w-full" : wFull}
-      ${
-        disabled
-          ? "bg-[var(--button-disabled)] border-b-4 border-b-[var(--button-progress)]"
-          : `
-      ${
-        isPressed || press
-          ? "bg-[var(--button-hover)] border-b-2 border-b-[var(--button-focus)]"
-          : "bg-[var(--button-default)] border-b-4 border-b-[var(--button-focus)]"
-      }
-      transition-all duration-70 ease-in-out`
-      }
-    `;
+    const buttonStyles = getButtonStyles({
+      style,
+      wFull,
+      isPressed,
+      press,
+      disabled,
+    });
 
     if (inline) {
       return (

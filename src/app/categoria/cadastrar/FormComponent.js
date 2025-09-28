@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Input } from "../../../components/form/Form";
 import { Loading } from "../../../components/loading/Loading";
 
 export const FormComponent = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(category?.name || "");
 
-  if (isLoading) {
-    return <Loading isLoading={isLoading} />;
-  }
+  useEffect(() => {
+    if (category?.name) {
+      setName(category.name);
+    }
+  }, [category]);
 
   const fetchCreateItem = async (formDetails) => {
     setIsLoading(true);
@@ -23,18 +25,36 @@ export const FormComponent = ({ category }) => {
     setIsLoading(false);
   };
 
+  const fetchUpdateItem = async (formDetails) => {
+    setIsLoading(true);
+    const resp = await fetch(`/api/category`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formDetails),
+    });
+
+    // const result = await resp.json();
+    setIsLoading(false);
+  };
+
   const handleSend = async () => {
     if (!name) {
       setIsValid(true);
       return;
     }
     setIsValid(false);
-    fetchCreateItem({ name });
+
+    if (category._id) {
+      fetchUpdateItem({ name, _id: category._id });
+    } else {
+      fetchCreateItem({ name });
+    }
+    setName("");
   };
 
   return (
     <div className="w-full max-w-[500px] mx-auto">
-      <Form method="POST" create={handleSend}>
+      <Form method="POST" create={handleSend} isLoading={isLoading}>
         <Input
           name="Nome da categoria"
           id="category"
@@ -44,7 +64,6 @@ export const FormComponent = ({ category }) => {
           error={name.trim() === ""}
           value={name}
         />
-        {<Loading isLoading={isLoading} />}
       </Form>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "../button/Button";
+import { Loading } from "../loading/Loading";
 
 const musculos = [
   "Adutor curto",
@@ -330,7 +331,7 @@ export const SelectExercise = ({
   );
 };
 
-export const Form = ({ children, create }) => {
+export const Form = ({ children, create, isLoading }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     create();
@@ -341,7 +342,19 @@ export const Form = ({ children, create }) => {
       className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
     >
       {children}
-      <Button onClick={handleSubmit} text="Cadastrar Categoria" />
+      <Button onClick={handleSubmit}>
+        {!isLoading ? (
+          "Cadastrar Categoria"
+        ) : (
+          <Loading
+            isLoading={isLoading}
+            style="style5"
+            color="white"
+            size="10"
+            speed="0.4"
+          />
+        )}
+      </Button>
     </form>
   );
 };

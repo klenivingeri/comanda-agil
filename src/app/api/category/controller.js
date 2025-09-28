@@ -26,10 +26,15 @@ export const getCagetories = async ({
       response = await category
         .findOne({
           _id: new mongoose.Types.ObjectId(id),
+          tenant: new mongoose.Types.ObjectId(xTenant.id),
         })
         .populate("tenant");
     } else {
-      response = await category.find().populate("tenant");
+      response = await category
+        .find({
+          tenant: new mongoose.Types.ObjectId(xTenant.id), // filtra todos pelo tenant
+        })
+        .populate("tenant");
     }
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {
@@ -75,3 +80,51 @@ export const postCagetories = async ({
     );
   }
 };
+
+export const patchCagetories = async ({
+  connectToDatabase,
+  category,
+  xTenant,
+  body,
+}) => {
+  try {
+    await connectToDatabase();
+    const { name, _id } = body;
+    const type = createType(name);
+    const payload = {
+      name,
+      type,
+    };
+
+    await category.findByIdAndUpdate(_id, { $set: payload });
+
+    return Response.json({ message: "Sucesso" }, { status: 200 });
+  } catch (_) {
+    return Response.json(
+      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { status: 500 }
+    );
+  }
+};
+
+export const deleteCagetories = async ({
+  connectToDatabase,
+  category,
+  xTenant,
+  body,
+}) => {
+  try {
+    await connectToDatabase();
+    const { _id } = body;
+
+    const result = await category.findOneAndDelete({ _id });
+
+    return Response.json({ message: "Sucesso" }, { status: 200 });
+  } catch (_) {
+    return Response.json(
+      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { status: 500 }
+    );
+  }
+};
+deleteCagetories;

@@ -7,9 +7,12 @@ import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
-import { Construction } from "../../../components/construction";
 import { InputSearch } from "../../../components/input/inputSearch";
 import { isEmpty } from "src/app/utils/empty";
+import { ItemList } from "src/components/itemList";
+import { Button } from "src/components/button/Button";
+import { IconDelete } from "public/icons/Delete";
+import { IconEdit } from "public/icons/Edit";
 
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
@@ -20,6 +23,14 @@ export default function ConsultarCategoria() {
 
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
+  };
+
+  const handleDelete = async (_id) => {
+    const res = await fetch(`/api/category`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id }),
+    });
   };
 
   useEffect(() => {
@@ -66,7 +77,32 @@ export default function ConsultarCategoria() {
       </Header>
       <div className="mt-[100px] mb-[60px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
-          <div className="flex py-2 px-4 h-14 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50"></div>
+          <div className="flex flex-col gap-2">
+            {categories.map((category) => (
+              <ItemList key={category._id} p="px-2">
+                <p className="font-bold">{category.name}</p>
+                <div className="flex gap-4">
+                  <Button
+                    style="buttonRed"
+                    wFull="w-10"
+                    hFull="h-9"
+                    margin="mt-1"
+                    onClick={() => handleDelete(category._id)}
+                  >
+                    <IconDelete size="h-[20px] w-[20px]" />
+                  </Button>
+                  <Button
+                    href={`/categoria/cadastrar/${category._id}`}
+                    wFull="w-10"
+                    hFull="h-9"
+                    margin="mt-1"
+                  >
+                    <IconEdit size="h-[20px] w-[20px]" />
+                  </Button>
+                </div>
+              </ItemList>
+            ))}
+          </div>
         </Content>
       </div>
       <MenuMobile

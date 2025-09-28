@@ -135,19 +135,70 @@ const Circle = () => {
   );
 };
 
+const LoadingDotsButton = ({ color, size, speed }) => {
+  const dotStyle = {
+    width: `${size}px`,
+    height: `${size}px`,
+    margin: `0 ${size / 2}px`,
+    borderRadius: "50%",
+    backgroundColor: color,
+    display: "inline-block",
+    animation: `bounce ${speed}s infinite alternate`,
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        height: `${size * 3}px`,
+      }}
+    >
+      <span style={{ ...dotStyle, animationDelay: "0s" }}></span>
+      <span style={{ ...dotStyle, animationDelay: `${speed / 3}s` }}></span>
+      <span
+        style={{ ...dotStyle, animationDelay: `${(speed / 3) * 2}s` }}
+      ></span>
+
+      {/* CSS keyframes */}
+      <style>
+        {`
+          @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-200%); }
+          }
+        `}
+      </style>
+    </div>
+  );
+};
+
 const LOADING_STYLE = {
   style1: AnimatedTextActiveChar,
   style2: AnimatedText,
   style3: Circle,
   style4: LoadingDots,
+  style5: LoadingDotsButton,
 };
 
-export const Loading = ({ isLoading, style = "style4" }) => {
+export const Loading = ({
+  isLoading,
+  style = "style4",
+  color = "silver",
+  size = 16,
+  speed = 0.3,
+}) => {
   const ComponentLoading = LOADING_STYLE[style];
   return (
     isLoading && (
       <div className="flex justify-center items-center">
-        <ComponentLoading text="Criando&nbsp;comanda!" />
+        <ComponentLoading
+          text="Criando&nbsp;comanda!"
+          color={color}
+          size={size}
+          speed={speed}
+        />
       </div>
     )
   );

@@ -8,15 +8,15 @@ function generateSignature(value) {
   return crypto.createHmac("sha256", SECRET).update(value).digest("hex");
 }
 
-export function createCookie(tenantId, userId, position) {
+export function createCookie(tenantId, userId, rule) {
   // adiciona timestamp ou nonce para tornar o cookie único
   const timestamp = Date.now();
   const nonce = randomUUID(); // ou só o timestamp já dá
 
-  const data = [tenantId, userId, position, timestamp, nonce].join(".");
+  const data = [tenantId, userId, rule, timestamp, nonce].join(".");
   const signature = generateSignature(data);
 
-  const cookieValue = `${tenantId}.${userId}.${position}.${timestamp}.${nonce}.${signature}`;
+  const cookieValue = `${tenantId}.${userId}.${rule}.${timestamp}.${nonce}.${signature}`;
 
   return serialize("x-tenant", cookieValue, {
     httpOnly: true,
@@ -51,7 +51,7 @@ export const postLogin = async (connectToDatabase, users, email, password) => {
     return new Response(JSON.stringify({ message: "Login bem-sucedido" }), {
       status: 200,
       headers: {
-        "Set-Cookie": createCookie(user.tenant._id, user._id, user.position),
+        "Set-Cookie": createCookie(user.tenant._id, user._id, user.role),
         "Content-Type": "application/json",
       },
     });
