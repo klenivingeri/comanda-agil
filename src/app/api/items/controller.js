@@ -1,8 +1,7 @@
-import { categories } from "../category/categoryModel";
-
 export const getProducts = async ({
   connectToDatabase,
   product,
+  categories,
   xTenant,
   id,
 }) => {
@@ -48,6 +47,7 @@ export const getProducts = async ({
 export const postProducts = async ({
   connectToDatabase,
   product,
+  categories,
   xTenant,
   body,
 }) => {
@@ -68,6 +68,7 @@ export const postProducts = async ({
 export const putProducts = async ({
   connectToDatabase,
   product,
+  categories,
   xTenant,
   body,
   id,
@@ -92,6 +93,7 @@ export const putProducts = async ({
 export const deleteProdutcs = async ({
   connectToDatabase,
   product,
+  categories,
   xTenant,
   body,
 }) => {

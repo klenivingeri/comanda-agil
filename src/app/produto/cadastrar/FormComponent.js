@@ -7,7 +7,7 @@ import {
   InputImagem,
   Select,
   Textarea,
-} from "../../../components/form/Form";
+} from "../../../components/form/FormComponents";
 
 const fetchCreateProduct = async (payload) => {
   const resp = await fetch(`/api/items`, {

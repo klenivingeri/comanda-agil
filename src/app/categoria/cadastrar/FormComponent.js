@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Input } from "../../../components/form/Form";
+import { Form, Input } from "../../../components/form/FormComponents";
 import { Loading } from "../../../components/loading/Loading";
 
 export const FormComponent = ({ category }) => {
