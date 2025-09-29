@@ -11,31 +11,62 @@ import { isEmpty } from "../../utils/empty";
 
 export const ProdutoCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [typeItems, setTypeItems] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [product, setProduct] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
-
+  console.log(categories);
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const getTypeItems = async () => {
-    const res = await fetch(`/api/category`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const typeItems = await res.json();
-    setIsLoading(false);
-    if (isEmpty(typeItems.records)) {
-      setError(true);
-      return;
-    }
-    setTypeItems(typeItems.records);
-  };
-
   useEffect(() => {
-    getTypeItems(isLoading);
-  }, []);
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      try {
+        const requests = [
+          fetch(`/api/category`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }),
+        ];
+
+        if (productUUID !== "create") {
+          requests.push(
+            fetch(`/api/items?id=${productUUID}`, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            })
+          );
+        }
+
+        const responses = await Promise.all(requests);
+        const [categoriesRes, productRes] = responses;
+
+        // categories
+        const categoriesJSON = await categoriesRes.json();
+        if (!isEmpty(categoriesJSON.records)) {
+          setCategories(categoriesJSON.records);
+        }
+
+        // product (só existe se não for create)
+        if (productRes) {
+          const productJSON = await productRes.json();
+          if (!isEmpty(productJSON.records)) {
+            setProduct(productJSON.records);
+          }
+        }
+      } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [productUUID]);
 
   return (
     <Container>
@@ -55,7 +86,7 @@ export const ProdutoCadastrar = ({ productUUID }) => {
       </Header>
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
-          <FormComponent typeItems={typeItems} />
+          <FormComponent categories={categories} product={product} />
         </Content>
       </div>
       <MenuMobile

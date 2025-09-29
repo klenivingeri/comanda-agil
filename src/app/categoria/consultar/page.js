@@ -25,31 +25,32 @@ export default function ConsultarCategoria() {
     setOpenMenuMobile(!openMenuMobile);
   };
 
+  const getCategoryItems = async () => {
+    const res = await fetch(`/api/category`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const resJSON = await res.json();
+
+    if (isEmpty(resJSON.records)) {
+      setIsLoading(false);
+      return;
+    }
+
+    setCategories(resJSON.records);
+    setIsLoading(false);
+  };
+
   const handleDelete = async (_id) => {
     const res = await fetch(`/api/category`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ _id }),
     });
+    getCategoryItems();
   };
 
   useEffect(() => {
-    const getCategoryItems = async () => {
-      const res = await fetch(`/api/category`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const resJSON = await res.json();
-
-      if (isEmpty(resJSON.records)) {
-        setIsLoading(false);
-        return;
-      }
-
-      setCategories(resJSON.records);
-      setIsLoading(false);
-    };
-
     getCategoryItems();
     setIsLoading(false);
   }, []);

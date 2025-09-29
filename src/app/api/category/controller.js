@@ -1,7 +1,3 @@
-import mongoose from "mongoose";
-
-import { users } from "../login/usersModel";
-
 const createType = (_str) => {
   let str = _str
     .normalize("NFD")
@@ -14,7 +10,7 @@ const createType = (_str) => {
 
 export const getCagetories = async ({
   connectToDatabase,
-  category,
+  categories,
   xTenant,
   id,
 }) => {
@@ -23,18 +19,14 @@ export const getCagetories = async ({
     let response;
 
     if (id) {
-      response = await category
-        .findOne({
-          _id: new mongoose.Types.ObjectId(id),
-          tenant: new mongoose.Types.ObjectId(xTenant.id),
-        })
-        .populate("tenant");
+      response = await categories.findOne({
+        _id: id,
+        tenant: xTenant.id,
+      });
     } else {
-      response = await category
-        .find({
-          tenant: new mongoose.Types.ObjectId(xTenant.id), // filtra todos pelo tenant
-        })
-        .populate("tenant");
+      response = await categories.find({
+        tenant: xTenant.id,
+      });
     }
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {
@@ -56,7 +48,7 @@ export const getCagetories = async ({
 
 export const postCagetories = async ({
   connectToDatabase,
-  category,
+  categories,
   xTenant,
   body,
 }) => {
@@ -67,10 +59,10 @@ export const postCagetories = async ({
     const payload = {
       name,
       type,
-      tenant: new mongoose.Types.ObjectId(xTenant.id),
+      tenant: xTenant.id,
     };
 
-    await category.create(payload);
+    await categories.create(payload);
 
     return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (_) {
@@ -83,7 +75,7 @@ export const postCagetories = async ({
 
 export const patchCagetories = async ({
   connectToDatabase,
-  category,
+  categories,
   xTenant,
   body,
 }) => {
@@ -96,7 +88,10 @@ export const patchCagetories = async ({
       type,
     };
 
-    await category.findByIdAndUpdate(_id, { $set: payload });
+    await categories.findByIdAndUpdate(
+      { _id, tenant: xTenant.id },
+      { $set: payload }
+    );
 
     return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (_) {
@@ -109,7 +104,7 @@ export const patchCagetories = async ({
 
 export const deleteCagetories = async ({
   connectToDatabase,
-  category,
+  categories,
   xTenant,
   body,
 }) => {
@@ -117,7 +112,10 @@ export const deleteCagetories = async ({
     await connectToDatabase();
     const { _id } = body;
 
-    const result = await category.findOneAndDelete({ _id });
+    const result = await categories.findOneAndDelete({
+      _id,
+      tenant: xTenant.id,
+    });
 
     return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (_) {
@@ -127,4 +125,3 @@ export const deleteCagetories = async ({
     );
   }
 };
-deleteCagetories;

@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../lib/dbConnect";
-import { category } from "./categoryModel";
+import { categories } from "./categoryModel";
 
 import { getStoreXTenant } from "../utils/getStoreXTenant.js";
 import {
@@ -16,7 +16,7 @@ export async function GET(request) {
 
   const response = await getCagetories({
     connectToDatabase,
-    category,
+    categories,
     xTenant,
     id,
   });
@@ -30,7 +30,7 @@ export async function POST(request) {
 
   const response = await postCagetories({
     connectToDatabase,
-    category,
+    categories,
     xTenant,
     body,
   });
@@ -44,7 +44,7 @@ export async function PATCH(request) {
 
   const response = await patchCagetories({
     connectToDatabase,
-    category,
+    categories,
     xTenant,
     body,
   });
@@ -58,7 +58,7 @@ export async function DELETE(request) {
 
   const response = await deleteCagetories({
     connectToDatabase,
-    category,
+    categories,
     xTenant,
     body,
   });

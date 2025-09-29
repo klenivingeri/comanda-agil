@@ -1,94 +1,132 @@
-import { useState } from "react";
-import { InputComponent } from "../../../components/form/InputComponent";
+import { use, useEffect, useState } from "react";
 import { InputFileComponent } from "../../../components/form/InputFileComponent";
-import { TextareaComponent } from "../../../components/form/TextareaComponent";
-import { SelectComponent } from "../../../components/form/SelectComponent";
 import { Loading } from "../../../components/loading/Loading";
-import { Button } from "../../../components/button/Button";
+import {
+  Form,
+  Input,
+  InputImagem,
+  Select,
+  Textarea,
+} from "../../../components/form/Form";
 
-const fetchCreateItem = async (formDetails) => {
+const fetchCreateProduct = async (payload) => {
   const resp = await fetch(`/api/items`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formDetails),
+    body: JSON.stringify(payload),
   });
   const result = await resp.json();
 };
 
-export const FormComponent = ({ typeItems }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [formDetails, setFormDetails] = useState({});
+const fetchUpdateProduct = async (id, payload) => {
+  const resp = await fetch(`/api/items?id=${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const result = await resp.json();
+};
 
-  const handleFormDetails = (id, value) => {
-    setFormDetails({ ...formDetails, [id]: value });
-  };
+export const FormComponent = ({ categories, product }) => {
+  console.log(product);
+  const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleSend = async () => {
-    const allFilled = Object.values(formDetails).every((value) => {
-      if (value.name) {
-        return value.name && value.name !== "seleted";
-      }
-      return value && value !== "seleted";
-    });
-
-    if (allFilled) {
-      setIsLoading(true);
-      await fetchCreateItem(formDetails);
-      setIsLoading(false);
+    if (!code || !name || !price || !description || !category) {
+      setIsValid(true);
+      return;
     }
+    setIsValid(false);
+
+    if (product?._id) {
+      setIsLoading(true);
+      fetchUpdateProduct(product._id, {
+        code,
+        name,
+        price,
+        description,
+        category,
+      });
+    } else {
+      setIsLoading(true);
+      fetchCreateProduct({ code, name, price, description, category });
+    }
+
+    setCode("");
+    setName("");
+    setPrice("");
+    setDescription("");
+    setCategory("");
+    setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <Loading isLoading={isLoading} />;
-  }
+  useEffect(() => {
+    if (product?._id) {
+      setCode(product.code);
+      setName(product.name);
+      setPrice(product.price);
+      setDescription(product.description);
+      setCategory(product.category?._id);
+    }
+  }, [product]);
 
   return (
     <div className="w-full max-w-[500px] mx-auto">
-      <InputFileComponent id="file" setValue={handleFormDetails} />
-      <InputComponent
-        id="code"
-        value={formDetails?.code || ""}
-        setValue={handleFormDetails}
-        label="Código do produto"
-        required
-      />
-      <InputComponent
-        id="name"
-        value={formDetails?.name || ""}
-        setValue={handleFormDetails}
-        label="Nome do produto"
-        required
-      />
-      <InputComponent
-        id="price"
-        value={formDetails?.price || ""}
-        setValue={handleFormDetails}
-        isCurrency
-        label="Preço do produto"
-        required
-      />
-      <TextareaComponent
-        id="description"
-        value={formDetails?.description || ""}
-        setValue={handleFormDetails}
-        label="Descrição do produto"
-      />
-
-      <SelectComponent
-        id="category"
-        value={formDetails?.category}
-        setValue={handleFormDetails}
-        label="Categoria do produto"
-        required
-        itemDefault={{ type: "seleted", name: "Selecione a categoria" }}
-        options={typeItems}
-      />
-
-      <div className="flex justify-center items-center w-full">
-        <div className="relative w-full flex justify-center items-center">
-          <Button onClick={handleSend} text="Cadastrar Produto" />
-        </div>
-      </div>
+      <Form method="POST" create={handleSend} isLoading={isLoading}>
+        <InputFileComponent id="file" setValue={() => {}} />
+        <Input
+          name="Código do produto"
+          id="code"
+          setValue={setCode}
+          placeholder="Código do produto"
+          isValid={isValid}
+          error={code.trim() === ""}
+          value={code}
+        />
+        <Input
+          name="Nome do produto"
+          id="name"
+          setValue={setName}
+          placeholder="Nome do produto"
+          isValid={isValid}
+          error={name.trim() === ""}
+          value={name}
+        />
+        <Input
+          name="Preço do produto"
+          id="price"
+          setValue={setPrice}
+          placeholder="Preço do produto"
+          isValid={isValid}
+          error={!price}
+          value={price}
+          isCurrency
+        />
+        <Textarea
+          name="Descrição do produto"
+          id="description"
+          setValue={setDescription}
+          placeholder="Descrição do produto"
+          isValid={isValid}
+          error={description.trim() === ""}
+          value={description}
+        />
+        <Select
+          name="Selecione a categoria"
+          id="select"
+          value={category}
+          setValue={setCategory}
+          options={categories}
+          isValid={isValid}
+          error={category.trim() === ""}
+        />
+      </Form>
     </div>
   );
 };

@@ -58,7 +58,7 @@ export const FormComponent = ({ category }) => {
         <Input
           name="Nome da categoria"
           id="category"
-          setText={setName}
+          setValue={setName}
           placeholder="Nome da categoria"
           isValid={isValid}
           error={name.trim() === ""}
