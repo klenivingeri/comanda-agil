@@ -15,7 +15,7 @@ export const ProdutoCadastrar = ({ productUUID }) => {
   const [product, setProduct] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
-  console.log(categories);
+
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };

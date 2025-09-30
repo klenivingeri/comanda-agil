@@ -1,6 +1,6 @@
 export const getProducts = async ({
   connectToDatabase,
-  product,
+  products,
   categories,
   xTenant,
   id,
@@ -14,14 +14,14 @@ export const getProducts = async ({
       select: "name type",
     };
     if (id) {
-      response = await product
+      response = await products
         .findOne({
           _id: id,
           tenant: xTenant.id,
         })
         .populate(populate);
     } else {
-      response = await product
+      response = await products
         .find({
           tenant: xTenant.id,
         })
@@ -46,15 +46,14 @@ export const getProducts = async ({
 
 export const postProducts = async ({
   connectToDatabase,
-  product,
-  categories,
+  products,
   xTenant,
   body,
 }) => {
   try {
     body.tenant = xTenant.id;
     await connectToDatabase();
-    await product.create(body);
+    await products.create(body);
 
     return Response.json({ message: "Sucesso" }, { status: 200 });
   } catch (_) {
@@ -67,8 +66,7 @@ export const postProducts = async ({
 
 export const putProducts = async ({
   connectToDatabase,
-  product,
-  categories,
+  products,
   xTenant,
   body,
   id,
@@ -76,7 +74,7 @@ export const putProducts = async ({
   try {
     await connectToDatabase();
 
-    await product.findByIdAndUpdate(
+    await products.findByIdAndUpdate(
       { _id: id, tenant: xTenant.id },
       { $set: body }
     );
@@ -92,8 +90,7 @@ export const putProducts = async ({
 
 export const deleteProdutcs = async ({
   connectToDatabase,
-  product,
-  categories,
+  products,
   xTenant,
   body,
 }) => {
@@ -101,7 +98,7 @@ export const deleteProdutcs = async ({
     await connectToDatabase();
     const { _id } = body;
 
-    const result = await product.findOneAndDelete({
+    const result = await products.findOneAndDelete({
       _id,
       tenant: xTenant.id,
     });

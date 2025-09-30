@@ -28,7 +28,6 @@ const fetchUpdateProduct = async (id, payload) => {
 };
 
 export const FormComponent = ({ categories, product }) => {
-  console.log(product);
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");

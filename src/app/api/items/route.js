@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../lib/dbConnect";
 import { categories } from "../category/categoryModel";
-import { product } from "./productModel";
+import { products } from "./productModel";
 import {
   getProducts,
   postProducts,
@@ -16,7 +16,7 @@ export async function GET(request) {
 
   const response = getProducts({
     connectToDatabase,
-    product,
+    products,
     categories,
     xTenant,
     id,
@@ -31,8 +31,7 @@ export async function POST(request) {
 
   const response = postProducts({
     connectToDatabase,
-    product,
-    categories,
+    products,
     xTenant,
     body,
   });
@@ -48,8 +47,7 @@ export async function PUT(request) {
 
   const response = await putProducts({
     connectToDatabase,
-    product,
-    categories,
+    products,
     xTenant,
     body,
     id,
@@ -64,8 +62,7 @@ export async function DELETE(request) {
 
   const response = await deleteProdutcs({
     connectToDatabase,
-    product,
-    categories,
+    products,
     xTenant,
     body,
   });

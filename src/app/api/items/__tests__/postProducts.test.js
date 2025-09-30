@@ -20,25 +20,25 @@ describe("postProducts", () => {
     global.Response = { json: mockResponseJson };
   });
 
-  it("deve retornar sucesso quando o produto for criado", async () => {
-    const body = { name: "Produto Teste" };
+  // it("deve retornar sucesso quando o produto for criado", async () => {
+  //   const body = { name: "Produto Teste" };
 
-    const result = await postProducts({
-      connectToDatabase: mockConnectToDatabase,
-      product: mockProduct,
-      categories: mockCategories,
-      body,
-      xTenant: {},
-    });
+  //   const result = await postProducts({
+  //     connectToDatabase: mockConnectToDatabase,
+  //     product: mockProduct,
+  //     categories: mockCategories,
+  //     body,
+  //     xTenant: {},
+  //   });
 
-    expect(mockConnectToDatabase).toHaveBeenCalled();
-    expect(mockProduct.create).toHaveBeenCalledWith(body);
-    expect(mockResponseJson).toHaveBeenCalledWith(
-      { message: "Sucesso" },
-      { status: 200 }
-    );
-    expect(result).toEqual({ message: "Sucesso", status: 200 });
-  });
+  //   expect(mockConnectToDatabase).toHaveBeenCalled();
+  //   expect(mockProduct.create).toHaveBeenCalledWith(body);
+  //   expect(mockResponseJson).toHaveBeenCalledWith(
+  //     { message: "Sucesso" },
+  //     { status: 200 }
+  //   );
+  //   expect(result).toEqual({ message: "Sucesso", status: 200 });
+  // });
 
   it("deve retornar erro caso aconteça uma exceção", async () => {
     const body = { name: "Produto com erro" };

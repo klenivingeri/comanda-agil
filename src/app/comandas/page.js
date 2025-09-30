@@ -53,7 +53,7 @@ export default function Comandas() {
   useEffect(() => {
     if (inputText.length) {
       const hasMatch = comandas?.some((c) => {
-        return c.id.toLowerCase().includes(inputText.trim().toLowerCase());
+        return c.code.toLowerCase().includes(inputText.trim().toLowerCase());
       });
       setHasComanda(hasMatch);
     }
@@ -96,26 +96,20 @@ export default function Comandas() {
             {comandas
               ?.filter((c) => {
                 if (!inputText.length) return true;
-                return c.id
+                return c.code
                   .toLowerCase()
                   .includes(inputText.trim().toLowerCase());
               })
               .map((c, idx) => (
                 <Button
-                  href={`/atendimento/${c.name}`}
+                  href={`/atendimento/${c.code}-${c._id}`}
                   wFull="w-28"
                   hFull="h-30"
                   key={idx}
                 >
                   <div className="h-30 w-28 p-3 text-white flex flex-col justify-between">
                     <div className="flex justify-end text-sm leading-none">
-                      {currency(
-                        c?.items?.reduce(
-                          (acc, item) =>
-                            acc + (item?.quantity * item?.price || 0),
-                          0
-                        )
-                      )}
+                      {currency(c.payment.amount)}
                     </div>
                     <div className="flex justify-center text-3xl font-bold leading-none">
                       {c.name}

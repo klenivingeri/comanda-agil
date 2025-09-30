@@ -21,7 +21,7 @@ const productSchema = mongoose.Schema(
   { versionKey: false }
 );
 
-const product =
+const products =
   mongoose.models?.products || mongoose.model("products", productSchema);
 
-export { product };
+export { products };

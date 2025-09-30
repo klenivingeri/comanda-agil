@@ -19,6 +19,8 @@ import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Button } from "../../components/button/Button";
 
 export const Atendimento = ({ idComanda }) => {
+  const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
+
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,34 +29,68 @@ export const Atendimento = ({ idComanda }) => {
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
 
+  const fetchCreateCommand = async (payload) => {
+    setIsLoading(true);
+    setOpenModal(true);
+
+    const resp = await fetch(
+      `/api/comandas${comanda?._id ? `?_id=${comanda?._id}` : ""}`,
+      {
+        method: comanda?._id ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const result = await resp.json();
+    setComanda(result?.records);
+
+    setItems(
+      items.map((item) => {
+        return { ...item, quantity: 0 };
+      })
+    );
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [itemsRes, comandasRes] = await Promise.all([
+        const _id = idComanda.split("-")[1];
+
+        const requests = [
           fetch(`/api/items`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           }),
-          fetch(`/api/comandas?id=${idComanda}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }),
-        ]);
+        ];
+
+        if (_id) {
+          requests.push(
+            fetch(`/api/comandas?_id=${_id}`, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            })
+          );
+        }
+
+        const responses = await Promise.all(requests);
+        const [itemsRes, comandasRes] = responses;
 
         const [itemsData, comandasData] = await Promise.all([
           itemsRes.json(),
-          comandasRes.json(),
+          comandasRes?.json(),
         ]);
 
-        setItems(itemsData.records);
-        setComanda(comandasData.records[0]);
+        if (itemsData) setItems(itemsData.records);
+        if (comandasData) setComanda(comandasData?.records);
       } catch (err) {
         setError(true);
       } finally {
         setIsLoading(false);
       }
     };
-
+    console.log("aaaaaaaaa");
     fetchData();
   }, []);
 
@@ -88,10 +124,32 @@ export const Atendimento = ({ idComanda }) => {
 
   const totalComanda = useMemo(() => {
     return itemsSelected
-      .concat(comanda?.items)
-      .reduce((acc, item) => acc + (item?.quantity * item?.price || 0), 0);
+      .concat(comanda?.subOrders)
+      .reduce(
+        (acc, item) => acc + (item?.quantity * item.product?.price || 0),
+        0
+      );
   }, [comanda?.items, itemsSelected]);
 
+  const saveCommand = () => {
+    const payload = {
+      code,
+      payment: {
+        method: "CASH",
+        amount: totalComanda,
+      },
+      subOrders: itemsSelected
+        .map((item) => {
+          return {
+            product: item?._id,
+            quantity: item?.quantity || 0,
+          };
+        })
+        .filter((item) => item?.quantity > 0),
+    };
+
+    fetchCreateCommand(payload);
+  };
   return (
     <Container>
       <Header divider>
@@ -106,17 +164,17 @@ export const Atendimento = ({ idComanda }) => {
           </div>
           <Link href="/comandas" className="col-span-2 flex justify-end">
             <div className="flex font-bold text-xl text-[var(--bg-subTitle)] h-[32px] w-full justify-center items-center rounded-r-full rounded-l-full bg-[var(--text-default)]">
-              {idComanda}
+              {code}
             </div>
           </Link>
         </HeaderGrid>
         <HeaderGrid>
           <div className="relative col-span-12 flex items-end gap-2">
-            <Button href="/comandas" wFull="w-[50px]" text={idComanda}></Button>
+            <Button href="/comandas" wFull="w-[50px]" text={code}></Button>
             <InputSearch setInputText={setInputText} mini />
             <Button
               onClick={handleOpenModal}
-              disabled={isEmpty(totalItems.length)}
+              disabled={isEmpty(comanda?._id)}
               wFull="w-[50px]"
             >
               <span className="pl-1">
@@ -145,7 +203,11 @@ export const Atendimento = ({ idComanda }) => {
         </Content>
       </div>
       <Footer>
-        <Button margin="mx-2 mb-2" text="LANÇAR ITEMS NA COMANDA" />
+        <Button
+          onClick={saveCommand}
+          margin="mx-2 mb-2"
+          text="LANÇAR ITEMS NA COMANDA"
+        />
       </Footer>
       <ModalRight
         handleOpenModal={handleOpenModal}
@@ -153,10 +215,13 @@ export const Atendimento = ({ idComanda }) => {
         totalComanda={totalComanda}
       >
         <div>
-          {comanda?.items?.map((item, idx) => (
+          {comanda?.subOrders?.map((item, idx) => (
             <Item
               key={idx}
-              item={item}
+              item={{
+                ...item.product,
+                quantity: item.quantity,
+              }}
               handleAddTotalItemsInTheCategiry={() => {}}
               handleRemoveTotalItemsInTheCategiry={() => {}}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
