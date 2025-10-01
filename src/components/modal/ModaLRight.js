@@ -30,6 +30,8 @@ export const ModalRight = ({
   totalComanda,
   openModal,
   children,
+  saveCommand,
+  itemsSelected,
 }) => {
   const [hidden, setHidden] = useState(true);
   const [animating, setAnimating] = useState(false);
@@ -91,7 +93,12 @@ export const ModalRight = ({
         <div className="flex justify-center items-center w-full">
           <div className="relative w-full flex justify-center items-center">
             <ShowValue totalComanda={totalComanda} />
-            <Button text="LANÇAR ITEMS NA COMANDA" margin="mx-2" />
+            <Button
+              disabled={itemsSelected.length == 0}
+              text="LANÇAR ITEMS NA COMANDA"
+              margin="mx-2"
+              onClick={saveCommand}
+            />
           </div>
         </div>
       </Footer>

@@ -90,7 +90,7 @@ export const Atendimento = ({ idComanda }) => {
         setIsLoading(false);
       }
     };
-    console.log("aaaaaaaaa");
+
     fetchData();
   }, []);
 
@@ -126,7 +126,8 @@ export const Atendimento = ({ idComanda }) => {
     return itemsSelected
       .concat(comanda?.subOrders)
       .reduce(
-        (acc, item) => acc + (item?.quantity * item.product?.price || 0),
+        (acc, item) =>
+          acc + (item?.quantity * (item?.product?.price || item?.price) || 0),
         0
       );
   }, [comanda?.items, itemsSelected]);
@@ -162,21 +163,12 @@ export const Atendimento = ({ idComanda }) => {
               <span className="text-md font-bold">Cardapio</span>
             </div>
           </div>
-          <Link href="/comandas" className="col-span-2 flex justify-end">
-            <div className="flex font-bold text-xl text-[var(--bg-subTitle)] h-[32px] w-full justify-center items-center rounded-r-full rounded-l-full bg-[var(--text-default)]">
-              {code}
-            </div>
-          </Link>
         </HeaderGrid>
         <HeaderGrid>
           <div className="relative col-span-12 flex items-end gap-2">
             <Button href="/comandas" wFull="w-[50px]" text={code}></Button>
             <InputSearch setInputText={setInputText} mini />
-            <Button
-              onClick={handleOpenModal}
-              disabled={isEmpty(comanda?._id)}
-              wFull="w-[50px]"
-            >
+            <Button onClick={handleOpenModal} wFull="w-[50px]">
               <span className="pl-1">
                 <IconMenuList size="h-[32px] w-[32px]" />
               </span>
@@ -205,6 +197,7 @@ export const Atendimento = ({ idComanda }) => {
       <Footer>
         <Button
           onClick={saveCommand}
+          disabled={itemsSelected.length == 0}
           margin="mx-2 mb-2"
           text="LANÇAR ITEMS NA COMANDA"
         />
@@ -213,6 +206,8 @@ export const Atendimento = ({ idComanda }) => {
         handleOpenModal={handleOpenModal}
         openModal={openModal}
         totalComanda={totalComanda}
+        saveCommand={saveCommand}
+        itemsSelected={itemsSelected}
       >
         <div>
           {comanda?.subOrders?.map((item, idx) => (

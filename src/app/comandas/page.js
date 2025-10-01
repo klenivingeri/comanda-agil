@@ -109,10 +109,11 @@ export default function Comandas() {
                 >
                   <div className="h-30 w-28 p-3 text-white flex flex-col justify-between">
                     <div className="flex justify-end text-sm leading-none">
+                      {console.log(c)}
                       {currency(c.payment.amount)}
                     </div>
                     <div className="flex justify-center text-3xl font-bold leading-none">
-                      {c.name}
+                      {c.code}
                     </div>
                     <div className="flex justify-start text-sm leading-none">
                       {dayjs(c.date).format("DD/MM")}
