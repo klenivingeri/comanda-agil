@@ -10,6 +10,8 @@
   --bg-subTitle: white; 
   --bg-alert: #FFDDAA;
 
+  --logo1: #18172C;
+  --logo2: #FF9900;
   --input-default: white;
 
   --button-red-default: #E74C3C; /* Vermelho Cereja */
@@ -108,12 +110,12 @@
 
 
 body, input, textarea, button {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--text-default);
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 

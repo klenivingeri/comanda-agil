@@ -38,7 +38,7 @@ function SubTitle({
     <div
       className={`w-full ${
         isOpen
-          ? "bg-[var(--bg-component)] shadow-md shadow-[var(--text-default)]/50"
+          ? "bg-[var(--bg-component)] shadow-md shadow-[var(--text-default)]/50 mb-2"
           : ""
       }`}
     >
@@ -53,7 +53,7 @@ function SubTitle({
             } px-2 `}
           >
             <div className="col-span-9">
-              <span className="text-2xl">{typeLabel}</span>
+              <span className="text-2xl font-semibold">{typeLabel}</span>
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
               {!!total && (
@@ -61,8 +61,10 @@ function SubTitle({
                   {total}
                 </div>
               )}
-              <div className="w-4 h-4 flex justify-center items-center ">
-                <span>{isOpen ? <IconArrowDown /> : <IconArrowRight />}</span>
+              <div className="w-4 h-4 flex justify-center ">
+                <span className="text-[var(--text-default)]">
+                  {isOpen ? <IconArrowDown /> : <IconArrowRight />}
+                </span>
               </div>
             </div>
           </div>
@@ -70,7 +72,7 @@ function SubTitle({
       )}
       <div
         ref={contentRef}
-        className="mx-2"
+        className={!inputText && "px-2"}
         style={{
           maxHeight: isOpen || inputText ? `${height || 999}px` : "0px",
           overflow: inputText ? "" : "hidden",

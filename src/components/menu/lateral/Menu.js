@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { IconCommand } from "../../../../public/icons/Command";
 import { IconGear } from "../../../../public/icons/Gear";
 import { IconMoney } from "../../../../public/icons/Money";
@@ -8,8 +9,8 @@ import { IconUsers } from "../../../../public/icons/User";
 import { IconCreate } from "../../../../public/icons/Create";
 import { IconSearch } from "../../../../public/icons/Search";
 import { IconChart } from "../../../../public/icons/Chart";
-
-import Link from "next/link";
+import { IconCompany } from "public/icons/Company";
+import { IconGraphic } from "public/icons/Graphic";
 
 const icons = {
   IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
@@ -21,6 +22,8 @@ const icons = {
   IconCreate: <IconCreate size="h-[20px] w-[20px]" />,
   IconSearch: <IconSearch size="h-[20px] w-[20px]" />,
   IconChart: <IconChart size="h-[20px] w-[20px]" />,
+  IconCompany: <IconCompany size="h-[30px] w-[30px]" />,
+  IconGraphic: <IconGraphic size="h-[28px] w-[28px]" />,
 };
 
 const Menu = ({ menuItems }) => {

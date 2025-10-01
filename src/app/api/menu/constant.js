@@ -100,7 +100,12 @@ export const menu = [
   {
     title: "Relatórios",
     path: "/relatarios",
-    icon: "IconPercent",
+    icon: "IconGraphic",
+  },
+  {
+    title: "Empresa",
+    path: "/empresa",
+    icon: "IconCompany",
   },
   {
     title: "Configuração",
