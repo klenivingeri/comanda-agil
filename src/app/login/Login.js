@@ -39,7 +39,15 @@ export default function Login({ store }) {
               onSubmit={handleSubmit}
               className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"
             >
-              <img src="/assets/logo2.png" className="mb-6" />
+              <div className="flex flex-col justify-center items-center text-gray-500 mb-6">
+                <div className="flex text-4xl ">
+                  <span className="text-[var(--logo1)]">Comanda</span>
+                  <span className="text-[var(--logo2)]">Go</span>
+                </div>
+                <span className="text-sm font-extralight">
+                  Gestão de Pedidos Simplificada
+                </span>
+              </div>
               <input
                 type="email"
                 className="w-full text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
