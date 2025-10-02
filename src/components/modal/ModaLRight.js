@@ -7,6 +7,8 @@ import { currency } from "../../app/utils/currency";
 import { IconCircleMoney } from "../../../public/icons/CircleMoney";
 import { Button } from "../button/Button";
 import { Loading } from "../loading/Loading";
+import { useCounter } from "src/hooks/useCounter";
+import { RotateImage } from "src/app/atendimento/Atendimento";
 
 const ShowValue = ({ totalComanda }) => {
   const [show, setShow] = useState(false);
@@ -38,7 +40,9 @@ export const ModalRight = ({
   saveCommand,
   itemsSelected,
   isLoadingCreate,
+  rotated,
 }) => {
+  const score = useCounter(0, 200, 2000);
   const [hidden, setHidden] = useState(true);
   const [animating, setAnimating] = useState(false);
 
@@ -79,7 +83,10 @@ export const ModalRight = ({
               <span className="text-md font-bold">Comanda</span>
             </div>
           </div>
-          <div className="col-span-2 flex items-end pt-1"></div>
+          <div className="flex col-span-2 items-center pb-2 justify-between">
+            <RotateImage rotated={rotated} />
+            {score}k
+          </div>
         </HeaderGrid>
         <div className="w-full h-full flex px-2 gap-2 items-center">
           <div className="pl-2 font-bold min-w-[50px] max-w-[50px]">Quant</div>

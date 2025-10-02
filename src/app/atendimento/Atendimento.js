@@ -19,7 +19,24 @@ import { Button } from "../../components/button/Button";
 import { Loading } from "src/components/loading/Loading";
 import { useCounter } from "src/hooks/useCounter";
 
+export function RotateImage({ rotated }) {
+  return (
+    <div className="">
+      <img
+        src="/assets/score.png"
+        width={20}
+        height={20}
+        alt="Logo"
+        className={`transition-transform duration-500 ease-in-out ${
+          rotated ? "rotate-y-180" : "rotate-y-0"
+        }`}
+      />
+    </div>
+  );
+}
+
 export const Atendimento = ({ idComanda }) => {
+  const [rotated, setRotated] = useState(false);
   const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
   const score = useCounter(0, 200, 2000);
@@ -33,6 +50,7 @@ export const Atendimento = ({ idComanda }) => {
   const [error, setError] = useState(false);
 
   const fetchCreateCommand = async (payload) => {
+    setRotated(!rotated);
     setIsLoadingCreat(true);
     setOpenModal(true);
 
@@ -158,7 +176,7 @@ export const Atendimento = ({ idComanda }) => {
             </div>
           </div>
           <div className="flex col-span-2 items-center pb-2 justify-between">
-            <img src="/assets/score.png" width="20" height="20" className="" />
+            <RotateImage rotated={rotated} setRotated={setRotated} />
             {score}k
           </div>
         </HeaderGrid>
@@ -213,6 +231,7 @@ export const Atendimento = ({ idComanda }) => {
         saveCommand={saveCommand}
         itemsSelected={itemsSelected}
         isLoadingCreate={isLoadingCreate}
+        rotated={rotated}
       >
         <div>
           {comanda?.subOrders?.map((item, idx) => (
