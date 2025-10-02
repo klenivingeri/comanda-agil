@@ -28,6 +28,10 @@ export default function Configuracao() {
 
   const [error, setError] = useState(false);
 
+  const handlesClearingCache = () => {
+    localStorage.removeItem("items-command");
+  };
+
   const handleButtonColor = (color) => {
     const root = window.document.documentElement;
     const colorCurrent = root.classList.value;
@@ -118,6 +122,17 @@ export default function Configuracao() {
                   text="Não"
                   press={hasVibrate === "off"}
                   onClick={handleResponseTouchOff}
+                />
+              </div>
+            </div>
+            <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
+              <div className="mt-3.5">Cache do aplicativo</div>
+              <div className="flex items-center gap-2 ml-4">
+                <Button
+                  wFull="w-28"
+                  hFull="h-8"
+                  text="Limpa"
+                  onClick={handlesClearingCache}
                 />
               </div>
             </div>

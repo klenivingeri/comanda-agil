@@ -6,6 +6,7 @@ import { Header, HeaderGrid } from "../layout/Header";
 import { currency } from "../../app/utils/currency";
 import { IconCircleMoney } from "../../../public/icons/CircleMoney";
 import { Button } from "../button/Button";
+import { Loading } from "../loading/Loading";
 
 const ShowValue = ({ totalComanda }) => {
   const [show, setShow] = useState(false);
@@ -32,6 +33,7 @@ export const ModalRight = ({
   children,
   saveCommand,
   itemsSelected,
+  isLoadingCreate,
 }) => {
   const [hidden, setHidden] = useState(true);
   const [animating, setAnimating] = useState(false);
@@ -95,10 +97,15 @@ export const ModalRight = ({
             <ShowValue totalComanda={totalComanda} />
             <Button
               disabled={itemsSelected.length == 0}
-              text="LANÇAR ITEMS NA COMANDA"
               margin="mx-2"
               onClick={saveCommand}
-            />
+            >
+              {!isLoadingCreate ? (
+                "LANÇAR ITEMS NA COMANDA"
+              ) : (
+                <Loading isLoading={isLoadingCreate} style="style3" />
+              )}
+            </Button>
           </div>
         </div>
       </Footer>

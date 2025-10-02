@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import dayjs from "dayjs";
+import { useConfig } from "../../app/context/ConfigContext";
 
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
@@ -15,49 +15,30 @@ import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconCreate } from "../../../public/icons/Create";
 
 import { currency } from "../utils/currency";
-import { isEmpty } from "../utils/empty";
 
 export default function Comandas() {
-  const [comandas, setComandas] = useState([]);
+  const { _command } = useConfig();
+
   const [inputText, setInputText] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [hasComanda, setHasComanda] = useState(true);
-  const [error, setError] = useState(false);
 
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const getComandas = async () => {
-    const res = await fetch(`/api/comandas`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const itemsDaComanda = await res.json();
-    setIsLoading(false);
-
-    if (isEmpty(itemsDaComanda?.records)) {
-      setError(true);
-      return;
-    }
-
-    setComandas(itemsDaComanda.records);
-  };
-
   useEffect(() => {
-    getComandas();
+    _command.get();
   }, []);
 
   useEffect(() => {
     if (inputText.length) {
-      const hasMatch = comandas?.some((c) => {
+      const hasMatch = _command.all?.some((c) => {
         return c.code.toLowerCase().includes(inputText.trim().toLowerCase());
       });
       setHasComanda(hasMatch);
     }
-  }, [comandas, inputText]);
+  }, [_command.all, inputText]);
 
   return (
     <Container>
@@ -88,12 +69,12 @@ export default function Comandas() {
         </HeaderGrid>
       </Header>
       <div className="mt-[108px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content isLoading={_command.isLoading} error={_command.error}>
           <div
             className="flex flex-wrap justify-center gap-4"
             style={{ alignContent: "flex-start" }}
           >
-            {comandas
+            {_command.all
               ?.filter((c) => {
                 if (!inputText.length) return true;
                 return c.code
@@ -109,7 +90,6 @@ export default function Comandas() {
                 >
                   <div className="h-30 w-28 p-3 text-white flex flex-col justify-between">
                     <div className="flex justify-end text-sm leading-none">
-                      {console.log(c)}
                       {currency(c.payment.amount)}
                     </div>
                     <div className="flex justify-center text-3xl font-bold leading-none">

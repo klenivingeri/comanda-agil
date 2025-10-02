@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
+import { useConfig } from "../../app/context/ConfigContext";
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
@@ -12,25 +13,26 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 
-import Link from "next/link";
-
 import { isEmpty } from "../utils/empty";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Button } from "../../components/button/Button";
+import { Loading } from "src/components/loading/Loading";
 
 export const Atendimento = ({ idComanda }) => {
+  const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
 
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCreate, setIsLoadingCreat] = useState(true);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
 
   const fetchCreateCommand = async (payload) => {
-    setIsLoading(true);
+    setIsLoadingCreat(true);
     setOpenModal(true);
 
     const resp = await fetch(
@@ -50,40 +52,27 @@ export const Atendimento = ({ idComanda }) => {
         return { ...item, quantity: 0 };
       })
     );
-    setIsLoading(false);
+    setIsLoadingCreat(false);
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setItems(_item.all);
       try {
         const _id = idComanda.split("-")[1];
-
-        const requests = [
-          fetch(`/api/items`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }),
-        ];
-
         if (_id) {
-          requests.push(
-            fetch(`/api/comandas?_id=${_id}`, {
+          const hasCommand = _command.all.find((c) => c._id == _id);
+          if (hasCommand?._id) {
+            setComanda(hasCommand);
+          } else {
+            const comandasRes = await fetch(`/api/comandas?_id=${_id}`, {
               method: "GET",
               headers: { "Content-Type": "application/json" },
-            })
-          );
+            });
+            const comandasData = await comandasRes?.json();
+            if (comandasData) setComanda(comandasData?.records);
+          }
         }
-
-        const responses = await Promise.all(requests);
-        const [itemsRes, comandasRes] = responses;
-
-        const [itemsData, comandasData] = await Promise.all([
-          itemsRes.json(),
-          comandasRes?.json(),
-        ]);
-
-        if (itemsData) setItems(itemsData.records);
-        if (comandasData) setComanda(comandasData?.records);
       } catch (err) {
         setError(true);
       } finally {
@@ -92,6 +81,10 @@ export const Atendimento = ({ idComanda }) => {
     };
 
     fetchData();
+  }, [_item.all]);
+
+  useEffect(() => {
+    _item.get();
   }, []);
 
   const handleOpenModal = () => {
@@ -199,8 +192,14 @@ export const Atendimento = ({ idComanda }) => {
           onClick={saveCommand}
           disabled={itemsSelected.length == 0}
           margin="mx-2 mb-2"
-          text="LANÇAR ITEMS NA COMANDA"
-        />
+          text=""
+        >
+          {!isLoadingCreate ? (
+            "LANÇAR ITEMS NA COMANDA"
+          ) : (
+            <Loading isLoading={isLoadingCreate} style="style3" />
+          )}
+        </Button>
       </Footer>
       <ModalRight
         handleOpenModal={handleOpenModal}
@@ -208,6 +207,7 @@ export const Atendimento = ({ idComanda }) => {
         totalComanda={totalComanda}
         saveCommand={saveCommand}
         itemsSelected={itemsSelected}
+        isLoadingCreate={isLoadingCreate}
       >
         <div>
           {comanda?.subOrders?.map((item, idx) => (
