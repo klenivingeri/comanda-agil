@@ -7,8 +7,14 @@ export const ConfigContext = createContext();
 
 export function ConfigProvider({ children }) {
   const [hasVibrate, setHasVibrate] = useState("off");
-  const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
-  const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
+  const [commandSave, setcommandSave] = useState({ all: [], error: false, loading: true });
+  const [itemSave, setItemSave] = useState({ all: [], error: false, loading: true });
+  const [cleaningTrigger, setCleaningTrigger] = useState(false);
+
+  const _handleCleaningTrigger = () => {
+    setItemSave({ all: [], error: false, loading: true });
+    setCleaningTrigger(!cleaningTrigger);
+  }
 
   const getComandas = async () => {
     setcommandSave({ ...commandSave, loading: true });
@@ -29,10 +35,8 @@ export function ConfigProvider({ children }) {
   };
 
   const getItems = async () => {
-    const savedItemsCommand = JSON.parse(localStorage.getItem("items-command"))
-
-    if (savedItemsCommand?.length > 0) {
-      setItemSave({ all: savedItemsCommand, error: false, loading: false });
+    if (itemSave.all.length > 0) {
+      return
     } else {
       setItemSave({ ...itemSave, loading: true });
       const res = await fetch(`/api/items`, {
@@ -58,6 +62,7 @@ export function ConfigProvider({ children }) {
   };
 
   useEffect(() => {
+    console.log('Carregando configurações salvas')
     const savedTheme = localStorage.getItem("theme");
     const savedThemeButton = localStorage.getItem("theme-button");
     const savedVibrateButton = localStorage.getItem("vibrate-button");
@@ -66,6 +71,8 @@ export function ConfigProvider({ children }) {
 
     if (savedItemsCommand?.length > 0) {
       setItemSave({ all: savedItemsCommand, error: false, loading: false });
+    } else {
+      getItems();
     }
 
     const root = window.document.documentElement;
@@ -84,7 +91,7 @@ export function ConfigProvider({ children }) {
     if (!isEmpty(savedVibrateButton)) {
       setHasVibrate(savedVibrateButton);
     }
-  }, []);
+  }, [cleaningTrigger]);
 
   const _command = {
     get: getComandas,
@@ -97,7 +104,7 @@ export function ConfigProvider({ children }) {
   }
 
   return (
-    <ConfigContext.Provider value={{ handleVibrate, hasVibrate, _command, _item }}>
+    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item }}>
       {children}
     </ConfigContext.Provider>
   );

@@ -21,16 +21,14 @@ const optionsColors = [
 ];
 
 export default function Configuracao() {
-  const { handleVibrate, hasVibrate } = useConfig();
-  const [isLoading, setIsLoading] = useState(false);
+  const { handleVibrate, hasVibrate, _handleCleaningTrigger } = useConfig();
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
-
-  const [error, setError] = useState(false);
 
   const handlesClearingCache = () => {
     localStorage.removeItem("items-command");
     localStorage.removeItem("menu");
+    _handleCleaningTrigger();
   };
 
   const handleButtonColor = (color) => {
@@ -40,7 +38,7 @@ export default function Configuracao() {
     for (const option of optionsColors) {
       if (colorCurrent.includes(option?.type)) {
         root.classList.remove(option?.type);
-        localStorage.setItem("theme-button", "");
+        localStorage.removeItem("theme-button");
       }
     }
     if (color !== "default") {
@@ -66,9 +64,6 @@ export default function Configuracao() {
     handleVibrate("off");
   };
 
-  if (isLoading) {
-    return <Loading isLoading={isLoading} />;
-  }
   useEffect(() => {
     const themeButton = localStorage.getItem("theme-button");
     if (themeButton) {
@@ -94,7 +89,7 @@ export default function Configuracao() {
         </HeaderGrid>
       </Header>
       <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content>
           <div className="w-full max-w-[500px] mx-auto">
             <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
               <div className="pt-3.5 ">Cor dos Botões</div>

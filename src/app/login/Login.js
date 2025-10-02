@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Button } from "../../components/button/Button";
@@ -11,6 +11,7 @@ export default function Login({ store }) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(e) {
     setIsLoading(true);
@@ -23,7 +24,7 @@ export default function Login({ store }) {
     });
 
     if (res.ok) {
-      window.location.href = "/comandas";
+      router.push("/comandas");
     } else if (email.trim() !== "" && password.trim() !== "") {
       setError(true);
       setIsLoading(false);

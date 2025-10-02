@@ -102,10 +102,6 @@ export const Atendimento = ({ idComanda }) => {
     fetchData();
   }, [_item.all]);
 
-  useEffect(() => {
-    _item.get();
-  }, []);
-
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
