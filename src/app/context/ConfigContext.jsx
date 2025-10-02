@@ -7,8 +7,8 @@ export const ConfigContext = createContext();
 
 export function ConfigProvider({ children }) {
   const [hasVibrate, setHasVibrate] = useState("off");
-  const [commandSave, setcommandSave] = useState({ all: [], error: false, loading: true });
-  const [itemSave, setItemSave] = useState({ all: [], error: false, loading: true });
+  const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
+  const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
 
   const getComandas = async () => {
     setcommandSave({ ...commandSave, loading: true });

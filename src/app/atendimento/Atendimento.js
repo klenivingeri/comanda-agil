@@ -180,7 +180,7 @@ export const Atendimento = ({ idComanda }) => {
         </HeaderGrid>
       </Header>
       <div className="mt-[104px] mb-[60px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content isLoading={isLoading || _item.isLoading} error={error}>
           {isEmpty(idComanda) ? (
             <div>Selecione uma comanda antes de adiconar os produtos</div>
           ) : (

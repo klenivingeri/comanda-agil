@@ -19,7 +19,6 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
   };
 
   useEffect(() => {
-    getMenu(); //sempre buscar o menu pra teste
     const saveMenuItems = localStorage.getItem("menu");
     if (isEmpty(saveMenuItems)) {
       getMenu();

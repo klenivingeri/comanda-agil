@@ -18,7 +18,6 @@ import { currency } from "../utils/currency";
 
 export default function Comandas() {
   const { _command } = useConfig();
-
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
 
