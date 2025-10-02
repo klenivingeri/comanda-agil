@@ -17,15 +17,16 @@ import { isEmpty } from "../utils/empty";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Button } from "../../components/button/Button";
 import { Loading } from "src/components/loading/Loading";
+import { useCounter } from "src/hooks/useCounter";
 
 export const Atendimento = ({ idComanda }) => {
   const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
-
+  const score = useCounter(0, 200, 2000);
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingCreate, setIsLoadingCreat] = useState(true);
+  const [isLoadingCreate, setIsLoadingCreat] = useState(false);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
@@ -155,6 +156,10 @@ export const Atendimento = ({ idComanda }) => {
             <div className="w-full flex justify-center">
               <span className="text-md font-bold">Cardapio</span>
             </div>
+          </div>
+          <div className="flex col-span-2 items-center pb-2 justify-between">
+            <img src="/assets/score.png" width="20" height="20" className="" />
+            {score}k
           </div>
         </HeaderGrid>
         <HeaderGrid>

@@ -20,12 +20,12 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
 
   useEffect(() => {
     getMenu(); //sempre buscar o menu pra teste
-    // const saveMenuItems = localStorage.getItem("menu");
-    // if (isEmpty(saveMenuItems)) {
-    //   getMenu();
-    // } else {
-    //   setMenuItems(JSON.parse(saveMenuItems));
-    // }
+    const saveMenuItems = localStorage.getItem("menu");
+    if (isEmpty(saveMenuItems)) {
+      getMenu();
+    } else {
+      setMenuItems(JSON.parse(saveMenuItems));
+    }
 
     const savedTheme = localStorage.getItem("theme");
     setThemeCurrent(savedTheme);

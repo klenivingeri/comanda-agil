@@ -30,6 +30,7 @@ export default function Configuracao() {
 
   const handlesClearingCache = () => {
     localStorage.removeItem("items-command");
+    localStorage.removeItem("menu");
   };
 
   const handleButtonColor = (color) => {

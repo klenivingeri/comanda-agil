@@ -15,13 +15,17 @@ const ShowValue = ({ totalComanda }) => {
     <div
       onClick={() => setShow(!show)}
       className={`${
-        show ? "w-[250px] " : "pr-2"
-      } transition-all duration-70 ease-in-out flex text-2xl gap-2 pl-3 py-2 items-center font-bold text-[var(--text-default)]`}
+        show ? (totalComanda >= 1000 ? "w-[370px]" : "w-[280px]") : "w-[50px]"
+      } transition-all duration-300 ease-in-out flex text-2xl gap-2 pl-3 py-2 items-center font-bold text-[var(--text-default)] overflow-hidden`}
     >
       <span>
         <IconCircleMoney size="h-[25px] w-[25px]" />
       </span>
-      {show && <span style={{ lineHeight: 0 }}>{currency(totalComanda)}</span>}
+      {show && (
+        <span className="whitespace-nowrap" style={{ lineHeight: 0 }}>
+          {currency(totalComanda)}
+        </span>
+      )}
     </div>
   );
 };
@@ -54,7 +58,7 @@ export const ModalRight = ({
     <div
       className={`
         absolute right-0 top-0 h-full bg-[var(--background)] z-[100]
-        transition-all duration-300 ease-in-out
+        transition-all duration-200 ease-in-out
         ${openModal && animating ? "w-full opacity-100" : "w-0 opacity-0"}
         ${hidden ? "hidden" : ""}
       `}
