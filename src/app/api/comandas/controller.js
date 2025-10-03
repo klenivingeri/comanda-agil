@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const populate = (products, categories) => ({
   path: "subOrders.product",
   model: products,
@@ -59,9 +61,13 @@ export const postCommands = async ({
   body,
 }) => {
   try {
-    body.tenant = xTenant.id;
-
     await connectToDatabase();
+    body.tenant = xTenant.id;
+    body.subOrders = body.subOrders.map((item) => ({
+      product: item.product,
+      quantity: item.quantity,
+      userId: xTenant.userId,
+    }));
 
     const created = await commands.create(body);
     const response = await commands
@@ -97,6 +103,7 @@ export const putCommands = async ({
               $each: body.subOrders.map((item) => ({
                 product: item.product,
                 quantity: item.quantity,
+                userId: xTenant.userId,
               })),
             },
           },
@@ -110,6 +117,56 @@ export const putCommands = async ({
   } catch (_) {
     return Response.json(
       { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { status: 500 }
+    );
+  }
+};
+
+export const getCommandsForUser = async ({
+  connectToDatabase,
+  commands,
+  xTenant,
+  userId,
+}) => {
+  try {
+    await connectToDatabase();
+    let response;
+
+    if (userId) {
+      response = await commands.aggregate([
+        { $match: { tenant: new mongoose.Types.ObjectId(xTenant.id) } },
+        { $unwind: "$subOrders" },
+        { $match: { "subOrders.userId": userId } },
+        {
+          $lookup: {
+            from: "products", // nome da collection no MongoDB
+            localField: "subOrders.product",
+            foreignField: "_id",
+            as: "productDetails",
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            product: { $arrayElemAt: ["$productDetails", 0] },
+            quantity: "$subOrders.quantity",
+          },
+        },
+      ]);
+    }
+
+    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
+      return Response.json({ records: response }, { status: 200 });
+    }
+
+    return Response.json(
+      { message: "Nenhum item encontrado" },
+      { status: 404 }
+    );
+  } catch (_) {
+    console.log(_);
+    return Response.json(
+      { message: "Erro ao processar os itens" },
       { status: 500 }
     );
   }

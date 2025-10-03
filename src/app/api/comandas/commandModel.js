@@ -27,6 +27,7 @@ const commandsSchema = new mongoose.Schema(
           required: true,
         },
         quantity: { type: mongoose.Schema.Types.Number, default: 0 },
+        userId: { type: String },
       },
     ],
 

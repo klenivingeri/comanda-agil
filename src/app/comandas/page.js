@@ -74,7 +74,12 @@ export default function Comandas() {
             style={{ alignContent: "flex-start" }}
           >
             {_command.all
-              ?.filter((c) => {
+              ?.sort((a, b) => {
+                const codeA = a.code;
+                const codeB = b.code;
+                return codeA.localeCompare(codeB);
+              })
+              .filter((c) => {
                 if (!inputText.length) return true;
                 return c.code
                   .toLowerCase()

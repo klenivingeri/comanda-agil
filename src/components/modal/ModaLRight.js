@@ -97,7 +97,7 @@ export const ModalRight = ({
       </Header>
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div className="flex-1 overflow-auto mt-[60px] mb-[50px] p-2">
+        <div className="flex-1 overflow-auto mt-[60px] mb-[60px] p-2">
           {children}
         </div>
       </div>

@@ -18,6 +18,9 @@ const usersSchema = new mongoose.Schema(
       required: true,
     },
     active: { type: Boolean, default: true },
+    painel: {
+      score: { type: Number, default: 0 },
+    },
   },
   { versionKey: false }
 );
@@ -25,3 +28,14 @@ const usersSchema = new mongoose.Schema(
 const users = mongoose.models?.users || mongoose.model("users", usersSchema);
 
 export { users };
+
+/*
+    profile: {
+      avatar: { type: String, default: "" },
+      phone: { type: String, default: "" },
+      address: { type: String, default: "" },
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      country: { type: String, default: "" },
+    },
+*/

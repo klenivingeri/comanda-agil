@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Menu from "./Menu";
 import { isEmpty } from "../../../app/utils/empty";
 import { SideModal } from "../../../components/modal/SideModal";
+import Link from "next/link";
 
 export const MenuMobile = ({ handleOpenModal, openModal }) => {
   const [themeCurrent, setThemeCurrent] = useState("");
@@ -45,13 +46,16 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
       <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-2xl m-2 bg-[var(--foreground)]">
         <div className="w-full grid grid-cols-12 px-2 h-[200px]">
-          <div className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">
+          <Link
+            href="/perfil"
+            className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr"
+          >
             <div className="rounded-full border-1 p-[1px] mb-4">
               <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
             </div>
             <span className="px-2 shadow-2xl font-bold ">Fulano Silva</span>
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
-          </div>
+          </Link>
           <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
             {themeCurrent === "dark" ? (
               <button onClick={() => handleSetTheme("light")} className="p-3">
