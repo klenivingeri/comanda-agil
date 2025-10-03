@@ -173,13 +173,13 @@ export const Atendimento = ({ idComanda }) => {
           <div className="col-span-2" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 flex pt-1">
             <div className="w-full flex justify-center">
               <span className="text-md font-bold">Cardapio</span>
             </div>
           </div>
           <div className="flex col-span-2 items-center pb-2 justify-between">
-            <RotateImage rotated={rotated} setRotated={setRotated} />
+            <RotateImage rotated={rotated} />
             {score}k
           </div>
         </HeaderGrid>

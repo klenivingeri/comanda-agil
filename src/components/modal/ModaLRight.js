@@ -79,20 +79,17 @@ export const ModalRight = ({
         if (!openModal) setHidden(true);
       }}
     >
-      <Header h="h-[65px]" divider>
+      <Header h="h-[80px]" divider>
         <HeaderGrid>
-          <div
-            className="col-span-2 flex items-center"
-            onClick={handleOpenModal}
-          >
-            <IconX size="h-[30px] w-[30px]" />
+          <div className="col-span-2" onClick={handleOpenModal}>
+            <IconX size="h-[32px] w-[32px]" />
           </div>
-          <div className="col-span-8 flex items-center">
-            <div className="w-full flex justify-center pt-2">
-              <span className="text-md font-bold">Comanda</span>
+          <div className="col-span-8 flex pt-1">
+            <div className="w-full flex justify-center">
+              <span className="text-md font-bold">Cardapio</span>
             </div>
           </div>
-          <div className="flex col-span-2 items-center pb-2 justify-between">
+          <div className="flex col-span-2 items-center justify-between">
             <RotateImage rotated={rotated} />
             {score}k
           </div>
@@ -107,7 +104,7 @@ export const ModalRight = ({
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
         <div
-          className="flex-1 overflow-auto mt-[60px] mb-[60px] p-2"
+          className="flex-1 overflow-auto mt-[77px] mb-[65px] p-2"
           id="minhaDiv"
         >
           {children}
