@@ -36,6 +36,7 @@ export function RotateImage({ rotated }) {
 }
 
 export const Atendimento = ({ idComanda }) => {
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [rotated, setRotated] = useState(false);
   const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
@@ -103,6 +104,12 @@ export const Atendimento = ({ idComanda }) => {
   }, [_item.all]);
 
   const handleOpenModal = () => {
+    if (!openModal) {
+      console.log("salvei");
+      setScrollPosition(window.scrollY);
+    } else {
+      const t = setTimeout(() => window.scrollTo({ top: scrollPosition }), 50);
+    }
     setOpenModal(!openModal);
   };
 
@@ -202,6 +209,7 @@ export const Atendimento = ({ idComanda }) => {
               items={items}
               inputText={inputText}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
+              openModal={openModal}
             />
           )}
         </Content>

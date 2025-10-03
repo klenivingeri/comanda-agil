@@ -107,6 +107,7 @@ export const ItemList = ({
   items,
   handleUpdateItemsSelected,
   showListComanda,
+  openModal,
 }) => {
   if (items.length <= 0) return;
   const [openType, setOpenType] = useState(null);
@@ -131,7 +132,8 @@ export const ItemList = ({
   }, [inputText]);
 
   return (
-    <div className="h-full w-full">
+    // openModal está aqui pra ajudar a função testParaIniciarDivNoFim
+    <div className={` ${openModal ? "hidden" : "h-full"} w-full`}>
       {Object.entries(groupedItems).map(([type, items]) => {
         return (
           <SubTitle

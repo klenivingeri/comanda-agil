@@ -46,13 +46,22 @@ export const ModalRight = ({
   const [hidden, setHidden] = useState(true);
   const [animating, setAnimating] = useState(false);
 
+  const testParaIniciarDivNoFim = () => {
+    const div = document.getElementById("minhaDiv");
+    if (div) {
+      div.scrollTo({
+        top: div.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
   useEffect(() => {
     if (openModal) {
-      window.scrollTo({ top: 0 });
       setHidden(false);
 
       const t = setTimeout(() => setAnimating(true), 50);
-      return () => clearTimeout(t);
+      const a = setTimeout(() => testParaIniciarDivNoFim(), 50);
+      return () => clearTimeout(t, a);
     } else {
       setAnimating(false);
     }
@@ -61,9 +70,9 @@ export const ModalRight = ({
   return (
     <div
       className={`
-        absolute right-0 top-0 h-full bg-[var(--background)] z-[100]
+        absolute bottom-0 top-0 h-full bg-[var(--background)] z-[100]
         transition-all duration-200 ease-in-out
-        ${openModal && animating ? "w-full opacity-100" : "w-0 opacity-0"}
+        ${openModal && animating ? "w-full opacity-100" : "h-0 opacity-0"}
         ${hidden ? "hidden" : ""}
       `}
       onTransitionEnd={() => {
@@ -97,7 +106,10 @@ export const ModalRight = ({
       </Header>
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div className="flex-1 overflow-auto mt-[60px] mb-[60px] p-2">
+        <div
+          className="flex-1 overflow-auto mt-[60px] mb-[60px] p-2"
+          id="minhaDiv"
+        >
           {children}
         </div>
       </div>
