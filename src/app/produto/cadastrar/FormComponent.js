@@ -1,6 +1,7 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { InputFileComponent } from "../../../components/form/InputFileComponent";
-import { Loading } from "../../../components/loading/Loading";
+import { useToast } from "../../../hooks/useToast";
+
 import {
   Form,
   Input,
@@ -8,24 +9,6 @@ import {
   Select,
   Textarea,
 } from "../../../components/form/FormComponents";
-
-const fetchCreateProduct = async (payload) => {
-  const resp = await fetch(`/api/items`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const result = await resp.json();
-};
-
-const fetchUpdateProduct = async (id, payload) => {
-  const resp = await fetch(`/api/items?id=${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const result = await resp.json();
-};
 
 export const FormComponent = ({ categories, product }) => {
   const [isValid, setIsValid] = useState(false);
@@ -35,6 +18,24 @@ export const FormComponent = ({ categories, product }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const toast = useToast();
+
+  const fetchCreateUpdateProduct = async (id, payload) => {
+    try {
+      const resp = await fetch(`/api/items?id=${id}`, {
+        method: id ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await resp.json();
+
+      toast.success("Produto cadastrada com sucesso!");
+    } catch (_) {
+      toast.error("Ocorreu um erro ao cadastrar a Produto.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSend = async () => {
     if (!code || !name || !price || !description || !category) {
@@ -43,26 +44,20 @@ export const FormComponent = ({ categories, product }) => {
     }
     setIsValid(false);
 
-    if (product?._id) {
-      setIsLoading(true);
-      fetchUpdateProduct(product._id, {
-        code,
-        name,
-        price,
-        description,
-        category,
-      });
-    } else {
-      setIsLoading(true);
-      fetchCreateProduct({ code, name, price, description, category });
-    }
+    setIsLoading(true);
+    fetchCreateUpdateProduct(product?._id, {
+      code,
+      name,
+      price,
+      description,
+      category,
+    });
 
     setCode("");
     setName("");
     setPrice("");
     setDescription("");
     setCategory("");
-    setIsLoading(false);
   };
 
   useEffect(() => {

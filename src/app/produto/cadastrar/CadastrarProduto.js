@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { useToast } from "../../../hooks/useToast";
 import { Container } from "../../../components/layout/Container";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
-import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
@@ -15,15 +15,11 @@ export const ProdutoCadastrar = ({ productUUID }) => {
   const [product, setProduct] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
-
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
-  };
+  const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-
       try {
         const requests = [
           fetch(`/api/category`, {
@@ -57,8 +53,9 @@ export const ProdutoCadastrar = ({ productUUID }) => {
             setProduct(productJSON.records);
           }
         }
-      } catch (err) {
-        console.error("Erro ao buscar dados:", err);
+      } catch (error) {
+        setIsLoading(false);
+        toast.error("Ocorreu um erro ao cadastrar a categoria.");
         setError(true);
       } finally {
         setIsLoading(false);
@@ -72,7 +69,7 @@ export const ProdutoCadastrar = ({ productUUID }) => {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
+          <div className="col-span-2 flex" onClick={() => router.back()}>
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
 
@@ -89,10 +86,6 @@ export const ProdutoCadastrar = ({ productUUID }) => {
           <FormComponent categories={categories} product={product} />
         </Content>
       </div>
-      <MenuMobile
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 };

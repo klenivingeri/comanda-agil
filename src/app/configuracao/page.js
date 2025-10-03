@@ -26,7 +26,7 @@ export default function Configuracao() {
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
 
   const handlesClearingCache = () => {
-    localStorage.removeItem("items-command");
+    sessionStorage.removeItem("items-command");
     localStorage.removeItem("menu");
     _handleCleaningTrigger();
   };

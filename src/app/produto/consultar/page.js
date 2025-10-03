@@ -17,7 +17,7 @@ import { IconEdit } from "public/icons/Edit";
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
@@ -26,20 +26,19 @@ export default function ConsultarCategoria() {
   };
 
   const getProducts = async () => {
-    const res = await fetch(`/api/items`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const resJSON = await res.json();
-
-    if (isEmpty(resJSON.records)) {
+    try {
+      const res = await fetch(`/api/items`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const resJSON = await res.json();
+      setProducts(resJSON.records);
+    } catch (_) {
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    setProducts(resJSON.records);
-    setIsLoading(false);
   };
+
   const handleDelete = async (_id) => {
     const res = await fetch(`/api/items`, {
       method: "DELETE",
@@ -51,7 +50,6 @@ export default function ConsultarCategoria() {
 
   useEffect(() => {
     getProducts();
-    setIsLoading(false);
   }, []);
 
   return (

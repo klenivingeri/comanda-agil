@@ -52,6 +52,7 @@ export const Button = React.memo(
 
     if (!isEmpty(href)) {
       attrButton.href = href;
+      attrButton.prefetch = true;
     }
 
     const buttonStyles = getButtonStyles({
@@ -86,7 +87,6 @@ export const Button = React.memo(
           ${margin ? margin : ""}`}
       >
         <Element
-          prefetch={true}
           onTouchStart={() => handleSetIsPressed(true)}
           onTouchEnd={() => handleSetIsPressed(false)}
           onMouseDown={() => handleSetIsPressed(true)}

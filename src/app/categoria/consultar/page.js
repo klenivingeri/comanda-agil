@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
-
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { InputSearch } from "../../../components/input/inputSearch";
-import { isEmpty } from "src/app/utils/empty";
 import { ItemList } from "src/components/itemList";
 import { Button } from "src/components/button/Button";
 import { IconDelete } from "public/icons/Delete";
@@ -26,19 +25,17 @@ export default function ConsultarCategoria() {
   };
 
   const getCategoryItems = async () => {
-    const res = await fetch(`/api/category`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const resJSON = await res.json();
-
-    if (isEmpty(resJSON.records)) {
+    try {
+      const res = await fetch(`/api/category`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const resJSON = await res.json();
+      setCategories(resJSON.records);
+    } catch (_) {
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    setCategories(resJSON.records);
-    setIsLoading(false);
   };
 
   const handleDelete = async (_id) => {
@@ -51,8 +48,8 @@ export default function ConsultarCategoria() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getCategoryItems();
-    setIsLoading(false);
   }, []);
 
   return (
@@ -65,7 +62,7 @@ export default function ConsultarCategoria() {
 
           <div className="col-span-8 flex items-center">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Consultar Funcionario</span>
+              <span className="text-md font-bold">Consultar Categoria</span>
             </div>
           </div>
           <div className="col-span-2"></div>

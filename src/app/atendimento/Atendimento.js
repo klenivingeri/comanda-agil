@@ -18,6 +18,7 @@ import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Button } from "../../components/button/Button";
 import { Loading } from "src/components/loading/Loading";
 import { useCounter } from "src/hooks/useCounter";
+import { useToast } from "src/hooks/useToast";
 
 export function RotateImage({ rotated }) {
   return (
@@ -49,30 +50,38 @@ export const Atendimento = ({ idComanda }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
+  const toast = useToast();
 
   const fetchCreateCommand = async (payload) => {
     setRotated(!rotated);
     setIsLoadingCreat(true);
     setOpenModal(true);
 
-    const resp = await fetch(
-      `/api/comandas${comanda?._id ? `?_id=${comanda?._id}` : ""}`,
-      {
-        method: comanda?._id ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
+    try {
+      const resp = await fetch(
+        `/api/comandas${comanda?._id ? `?_id=${comanda?._id}` : ""}`,
+        {
+          method: comanda?._id ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
-    const result = await resp.json();
-    setComanda(result?.records);
+      const result = await resp.json();
+      setComanda(result?.records);
 
-    setItems(
-      items.map((item) => {
-        return { ...item, quantity: 0 };
-      })
-    );
-    setIsLoadingCreat(false);
+      setItems(
+        items.map((item) => {
+          return { ...item, quantity: 0 };
+        })
+      );
+      toast.success("Item enviado com sucesso!");
+      setIsLoadingCreat(false);
+    } catch (_) {
+      toast.error("Ocorreu um erro ao enviar o items");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

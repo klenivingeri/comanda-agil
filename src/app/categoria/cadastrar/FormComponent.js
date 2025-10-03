@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Form, Input } from "../../../components/form/FormComponents";
-import { Loading } from "../../../components/loading/Loading";
+import { useToast } from "../../../hooks/useToast";
 
 export const FormComponent = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [name, setName] = useState(category?.name || "");
+  const toast = useToast();
 
   useEffect(() => {
     if (category?.name) {
@@ -15,14 +16,20 @@ export const FormComponent = ({ category }) => {
 
   const fetchCreateItem = async (formDetails) => {
     setIsLoading(true);
-    const resp = await fetch(`/api/category`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formDetails),
-    });
+    try {
+      const resp = await fetch(`/api/category`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formDetails),
+      });
+      const result = await resp.json();
 
-    const result = await resp.json();
-    setIsLoading(false);
+      toast.success("Categoria cadastrada com sucesso!");
+    } catch (error) {
+      toast.error("Ocorreu um erro ao cadastrar a categoria.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const fetchUpdateItem = async (formDetails) => {

@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Container } from "../../../components/layout/Container";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
-import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
@@ -14,6 +14,7 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
   const [category, setCategory] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
@@ -46,13 +47,13 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
+          <div className="col-span-2 flex" onClick={() => router.back()}>
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cadastrar Produto</span>
+              <span className="text-md font-bold">Cadastrar Categoria</span>
             </div>
           </div>
           <div className="col-span-2"></div>
@@ -63,10 +64,6 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
           <FormComponent category={category} />
         </Content>
       </div>
-      <MenuMobile
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 };
