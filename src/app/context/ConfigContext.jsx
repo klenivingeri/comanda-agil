@@ -10,17 +10,17 @@ const defaultValue = {
 
 export function ConfigProvider({ children }) {
   const [hasVibrate, setHasVibrate] = useState("off");
-  const [commandSave, setcommandSave] = useState({ all: [], error: false, loading: true });
-  const [itemSave, setItemSave] = useState({ all: [], error: false, loading: true });
+  const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
+  const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
   const [cleaningTrigger, setCleaningTrigger] = useState(false);
 
   const _handleCleaningTrigger = () => {
-    setItemSave({ all: [], error: false, loading: true });
+    setItemSave({ all: [], error: false, isLoading: true });
     setCleaningTrigger(!cleaningTrigger);
   }
 
   const getComandas = async () => {
-    setcommandSave({ ...commandSave, loading: true });
+    setcommandSave({ ...commandSave, isLoading: true });
     const res = await fetch(`/api/comandas`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export function ConfigProvider({ children }) {
       return;
     }
 
-    setcommandSave({ all: comanda.records, error: false, loading: false });
+    setcommandSave({ all: comanda.records, error: false, isLoading: false });
 
   };
 
@@ -54,7 +54,7 @@ export function ConfigProvider({ children }) {
         return;
       }
       sessionStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
-      setItemSave({ all: itemsDaComanda.records, error: false, loading: false });
+      setItemSave({ all: itemsDaComanda.records, error: false, isLoading: false });
     }
 
   };
@@ -73,7 +73,7 @@ export function ConfigProvider({ children }) {
     const savedItemsCommand = JSON.parse(sessionStorage.getItem("items-command"))
 
     if (savedItemsCommand?.length > 0) {
-      setItemSave({ all: savedItemsCommand, error: false, loading: false });
+      setItemSave({ all: savedItemsCommand, error: false, isLoading: false });
     } else {
       getItems();
     }
