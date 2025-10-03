@@ -68,7 +68,7 @@ export default function Login({ store }) {
                   Algo errado não esta certo, tente novamente.
                 </p>
               )}
-              <Button type="submit">
+              <Button type="submit" style="buttonOrange">
                 {!isLoading ? (
                   "Entrar"
                 ) : (

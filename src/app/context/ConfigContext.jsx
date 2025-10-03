@@ -3,7 +3,10 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { isEmpty } from "../utils/empty";
 
 export const ConfigContext = createContext();
-
+const defaultValue = {
+  hasVibrate: false,
+  // outros defaults
+};
 
 export function ConfigProvider({ children }) {
   const [hasVibrate, setHasVibrate] = useState("off");
@@ -50,7 +53,7 @@ export function ConfigProvider({ children }) {
         setItemSave({ ...itemsDaComanda, error: true });
         return;
       }
-      localStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
+      sessionStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
       setItemSave({ all: itemsDaComanda.records, error: false, loading: false });
     }
 
@@ -67,7 +70,7 @@ export function ConfigProvider({ children }) {
     const savedThemeButton = localStorage.getItem("theme-button");
     const savedVibrateButton = localStorage.getItem("vibrate-button");
 
-    const savedItemsCommand = JSON.parse(localStorage.getItem("items-command"))
+    const savedItemsCommand = JSON.parse(sessionStorage.getItem("items-command"))
 
     if (savedItemsCommand?.length > 0) {
       setItemSave({ all: savedItemsCommand, error: false, loading: false });
@@ -110,4 +113,4 @@ export function ConfigProvider({ children }) {
   );
 }
 
-export const useConfig = () => useContext(ConfigContext);
+export const useConfig = () => useContext(ConfigContext) || defaultValue

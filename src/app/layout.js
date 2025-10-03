@@ -1,5 +1,6 @@
 import { Montserrat, Poppins } from "next/font/google";
-import { ConfigProvider } from "./context/ConfigContext";
+
+import Providers from "./providers";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -39,9 +40,9 @@ export default function RootLayout({ children }) {
             id="container"
             className="flex w-full md:max-w-[768px] min-h-screen relative"
           >
-            <ConfigProvider>
+            <Providers>
               <main className="flex-1">{children}</main>
-            </ConfigProvider>
+            </Providers>
           </div>
         </div>
       </body>
