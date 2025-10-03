@@ -86,6 +86,7 @@ export const Button = React.memo(
           ${margin ? margin : ""}`}
       >
         <Element
+          prefetch={true}
           onTouchStart={() => handleSetIsPressed(true)}
           onTouchEnd={() => handleSetIsPressed(false)}
           onMouseDown={() => handleSetIsPressed(true)}
