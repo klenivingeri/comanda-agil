@@ -105,7 +105,6 @@ export const Atendimento = ({ idComanda }) => {
 
   const handleOpenModal = () => {
     if (!openModal) {
-      console.log("salvei");
       setScrollPosition(window.scrollY);
     } else {
       const t = setTimeout(() => window.scrollTo({ top: scrollPosition }), 50);

@@ -19,13 +19,10 @@ export default function Perfil() {
   };
 
   const handleFetch = async () => {
-    const res = await fetch(
-      `/api/comandas/items?userId=68d9233144b1a2f9911f140f`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const res = await fetch("/api/comandas/items", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
   };
 
   return (

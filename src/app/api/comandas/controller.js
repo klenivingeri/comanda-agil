@@ -126,17 +126,16 @@ export const getCommandsForUser = async ({
   connectToDatabase,
   commands,
   xTenant,
-  userId,
 }) => {
   try {
     await connectToDatabase();
     let response;
 
-    if (userId) {
+    if (xTenant.userId) {
       response = await commands.aggregate([
         { $match: { tenant: new mongoose.Types.ObjectId(xTenant.id) } },
         { $unwind: "$subOrders" },
-        { $match: { "subOrders.userId": userId } },
+        { $match: { "subOrders.userId": xTenant.userId } },
         {
           $lookup: {
             from: "products", // nome da collection no MongoDB
