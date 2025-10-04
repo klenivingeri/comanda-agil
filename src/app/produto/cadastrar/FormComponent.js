@@ -100,6 +100,7 @@ export const FormComponent = ({ categories, product }) => {
           isValid={isValid}
           error={!price}
           value={price}
+          type="tel"
           isCurrency
         />
         <Textarea
@@ -112,9 +113,10 @@ export const FormComponent = ({ categories, product }) => {
           value={description}
         />
         <Select
-          name="Selecione a categoria"
+          name="Categoria"
           id="select"
           value={category}
+          placeholder="Selecione a categoria"
           setValue={setCategory}
           options={categories}
           isValid={isValid}

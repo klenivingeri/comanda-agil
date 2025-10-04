@@ -1,6 +1,6 @@
 import { serialize } from "cookie";
 import crypto, { randomUUID } from "crypto";
-import { tenants } from "../login/create/tenantModel";
+import { tenants } from "../user/tenantModel";
 
 const SECRET = process.env.COOKIE_SECRET;
 

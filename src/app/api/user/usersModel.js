@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { tenantSchema } from "./create/tenantModel";
+import { tenantSchema } from "./tenantModel";
 
 const usersSchema = new mongoose.Schema(
   {
@@ -9,12 +9,16 @@ const usersSchema = new mongoose.Schema(
     password: { type: String, required: true },
     role: {
       type: String,
-      enum: ["master", "admin", "gm", "user"],
+      enum: ["ADMIN", "EDITOR", "MODERATOR", "VIEWER"],
       default: "user",
     },
     tenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",
+      required: true,
+    },
+    branch: {
+      type: String,
       required: true,
     },
     active: { type: Boolean, default: true },

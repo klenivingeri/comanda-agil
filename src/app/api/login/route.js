@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../lib/dbConnect";
-import { users } from "./usersModel.js";
+import { users } from "../user/usersModel.js";
 import { postLogin } from "./controller.js";
 
 export async function POST(request) {

@@ -53,7 +53,7 @@ function SubTitle({
             } px-2 `}
           >
             <div className="col-span-9">
-              <span className="text-2xl font-semibold">{typeLabel}</span>
+              <span className="text-1xl font-semibold">{typeLabel}</span>
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
               {!!total && (
