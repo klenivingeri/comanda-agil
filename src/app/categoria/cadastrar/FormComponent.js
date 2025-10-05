@@ -14,11 +14,11 @@ export const FormComponent = ({ category }) => {
     }
   }, [category]);
 
-  const fetchCreateItem = async (formDetails) => {
+  const fetchCreateIUpdatetem = async (formDetails) => {
     setIsLoading(true);
     try {
       const resp = await fetch(`/api/category`, {
-        method: "POST",
+        method: formDetails?._id ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formDetails),
       });
@@ -32,18 +32,6 @@ export const FormComponent = ({ category }) => {
     }
   };
 
-  const fetchUpdateItem = async (formDetails) => {
-    setIsLoading(true);
-    const resp = await fetch(`/api/category`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formDetails),
-    });
-
-    // const result = await resp.json();
-    setIsLoading(false);
-  };
-
   const handleSend = async () => {
     if (!name) {
       setIsValid(true);
@@ -51,11 +39,7 @@ export const FormComponent = ({ category }) => {
     }
     setIsValid(false);
 
-    if (category._id) {
-      fetchUpdateItem({ name, _id: category._id });
-    } else {
-      fetchCreateItem({ name });
-    }
+    fetchCreateIUpdatetem({ _id: category?._id, name });
     setName("");
   };
 

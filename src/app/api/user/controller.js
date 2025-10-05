@@ -15,14 +15,62 @@ async function createUser(email, password) {
   return user;
 }
 
-export const postUser = async ({ connectToDatabase, users, xTenant, body }) => {
+export const getUser = async ({ users, xTenant, _id }) => {
   try {
-    connectToDatabase();
-    esperar(3000);
-    console.log(body);
+    let response;
+
+    if (_id) {
+      response = await users
+        .findOne({
+          _id,
+          tenant: xTenant.id,
+        })
+        .lean();
+    } else {
+      response = await users
+        .find({
+          tenant: xTenant.id,
+        })
+        .lean();
+    }
+
+    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
+      return Response.json({ records: response }, { status: 200 });
+    }
+
+    return Response.json(
+      { message: "Nenhum usuario encontrado" },
+      { status: 404 }
+    );
+  } catch (e) {
+    console.error(e);
+    return Response.json(
+      { message: "Erro ao processar os itens" },
+      { status: 500 }
+    );
+  }
+};
+
+export const postUser = async ({ users, xTenant, body }) => {
+  try {
     body.tenant = xTenant.id;
     //createUser("erick@loja.com", "123456");
     const created = await users.create(body);
+    return Response.json(
+      { message: "sucesso ao fazer login" },
+      { status: 200 }
+    );
+  } catch (_) {
+    console.log(_);
+    return Response.json({ message: "Rotas de items" }, { status: 500 });
+  }
+};
+
+export const putUser = async ({ users, xTenant, _id, body }) => {
+  try {
+    body.tenant = xTenant.id;
+
+    await users.findByIdAndUpdate({ _id, tenant: xTenant.id }, { $set: body });
     return Response.json(
       { message: "sucesso ao fazer login" },
       { status: 200 }

@@ -10,12 +10,12 @@ import {
 import { getStoreXTenant } from "../utils/getStoreXTenant.js";
 
 export async function GET(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
   const response = getProducts({
-    connectToDatabase,
     products,
     categories,
     xTenant,
@@ -26,11 +26,11 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = postProducts({
-    connectToDatabase,
     products,
     xTenant,
     body,
@@ -40,13 +40,13 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   const body = await request.json();
 
   const response = await putProducts({
-    connectToDatabase,
     products,
     xTenant,
     body,
@@ -57,11 +57,11 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = await deleteProdutcs({
-    connectToDatabase,
     products,
     xTenant,
     body,

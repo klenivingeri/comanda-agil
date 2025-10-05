@@ -5,17 +5,17 @@ import { getStoreXTenant } from "../utils/getStoreXTenant.js";
 import {
   getCagetories,
   postCagetories,
-  patchCagetories,
+  putCagetories,
   deleteCagetories,
 } from "./controller.js";
 
 export async function GET(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
   const response = await getCagetories({
-    connectToDatabase,
     categories,
     xTenant,
     id,
@@ -25,11 +25,11 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = await postCagetories({
-    connectToDatabase,
     categories,
     xTenant,
     body,
@@ -38,12 +38,12 @@ export async function POST(request) {
   return response;
 }
 
-export async function PATCH(request) {
+export async function PUT(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
-  const response = await patchCagetories({
-    connectToDatabase,
+  const response = await putCagetories({
     categories,
     xTenant,
     body,
@@ -53,11 +53,11 @@ export async function PATCH(request) {
 }
 
 export async function DELETE(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = await deleteCagetories({
-    connectToDatabase,
     categories,
     xTenant,
     body,

@@ -27,13 +27,12 @@ export function createCookie(tenantId, userId, rule) {
   });
 }
 
-export const postLogin = async (connectToDatabase, users, email, password) => {
+export const postLogin = async ({ users, email, password }) => {
   try {
-    await connectToDatabase();
-
     const user = await users
       .findOne({ email, active: true })
-      .populate({ path: "tenant", model: tenants, select: "name" });
+      .populate({ path: "tenant", model: tenants, select: "name" })
+      .lean();
 
     if (!user)
       return new Response(

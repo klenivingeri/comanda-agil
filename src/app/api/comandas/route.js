@@ -7,12 +7,12 @@ import { getStoreXTenant } from "../utils/getStoreXTenant.js";
 import { getCommands, postCommands, putCommands } from "./controller.js";
 
 export async function GET(request) {
+  await connectToDatabase();
   const { searchParams } = new URL(request.url);
   const _id = searchParams.get("_id");
   const xTenant = getStoreXTenant(request);
 
   const response = getCommands({
-    connectToDatabase,
     categories,
     commands,
     products,
@@ -24,11 +24,11 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = await postCommands({
-    connectToDatabase,
     categories,
     commands,
     products,
@@ -40,13 +40,13 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
+  await connectToDatabase();
   const { searchParams } = new URL(request.url);
   const _id = searchParams.get("_id");
   const xTenant = getStoreXTenant(request);
   const body = await request.json();
 
   const response = await putCommands({
-    connectToDatabase,
     categories,
     commands,
     products,

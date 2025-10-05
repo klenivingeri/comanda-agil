@@ -11,7 +11,6 @@ const populate = (products, categories) => ({
 });
 
 export const getCommands = async ({
-  connectToDatabase,
   categories,
   commands,
   products,
@@ -19,7 +18,6 @@ export const getCommands = async ({
   _id,
 }) => {
   try {
-    await connectToDatabase();
     let response;
     if (_id) {
       response = await commands
@@ -27,13 +25,15 @@ export const getCommands = async ({
           _id,
           tenant: xTenant.id,
         })
-        .populate(populate(products, categories));
+        .populate(populate(products, categories))
+        .lean();
     } else {
       response = await commands
         .find({
           tenant: xTenant.id,
         })
-        .populate(populate(products, categories));
+        .populate(populate(products, categories))
+        .lean();
     }
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {
@@ -53,7 +53,6 @@ export const getCommands = async ({
 };
 
 export const postCommands = async ({
-  connectToDatabase,
   categories,
   commands,
   products,
@@ -61,21 +60,21 @@ export const postCommands = async ({
   body,
 }) => {
   try {
-    await connectToDatabase();
     body.tenant = xTenant.id;
-    body.subOrders = body.subOrders.map((item) => ({
-      product: item.product,
-      quantity: item.quantity,
-      userId: xTenant.userId,
-    }));
+    body.subOrders = body.subOrders
+      .filter((item) => item.quantity > 0 && item.product)
+      .map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+        userId: xTenant.userId,
+      }));
 
     const created = await commands.create(body);
-    const response = await commands
-      .findById(created._id)
-      .populate(populate(products, categories));
+    await created.populate(populate(products, categories));
 
-    return Response.json({ records: response }, { status: 200 });
+    return Response.json({ records: created }, { status: 200 });
   } catch (err) {
+    console.error("Erro postCommands:", err);
     return Response.json(
       { message: "Ocorreu um erro ao fazer o cadastro do item" },
       { status: 500 }
@@ -84,7 +83,6 @@ export const postCommands = async ({
 };
 
 export const putCommands = async ({
-  connectToDatabase,
   categories,
   commands,
   products,
@@ -93,42 +91,44 @@ export const putCommands = async ({
   _id,
 }) => {
   try {
-    await connectToDatabase();
+    const validSubOrders = (body.subOrders || [])
+      .filter((item) => item.product && item.quantity > 0)
+      .map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+        userId: xTenant.userId,
+      }));
+
     const response = await commands
       .findOneAndUpdate(
         { _id, tenant: xTenant.id },
         {
-          $push: {
-            subOrders: {
-              $each: body.subOrders.map((item) => ({
-                product: item.product,
-                quantity: item.quantity,
-                userId: xTenant.userId,
-              })),
-            },
-          },
-          $set: { "payment.amount": body.payment.amount },
+          $push: { subOrders: { $each: validSubOrders } },
+          $set: { "payment.amount": body.payment?.amount },
         },
         { new: true }
       )
       .populate(populate(products, categories));
 
+    if (!response) {
+      return Response.json(
+        { message: "Comanda não encontrada" },
+        { status: 404 }
+      );
+    }
+
     return Response.json({ records: response }, { status: 200 });
-  } catch (_) {
+  } catch (err) {
+    console.error("Erro putCommands:", err);
     return Response.json(
-      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { message: "Ocorreu um erro ao atualizar o item" },
       { status: 500 }
     );
   }
 };
 
-export const getCommandsForUser = async ({
-  connectToDatabase,
-  commands,
-  xTenant,
-}) => {
+export const getCommandsForUser = async ({ commands, xTenant }) => {
   try {
-    await connectToDatabase();
     let response;
 
     if (xTenant.userId) {
@@ -154,16 +154,15 @@ export const getCommandsForUser = async ({
       ]);
     }
 
-    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
-      return Response.json({ records: response }, { status: 200 });
+    if (!response || response.length === 0) {
+      return Response.json(
+        { message: "Nenhum item encontrado" },
+        { status: 404 }
+      );
     }
 
-    return Response.json(
-      { message: "Nenhum item encontrado" },
-      { status: 404 }
-    );
+    return Response.json({ records: response }, { status: 200 });
   } catch (_) {
-    console.log(_);
     return Response.json(
       { message: "Erro ao processar os itens" },
       { status: 500 }

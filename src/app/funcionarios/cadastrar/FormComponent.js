@@ -17,7 +17,7 @@ export const FormComponent = ({ employee }) => {
 
   const fetchCreateUpdateEmployee = async (id, payload) => {
     try {
-      const resp = await fetch(`/api/user?id=${id}`, {
+      const resp = await fetch(`/api/user?_id=${id}`, {
         method: id ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -119,15 +119,15 @@ export const FormComponent = ({ employee }) => {
           setValue={setRole}
           options={[
             {
-              name: "Acesso de leitura - Pode criar e adicionar items na comanda, porem apenas a visualização de todos os dados e itens.",
+              name: "Leitura - Pode criar e adicionar items na comanda, porem apenas a visualização de todos os dados e itens.",
               _id: "VIEWER",
             },
             {
-              name: "Possui todas as permissões de Leitura, além de poder ativar e desativar itens/registros existentes.",
+              name: "Moderador - Possui todas as permissões de VIEWER, além de ter acesso ao caixa e poder ativar e desativar itens/registros existentes.",
               _id: "MODERATOR",
             },
             {
-              name: "Possui todas as permissões do GM, além de poder cadastrar novos itens e editar os itens existentes.",
+              name: "Editor - Possui todas as permissões do MODERATOR, além poder cadastrar novos itens e editar os itens existentes.",
               _id: "EDITOR",
             },
             {

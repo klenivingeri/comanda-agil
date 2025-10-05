@@ -8,25 +8,23 @@ const createType = (_str) => {
   return str;
 };
 
-export const getCagetories = async ({
-  connectToDatabase,
-  categories,
-  xTenant,
-  id,
-}) => {
+export const getCagetories = async ({ categories, xTenant, id }) => {
   try {
-    await connectToDatabase();
     let response;
 
     if (id) {
-      response = await categories.findOne({
-        _id: id,
-        tenant: xTenant.id,
-      });
+      response = await categories
+        .findOne({
+          _id: id,
+          tenant: xTenant.id,
+        })
+        .lean();
     } else {
-      response = await categories.find({
-        tenant: xTenant.id,
-      });
+      response = await categories
+        .find({
+          tenant: xTenant.id,
+        })
+        .lean();
     }
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {
@@ -46,14 +44,8 @@ export const getCagetories = async ({
   }
 };
 
-export const postCagetories = async ({
-  connectToDatabase,
-  categories,
-  xTenant,
-  body,
-}) => {
+export const postCagetories = async ({ categories, xTenant, body }) => {
   try {
-    await connectToDatabase();
     const { name } = body;
     const type = createType(name);
     const payload = {
@@ -73,14 +65,8 @@ export const postCagetories = async ({
   }
 };
 
-export const patchCagetories = async ({
-  connectToDatabase,
-  categories,
-  xTenant,
-  body,
-}) => {
+export const putCagetories = async ({ categories, xTenant, body }) => {
   try {
-    await connectToDatabase();
     const { name, _id } = body;
     const type = createType(name);
     const payload = {
@@ -102,14 +88,8 @@ export const patchCagetories = async ({
   }
 };
 
-export const deleteCagetories = async ({
-  connectToDatabase,
-  categories,
-  xTenant,
-  body,
-}) => {
+export const deleteCagetories = async ({ categories, xTenant, body }) => {
   try {
-    await connectToDatabase();
     const { _id } = body;
 
     const result = await categories.findOneAndDelete({

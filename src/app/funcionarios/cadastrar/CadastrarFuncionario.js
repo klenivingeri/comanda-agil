@@ -8,14 +8,14 @@ import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { FormComponent } from "./FormComponent";
+import { useToast } from "../../../hooks/useToast";
 
 export default function CadastrarFuncionario({ employeeUUID }) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [employee, setEmployee] = useState({});
-
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
-
+  const toast = useToast();
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
@@ -23,15 +23,15 @@ export default function CadastrarFuncionario({ employeeUUID }) {
   const fetchCreateEmployee = async () => {
     setIsLoading(true);
     try {
-      const resp = await fetch(`/api/user?id=${employeeUUID}`, {
+      const resp = await fetch(`/api/user?_id=${employeeUUID}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formDetails),
       });
       const result = await resp.json();
       setEmployee(result.records);
-    } catch (error) {
-      toast.error("Ocorreu um erro ao cadastrar o funcionario.");
+    } catch (_) {
+      console.log(error);
+      toast.error("Ocorreu um erro ao buscar cadastro funcionario.");
     } finally {
       setIsLoading(false);
     }

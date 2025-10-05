@@ -4,10 +4,10 @@ import { getStoreXTenant } from "../../utils/getStoreXTenant.js";
 import { getCommandsForUser } from "../controller.js";
 
 export async function GET(request) {
+  await connectToDatabase();
   const xTenant = getStoreXTenant(request);
 
   const response = getCommandsForUser({
-    connectToDatabase,
     commands,
     xTenant,
   });
