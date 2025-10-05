@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { IconArrowRight } from "../../../public/icons/ArrowRight";
 import { IconArrowDown } from "../../../public/icons/ArrowDown";

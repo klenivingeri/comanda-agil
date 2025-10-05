@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense, use } from "react";
 import { Atendimento } from "../Atendimento";
 
