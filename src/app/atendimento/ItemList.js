@@ -83,7 +83,7 @@ function SubTitle({
         <div>
           {items
             .filter((item) => {
-              if (!inputText.length) return true;
+              if (!inputText?.length) return true;
               return `${item.code} - ${item.name}`
                 .toLowerCase()
                 .includes(inputText.trim().toLowerCase());
@@ -109,17 +109,17 @@ export const ItemList = ({
   showListComanda,
   openModal,
 }) => {
-  if (items.length <= 0) return;
+  if (items?.length <= 0) return;
   const [openType, setOpenType] = useState(null);
 
-  const groupedItems = items.reduce((acc, item) => {
+  const groupedItems = items?.reduce((acc, item) => {
     if (!acc[item.category.type]) acc[item.category.type] = [];
     acc[item.category.type].push(item);
     return acc;
   }, {});
 
   const typeLabels = {};
-  items.forEach((item) => {
+  items?.forEach((item) => {
     if (!typeLabels[item.category.type]) {
       typeLabels[item.category.type] = item.category.name;
     }
@@ -134,7 +134,7 @@ export const ItemList = ({
   return (
     // openModal está aqui pra ajudar a função testParaIniciarDivNoFim
     <div className={` ${openModal ? "hidden" : "h-full"} w-full`}>
-      {Object.entries(groupedItems).map(([type, items]) => {
+      {Object.entries(groupedItems)?.map(([type, items]) => {
         return (
           <SubTitle
             inputText={inputText}

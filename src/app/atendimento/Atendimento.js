@@ -138,16 +138,16 @@ export const Atendimento = ({ idComanda }) => {
   };
 
   const totalItems = useMemo(() => {
-    return items.filter((item) => item?.quantity > 0);
+    return items?.filter((item) => item?.quantity > 0);
   }, [items]);
 
   const itemsSelected = useMemo(() => {
-    return items.filter((item) => item?.quantity > 0);
+    return items?.filter((item) => item?.quantity > 0);
   }, [items]);
 
   const totalComanda = useMemo(() => {
     return itemsSelected
-      .concat(comanda?.subOrders)
+      ?.concat(comanda?.subOrders)
       .reduce(
         (acc, item) =>
           acc + (item?.quantity * (item?.product?.price || item?.price) || 0),
@@ -176,7 +176,7 @@ export const Atendimento = ({ idComanda }) => {
   };
   return (
     <Container>
-      <Header divider>
+      <Header>
         <HeaderGrid>
           <div className="col-span-2" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
@@ -199,9 +199,9 @@ export const Atendimento = ({ idComanda }) => {
               <span className="pl-1">
                 <IconMenuList size="h-[32px] w-[32px]" />
               </span>
-              {!!totalItems.length && (
+              {!!totalItems?.length && (
                 <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-                  {totalItems.length}
+                  {totalItems?.length}
                 </div>
               )}
             </Button>
@@ -225,7 +225,7 @@ export const Atendimento = ({ idComanda }) => {
       <Footer>
         <Button
           onClick={saveCommand}
-          disabled={itemsSelected.length == 0}
+          disabled={itemsSelected?.length == 0}
           margin="mx-2 mb-2"
           text=""
         >
@@ -260,7 +260,7 @@ export const Atendimento = ({ idComanda }) => {
               itemInNote
             />
           ))}
-          {itemsSelected.map((item, idx) => (
+          {itemsSelected?.map((item, idx) => (
             <Item
               key={idx}
               item={item}

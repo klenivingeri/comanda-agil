@@ -36,7 +36,7 @@ export const Item = ({
         <span className="font-semibold truncate text-sm mr-2">
           {item.code} - {item.name}
         </span>
-        <span className="text-sm mt-[-2px] text-gray-500">
+        <span className="text-xs mt-[-2px] text-gray-500">
           {currency(item.price)}
         </span>
       </div>

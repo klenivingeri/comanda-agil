@@ -1,15 +1,15 @@
-import { Montserrat, Poppins } from "next/font/google";
+import { Inter, Roboto } from "next/font/google";
 
 import Providers from "./providers";
 import "./globals.css";
 
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
 });
 
-const montserrat = Montserrat({
+const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-roboto",
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="overflow-y-scroll">
       <body
-        className={`${montserrat.variable} ${poppins.variable} antialiased `} //select-none
+        className={`${inter.variable} ${roboto.variable} antialiased `} //select-none
       >
         <div className="flex justify-center min-h-screen">
           {/* Container central */}

@@ -118,12 +118,12 @@
 
 
 body, input, textarea, button {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--text-default);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 

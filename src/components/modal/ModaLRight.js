@@ -116,7 +116,7 @@ export const ModalRight = ({
           <div className="relative w-full flex justify-center items-center">
             <ShowValue totalComanda={totalComanda} />
             <Button
-              disabled={itemsSelected.length == 0}
+              disabled={itemsSelected?.length == 0}
               margin="mx-2"
               onClick={saveCommand}
             >

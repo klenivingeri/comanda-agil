@@ -112,7 +112,7 @@ export const FormComponent = ({ employee }) => {
           error={branch.trim() === ""}
         />
         <Select
-          name="Nivel de acesso (Registri opções no menu)"
+          name="Nivel de acesso (Restringe opções no menu)"
           id="role"
           placeholder="Selecione o nivel de acesso"
           value={role}
