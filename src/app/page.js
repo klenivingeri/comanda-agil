@@ -34,7 +34,7 @@ export default function Login() {
     <Container>
       <div className="flex-1 flex flex-col">
         <Content padding="-">
-          <div className="relative w-full h-full flex justify-center items-center ">
+          <div className="relative w-full h-full flex justify-center items-center">
             <form
               onSubmit={handleSubmit}
               className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"

@@ -36,9 +36,7 @@ export default function RootLayout({ children }) {
           {/* Container central */}
           <div
             id="container"
-            className={`relative min-h-screen w-full ${
-              !isMobile ? "max-w-[1280px]" : ""
-            }`}
+            className="flex w-full md:max-w-[768px] min-h-screen relative"
           >
             <Providers>
               <main className="flex-1">{children}</main>

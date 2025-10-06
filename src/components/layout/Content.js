@@ -17,7 +17,7 @@ export const Content = ({ isLoading, children, error, padding = "p-2" }) => {
     );
   }
   return (
-    <div className={`grid grid-cols-1 rounded ${padding} h-full`}>
+    <div className={`grid grid-cols-1 rounded ${padding} h-full `}>
       {children}
     </div>
   );
