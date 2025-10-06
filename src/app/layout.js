@@ -1,5 +1,5 @@
 import { Inter, Roboto } from "next/font/google";
-
+import { isMobile } from "react-device-detect";
 import Providers from "./providers";
 import "./globals.css";
 
@@ -31,14 +31,14 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="overflow-y-scroll">
-      <body
-        className={`${inter.variable} ${roboto.variable} antialiased `} //select-none
-      >
-        <div className="flex justify-center min-h-screen">
+      <body className={`${inter.variable} ${roboto.variable} antialiased`}>
+        <div className="min-h-screen flex justify-center">
           {/* Container central */}
           <div
             id="container"
-            className="flex w-full md:max-w-[768px] min-h-screen relative"
+            className={`relative min-h-screen w-full ${
+              !isMobile ? "max-w-[1280px]" : ""
+            }`}
           >
             <Providers>
               <main className="flex-1">{children}</main>

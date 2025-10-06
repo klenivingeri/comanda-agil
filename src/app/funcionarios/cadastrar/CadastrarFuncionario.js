@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
 
@@ -9,13 +9,19 @@ import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { FormComponent } from "./FormComponent";
 import { useToast } from "../../../hooks/useToast";
+import { IconBack } from "public/icons/ArrowBack";
 
 export default function CadastrarFuncionario({ employeeUUID }) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [employee, setEmployee] = useState({});
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const router = useRouter();
   const toast = useToast();
+
+  const goBack = () => {
+    router.back();
+  };
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
@@ -47,8 +53,8 @@ export default function CadastrarFuncionario({ employeeUUID }) {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+          <div className="col-span-2 flex" onClick={goBack}>
+            <IconBack size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">

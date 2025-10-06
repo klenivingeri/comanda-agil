@@ -12,6 +12,7 @@ export function ConfigProvider({ children }) {
   const [hasVibrate, setHasVibrate] = useState("off");
   const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
   const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
+  const [menuSave, setMenuSave] = useState({ all: [], error: false, isLoading: true });
   const [cleaningTrigger, setCleaningTrigger] = useState(false);
 
   const _handleCleaningTrigger = () => {
@@ -29,7 +30,7 @@ export function ConfigProvider({ children }) {
     const comanda = await res.json();
 
     if (isEmpty(comanda?.records)) {
-      setcommandSave({ ...commandSave, error: true });
+      setcommandSave({ ...commandSave, error: true, isLoading: false });
       return;
     }
 
@@ -50,7 +51,7 @@ export function ConfigProvider({ children }) {
       const itemsDaComanda = await res.json();
 
       if (isEmpty(itemsDaComanda?.records)) {
-        setItemSave({ ...itemsDaComanda, error: true });
+        setItemSave({ ...itemsDaComanda, error: true, isLoading: false });
         return;
       }
       sessionStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
@@ -58,6 +59,23 @@ export function ConfigProvider({ children }) {
     }
 
   };
+
+  const getMenu = async () => {
+    try {
+      const res = await fetch(`/api/menu`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const menuItems = await res.json();
+
+      setMenuSave({ all: menuItems.records, error: false, isLoading: false });
+      localStorage.setItem("menu", JSON.stringify(menuItems.records));
+    } catch (_) {
+      setMenuSave({ ...menuItems.records, error: true, isLoading: false });
+    } finally {
+    }
+  };
+
 
   const handleVibrate = (vibrate) => {
     setHasVibrate(vibrate);
@@ -71,11 +89,18 @@ export function ConfigProvider({ children }) {
     const savedVibrateButton = localStorage.getItem("vibrate-button");
 
     const savedItemsCommand = JSON.parse(sessionStorage.getItem("items-command"))
-
     if (savedItemsCommand?.length > 0) {
       setItemSave({ all: savedItemsCommand, error: false, isLoading: false });
     } else {
       getItems();
+    }
+
+    const savedMenu = JSON.parse(localStorage.getItem("menu"))
+    if (!isEmpty(savedMenu)) {
+      setMenuSave({ all: savedMenu, error: false, isLoading: false });
+    } else {
+      console.log('Carregando menu')
+      getMenu();
     }
 
     const root = window.document.documentElement;
@@ -106,8 +131,13 @@ export function ConfigProvider({ children }) {
     ...itemSave
   }
 
+  const _menu = {
+    get: getMenu,
+    ...menuSave
+  }
+
   return (
-    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item }}>
+    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item, _menu }}>
       {children}
     </ConfigContext.Provider>
   );

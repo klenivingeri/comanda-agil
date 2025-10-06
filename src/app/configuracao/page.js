@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useConfig } from "../context/ConfigContext";
 import { SelectComponent } from "../../components/form/SelectComponent";
-import { Loading } from "../../components/loading/Loading";
 
+import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
 import { Header, HeaderGrid } from "../../components/layout/Header";
-import { IconDotMenu } from "../../../public/icons/DotMenu";
-import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Content } from "../../components/layout/Content";
 import { Button } from "src/components/button/Button";
+import { IconBack } from "public/icons/ArrowBack";
 
 const optionsColors = [
   { type: "btn-blue", name: "Azul" },
@@ -22,8 +21,12 @@ const optionsColors = [
 
 export default function Configuracao() {
   const { handleVibrate, hasVibrate, _handleCleaningTrigger } = useConfig();
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
+  const router = useRouter();
+
+  const goBack = () => {
+    router.back();
+  };
 
   const handlesClearingCache = () => {
     sessionStorage.removeItem("items-command");
@@ -45,10 +48,6 @@ export default function Configuracao() {
       root.classList.add(color);
       localStorage.setItem("theme-button", color);
     }
-  };
-
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
   };
 
   const handleColorButton = (id, value) => {
@@ -76,8 +75,8 @@ export default function Configuracao() {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+          <div className="col-span-2 flex" onClick={goBack}>
+            <IconBack size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">
@@ -135,10 +134,6 @@ export default function Configuracao() {
           </div>
         </Content>
       </div>
-      <MenuMobile
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 }

@@ -8,12 +8,12 @@ import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
+import { IconBack } from "public/icons/ArrowBack";
 
 export const ProdutoCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState([]);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
   const toast = useToast();
@@ -70,7 +70,7 @@ export const ProdutoCadastrar = ({ productUUID }) => {
       <Header h="h-[40px]">
         <HeaderGrid>
           <div className="col-span-2 flex" onClick={() => router.back()}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+            <IconBack size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">

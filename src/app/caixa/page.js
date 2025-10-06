@@ -1,48 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useConfig } from "../../app/context/ConfigContext";
+import { isEmpty } from "../../app/utils/empty";
+import Menu from "src/components/menu/lateral/Menu";
 
-import { IconDotMenu } from "../../../public/icons/DotMenu";
-import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
-
-import { Container } from "../../components/layout/Container";
-import { Content } from "../../components/layout/Content";
-import { Header, HeaderGrid } from "../../components/layout/Header";
-import { Construction } from "../../components/construction";
+const ContainerStyle = ({ children }) => {
+  return (
+    <div
+      className={`relative flex min-h-screen h-full w-full flex-1 bg-[var(--foreground)]`}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default function Caixa() {
+  const { _menu } = useConfig();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
-  };
+  const [themeCurrent, setThemeCurrent] = useState("");
+  const [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    _menu.get();
+    const savedTheme = localStorage.getItem("theme");
+    setThemeCurrent(savedTheme);
+  }, []);
+
+  useEffect(() => {
+    if (!isEmpty(_menu.all)) {
+      setMenuItems(_menu.all);
+    }
+  }, [_menu.all]);
 
   return (
-    <Container>
-      <Header h="h-[40px]">
-        <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
-          </div>
-
-          <div className="col-span-8 flex items-center">
-            <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Relatorio de Promoções</span>
-            </div>
-          </div>
-          <div className="col-span-2"></div>
-        </HeaderGrid>
-      </Header>
-      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
-          <Construction />
-        </Content>
+    <ContainerStyle>
+      <div className="w-[500px] bg-amber-700 flex justify-end">
+        <Menu menuItems={menuItems} />
       </div>
-      <MenuMobile
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
-    </Container>
+      <div> batata doc</div>
+    </ContainerStyle>
   );
 }

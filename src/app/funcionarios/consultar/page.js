@@ -12,6 +12,7 @@ import { ItemList } from "src/components/itemList";
 import { Button } from "src/components/button/Button";
 import { IconDelete } from "public/icons/Delete";
 import { IconEdit } from "public/icons/Edit";
+import { IconBack } from "public/icons/ArrowBack";
 
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
@@ -19,6 +20,11 @@ export default function ConsultarCategoria() {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const router = useRouter();
+
+  const goBack = () => {
+    router.back();
+  };
 
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
@@ -56,8 +62,8 @@ export default function ConsultarCategoria() {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+          <div className="col-span-2 flex" onClick={goBack}>
+            <IconBack size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">

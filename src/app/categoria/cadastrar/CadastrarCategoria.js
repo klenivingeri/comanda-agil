@@ -8,16 +8,15 @@ import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
+import { IconBack } from "public/icons/ArrowBack";
 
 export const CategoriaCadastrar = ({ categoryUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [category, setCategory] = useState([]);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
+  const goBack = () => {
+    router.back();
   };
 
   const getCategoryItems = async (categoryUUID) => {
@@ -47,8 +46,8 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={() => router.back()}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+          <div className="col-span-2 flex" onClick={goBack}>
+            <IconBack size="h-[32px] w-[32px]" />
           </div>
 
           <div className="col-span-8 flex items-center">

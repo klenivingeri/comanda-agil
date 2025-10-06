@@ -1,35 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useConfig } from "../../../app/context/ConfigContext";
 import Menu from "./Menu";
 import { isEmpty } from "../../../app/utils/empty";
 import { SideModal } from "../../../components/modal/SideModal";
 import Link from "next/link";
 
 export const MenuMobile = ({ handleOpenModal, openModal }) => {
+  const { _menu } = useConfig();
   const [themeCurrent, setThemeCurrent] = useState("");
   const [menuItems, setMenuItems] = useState([]);
 
-  const getMenu = async () => {
-    const res = await fetch(`/api/menu`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const menuItems = await res.json();
-    setMenuItems(menuItems.records);
-    localStorage.setItem("menu", JSON.stringify(menuItems.records));
-  };
-
   useEffect(() => {
-    const saveMenuItems = localStorage.getItem("menu");
-    if (isEmpty(saveMenuItems)) {
-      getMenu();
-    } else {
-      setMenuItems(JSON.parse(saveMenuItems));
-    }
-
+    _menu.get();
     const savedTheme = localStorage.getItem("theme");
     setThemeCurrent(savedTheme);
   }, []);
+
+  useEffect(() => {
+    if (!isEmpty(_menu.all)) {
+      setMenuItems(_menu.all);
+    }
+  }, [_menu.all]);
 
   const handleSetTheme = (color) => {
     const root = window.document.documentElement;
@@ -44,7 +36,7 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
 
   return (
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
-      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-2xl m-2 bg-[var(--foreground)]">
+      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-sm m-2 bg-[var(--foreground)]">
         <div className="w-full grid grid-cols-12 px-2 h-[200px]">
           <Link
             href="/perfil"

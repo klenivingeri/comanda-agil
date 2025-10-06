@@ -119,19 +119,19 @@ export const FormComponent = ({ employee }) => {
           setValue={setRole}
           options={[
             {
-              name: "Leitura - Pode criar e adicionar items na comanda, porem apenas a visualização de todos os dados e itens.",
+              name: "Leitor - Pode criar e adicionar items na comanda, porem apenas a visualização de todos os dados e itens.",
               _id: "VIEWER",
             },
             {
-              name: "Moderador - Possui todas as permissões de VIEWER, além de ter acesso ao caixa e poder ativar e desativar itens/registros existentes.",
+              name: "Moderador - Possui todas as permissões de Leitor, além de ter acesso ao caixa e poder ativar e desativar itens/registros existentes.",
               _id: "MODERATOR",
             },
             {
-              name: "Editor - Possui todas as permissões do MODERATOR, além poder cadastrar novos itens e editar os itens existentes.",
+              name: "Editor - Possui todas as permissões do Moderador, além poder cadastrar novos itens e editar os itens existentes.",
               _id: "EDITOR",
             },
             {
-              name: "Possui todas as permissões do ADM, com a autoridade máxima de deletar permanentemente itens/registros.",
+              name: "Administrador - Possui todas as permissões, com a autoridade máxima de deletar permanentemente itens/registros.",
               _id: "ADMIN",
             },
           ]}
