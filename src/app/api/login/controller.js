@@ -54,8 +54,7 @@ export const postLogin = async ({ users, email, password }) => {
         "Content-Type": "application/json",
       },
     });
-  } catch (err) {
-    console.error(err);
+  } catch (_) {
     return new Response(JSON.stringify({ message: "Erro no login" }), {
       status: 500,
     });

@@ -35,8 +35,7 @@ export const getCagetories = async ({ categories, xTenant, id }) => {
       { message: "Nenhum item encontrado" },
       { status: 404 }
     );
-  } catch (e) {
-    console.error(e);
+  } catch (_) {
     return Response.json(
       { message: "Erro ao processar os itens" },
       { status: 500 }

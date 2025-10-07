@@ -42,8 +42,7 @@ export const getUser = async ({ users, xTenant, _id }) => {
       { message: "Nenhum funcionario encontrado" },
       { status: 404 }
     );
-  } catch (e) {
-    console.error(e);
+  } catch (_) {
     return Response.json(
       { message: "Erro ao buscar funcionario" },
       { status: 500 }

@@ -74,7 +74,6 @@ export const postCommands = async ({
 
     return Response.json({ records: created }, { status: 200 });
   } catch (err) {
-    console.error("Erro postCommands:", err);
     return Response.json(
       { message: "Ocorreu um erro ao fazer o cadastro do item" },
       { status: 500 }
@@ -119,7 +118,6 @@ export const putCommands = async ({
 
     return Response.json({ records: response }, { status: 200 });
   } catch (err) {
-    console.error("Erro putCommands:", err);
     return Response.json(
       { message: "Ocorreu um erro ao atualizar o item" },
       { status: 500 }

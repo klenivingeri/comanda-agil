@@ -50,7 +50,7 @@ export const ModalRight = ({
     const div = document.getElementById("minhaDiv");
     if (div) {
       div.scrollTo({
-        top: div.scrollHeight,
+        top: 99999,
         behavior: "smooth",
       });
     }
@@ -104,17 +104,37 @@ export const ModalRight = ({
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
         <div
-          className="flex-1 overflow-auto mt-[77px] mb-[65px] p-2"
+          className="flex-1 overflow-auto mt-[77px] mb-[190px] p-2"
           id="minhaDiv"
         >
           {children}
         </div>
       </div>
 
-      <Footer>
-        <div className="flex justify-center items-center w-full">
+      <Footer bg="bg-[var(--bg-component)]" h="h-[180px] rounded-t-2xl">
+        <div className="flex justify-center flex-col items-center w-full">
+          <div className="w-full px-6 font-bold pb-3">
+            <div className="flex justify-between items-start">
+              <span className="">SubTotal</span>
+              <span className="whitespace-nowrap font-extrabold">
+                {currency(totalComanda)}
+              </span>
+            </div>
+            <div className=" flex justify-between items-start">
+              <span className="whitespace-nowrap">Desconto</span>
+              <span className="whitespace-nowrap font-extrabold">
+                {currency(0)}
+              </span>
+            </div>
+            <hr className="my-3" />
+            <div className=" flex justify-between items-start font-extrabold">
+              <span className="whitespace-nowrap">Total</span>
+              <span className="whitespace-nowrap text-[var(--button-default)]">
+                {currency(totalComanda)}
+              </span>
+            </div>
+          </div>
           <div className="relative w-full flex justify-center items-center">
-            <ShowValue totalComanda={totalComanda} />
             <Button
               disabled={itemsSelected?.length == 0}
               margin="mx-2"

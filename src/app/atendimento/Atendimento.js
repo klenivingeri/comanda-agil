@@ -157,7 +157,6 @@ export const Atendimento = ({ idComanda }) => {
       0
     );
   }, [itemsSelected, comanda?.subOrders]);
-  console.log({ totalComanda }, comanda?.subOrders);
 
   const saveCommand = () => {
     const payload = {

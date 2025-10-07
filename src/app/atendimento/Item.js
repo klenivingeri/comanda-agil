@@ -31,7 +31,7 @@ export const Item = ({
           {item?.quantity}
         </div>
       ) : (
-        <div className="ml-2 flex h-12 w-16 items-center justify-center border-1 border-[var(--text-default)]/20 rounded-sm p-1 cursor-pointer transition overflow-hidden text-[var(--text-default)]/20">
+        <div className="ml-2 flex h-12 min-w-[60px] w-[70px] items-center justify-center border-1 border-[var(--text-default)]/20 rounded-sm p-1 cursor-pointer transition overflow-hidden text-[var(--text-default)]/20">
           <IconImageEmpty size="h-[32px] w-[32px]" />
         </div>
       )}
