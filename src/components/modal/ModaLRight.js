@@ -50,7 +50,7 @@ export const ModalRight = ({
     const div = document.getElementById("minhaDiv");
     if (div) {
       div.scrollTo({
-        top: 99999,
+        top: div.scrollHeight,
         behavior: "smooth",
       });
     }
@@ -104,14 +104,14 @@ export const ModalRight = ({
       {/* Container do conteúdo com rolagem */}
       <div className="relative w-full h-full flex flex-col overflow-auto">
         <div
-          className="flex-1 overflow-auto mt-[77px] mb-[190px] p-2"
+          className="flex-1 overflow-auto mt-[77px] mb-[180px] p-2"
           id="minhaDiv"
         >
           {children}
         </div>
       </div>
 
-      <Footer bg="bg-[var(--bg-component)]" h="h-[180px] rounded-t-2xl">
+      <Footer bg="bg-[var(--bg-component)]" h="h-[175px] rounded-t-2xl">
         <div className="flex justify-center flex-col items-center w-full">
           <div className="w-full px-6 font-bold pb-3">
             <div className="flex justify-between items-start">

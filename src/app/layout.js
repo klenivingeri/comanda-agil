@@ -30,18 +30,17 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt" className="overflow-y-scroll">
-      <body className={`${inter.variable} ${roboto.variable} antialiased`}>
-        <div className="min-h-screen flex justify-center">
-          {/* Container central */}
-          <div
-            id="container"
-            className="flex w-full md:max-w-[768px] min-h-screen relative"
-          >
-            <Providers>
-              <main className="flex-1">{children}</main>
-            </Providers>
-          </div>
+    <html lang="pt" className="h-full">
+      <body
+        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center`}
+      >
+        <div
+          id="container"
+          className="flex w-full md:max-w-[768px] relative h-full"
+        >
+          <Providers>
+            <main className="flex-1 h-full">{children}</main>
+          </Providers>
         </div>
       </body>
     </html>
