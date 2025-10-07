@@ -1,19 +1,18 @@
 "use client";
 import { useState } from "react";
-
-import { IconDotMenu } from "public/icons/DotMenu";
-import { MenuMobile } from "src/components/menu/lateral/MenuMobile";
+import { useRouter } from "next/navigation";
 
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { Header, HeaderGrid } from "src/components/layout/Header";
 import { Construction } from "src/components/construction";
+import { IconBack } from "public/icons/ArrowBack";
 
 export default function Perfil() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
-
+  const router = useRouter();
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
@@ -29,13 +28,13 @@ export default function Perfil() {
     <Container>
       <Header h="h-[40px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
+          <div className="col-span-2 flex" onClick={() => router.back()}>
+            <IconBack size="h-[26px] w-[26px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Perfil</span>
+              <span className="text-xs font-bold">PERFIL</span>
             </div>
           </div>
           <div className="col-span-2"></div>
@@ -47,10 +46,6 @@ export default function Perfil() {
           <Construction />
         </Content>
       </div>
-      <MenuMobile
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 }

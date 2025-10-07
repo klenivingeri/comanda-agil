@@ -58,12 +58,12 @@ export default function ConsultarCategoria() {
       <Header h="h-[40px]">
         <HeaderGrid>
           <div className="col-span-2 flex" onClick={goBack}>
-            <IconBack size="h-[32px] w-[32px]" />
+            <IconBack size="h-[26px] w-[26px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Consultar Funcionario</span>
+              <span className="text-xs font-bold">CONSULTAR FUNCIONARIO</span>
             </div>
           </div>
           <div className="col-span-2"></div>

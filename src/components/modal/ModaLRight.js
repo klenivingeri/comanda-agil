@@ -84,9 +84,9 @@ export const ModalRight = ({
           <div className="col-span-2" onClick={handleOpenModal}>
             <IconX size="h-[32px] w-[32px]" />
           </div>
-          <div className="col-span-8 flex pt-1">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cardapio</span>
+              <span className="text-xs font-bold">CARDAPIO</span>
             </div>
           </div>
           <div className="flex col-span-2 items-center justify-between">

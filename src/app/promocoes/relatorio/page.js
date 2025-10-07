@@ -20,21 +20,21 @@ export default function RelatorioPromocoes() {
 
   return (
     <Container>
-      <Header h="h-[40px]">
+      <Header h="h-[30px]">
         <HeaderGrid>
           <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Relatorio de Promoções</span>
+              <span className="text-xs font-bold">RELATÓRIO DE PROMOÇÕES</span>
             </div>
           </div>
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           <Construction />
         </Content>

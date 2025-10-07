@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../../../hooks/useToast";
 import { Container } from "../../../components/layout/Container";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
-import { IconDotMenu } from "../../../../public/icons/DotMenu";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
@@ -67,21 +66,21 @@ export const ProdutoCadastrar = ({ productUUID }) => {
 
   return (
     <Container>
-      <Header h="h-[40px]">
+      <Header h="h-[30px]">
         <HeaderGrid>
-          <div className="col-span-2 flex" onClick={() => router.back()}>
-            <IconBack size="h-[32px] w-[32px]" />
+          <div className="col-span-2" onClick={() => router.back()}>
+            <IconBack size="h-[26px] w-[26px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cadastrar Produto</span>
+              <span className="text-xs font-bold">CADASTRAR PRODUTO</span>
             </div>
           </div>
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           <FormComponent categories={categories} product={product} />
         </Content>

@@ -20,7 +20,7 @@ export default function CadastrarPromocao({ promotionUUID }) {
 
   return (
     <Container>
-      <Header h="h-[40px]">
+      <Header h="h-[30px]">
         <HeaderGrid>
           <div className="col-span-2 flex" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
@@ -28,13 +28,13 @@ export default function CadastrarPromocao({ promotionUUID }) {
 
           <div className="col-span-8 flex items-center">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cadastrar Funcionario</span>
+              <span className="text-xs font-bold">CADASTAR FUNCIONARIO</span>
             </div>
           </div>
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           <Construction />
         </Content>

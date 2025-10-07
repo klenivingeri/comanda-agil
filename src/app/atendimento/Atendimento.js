@@ -183,7 +183,7 @@ export const Atendimento = ({ idComanda }) => {
           </div>
           <div className="col-span-8 flex pt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cardapio</span>
+              <span className="text-xs font-bold">CARDAPIO</span>
             </div>
           </div>
           <div className="flex col-span-2 items-center pb-2 justify-between">

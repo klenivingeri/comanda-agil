@@ -71,21 +71,21 @@ export default function Configuracao() {
 
   return (
     <Container>
-      <Header h="h-[40px]">
+      <Header h="h-[30px]">
         <HeaderGrid>
           <div className="col-span-2 flex" onClick={goBack}>
-            <IconBack size="h-[32px] w-[32px]" />
+            <IconBack size="h-[26px] w-[26px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Cadastrar Produto</span>
+              <span className="text-xs font-bold">CADASTRAR PRODUTO</span>
             </div>
           </div>
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[50px] mb-[50px] flex-1 flex flex-col">
+      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content>
           <div className="w-full max-w-[500px] mx-auto">
             <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">

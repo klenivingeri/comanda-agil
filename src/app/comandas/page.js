@@ -47,9 +47,9 @@ export default function Comandas() {
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
 
-          <div className="col-span-8 flex items-center">
+          <div className="col-span-8 mt-1">
             <div className="w-full flex justify-center">
-              <span className="text-md font-bold">Comandas</span>
+              <span className="text-xs font-bold">COMANDAS</span>
             </div>
           </div>
           <div className="col-span-2 flex items-center"></div>

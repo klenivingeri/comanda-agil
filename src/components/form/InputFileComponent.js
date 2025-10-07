@@ -41,9 +41,9 @@ export const InputFileComponent = ({
       ) : (
         <label
           htmlFor={label}
-          className="flex items-center justify-center w-20 h-20 border-2 border-gray-400 p-4 rounded-2xl cursor-pointer transition overflow-hidden"
+          className="flex items-center justify-center w-20 h-20 border-2 border-gray-400 p-4 rounded-2xl cursor-pointer transition overflow-hidden text-black"
         >
-          <IconImageEmpty className="w-8 h-8 text-gray-400" />
+          <IconImageEmpty className="w-8 h-8 " />
         </label>
       )}
     </div>
