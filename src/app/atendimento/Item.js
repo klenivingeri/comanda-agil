@@ -3,6 +3,7 @@
 import React from "react";
 import { currency } from "../../app/utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
+import { IconImageEmpty } from "public/icons/ImageEmpty";
 
 export const Item = ({
   item,
@@ -30,7 +31,9 @@ export const Item = ({
           {item?.quantity}
         </div>
       ) : (
-        ""
+        <div className="ml-2 flex h-12 w-16 items-center justify-center border-1 border-[var(--text-default)]/20 rounded-sm p-1 cursor-pointer transition overflow-hidden text-[var(--text-default)]/20">
+          <IconImageEmpty size="h-[32px] w-[32px]" />
+        </div>
       )}
       <div className="truncate w-full flex flex-col px-2 py-1 ">
         <span className="font-semibold truncate text-sm mr-2">

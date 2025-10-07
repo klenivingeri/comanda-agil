@@ -17,7 +17,7 @@ const ShowValue = ({ totalComanda }) => {
     <div
       onClick={() => setShow(!show)}
       className={`${
-        show ? (totalComanda >= 1000 ? "w-[370px]" : "w-[280px]") : "w-[50px]"
+        show ? (totalComanda >= 1000 ? "w-[370px]" : "w-[290px]") : "w-[50px]"
       } transition-all duration-300 ease-in-out flex text-2xl gap-2 pl-3 py-2 items-center font-bold text-[var(--text-default)] overflow-hidden`}
     >
       <span>
@@ -42,7 +42,7 @@ export const ModalRight = ({
   isLoadingCreate,
   rotated,
 }) => {
-  const score = useCounter(0, 200, 2000);
+  const score = useCounter(0, 200);
   const [hidden, setHidden] = useState(true);
   const [animating, setAnimating] = useState(false);
 
@@ -84,12 +84,12 @@ export const ModalRight = ({
           <div className="col-span-2" onClick={handleOpenModal}>
             <IconX size="h-[32px] w-[32px]" />
           </div>
-          <div className="col-span-8 mt-1">
+          <div className="col-span-8 mt-2">
             <div className="w-full flex justify-center">
               <span className="text-xs font-bold">CARDAPIO</span>
             </div>
           </div>
-          <div className="flex col-span-2 items-center justify-between">
+          <div className="flex col-span-2 text-xs mt-2 justify-between">
             <RotateImage rotated={rotated} />
             {score}k
           </div>

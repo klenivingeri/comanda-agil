@@ -25,8 +25,8 @@ export function RotateImage({ rotated }) {
     <div className="">
       <img
         src="/assets/score.png"
-        width={20}
-        height={20}
+        width={16}
+        height={16}
         alt="Logo"
         className={`transition-transform duration-500 ease-in-out ${
           rotated ? "rotate-y-180" : "rotate-y-0"
@@ -41,7 +41,7 @@ export const Atendimento = ({ idComanda }) => {
   const [rotated, setRotated] = useState(false);
   const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
-  const score = useCounter(0, 200, 2000);
+  const score = useCounter(0, 200);
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -146,14 +146,18 @@ export const Atendimento = ({ idComanda }) => {
   }, [items]);
 
   const totalComanda = useMemo(() => {
-    return itemsSelected
-      ?.concat(comanda?.subOrders)
-      .reduce(
-        (acc, item) =>
-          acc + (item?.quantity * (item?.product?.price || item?.price) || 0),
-        0
-      );
-  }, [comanda?.items, itemsSelected]);
+    if (!itemsSelected) return 0;
+
+    return [...itemsSelected, ...(comanda?.subOrders || [])].reduce(
+      (acc, item) => {
+        const quantity = item?.quantity || 0;
+        const price = item?.product?.price ?? item?.price ?? 0;
+        return acc + quantity * price;
+      },
+      0
+    );
+  }, [itemsSelected, comanda?.subOrders]);
+  console.log({ totalComanda }, comanda?.subOrders);
 
   const saveCommand = () => {
     const payload = {
@@ -181,12 +185,12 @@ export const Atendimento = ({ idComanda }) => {
           <div className="col-span-2" onClick={handleOpenMenuMobile}>
             <IconDotMenu size="h-[32px] w-[32px]" />
           </div>
-          <div className="col-span-8 flex pt-1">
+          <div className="col-span-8 mt-2">
             <div className="w-full flex justify-center">
               <span className="text-xs font-bold">CARDAPIO</span>
             </div>
           </div>
-          <div className="flex col-span-2 items-center pb-2 justify-between">
+          <div className="flex text-xs col-span-2 mt-2 pb-2 justify-between">
             <RotateImage rotated={rotated} />
             {score}k
           </div>
