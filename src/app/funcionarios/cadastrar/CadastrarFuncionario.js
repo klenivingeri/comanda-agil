@@ -36,7 +36,6 @@ export default function CadastrarFuncionario({ employeeUUID }) {
       const result = await resp.json();
       setEmployee(result.records);
     } catch (_) {
-      console.log(error);
       toast.error("Ocorreu um erro ao buscar cadastro funcionario.");
     } finally {
       setIsLoading(false);

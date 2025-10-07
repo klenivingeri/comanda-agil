@@ -20,11 +20,10 @@ export const getStoreXTenant = (request) => {
     return xTenant;
   }
 
-  const [tenantId, userId, position, timestamp, nonce, signature] =
+  const [tenantId, userId, role, timestamp, nonce, signature] =
     cookieValue.split(".");
   if (
-    sign(`${tenantId}.${userId}.${position}.${timestamp}.${nonce}`) !==
-    signature
+    sign(`${tenantId}.${userId}.${role}.${timestamp}.${nonce}`) !== signature
   ) {
     xTenant.status = 401;
     xTenant.message = "x-tenant invalido";
@@ -33,7 +32,7 @@ export const getStoreXTenant = (request) => {
 
   xTenant.id = tenantId;
   xTenant.userId = userId;
-  xTenant.position = position;
+  xTenant.role = role;
 
   return xTenant;
 };

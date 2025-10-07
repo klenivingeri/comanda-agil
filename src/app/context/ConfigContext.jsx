@@ -13,10 +13,17 @@ export function ConfigProvider({ children }) {
   const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
   const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
   const [menuSave, setMenuSave] = useState({ all: [], error: false, isLoading: true });
+  const [categorySave, setCategorySave] = useState({ all: [], error: false, isLoading: true });
   const [cleaningTrigger, setCleaningTrigger] = useState(false);
 
   const _handleCleaningTrigger = () => {
+    sessionStorage.removeItem("items-command");
     setItemSave({ all: [], error: false, isLoading: true });
+    sessionStorage.removeItem("menu");
+    setMenuSave({ all: [], error: false, isLoading: true });
+    sessionStorage.removeItem("categories");
+    setCategorySave({ all: [], error: false, isLoading: true });
+
     setCleaningTrigger(!cleaningTrigger);
   }
 
@@ -51,13 +58,29 @@ export function ConfigProvider({ children }) {
       const itemsDaComanda = await res.json();
 
       if (isEmpty(itemsDaComanda?.records)) {
-        setItemSave({ ...itemsDaComanda, error: true, isLoading: false });
+        setItemSave({ all: [], error: true, isLoading: false });
         return;
       }
       sessionStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
       setItemSave({ all: itemsDaComanda.records, error: false, isLoading: false });
     }
 
+  };
+
+  const getCategory = async () => {
+    try {
+      const res = await fetch(`/api/category`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const category = await res.json();
+
+      setCategorySave({ all: category.records, error: false, isLoading: false });
+      sessionStorage.setItem("categories", JSON.stringify(category.records));
+    } catch (_) {
+      setCategorySave({ all: [], error: true, isLoading: false });
+    } finally {
+    }
   };
 
   const getMenu = async () => {
@@ -69,13 +92,12 @@ export function ConfigProvider({ children }) {
       const menuItems = await res.json();
 
       setMenuSave({ all: menuItems.records, error: false, isLoading: false });
-      localStorage.setItem("menu", JSON.stringify(menuItems.records));
+      sessionStorage.setItem("menu", JSON.stringify(menuItems.records));
     } catch (_) {
-      setMenuSave({ ...menuItems.records, error: true, isLoading: false });
+      setMenuSave({ all: [], error: true, isLoading: false });
     } finally {
     }
   };
-
 
   const handleVibrate = (vibrate) => {
     setHasVibrate(vibrate);
@@ -83,7 +105,6 @@ export function ConfigProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log('Carregando configurações salvas')
     const savedTheme = localStorage.getItem("theme");
     const savedThemeButton = localStorage.getItem("theme-button");
     const savedVibrateButton = localStorage.getItem("vibrate-button");
@@ -95,11 +116,17 @@ export function ConfigProvider({ children }) {
       getItems();
     }
 
-    const savedMenu = JSON.parse(localStorage.getItem("menu"))
+    const savedCategory = JSON.parse(sessionStorage.getItem("categories"))
+    if (savedCategory?.length > 0) {
+      setCategorySave({ all: savedCategory, error: false, isLoading: false });
+    } else {
+      getCategory();
+    }
+
+    const savedMenu = JSON.parse(sessionStorage.getItem("menu"))
     if (!isEmpty(savedMenu)) {
       setMenuSave({ all: savedMenu, error: false, isLoading: false });
     } else {
-      console.log('Carregando menu')
       getMenu();
     }
 
@@ -130,14 +157,19 @@ export function ConfigProvider({ children }) {
     get: getItems,
     ...itemSave
   }
-
+  getCategory
   const _menu = {
     get: getMenu,
     ...menuSave
   }
 
+  const _category = {
+    get: getCategory,
+    ...categorySave
+  }
+
   return (
-    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item, _menu }}>
+    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item, _menu, _category }}>
       {children}
     </ConfigContext.Provider>
   );

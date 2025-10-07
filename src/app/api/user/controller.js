@@ -61,7 +61,6 @@ export const postUser = async ({ users, xTenant, body }) => {
       { status: 200 }
     );
   } catch (_) {
-    console.log(_);
     return Response.json({ message: "Rotas de items" }, { status: 500 });
   }
 };
@@ -76,7 +75,6 @@ export const putUser = async ({ users, xTenant, _id, body }) => {
       { status: 200 }
     );
   } catch (_) {
-    console.log(_);
     return Response.json({ message: "Rotas de items" }, { status: 500 });
   }
 };

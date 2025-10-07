@@ -1,10 +1,8 @@
-import { esperar } from "../utils/esperar";
 import { business } from "./business";
 
-export const getMenu = async (request) => {
+export const getMenu = async ({ xTenant }) => {
   try {
-    esperar(3000);
-    const menu = business();
+    const menu = business({ xTenant });
 
     return Response.json({ records: menu });
   } catch {

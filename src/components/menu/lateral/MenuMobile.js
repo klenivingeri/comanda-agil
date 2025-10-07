@@ -62,7 +62,7 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
 
           <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
         </div>
-        <Menu menuItems={menuItems} />
+        {menuItems.length > 0 && <Menu menuItems={menuItems} />}
       </div>
     </SideModal>
   );

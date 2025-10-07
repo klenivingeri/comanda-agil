@@ -29,8 +29,6 @@ export default function Configuracao() {
   };
 
   const handlesClearingCache = () => {
-    sessionStorage.removeItem("items-command");
-    localStorage.removeItem("menu");
     _handleCleaningTrigger();
   };
 
