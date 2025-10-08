@@ -52,7 +52,7 @@ export const ModalRight = ({
               <IconX size="h-[32px] w-[32px]" />
             </div>
             {user?.role === "ADMIN" && (
-              <div className="mt-1.5" onClick={handleShowDelete}>
+              <div className="px-2 pt-1.5" onClick={handleShowDelete}>
                 <IconEdit size="h-[23px] w-[23px]" />
               </div>
             )}
@@ -78,7 +78,10 @@ export const ModalRight = ({
         </div>
       </div>
 
-      <Footer bg="bg-[var(--bg-component)]" h="h-[180px] rounded-t-2xl">
+      <Footer
+        bg="bg-[var(--bg-component)]"
+        h="h-[188px] rounded-t-2xl border-2 border-[var(--bg-subTitle)] "
+      >
         <div className="flex justify-center flex-col items-center w-full">
           <div className="w-full px-6 font-bold pb-3">
             <div className="flex justify-between items-start">

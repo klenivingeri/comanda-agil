@@ -6,6 +6,7 @@ import { SelectQuantity } from "./SelectQuantity";
 import { IconImageEmpty } from "public/icons/ImageEmpty";
 import { Button } from "src/components/button/Button";
 import { CenterModal } from "src/components/modal";
+import { IconDelete } from "public/icons/Delete";
 
 export const Item = ({
   item,
@@ -72,10 +73,11 @@ export const Item = ({
               onClick={handleDelete}
               wFull="w-9"
               hFull="h-8"
-              text="〤"
               padding="py-4 "
               style="buttonRed"
-            />
+            >
+              <IconDelete size="h-[20px] w-[20px]" />
+            </Button>
           </div>
         )
       )}
