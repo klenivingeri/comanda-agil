@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { ConfigProvider } from "./context/ConfigContext";
-
+import { UserProvider } from "./context/UserContext";
 export default function Providers({ children }) {
   const pathname = usePathname();
 
@@ -9,5 +9,9 @@ export default function Providers({ children }) {
     return children;
   }
 
-  return <ConfigProvider>{children}</ConfigProvider>;
+  return (
+    <ConfigProvider>
+      <UserProvider>{children}</UserProvider>
+    </ConfigProvider>
+  );
 }

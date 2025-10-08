@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, useMemo } from "react";
 import { isEmpty } from "../utils/empty";
 
 export const ConfigContext = createContext();
@@ -148,28 +148,36 @@ export function ConfigProvider({ children }) {
     }
   }, [cleaningTrigger]);
 
-  const _command = {
+  const _command = useMemo(() => ({
     get: getComandas,
     ...commandSave
-  }
+  }), [commandSave]);
 
-  const _item = {
+  const _item = useMemo(() => ({
     get: getItems,
     ...itemSave
-  }
-  getCategory
-  const _menu = {
+  }), [itemSave]);
+
+  const _menu = useMemo(() => ({
     get: getMenu,
     ...menuSave
-  }
+  }), [menuSave]);
 
-  const _category = {
+  const _category = useMemo(() => ({
     get: getCategory,
     ...categorySave
-  }
+  }), [categorySave]);
 
   return (
-    <ConfigContext.Provider value={{ _handleCleaningTrigger, handleVibrate, hasVibrate, _command, _item, _menu, _category }}>
+    <ConfigContext.Provider value={{
+      _handleCleaningTrigger,
+      handleVibrate,
+      hasVibrate,
+      _command,
+      _item,
+      _menu,
+      _category
+    }}>
       {children}
     </ConfigContext.Provider>
   );

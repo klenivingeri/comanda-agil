@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useConfig } from "../../../app/context/ConfigContext";
+import { useUserConfig } from "../../../app/context/UserContext";
 import Menu from "./Menu";
 import { isEmpty } from "../../../app/utils/empty";
 import { SideModal } from "../../../components/modal/SideModal";
@@ -8,20 +9,25 @@ import Link from "next/link";
 
 export const MenuMobile = ({ handleOpenModal, openModal }) => {
   const { _menu } = useConfig();
+  const { _user } = useUserConfig();
+
   const [themeCurrent, setThemeCurrent] = useState("");
   const [menuItems, setMenuItems] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     _menu.get();
     const savedTheme = localStorage.getItem("theme");
     setThemeCurrent(savedTheme);
   }, []);
-
   useEffect(() => {
+    if (!isEmpty(_user.all)) {
+      setUser(_user.all);
+    }
     if (!isEmpty(_menu.all)) {
       setMenuItems(_menu.all);
     }
-  }, [_menu.all]);
+  }, [_menu.all, _user.all]);
 
   const handleSetTheme = (color) => {
     const root = window.document.documentElement;
@@ -45,7 +51,7 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
             <div className="rounded-full border-1 p-[1px] mb-4">
               <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
             </div>
-            <span className="px-2 shadow-2xl font-bold ">Fulano Silva</span>
+            <span className="px-2 shadow-2xl font-bold ">{user?.name}</span>
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
           </Link>
           <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">

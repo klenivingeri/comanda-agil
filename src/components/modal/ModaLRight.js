@@ -4,35 +4,12 @@ import { IconX } from "../../../public/icons/X";
 import { Footer } from "../layout/Footer";
 import { Header, HeaderGrid } from "../layout/Header";
 import { currency } from "../../app/utils/currency";
-import { IconCircleMoney } from "../../../public/icons/CircleMoney";
 import { Button } from "../button/Button";
 import { Loading } from "../loading/Loading";
-import { useCounter } from "src/hooks/useCounter";
 import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../layout/Container";
-
-const ShowValue = ({ totalComanda }) => {
-  const [show, setShow] = useState(false);
-
-  return (
-    <div
-      onClick={() => setShow(!show)}
-      className={`${
-        show ? (totalComanda >= 1000 ? "w-[370px]" : "w-[290px]") : "w-[50px]"
-      } transition-all duration-300 ease-in-out flex text-2xl gap-2 pl-3 py-2 items-center font-bold text-[var(--text-default)] overflow-hidden`}
-    >
-      <span>
-        <IconCircleMoney size="h-[25px] w-[25px]" />
-      </span>
-      {show && (
-        <span className="whitespace-nowrap" style={{ lineHeight: 0 }}>
-          {currency(totalComanda)}
-        </span>
-      )}
-    </div>
-  );
-};
+import { useUserConfig } from "src/app/context/UserContext";
 
 export const ModalRight = ({
   handleOpenModal,
@@ -44,7 +21,9 @@ export const ModalRight = ({
   rotated,
   handleShowDelete,
 }) => {
-  const score = useCounter(0, 200);
+  const { _user } = useUserConfig();
+  const [user, setUser] = useState({});
+  const score = 200;
 
   const testParaIniciarDivNoFim = () => {
     const div = document.getElementById("minhaDiv");
@@ -60,6 +39,10 @@ export const ModalRight = ({
     return () => clearTimeout(a);
   }, []);
 
+  useEffect(() => {
+    setUser(_user?.all);
+  }, [_user?.all]);
+
   return (
     <Container>
       <Header h="h-[50px]" divider>
@@ -68,9 +51,11 @@ export const ModalRight = ({
             <div onClick={handleOpenModal}>
               <IconX size="h-[32px] w-[32px]" />
             </div>
-            <div className="mt-1.5" onClick={handleShowDelete}>
-              <IconEdit size="h-[23px] w-[23px]" />
-            </div>
+            {user?.role === "ADMIN" && (
+              <div className="mt-1.5" onClick={handleShowDelete}>
+                <IconEdit size="h-[23px] w-[23px]" />
+              </div>
+            )}
           </div>
           <div className="col-span-8 mt-2">
             <div className="w-full flex justify-center">

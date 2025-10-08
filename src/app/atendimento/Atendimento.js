@@ -17,7 +17,7 @@ import { isEmpty } from "../utils/empty";
 import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
 import { Button } from "../../components/button/Button";
 import { Loading } from "src/components/loading/Loading";
-import { useCounter } from "src/hooks/useCounter";
+
 import { useToast } from "src/hooks/useToast";
 
 export function RotateImage({ rotated }) {
@@ -41,7 +41,7 @@ export const Atendimento = ({ idComanda }) => {
   const [rotated, setRotated] = useState(false);
   const { _item, _command } = useConfig();
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
-  const score = useCounter(0, 200);
+  const score = 200;
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +52,8 @@ export const Atendimento = ({ idComanda }) => {
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [itemsSelected, setItemsSelected] = useState([]);
+
   const toast = useToast();
 
   const fetchCreateCommand = async (payload) => {
@@ -171,12 +173,9 @@ export const Atendimento = ({ idComanda }) => {
 
   const handleShowDelete = () => setShowDelete(!showDelete);
 
-  const totalItems = useMemo(() => {
-    return items?.filter((item) => item?.quantity > 0);
-  }, [items]);
-
-  const itemsSelected = useMemo(() => {
-    return items?.filter((item) => item?.quantity > 0);
+  useEffect(() => {
+    const selected = items?.filter((item) => item?.quantity > 0);
+    setItemsSelected(selected);
   }, [items]);
 
   const totalComanda = useMemo(() => {
@@ -283,9 +282,9 @@ export const Atendimento = ({ idComanda }) => {
               <span className="pl-1">
                 <IconMenuList size="h-[32px] w-[32px]" />
               </span>
-              {!!totalItems?.length && (
+              {!!itemsSelected?.length && (
                 <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-                  {totalItems?.length}
+                  {itemsSelected?.length}
                 </div>
               )}
             </Button>
