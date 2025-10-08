@@ -109,9 +109,10 @@ export const ItemList = ({
   handleUpdateItemsSelected,
   showListComanda,
   openModal,
+  openType,
+  setOpenType,
 }) => {
   if (items?.length <= 0) return;
-  const [openType, setOpenType] = useState(null);
 
   const groupedItems = items?.reduce((acc, item) => {
     if (!acc[item.category.type]) acc[item.category.type] = [];

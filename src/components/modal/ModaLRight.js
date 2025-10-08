@@ -9,6 +9,8 @@ import { Button } from "../button/Button";
 import { Loading } from "../loading/Loading";
 import { useCounter } from "src/hooks/useCounter";
 import { RotateImage } from "src/app/atendimento/Atendimento";
+import { IconEdit } from "public/icons/Edit";
+import { Container } from "../layout/Container";
 
 const ShowValue = ({ totalComanda }) => {
   const [show, setShow] = useState(false);
@@ -35,16 +37,14 @@ const ShowValue = ({ totalComanda }) => {
 export const ModalRight = ({
   handleOpenModal,
   totalComanda,
-  openModal,
   children,
   saveCommand,
   itemsSelected,
   isLoadingCreate,
   rotated,
+  handleShowDelete,
 }) => {
   const score = useCounter(0, 200);
-  const [hidden, setHidden] = useState(true);
-  const [animating, setAnimating] = useState(false);
 
   const testParaIniciarDivNoFim = () => {
     const div = document.getElementById("minhaDiv");
@@ -56,37 +56,25 @@ export const ModalRight = ({
     }
   };
   useEffect(() => {
-    if (openModal) {
-      setHidden(false);
-
-      const t = setTimeout(() => setAnimating(true), 50);
-      const a = setTimeout(() => testParaIniciarDivNoFim(), 50);
-      return () => clearTimeout(t, a);
-    } else {
-      setAnimating(false);
-    }
-  }, [openModal]);
+    const a = setTimeout(() => testParaIniciarDivNoFim(), 50);
+    return () => clearTimeout(a);
+  }, []);
 
   return (
-    <div
-      className={`
-        absolute bottom-0 top-0 h-full bg-[var(--background)] z-[100]
-        transition-all duration-200 ease-in-out
-        ${openModal && animating ? "w-full opacity-100" : "h-0 opacity-0"}
-        ${hidden ? "hidden" : ""}
-      `}
-      onTransitionEnd={() => {
-        if (!openModal) setHidden(true);
-      }}
-    >
-      <Header h="h-[80px]" divider>
+    <Container>
+      <Header h="h-[50px]" divider>
         <HeaderGrid>
-          <div className="col-span-2" onClick={handleOpenModal}>
-            <IconX size="h-[32px] w-[32px]" />
+          <div className="flex col-span-2 gap-4">
+            <div onClick={handleOpenModal}>
+              <IconX size="h-[32px] w-[32px]" />
+            </div>
+            <div className="mt-1.5" onClick={handleShowDelete}>
+              <IconEdit size="h-[23px] w-[23px]" />
+            </div>
           </div>
           <div className="col-span-8 mt-2">
             <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">CARDAPIO</span>
+              <span className="text-xs font-bold">COMANDA</span>
             </div>
           </div>
           <div className="flex col-span-2 text-xs mt-2 justify-between">
@@ -94,24 +82,18 @@ export const ModalRight = ({
             {score}k
           </div>
         </HeaderGrid>
-        <div className="w-full h-full flex px-2 gap-2 items-center">
-          <div className="pl-2 font-bold min-w-[50px] max-w-[50px]">Quant</div>
-          <div className="w-full flex ">
-            <span className="text-md font-bold pl-2">Items</span>
-          </div>
-        </div>
       </Header>
-      {/* Container do conteúdo com rolagem */}
+
       <div className="relative w-full h-full flex flex-col overflow-auto">
         <div
-          className="flex-1 overflow-auto mt-[77px] mb-[180px] p-2"
+          className="flex-1 overflow-auto mt-[40px] mb-[180px] p-2"
           id="minhaDiv"
         >
           {children}
         </div>
       </div>
 
-      <Footer bg="bg-[var(--bg-component)]" h="h-[175px] rounded-t-2xl">
+      <Footer bg="bg-[var(--bg-component)]" h="h-[180px] rounded-t-2xl">
         <div className="flex justify-center flex-col items-center w-full">
           <div className="w-full px-6 font-bold pb-3">
             <div className="flex justify-between items-start">
@@ -134,10 +116,10 @@ export const ModalRight = ({
               </span>
             </div>
           </div>
-          <div className="relative w-full flex justify-center items-center">
+          <div className="relative w-full flex justify-center items-center ">
             <Button
               disabled={itemsSelected?.length == 0}
-              margin="mx-2"
+              margin="mx-2 mb-3"
               onClick={saveCommand}
             >
               {!isLoadingCreate ? (
@@ -149,6 +131,6 @@ export const ModalRight = ({
           </div>
         </div>
       </Footer>
-    </div>
+    </Container>
   );
 };

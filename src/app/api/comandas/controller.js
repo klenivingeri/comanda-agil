@@ -125,6 +125,54 @@ export const putCommands = async ({
   }
 };
 
+export const deleteCommands = async ({
+  categories,
+  commands,
+  products,
+  xTenant,
+  _id,
+  itemUUID,
+}) => {
+  console.log({ commands, xTenant, _id, itemUUID });
+  try {
+    if (!itemUUID) {
+      return Response.json(
+        { message: "ID do item a ser removido não fornecido" },
+        { status: 400 }
+      );
+    }
+
+    const response = await commands
+      .findOneAndUpdate(
+        { _id, tenant: xTenant.id },
+        {
+          $pull: {
+            subOrders: {
+              _id: new mongoose.Types.ObjectId(itemUUID),
+            },
+          },
+        },
+        { new: true }
+      )
+      .populate(populate(products, categories));
+
+    if (!response) {
+      return Response.json(
+        { message: "Comanda não encontrada" },
+        { status: 404 }
+      );
+    }
+
+    return Response.json({ records: response }, { status: 200 });
+  } catch (err) {
+    console.error(err);
+    return Response.json(
+      { message: "Ocorreu um erro ao deletar o item da comanda" },
+      { status: 500 }
+    );
+  }
+};
+
 export const getCommandsForUser = async ({ commands, xTenant }) => {
   try {
     let response;

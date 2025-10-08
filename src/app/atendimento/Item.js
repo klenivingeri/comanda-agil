@@ -1,17 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { currency } from "../../app/utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
 import { IconImageEmpty } from "public/icons/ImageEmpty";
+import { Button } from "src/components/button/Button";
+import { CenterModal } from "src/components/modal";
 
 export const Item = ({
   item,
   handleUpdateItemsSelected,
+  handleDeleteItemSelected,
   hiddeSelectQuantity,
+  uuidItemInCommand,
   itemInNote = false,
   hideValue,
+  showDelete = false,
 }) => {
+  const [openCenterModal, setOpenCenterModal] = useState(false);
+
   const handleAdd = () => {
     if (item?.quantity) {
       handleUpdateItemsSelected(item, item.quantity + 1);
@@ -22,6 +29,10 @@ export const Item = ({
 
   const handleRemove = () => {
     handleUpdateItemsSelected(item, item.quantity - 1);
+  };
+
+  const handleDelete = () => {
+    setOpenCenterModal(true);
   };
 
   return (
@@ -43,14 +54,61 @@ export const Item = ({
           {currency(item.price)}
         </span>
       </div>
-      {!hiddeSelectQuantity && (
+
+      {!hiddeSelectQuantity ? (
         <SelectQuantity
           handleAdd={handleAdd}
           handleRemove={handleRemove}
           value={item?.quantity || 0}
           hideValue={hideValue}
         />
+      ) : (
+        showDelete && (
+          <div
+            style={{ width: "40px" }}
+            className="flex justify-center content-center mr-2 mt-1"
+          >
+            <Button
+              onClick={handleDelete}
+              wFull="w-9"
+              hFull="h-8"
+              text="〤"
+              padding="py-4 "
+              style="buttonRed"
+            />
+          </div>
+        )
       )}
+      <CenterModal
+        isOpen={openCenterModal}
+        onClose={() => setOpenCenterModal(false)}
+      >
+        <div className="p-6 sm:p-8 flex flex-col items-center text-center">
+          <span className="text-2xl sm:text-3xl font-extrabold text-red-600 mt-4 mb-2">
+            Atenção! Confirma a Exclusão?
+          </span>
+          <p className="text-lg text-gray-700 mb-4">
+            Você está prestes a deletar o seguinte item. Esta ação é
+            **irreversível**.
+          </p>
+          <div className="w-full bg-gray-100 p-3 sm:p-4 rounded-lg my-4 border border-gray-200">
+            <p className="text-xl font-semibold text-gray-900">
+              {item.code} - {item.name}
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
+            <Button
+              onClick={() => {
+                handleDeleteItemSelected(uuidItemInCommand);
+                setOpenCenterModal(false);
+              }}
+              text="Deletar Permanentemente"
+              style="buttonRed"
+              hFull="h-10"
+            />
+          </div>
+        </div>
+      </CenterModal>
     </div>
   );
 };

@@ -48,11 +48,14 @@ export const Atendimento = ({ idComanda }) => {
   const [isLoadingCreate, setIsLoadingCreat] = useState(false);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openType, setOpenType] = useState(null);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const toast = useToast();
 
   const fetchCreateCommand = async (payload) => {
+    setShowDelete(false);
     setRotated(!rotated);
     setIsLoadingCreat(true);
     setOpenModal(true);
@@ -79,6 +82,31 @@ export const Atendimento = ({ idComanda }) => {
       setIsLoadingCreat(false);
     } catch (_) {
       toast.error("Ocorreu um erro ao enviar o items");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchDeleteItemCommand = async (itemUUID) => {
+    setIsLoadingCreat(true);
+    setOpenModal(true);
+
+    try {
+      const resp = await fetch(
+        `/api/comandas?_id=${comanda?._id}&itemUUID=${itemUUID}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      const result = await resp.json();
+      setComanda(result?.records);
+
+      toast.success("Item deletado");
+      setIsLoadingCreat(false);
+    } catch (_) {
+      toast.error("Ocorreu um erro ao deletar item");
     } finally {
       setIsLoading(false);
     }
@@ -137,6 +165,12 @@ export const Atendimento = ({ idComanda }) => {
     setItems(newArray);
   };
 
+  const handleDeleteItemSelected = (itemUUID) => {
+    fetchDeleteItemCommand(itemUUID);
+  };
+
+  const handleShowDelete = () => setShowDelete(!showDelete);
+
   const totalItems = useMemo(() => {
     return items?.filter((item) => item?.quantity > 0);
   }, [items]);
@@ -177,6 +211,53 @@ export const Atendimento = ({ idComanda }) => {
 
     fetchCreateCommand(payload);
   };
+
+  if (openModal) {
+    return (
+      <ModalRight
+        handleOpenModal={handleOpenModal}
+        openModal={openModal}
+        totalComanda={totalComanda}
+        saveCommand={saveCommand}
+        itemsSelected={itemsSelected}
+        isLoadingCreate={isLoadingCreate}
+        rotated={rotated}
+        handleShowDelete={handleShowDelete}
+      >
+        <div>
+          {comanda?.subOrders?.map((item, idx) => (
+            <Item
+              key={idx}
+              item={{
+                ...item.product,
+                quantity: item.quantity,
+              }}
+              uuidItemInCommand={item._id}
+              handleAddTotalItemsInTheCategiry={() => {}}
+              handleRemoveTotalItemsInTheCategiry={() => {}}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              handleDeleteItemSelected={handleDeleteItemSelected}
+              hiddeSelectQuantity
+              itemInNote
+              showDelete={showDelete}
+            />
+          ))}
+          {itemsSelected?.map((item, idx) => (
+            <Item
+              key={idx}
+              item={item}
+              handleAddTotalItemsInTheCategiry={() => {}}
+              handleRemoveTotalItemsInTheCategiry={() => {}}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              itemInNote
+              hideValue
+            />
+          ))}
+        </div>
+      </ModalRight>
+    );
+  }
+
   return (
     <Container>
       <Header>
@@ -221,6 +302,8 @@ export const Atendimento = ({ idComanda }) => {
               inputText={inputText}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
               openModal={openModal}
+              openType={openType}
+              setOpenType={setOpenType}
             />
           )}
         </Content>
@@ -239,43 +322,6 @@ export const Atendimento = ({ idComanda }) => {
           )}
         </Button>
       </Footer>
-      <ModalRight
-        handleOpenModal={handleOpenModal}
-        openModal={openModal}
-        totalComanda={totalComanda}
-        saveCommand={saveCommand}
-        itemsSelected={itemsSelected}
-        isLoadingCreate={isLoadingCreate}
-        rotated={rotated}
-      >
-        <div>
-          {comanda?.subOrders?.map((item, idx) => (
-            <Item
-              key={idx}
-              item={{
-                ...item.product,
-                quantity: item.quantity,
-              }}
-              handleAddTotalItemsInTheCategiry={() => {}}
-              handleRemoveTotalItemsInTheCategiry={() => {}}
-              handleUpdateItemsSelected={handleUpdateItemsSelected}
-              hiddeSelectQuantity
-              itemInNote
-            />
-          ))}
-          {itemsSelected?.map((item, idx) => (
-            <Item
-              key={idx}
-              item={item}
-              handleAddTotalItemsInTheCategiry={() => {}}
-              handleRemoveTotalItemsInTheCategiry={() => {}}
-              handleUpdateItemsSelected={handleUpdateItemsSelected}
-              itemInNote
-              hideValue
-            />
-          ))}
-        </div>
-      </ModalRight>
       <MenuMobile
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
