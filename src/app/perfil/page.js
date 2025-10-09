@@ -18,7 +18,7 @@ export default function Perfil() {
   };
 
   const handleFetch = async () => {
-    const res = await fetch("/api/comandas/items", {
+    const res = await fetch("/api/comandas/user-status", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

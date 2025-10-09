@@ -116,6 +116,15 @@ export const ModalRight = ({
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
             </Button>
+            <Button
+              disabled={!itemsSelected?.length == 0}
+              onClick={() => {}}
+              wFull="w-26"
+              margin="mx-2 mb-3"
+              style="buttonGreen"
+            >
+              Finalizar
+            </Button>
           </div>
         </div>
       </Footer>

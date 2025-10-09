@@ -20,7 +20,9 @@ export function UserProvider({ children }) {
       const user = await res.json();
 
       setUserSave({ all: user.records, error: false, isLoading: false });
-      sessionStorage.setItem("user", JSON.stringify(user.records));
+      if (user.records) {
+        sessionStorage.setItem("user", JSON.stringify(user.records));
+      }
     } catch (_) {
       setUserSave({ all: [], error: true, isLoading: false });
     } finally {
@@ -37,6 +39,7 @@ export function UserProvider({ children }) {
   }, []);
 
   const _user = {
+    get: getUser,
     ...user,
   };
 

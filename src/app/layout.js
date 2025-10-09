@@ -30,7 +30,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt" className="h-full">
+    <html lang="pt" className="h-full select-none">
       <body
         className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center`}
       >

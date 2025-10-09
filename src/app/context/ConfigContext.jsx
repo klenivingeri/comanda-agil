@@ -76,7 +76,10 @@ export function ConfigProvider({ children }) {
       const category = await res.json();
 
       setCategorySave({ all: category.records, error: false, isLoading: false });
-      sessionStorage.setItem("categories", JSON.stringify(category.records));
+      if (category?.records) {
+        sessionStorage.setItem("categories", JSON.stringify(category.records));
+      }
+
     } catch (_) {
       setCategorySave({ all: [], error: true, isLoading: false });
     } finally {

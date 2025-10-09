@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 const commandsSchema = new mongoose.Schema(
   {
     code: { type: String, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
     payment: {
       method: {
         type: String,
@@ -18,7 +23,6 @@ const commandsSchema = new mongoose.Schema(
         },
       },
     },
-
     subOrders: [
       {
         product: {
@@ -30,7 +34,6 @@ const commandsSchema = new mongoose.Schema(
         userId: { type: String },
       },
     ],
-
     tenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",

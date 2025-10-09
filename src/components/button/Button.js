@@ -96,7 +96,7 @@ export const Button = React.memo(
           {...attrButton}
         >
           <div
-            className={`border-b-1 border-[var(--button-disabled)] w-full flex justify-center items-center ${
+            className={`border-b-1 border-white/50 w-full flex justify-center items-center ${
               !hFull ? "h-11" : hFull
             } rounded-md`}
           >

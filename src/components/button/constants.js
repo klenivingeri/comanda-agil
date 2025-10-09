@@ -3,12 +3,44 @@ const buttonOrange = ({ wFull, isPressed, press, disabled }) => `
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? "bg-[var(--button-orange-disabled)] border-b-4 border-b-[var(--button-progress)]"
+      ? "bg-[var(--button-orange-disabled)] border-b-4 border-b-[var(--button-orange-progress)]"
       : `
   ${
     isPressed || press
       ? "bg-[var(--button-orange-hover)] border-b-2 border-b-[var(--button-orange-focus)] cursor-pointer"
       : "bg-[var(--button-orange-default)] border-b-4 border-b-[var(--button-orange-focus)] cursor-pointer"
+  }
+  transition-all duration-70 ease-in-out`
+  }
+`;
+
+const buttonBlue = ({ wFull, isPressed, press, disabled }) => `
+  relative text-white font-bold rounded-md shadow-sm
+  ${!wFull ? "w-full" : wFull}
+  ${
+    disabled
+      ? "bg-[var(--button-blue-disabled)] border-b-4 border-b-[var(--button-blue-progress)]"
+      : `
+  ${
+    isPressed || press
+      ? "bg-[var(--button-blue-hover)] border-b-2 border-b-[var(--button-blue-focus)] cursor-pointer"
+      : "bg-[var(--button-blue-default)] border-b-4 border-b-[var(--button-blue-focus)] cursor-pointer"
+  }
+  transition-all duration-70 ease-in-out`
+  }
+`;
+
+const buttonGreen = ({ wFull, isPressed, press, disabled }) => `
+  relative text-white font-bold rounded-md shadow-sm
+  ${!wFull ? "w-full" : wFull}
+  ${
+    disabled
+      ? "bg-[var(--button-green-disabled)] border-b-4 border-b-[var(--button-green-progress)]"
+      : `
+  ${
+    isPressed || press
+      ? "bg-[var(--button-green-hover)] border-b-2 border-b-[var(--button-green-focus)] cursor-pointer"
+      : "bg-[var(--button-green-default)] border-b-4 border-b-[var(--button-green-focus)] cursor-pointer"
   }
   transition-all duration-70 ease-in-out`
   }
@@ -49,6 +81,8 @@ const buttonRed = ({ wFull, isPressed, press, disabled }) => `
 const buttonStyles = {
   buttonDefault,
   buttonOrange,
+  buttonGreen,
+  buttonBlue,
   buttonRed,
 };
 

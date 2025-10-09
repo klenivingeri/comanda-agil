@@ -17,6 +17,7 @@ export const getStoreXTenant = (request) => {
   if (!cookieValue) {
     xTenant.status = 401;
     xTenant.message = "x-tenant não encontrado";
+    xTenant.isValid = false;
     return xTenant;
   }
 
@@ -27,12 +28,14 @@ export const getStoreXTenant = (request) => {
   ) {
     xTenant.status = 401;
     xTenant.message = "x-tenant invalido";
+    xTenant.isValid = false;
     return xTenant;
   }
 
   xTenant.id = tenantId;
   xTenant.userId = userId;
   xTenant.role = role;
+  xTenant.isValid = true;
 
   return xTenant;
 };

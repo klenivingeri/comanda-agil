@@ -17,6 +17,7 @@ export const MenuMobile = ({ handleOpenModal, openModal }) => {
 
   useEffect(() => {
     _menu.get();
+    _user.get();
     const savedTheme = localStorage.getItem("theme");
     setThemeCurrent(savedTheme);
   }, []);
