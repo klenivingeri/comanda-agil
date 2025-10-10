@@ -26,9 +26,8 @@ export const ModalRight = ({
 }) => {
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
-  const postCloseCommand = async (itemUUID) => {
+  const postCloseCommand = async () => {
     setisLoadingCloseCommand(true);
-
     try {
       const resp = await fetch(`/api/comandas/close?_id=${commandID}`, {
         method: "POST",
@@ -76,8 +75,16 @@ export const ModalRight = ({
               <IconX size="h-[32px] w-[32px]" />
             </div>
             {user?.role === "ADMIN" && (
-              <div className="px-2 pt-1.5" onClick={handleShowDelete}>
-                <IconEdit size="h-[23px] w-[23px]" />
+              <div className="flex">
+                <Button
+                  onClick={handleShowDelete}
+                  hFull="h-8"
+                  wFull="w-16"
+                  margin="mx-2 mt-1"
+                  style="buttonBlue"
+                >
+                  <IconEdit size="h-[23px] w-[23px]" />
+                </Button>
               </div>
             )}
           </div>
