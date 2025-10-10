@@ -10,6 +10,8 @@ import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../layout/Container";
 import { useUserConfig } from "src/app/context/UserContext";
+import { isEmpty } from "src/app/utils/empty";
+import { useToast } from "src/hooks/useToast";
 
 export const ModalRight = ({
   handleOpenModal,
@@ -20,7 +22,29 @@ export const ModalRight = ({
   isLoadingCreate,
   rotated,
   handleShowDelete,
+  commandID,
 }) => {
+  const toast = useToast();
+  const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
+  const postCloseCommand = async (itemUUID) => {
+    setisLoadingCloseCommand(true);
+
+    try {
+      const resp = await fetch(`/api/comandas/close?_id=${commandID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const result = await resp.json();
+
+      toast.success("👷🏻 Deu bom, mas ainda está em test");
+    } catch (_) {
+      toast.error("Ocorreu um erro fechar a comanda!");
+    } finally {
+      setisLoadingCloseCommand(false);
+    }
+  };
+
   const { _user } = useUserConfig();
   const [user, setUser] = useState({});
   const score = 200;
@@ -117,13 +141,21 @@ export const ModalRight = ({
               )}
             </Button>
             <Button
-              disabled={!itemsSelected?.length == 0}
-              onClick={() => {}}
-              wFull="w-26"
+              disabled={
+                !itemsSelected?.length == 0 ||
+                isLoadingCloseCommand ||
+                isEmpty(commandID)
+              }
+              onClick={postCloseCommand}
+              wFull="w-28"
               margin="mx-2 mb-3"
               style="buttonGreen"
             >
-              Finalizar
+              {!isLoadingCloseCommand ? (
+                "FINALIZAR"
+              ) : (
+                <Loading isLoading={isLoadingCloseCommand} style="style3" />
+              )}
             </Button>
           </div>
         </div>

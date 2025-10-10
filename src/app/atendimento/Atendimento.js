@@ -81,10 +81,10 @@ export const Atendimento = ({ idComanda }) => {
         })
       );
       toast.success("Item enviado com sucesso!");
-      setIsLoadingCreat(false);
     } catch (_) {
       toast.error("Ocorreu um erro ao enviar o items");
     } finally {
+      setIsLoadingCreat(false);
       setIsLoading(false);
     }
   };
@@ -106,19 +106,22 @@ export const Atendimento = ({ idComanda }) => {
       setComanda(result?.records);
 
       toast.success("Item deletado");
-      setIsLoadingCreat(false);
     } catch (_) {
       toast.error("Ocorreu um erro ao deletar item");
     } finally {
+      setIsLoadingCreat(false);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    setItems(_item.all);
+  }, [_item.all]);
+
+  useEffect(() => {
     const fetchData = async () => {
-      setItems(_item.all);
       try {
-        const _id = idComanda.split("-")[1];
+        const _id = idComanda?.split("-")[1];
         if (_id) {
           const hasCommand = _command.all.find((c) => c._id == _id);
           if (hasCommand?._id) {
@@ -140,7 +143,7 @@ export const Atendimento = ({ idComanda }) => {
     };
 
     fetchData();
-  }, [_item.all]);
+  }, []);
 
   const handleOpenModal = () => {
     if (!openModal) {
@@ -222,6 +225,7 @@ export const Atendimento = ({ idComanda }) => {
         isLoadingCreate={isLoadingCreate}
         rotated={rotated}
         handleShowDelete={handleShowDelete}
+        commandID={comanda?._id}
       >
         <div>
           {comanda?.subOrders?.map((item, idx) => (
