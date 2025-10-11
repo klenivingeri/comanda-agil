@@ -159,10 +159,10 @@ export const deleteCommands = async ({
   commands,
   products,
   xTenant,
+  restValue = 0,
   _id,
   itemUUID,
 }) => {
-  console.log({ commands, xTenant, _id, itemUUID });
   try {
     if (!itemUUID) {
       return Response.json(
@@ -170,20 +170,45 @@ export const deleteCommands = async ({
         { status: 400 }
       );
     }
-
-    const response = await commands
-      .findOneAndUpdate(
-        { _id, tenant: xTenant.id },
-        {
-          $pull: {
-            subOrders: {
-              _id: new mongoose.Types.ObjectId(itemUUID),
+    let response;
+    if (!restValue) {
+      response = await commands
+        .findOneAndUpdate(
+          { _id, tenant: xTenant.id },
+          {
+            $pull: {
+              subOrders: {
+                _id: new mongoose.Types.ObjectId(itemUUID),
+              },
             },
           },
-        },
-        { new: true }
-      )
-      .populate(populate(products, categories));
+          { new: true }
+        )
+        .populate(populate(products, categories));
+    } else {
+      response = await commands
+        .findOneAndUpdate(
+          {
+            _id,
+            tenant: xTenant.id,
+            "subOrders._id": new mongoose.Types.ObjectId(itemUUID),
+          },
+          {
+            $set: {
+              "subOrders.$[subItem].quantity": restValue,
+            },
+          },
+          {
+            new: true,
+            arrayFilters: [
+              {
+                "subItem._id": new mongoose.Types.ObjectId(itemUUID),
+              },
+            ],
+          }
+        )
+        .populate(populate(products, categories));
+    }
 
     if (!response) {
       return Response.json(

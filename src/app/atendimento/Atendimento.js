@@ -89,13 +89,15 @@ export const Atendimento = ({ idComanda }) => {
     }
   };
 
-  const fetchDeleteItemCommand = async (itemUUID) => {
+  const fetchDeleteItemCommand = async (itemUUID, rest) => {
     setIsLoadingCreat(true);
     setOpenModal(true);
 
     try {
       const resp = await fetch(
-        `/api/comandas?_id=${comanda?._id}&itemUUID=${itemUUID}`,
+        `/api/comandas?_id=${comanda?._id}&itemUUID=${itemUUID}${
+          rest ? `&rest=${rest}` : ""
+        }`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -170,8 +172,8 @@ export const Atendimento = ({ idComanda }) => {
     setItems(newArray);
   };
 
-  const handleDeleteItemSelected = (itemUUID) => {
-    fetchDeleteItemCommand(itemUUID);
+  const handleDeleteItemSelected = (itemUUID, rest) => {
+    fetchDeleteItemCommand(itemUUID, rest);
   };
 
   const handleShowDelete = () => setShowDelete(!showDelete);

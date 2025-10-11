@@ -68,6 +68,7 @@ export async function DELETE(request) {
   const { searchParams } = new URL(request.url);
   const _id = searchParams.get("_id");
   const itemUUID = searchParams.get("itemUUID");
+  const restValue = searchParams.get("rest");
 
   const xTenant = getStoreXTenant(request);
 
@@ -77,6 +78,7 @@ export async function DELETE(request) {
     products,
     xTenant,
     itemUUID,
+    restValue,
     _id,
   });
 

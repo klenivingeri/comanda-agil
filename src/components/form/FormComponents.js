@@ -166,7 +166,7 @@ export const Select = ({
             value={value}
             className="w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
           >
-            <option value="">{placeholder}</option>
+            {placeholder && <option value="">{placeholder}</option>}
             {options.map((op, i) => (
               <option key={i} value={op._id}>
                 {op.name}

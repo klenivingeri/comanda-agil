@@ -7,6 +7,7 @@ import { IconImageEmpty } from "public/icons/ImageEmpty";
 import { Button } from "src/components/button/Button";
 import { CenterModal } from "src/components/modal";
 import { IconDelete } from "public/icons/Delete";
+import { Select } from "src/components/form/FormComponents";
 
 export const Item = ({
   item,
@@ -19,6 +20,7 @@ export const Item = ({
   showDelete = false,
 }) => {
   const [openCenterModal, setOpenCenterModal] = useState(false);
+  const [quantityToBeDeleted, setQuantityToBeDeleted] = useState(1);
 
   const handleAdd = () => {
     if (item?.quantity) {
@@ -34,6 +36,12 @@ export const Item = ({
 
   const handleDelete = () => {
     setOpenCenterModal(true);
+  };
+
+  const handlesTheAmountOfItemsToBeDeleted = () => {
+    const rest = item.quantity - quantityToBeDeleted;
+
+    handleDeleteItemSelected(uuidItemInCommand, rest);
   };
 
   return (
@@ -87,24 +95,43 @@ export const Item = ({
       >
         <div className="p-6 sm:p-8 flex flex-col items-center text-center">
           <span className="text-2xl sm:text-3xl font-extrabold text-red-600 mt-4 mb-2">
-            Atenção! Confirma a Exclusão?
+            Confirmar Exclusão!
           </span>
-          <p className="text-lg text-gray-700 mb-4">
-            Você está prestes a deletar o seguinte item. Esta ação é
-            **irreversível**.
+          <p className="text-lg mb-2">
+            Você está prestes a deletar o seguinte item.
           </p>
           <div className="w-full bg-gray-100 p-3 sm:p-4 rounded-lg my-4 border border-gray-200">
             <p className="text-xl font-semibold text-gray-900">
               {item.code} - {item.name}
             </p>
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Quantidade a ser Deletada:
+              <div className="flex flex-row items-center gap-2 ">
+                <select
+                  onChange={(e) => setQuantityToBeDeleted(e.target.value)}
+                  value={quantityToBeDeleted}
+                  className="w-full px-4 py-3 text-xl font-semibold h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:ring-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black text-center"
+                >
+                  {Array.from({ length: item.quantity }, (v, i) => (
+                    <option key={i} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </label>
           </div>
+          Esta ação é **irreversível**.
           <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
             <Button
               onClick={() => {
-                handleDeleteItemSelected(uuidItemInCommand);
+                handlesTheAmountOfItemsToBeDeleted();
                 setOpenCenterModal(false);
               }}
-              text="Deletar Permanentemente"
+              text="Deletar"
               style="buttonRed"
               hFull="h-10"
             />
