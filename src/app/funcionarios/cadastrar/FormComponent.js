@@ -59,7 +59,7 @@ export const FormComponent = ({ employee }) => {
     if (employee?._id) {
       setName(employee.name);
       setEmail(employee.email);
-      sePassword(employee.password);
+      sePassword("");
       setRole(employee.role);
       setBranch(employee.branch);
     }
@@ -101,7 +101,6 @@ export const FormComponent = ({ employee }) => {
           name="Filial"
           id="branch"
           value={branch}
-          placeholder="Selecione o numero da loja"
           setValue={setBranch}
           options={[
             { name: "1", _id: "1" },

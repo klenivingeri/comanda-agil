@@ -19,19 +19,23 @@ export const getUser = async ({ users, xTenant, _id }) => {
   try {
     let response;
 
-    if (xTenant.role === "admin") {
+    if (xTenant.role === "ADMIN") {
       if (_id) {
-        response = await users
+        const user = await users
           .findOne({
             _id,
             tenant: xTenant.id,
           })
+          .select("-password")
           .lean();
+
+        response = [user];
       } else {
         response = await users
           .find({
             tenant: xTenant.id,
           })
+          .select("-password")
           .lean();
       }
     } else {
@@ -40,9 +44,10 @@ export const getUser = async ({ users, xTenant, _id }) => {
           _id: xTenant.userId,
           tenant: xTenant.id,
         })
+        .select("-password")
         .lean();
-      delete user.password;
-      response = user;
+
+      response = [user];
     }
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {

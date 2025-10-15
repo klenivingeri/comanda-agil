@@ -66,7 +66,7 @@ export default function CadastrarFuncionario({ employeeUUID }) {
       </Header>
       <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
-          <FormComponent employee={employee} />
+          <FormComponent employee={employee[0]} />
         </Content>
       </div>
       <MenuMobile

@@ -18,7 +18,7 @@ export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [users, setUsers] = useState([]);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const router = useRouter();
 
@@ -30,14 +30,14 @@ export default function ConsultarCategoria() {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  const getCategoryItems = async () => {
+  const getUsers = async () => {
     try {
       const res = await fetch(`/api/user`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = await res.json();
-      setCategories(resJSON.records);
+      setUsers(resJSON.records);
     } catch (_) {
     } finally {
       setIsLoading(false);
@@ -50,12 +50,12 @@ export default function ConsultarCategoria() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ _id }),
     });
-    getCategoryItems();
+    getUsers();
   };
 
   useEffect(() => {
     setIsLoading(true);
-    getCategoryItems();
+    getUsers();
   }, []);
 
   return (
@@ -82,21 +82,21 @@ export default function ConsultarCategoria() {
       <div className="mt-[100px] mb-[60px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
           <div className="flex flex-col gap-2">
-            {categories.map((category) => (
-              <ItemList key={category._id} p="px-2">
-                <p className="font-bold">{category.name}</p>
+            {users?.map((user) => (
+              <ItemList key={user._id} p="px-2">
+                <p className="font-bold">{user.name}</p>
                 <div className="flex gap-4">
                   <Button
                     style="buttonRed"
                     wFull="w-10"
                     hFull="h-9"
                     margin="mt-1"
-                    onClick={() => handleDelete(category._id)}
+                    onClick={() => handleDelete(user._id)}
                   >
                     <IconDelete size="h-[20px] w-[20px]" />
                   </Button>
                   <Button
-                    href={`/funcionarios/cadastrar/${category._id}`}
+                    href={`/funcionarios/cadastrar/${user._id}`}
                     wFull="w-10"
                     hFull="h-9"
                     margin="mt-1"
