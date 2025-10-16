@@ -19,9 +19,9 @@ export function UserProvider({ children }) {
       });
       const user = await res.json();
 
-      setUserSave({ all: user.records, error: false, isLoading: false });
+      setUserSave({ all: user.records[0], error: false, isLoading: false });
       if (user.records) {
-        sessionStorage.setItem("user", JSON.stringify(user.records));
+        sessionStorage.setItem("user", JSON.stringify(user.records[0]));
       }
     } catch (_) {
       setUserSave({ all: [], error: true, isLoading: false });

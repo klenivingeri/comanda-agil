@@ -45,49 +45,69 @@ export const Item = ({
   };
 
   return (
-    <div className=" flex my-2 py-2 content-center bg-[var(--bg-component)] items-center justify-between border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-      {itemInNote ? (
-        <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md shadow-[var(--bg-subTitle)]/50 flex justify-center content-center">
-          {item?.quantity}
-        </div>
-      ) : (
-        <div className="ml-2 flex h-12 min-w-[60px] w-[70px] items-center justify-center border-1 border-[var(--text-default)]/20 rounded-sm p-1 cursor-pointer transition overflow-hidden text-[var(--text-default)]/20">
-          <IconImageEmpty size="h-[32px] w-[32px]" />
-        </div>
-      )}
-      <div className="truncate w-full flex flex-col px-2 py-1 ">
-        <span className="font-semibold truncate text-sm mr-2">
-          {item.code} - {item.name}
-        </span>
-        <span className="text-xs mt-[-2px] text-gray-500">
-          {currency(item.price)}
-        </span>
-      </div>
-
-      {!hiddeSelectQuantity ? (
-        <SelectQuantity
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
-          value={item?.quantity || 0}
-          hideValue={hideValue}
-        />
-      ) : (
-        showDelete && (
-          <div
-            style={{ width: "40px" }}
-            className="flex justify-center content-center mr-2 mt-1"
-          >
-            <Button
-              onClick={handleDelete}
-              wFull="w-9"
-              hFull="h-8"
-              padding="py-4 "
-              style="buttonRed"
-            >
-              <IconDelete size="h-[20px] w-[20px]" />
-            </Button>
+    <div className="flex flex-col my-2">
+      <div
+        className={`flex 
+        } py-2 content-center bg-[var(--bg-component)] items-center justify-between border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50`}
+      >
+        {itemInNote ? (
+          <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md shadow-[var(--bg-subTitle)]/50 flex justify-center content-center">
+            {item?.quantity}
           </div>
-        )
+        ) : (
+          <div className="ml-2 flex h-12 min-w-[60px] w-[70px] items-center justify-center border-1 border-[var(--text-default)]/20 rounded-sm p-1 cursor-pointer transition overflow-hidden text-[var(--text-default)]/20">
+            <IconImageEmpty size="h-[32px] w-[32px]" />
+          </div>
+        )}
+        <div className="truncate w-full flex flex-col px-2 py-1 ">
+          <span className="font-semibold truncate text-sm mr-2">
+            {item.code} - {item.name}
+          </span>
+          <span className="text-xs mt-[-2px] text-gray-500">
+            {currency(item.price)}
+          </span>
+        </div>
+
+        {!hiddeSelectQuantity ? (
+          <SelectQuantity
+            handleAdd={handleAdd}
+            handleRemove={handleRemove}
+            value={item?.quantity || 0}
+            hideValue={hideValue}
+          />
+        ) : (
+          showDelete && (
+            <div
+              style={{ width: "40px" }}
+              className="flex justify-center content-center mr-2 mt-1"
+            >
+              <Button
+                onClick={handleDelete}
+                wFull="w-9"
+                hFull="h-8"
+                padding="py-4 "
+                style="buttonRed"
+              >
+                <IconDelete size="h-[20px] w-[20px]" />
+              </Button>
+            </div>
+          )
+        )}
+      </div>
+      {item?.user?.name && (
+        <div className="flex mt-[-13px] ml-[14px] ">
+          <div className="bg-[var(--bg-component)] flex rounded-full shadow-lg">
+            {item?.user?.image && (
+              <div
+                className="bg-cover bg-center rounded-full w-7 h-7 shadow-sm"
+                // 💡 APLICAÇÃO DO ESTILO INLINE para a background-image
+                style={{ backgroundImage: `url('${item.user.image}')` }}
+              ></div>
+            )}
+
+            <p className="ml-2  px-2">{item?.user?.name}</p>
+          </div>
+        </div>
       )}
       <CenterModal
         isOpen={openCenterModal}

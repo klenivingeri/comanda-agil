@@ -52,6 +52,7 @@ export const Atendimento = ({ idComanda }) => {
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [itemsSelected, setItemsSelected] = useState([]);
 
   const toast = useToast();
@@ -147,6 +148,10 @@ export const Atendimento = ({ idComanda }) => {
     fetchData();
   }, []);
 
+  const handleShowDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   const handleOpenModal = () => {
     if (!openModal) {
       setScrollPosition(window.scrollY);
@@ -176,7 +181,10 @@ export const Atendimento = ({ idComanda }) => {
     fetchDeleteItemCommand(itemUUID, rest);
   };
 
-  const handleShowDelete = () => setShowDelete(!showDelete);
+  const handleShowDelete = () => {
+    handleShowDetails();
+    setShowDelete(!showDelete);
+  };
 
   useEffect(() => {
     const selected = items?.filter((item) => item?.quantity > 0);
@@ -217,6 +225,36 @@ export const Atendimento = ({ idComanda }) => {
   };
 
   if (openModal) {
+    function agruparSubOrdersEmanterEstrutura(data) {
+      const subOrders = comanda?.subOrders;
+
+      // Objeto usado como mapa (hashmap) para agrupar os itens pelo product._id
+      // O valor armazenado será o objeto da subOrder que será retornado.
+      const groupedItems = subOrders.reduce((acc, currentOrder) => {
+        const productId = currentOrder.product._id;
+        const currentQuantity = currentOrder.quantity;
+
+        // 1. Se o produto ainda não foi visto:
+        if (!acc[productId]) {
+          // Cria uma cópia do objeto da subOrder atual (currentOrder)
+          // e armazena no acumulador. Usamos o spread operator para garantir que
+          // não alteramos o objeto original se ele for imutável (boa prática).
+          acc[productId] = { ...currentOrder };
+        } else {
+          // 2. Se o produto JÁ foi visto:
+          // Apenas adiciona a quantidade do item atual ao totalizador
+          acc[productId].quantity += currentQuantity;
+        }
+
+        return acc;
+      }, {});
+
+      // Converte o objeto de agrupamento (hashmap) de volta para um array.
+      const finalGroupedArray = Object.values(groupedItems);
+
+      return finalGroupedArray;
+    }
+
     return (
       <ModalRight
         handleOpenModal={handleOpenModal}
@@ -228,25 +266,45 @@ export const Atendimento = ({ idComanda }) => {
         rotated={rotated}
         handleShowDelete={handleShowDelete}
         commandID={comanda?._id}
+        handleShowDetails={handleShowDetails}
       >
         <div>
-          {comanda?.subOrders?.map((item, idx) => (
-            <Item
-              key={idx}
-              item={{
-                ...item.product,
-                quantity: item.quantity,
-              }}
-              uuidItemInCommand={item._id}
-              handleAddTotalItemsInTheCategiry={() => {}}
-              handleRemoveTotalItemsInTheCategiry={() => {}}
-              handleUpdateItemsSelected={handleUpdateItemsSelected}
-              handleDeleteItemSelected={handleDeleteItemSelected}
-              hiddeSelectQuantity
-              itemInNote
-              showDelete={showDelete}
-            />
-          ))}
+          {showDetails
+            ? comanda?.subOrders?.map((item, idx) => (
+                <Item
+                  key={idx}
+                  item={{
+                    ...item.product,
+                    quantity: item.quantity,
+                    user: item.userId,
+                  }}
+                  uuidItemInCommand={item._id}
+                  handleAddTotalItemsInTheCategiry={() => {}}
+                  handleRemoveTotalItemsInTheCategiry={() => {}}
+                  handleUpdateItemsSelected={handleUpdateItemsSelected}
+                  handleDeleteItemSelected={handleDeleteItemSelected}
+                  hiddeSelectQuantity
+                  itemInNote
+                  showDelete={showDelete}
+                />
+              ))
+            : agruparSubOrdersEmanterEstrutura()?.map((item, idx) => (
+                <Item
+                  key={idx}
+                  item={{
+                    ...item.product,
+                    quantity: item.quantity,
+                  }}
+                  uuidItemInCommand={item._id}
+                  handleAddTotalItemsInTheCategiry={() => {}}
+                  handleRemoveTotalItemsInTheCategiry={() => {}}
+                  handleUpdateItemsSelected={handleUpdateItemsSelected}
+                  handleDeleteItemSelected={handleDeleteItemSelected}
+                  hiddeSelectQuantity
+                  itemInNote
+                  showDelete={showDelete}
+                />
+              ))}
           {itemsSelected?.map((item, idx) => (
             <Item
               key={idx}

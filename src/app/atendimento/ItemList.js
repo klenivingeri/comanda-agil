@@ -135,7 +135,7 @@ export const ItemList = ({
 
   return (
     // openModal está aqui pra ajudar a função testParaIniciarDivNoFim
-    <div className={` ${openModal ? "hidden" : "h-full"} w-full`}>
+    <div className={` ${openModal ? "hidden" : "h-full"} w-full `}>
       {Object.entries(groupedItems)?.map(([type, items]) => {
         return (
           <SubTitle

@@ -27,10 +27,10 @@ export const viewport = {
   maximumScale: 1,
   userScalable: "no",
 };
-
+//select-none
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt" className="h-full select-none">
+    <html lang="pt" className="h-full ">
       <body
         className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center`}
       >
