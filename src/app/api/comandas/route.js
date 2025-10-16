@@ -1,6 +1,7 @@
 import { connectToDatabase } from "../lib/dbConnect.js";
 import { commands } from "./commandModel.js";
 import { products } from "../items/productModel.js";
+import { users } from "../user/usersModel.js";
 import { categories } from "../category/categoryModel.js";
 import { tenants } from "../user/tenantModel.js";
 import { getStoreXTenant } from "../utils/getStoreXTenant.js";
@@ -22,6 +23,7 @@ export async function GET(request) {
     commands,
     products,
     tenants,
+    users,
     xTenant,
     _id,
   });
@@ -38,6 +40,7 @@ export async function POST(request) {
     commands,
     products,
     xTenant,
+    users,
     body,
   });
 
@@ -56,6 +59,7 @@ export async function PUT(request) {
     commands,
     products,
     xTenant,
+    users,
     body,
     _id,
   });
@@ -79,6 +83,7 @@ export async function DELETE(request) {
     xTenant,
     itemUUID,
     restValue,
+    users,
     _id,
   });
 

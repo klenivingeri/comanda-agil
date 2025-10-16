@@ -1,15 +1,22 @@
 import mongoose from "mongoose";
 import { getInfoPainelUser } from "./business";
 
-const populate = (products, categories) => ({
-  path: "subOrders.product",
-  model: products,
-  populate: {
-    path: "category",
-    model: categories,
-    select: "name type",
+const populate = (products, categories, users) => [
+  {
+    path: "subOrders.product",
+    model: products,
+    populate: {
+      path: "category",
+      model: categories,
+      select: "name type",
+    },
   },
-});
+  {
+    path: "subOrders.userId",
+    model: users,
+    select: "name image",
+  },
+];
 
 const getDayRangeBRT = (daysAgo = 0) => {
   const now = new Date();
@@ -42,6 +49,7 @@ export const getCommands = async ({
   categories,
   commands,
   products,
+  users,
   xTenant,
   _id,
 }) => {
@@ -53,14 +61,14 @@ export const getCommands = async ({
           tenant: xTenant.id,
           _id,
         })
-        .populate(populate(products, categories))
+        .populate(populate(products, categories, users))
         .lean();
     } else {
       response = await commands
         .find({
           tenant: xTenant.id,
         })
-        .populate(populate(products, categories))
+        .populate(populate(products, categories, users))
         .lean();
     }
 
@@ -85,6 +93,7 @@ export const postCommands = async ({
   commands,
   products,
   xTenant,
+  users,
   body,
 }) => {
   try {
@@ -99,7 +108,7 @@ export const postCommands = async ({
       }));
 
     const created = await commands.create(body);
-    await created.populate(populate(products, categories));
+    await created.populate(populate(products, categories, users));
 
     return Response.json({ records: created }, { status: 200 });
   } catch (err) {
@@ -115,6 +124,7 @@ export const putCommands = async ({
   commands,
   products,
   xTenant,
+  users,
   body,
   _id,
 }) => {
@@ -136,7 +146,7 @@ export const putCommands = async ({
         },
         { new: true }
       )
-      .populate(populate(products, categories));
+      .populate(populate(products, categories, users));
 
     if (!response) {
       return Response.json(
@@ -159,6 +169,7 @@ export const deleteCommands = async ({
   commands,
   products,
   xTenant,
+  users,
   restValue = 0,
   _id,
   itemUUID,
@@ -184,7 +195,7 @@ export const deleteCommands = async ({
           },
           { new: true }
         )
-        .populate(populate(products, categories));
+        .populate(populate(products, categories, users));
     } else {
       response = await commands
         .findOneAndUpdate(
@@ -207,7 +218,7 @@ export const deleteCommands = async ({
             ],
           }
         )
-        .populate(populate(products, categories));
+        .populate(populate(products, categories, users));
     }
 
     if (!response) {
