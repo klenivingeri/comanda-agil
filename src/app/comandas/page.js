@@ -20,8 +20,10 @@ export default function Comandas() {
   const { _command } = useConfig();
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
-
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const comprimentoDesejado = 3;
+  const zero = "0";
+
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
@@ -58,7 +60,10 @@ export default function Comandas() {
           <div className="col-span-12 flex items-end gap-2">
             <InputSearch setInputText={setInputText} _isNumeric />
             <Button
-              href={`/atendimento/${inputText}`}
+              href={`/atendimento/${String(inputText).padStart(
+                comprimentoDesejado,
+                zero
+              )}`}
               disabled={hasComanda}
               wFull="w-[50px]"
             >

@@ -227,29 +227,21 @@ export const Atendimento = ({ idComanda }) => {
   if (openModal) {
     function agruparSubOrdersEmanterEstrutura(data) {
       const subOrders = comanda?.subOrders;
+      if (!subOrders) return [];
 
-      // Objeto usado como mapa (hashmap) para agrupar os itens pelo product._id
-      // O valor armazenado será o objeto da subOrder que será retornado.
-      const groupedItems = subOrders.reduce((acc, currentOrder) => {
+      const groupedItems = subOrders?.reduce((acc, currentOrder) => {
         const productId = currentOrder.product._id;
         const currentQuantity = currentOrder.quantity;
 
-        // 1. Se o produto ainda não foi visto:
         if (!acc[productId]) {
-          // Cria uma cópia do objeto da subOrder atual (currentOrder)
-          // e armazena no acumulador. Usamos o spread operator para garantir que
-          // não alteramos o objeto original se ele for imutável (boa prática).
           acc[productId] = { ...currentOrder };
         } else {
-          // 2. Se o produto JÁ foi visto:
-          // Apenas adiciona a quantidade do item atual ao totalizador
           acc[productId].quantity += currentQuantity;
         }
 
         return acc;
       }, {});
 
-      // Converte o objeto de agrupamento (hashmap) de volta para um array.
       const finalGroupedArray = Object.values(groupedItems);
 
       return finalGroupedArray;

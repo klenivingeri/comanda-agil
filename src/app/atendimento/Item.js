@@ -96,7 +96,7 @@ export const Item = ({
       </div>
       {item?.user?.name && (
         <div className="flex mt-[-13px] ml-[14px] ">
-          <div className="bg-[var(--bg-component)] flex rounded-full shadow-lg">
+          <div className="bg-[var(--bg-component)] flex rounded-full shadow-lg border-b-2 border-[var(--bg-subTitle)] ">
             {item?.user?.image && (
               <div
                 className="bg-cover bg-center rounded-full w-7 h-7 shadow-sm"
