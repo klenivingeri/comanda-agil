@@ -1,34 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useConfig } from "../../../app/context/ConfigContext";
-import { useUserConfig } from "../../../app/context/UserContext";
 import Menu from "./Menu";
-import { isEmpty } from "../../../app/utils/empty";
 import { SideModal } from "../../../components/modal/SideModal";
 import Link from "next/link";
 
-export const MenuMobile = ({ handleOpenModal, openModal }) => {
-  const { _menu } = useConfig();
-  const { _user } = useUserConfig();
-
+export const MenuMobile = ({ handleOpenModal, openModal, menuItems, user }) => {
   const [themeCurrent, setThemeCurrent] = useState("");
-  const [menuItems, setMenuItems] = useState([]);
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    _menu.get();
-    _user.get();
     const savedTheme = localStorage.getItem("theme");
     setThemeCurrent(savedTheme);
   }, []);
-  useEffect(() => {
-    if (!isEmpty(_user.all)) {
-      setUser(_user.all);
-    }
-    if (!isEmpty(_menu.all)) {
-      setMenuItems(_menu.all);
-    }
-  }, [_menu.all, _user.all]);
 
   const handleSetTheme = (color) => {
     const root = window.document.documentElement;

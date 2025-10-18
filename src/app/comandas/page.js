@@ -7,7 +7,7 @@ import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Header, HeaderGrid } from "../../components/layout/Header";
-import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+import { MenuMobileContainer } from "../../components/menu/lateral";
 import { Button } from "../../components/button/Button";
 
 import { IconMenuList } from "../../../public/icons/MenuList";
@@ -116,7 +116,7 @@ export default function Comandas() {
           </div>
         </Content>
       </div>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />

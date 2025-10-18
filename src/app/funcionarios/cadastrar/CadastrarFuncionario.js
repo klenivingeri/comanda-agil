@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IconDotMenu } from "../../../../public/icons/DotMenu";
-import { MenuMobile } from "../../../components/menu/lateral/MenuMobile";
+import { MenuMobileContainer } from "../../../components/menu/lateral";
 
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";

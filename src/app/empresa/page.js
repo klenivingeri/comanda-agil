@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { MenuMobile } from "src/components/menu/lateral/MenuMobile";
+import { MenuMobileContainer } from "src/components/menu/lateral";
 
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";

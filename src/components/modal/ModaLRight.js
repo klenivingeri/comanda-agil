@@ -24,6 +24,7 @@ export const ModalRight = ({
   handleShowDelete,
   commandID,
 }) => {
+  const { _user } = useUserConfig();
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
   const postCloseCommand = async () => {
@@ -44,8 +45,6 @@ export const ModalRight = ({
     }
   };
 
-  const { _user } = useUserConfig();
-  const [user, setUser] = useState({});
   const score = 200;
 
   const testParaIniciarDivNoFim = () => {
@@ -62,10 +61,6 @@ export const ModalRight = ({
     return () => clearTimeout(a);
   }, []);
 
-  useEffect(() => {
-    setUser(_user?.all);
-  }, [_user?.all]);
-
   return (
     <Container>
       <Header h="h-[50px]" divider>
@@ -74,7 +69,7 @@ export const ModalRight = ({
             <div onClick={handleOpenModal}>
               <IconX size="h-[32px] w-[32px]" />
             </div>
-            {user?.role === "ADMIN" && (
+            {_user.all[0]?.role === "ADMIN" && (
               <div className="flex">
                 <Button
                   onClick={handleShowDelete}

@@ -14,7 +14,7 @@ import { Item } from "./Item";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 
 import { isEmpty } from "../utils/empty";
-import { MenuMobile } from "../../components/menu/lateral/MenuMobile";
+import { MenuMobileContainer } from "../../components/menu/lateral";
 import { Button } from "../../components/button/Button";
 import { Loading } from "src/components/loading/Loading";
 
@@ -377,7 +377,7 @@ export const Atendimento = ({ idComanda }) => {
           )}
         </Button>
       </Footer>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />
