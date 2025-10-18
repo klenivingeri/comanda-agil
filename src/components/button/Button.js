@@ -26,6 +26,7 @@ export const Button = React.memo(
     press = false,
     inline = false,
     style = "buttonDefault",
+    vibre = "on",
     _config,
   }) => {
     const [isPressed, setIsPressed] = useState(false);
@@ -36,7 +37,7 @@ export const Button = React.memo(
         e.preventDefault();
         return;
       }
-      _config.hasVibrate === "on" && vibrate();
+      _config.hasVibrate === vibre && vibrate();
 
       onClick(e);
     };

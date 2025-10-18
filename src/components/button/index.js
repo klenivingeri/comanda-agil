@@ -15,6 +15,7 @@ export const ButtonContainer = ({
   disabled,
   press,
   inline,
+  vibre,
   style,
 }) => {
   const { _config } = useConfig();
@@ -32,6 +33,7 @@ export const ButtonContainer = ({
       press={press}
       inline={inline}
       style={style}
+      vibre={vibre}
       _config={_config}
     >
       {children}

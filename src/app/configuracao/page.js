@@ -109,12 +109,14 @@ export default function Configuracao() {
                   hFull="h-8"
                   text="Sim"
                   press={_config.hasVibrate === "on"}
+                  vibre="off"
                   onClick={handleResponseTouchOn}
                 />
                 <ButtonContainer
                   wFull="w-13"
                   hFull="h-8"
                   text="Não"
+                  vibre="off"
                   press={_config.hasVibrate === "off"}
                   onClick={handleResponseTouchOff}
                 />
