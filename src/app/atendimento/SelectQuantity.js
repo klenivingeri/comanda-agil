@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "../../components/button/Button";
+import { ButtonContainer } from "../../components/button";
 export const SelectQuantity = ({
   handleAdd,
   handleRemove,
@@ -17,7 +17,13 @@ export const SelectQuantity = ({
             className="flex justify-center content-center"
             onClick={handleRemove}
           >
-            <Button wFull="w-9" hFull="h-8" text="-" padding="py-4" inline />
+            <ButtonContainer
+              wFull="w-9"
+              hFull="h-8"
+              text="-"
+              padding="py-4"
+              inline
+            />
           </div>
           {!hideValue ? (
             <div style={{ width: "40px" }}>
@@ -35,7 +41,7 @@ export const SelectQuantity = ({
         className=" flex justify-center content-center mt-1"
         onClick={handleAdd}
       >
-        <Button wFull="w-9" hFull="h-8" text="+" />
+        <ButtonContainer wFull="w-9" hFull="h-8" text="+" />
       </div>
     </div>
   );

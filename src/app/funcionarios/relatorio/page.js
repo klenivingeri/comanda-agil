@@ -41,7 +41,7 @@ export default function RelatorioFuncionario() {
           <Construction />
         </Content>
       </div>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />

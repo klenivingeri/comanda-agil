@@ -40,7 +40,7 @@ export default function Empresa() {
           <Construction />
         </Content>
       </div>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />

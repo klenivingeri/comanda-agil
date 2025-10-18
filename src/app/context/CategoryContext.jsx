@@ -1,10 +1,12 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
+import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
 
 const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
+  const { refreshKey } = useCleaningTrigger();
   const [categorySave, setCategorySave] = useState({ all: [], error: false, isLoading: true });
 
   const getCategory = useCallback(() => fetchAndCache("/api/category", "categories", setCategorySave), []);
@@ -16,7 +18,7 @@ export function CategoryProvider({ children }) {
     } else {
       getCategory();
     }
-  }, [getCategory]);
+  }, [getCategory, refreshKey]);
 
   const value = useMemo(() => ({ get: getCategory, ...categorySave }), [categorySave, getCategory]);
   return <CategoryContext.Provider value={value}>{children}</CategoryContext.Provider>;

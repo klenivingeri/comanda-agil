@@ -18,11 +18,15 @@ export default function Providers({ children }) {
   return (
     <CleaningProvider>
       <ConfigProvider>
-        <UserProvider>
-          <MenuProvider>
-            <CommandProvider>{children}</CommandProvider>
-          </MenuProvider>
-        </UserProvider>
+        <CategoryProvider>
+          <ItemProvider>
+            <UserProvider>
+              <MenuProvider>
+                <CommandProvider>{children}</CommandProvider>
+              </MenuProvider>
+            </UserProvider>
+          </ItemProvider>
+        </CategoryProvider>
       </ConfigProvider>
     </CleaningProvider>
   );

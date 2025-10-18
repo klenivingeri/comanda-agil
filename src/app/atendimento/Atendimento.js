@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { useConfig } from "../../app/context/ConfigContext";
+
 import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
@@ -15,7 +15,7 @@ import { IconDotMenu } from "../../../public/icons/DotMenu";
 
 import { isEmpty } from "../utils/empty";
 import { MenuMobileContainer } from "../../components/menu/lateral";
-import { Button } from "../../components/button/Button";
+import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
@@ -36,11 +36,10 @@ export function RotateImage({ rotated }) {
   );
 }
 
-export const Atendimento = ({ idComanda }) => {
+export const Atendimento = ({ idComanda, _command, _item }) => {
+  const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
   const [scrollPosition, setScrollPosition] = useState(0);
   const [rotated, setRotated] = useState(false);
-  const { _item, _command } = useConfig();
-  const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
   const score = 200;
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
@@ -54,7 +53,6 @@ export const Atendimento = ({ idComanda }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [itemsSelected, setItemsSelected] = useState([]);
-
   const toast = useToast();
 
   const fetchCreateCommand = async (payload) => {
@@ -332,9 +330,13 @@ export const Atendimento = ({ idComanda }) => {
         </HeaderGrid>
         <HeaderGrid>
           <div className="relative col-span-12 flex items-end gap-2">
-            <Button href="/comandas" wFull="w-[50px]" text={code}></Button>
+            <ButtonContainer
+              href="/comandas"
+              wFull="w-[50px]"
+              text={code}
+            ></ButtonContainer>
             <InputSearch setInputText={setInputText} mini />
-            <Button onClick={handleOpenModal} wFull="w-[50px]">
+            <ButtonContainer onClick={handleOpenModal} wFull="w-[50px]">
               <span className="pl-1">
                 <IconMenuList size="h-[32px] w-[32px]" />
               </span>
@@ -343,7 +345,7 @@ export const Atendimento = ({ idComanda }) => {
                   {itemsSelected?.length}
                 </div>
               )}
-            </Button>
+            </ButtonContainer>
           </div>
         </HeaderGrid>
       </Header>
@@ -364,7 +366,7 @@ export const Atendimento = ({ idComanda }) => {
         </Content>
       </div>
       <Footer>
-        <Button
+        <ButtonContainer
           onClick={saveCommand}
           disabled={itemsSelected?.length == 0}
           margin="mx-2 mb-2"
@@ -375,7 +377,7 @@ export const Atendimento = ({ idComanda }) => {
           ) : (
             <Loading isLoading={isLoadingCreate} style="style3" />
           )}
-        </Button>
+        </ButtonContainer>
       </Footer>
       <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}

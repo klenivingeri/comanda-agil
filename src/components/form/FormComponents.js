@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../button/Button";
+import { ButtonContainer } from "../button";
 import { Loading } from "../loading/Loading";
 import { currency } from "../../app/utils/currency";
 
@@ -193,7 +193,7 @@ export const Form = ({ children, create, isLoading }) => {
       className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
     >
       {children}
-      <Button onClick={handleSubmit}>
+      <ButtonContainer onClick={handleSubmit}>
         {!isLoading ? (
           "Cadastrar Categoria"
         ) : (
@@ -205,7 +205,7 @@ export const Form = ({ children, create, isLoading }) => {
             speed="0.4"
           />
         )}
-      </Button>
+      </ButtonContainer>
     </form>
   );
 };

@@ -7,7 +7,7 @@ import { Content } from "../../../components/layout/Content";
 import { Header, HeaderGrid } from "../../../components/layout/Header";
 import { InputSearch } from "../../../components/input/inputSearch";
 import { ItemList } from "src/components/itemList";
-import { Button } from "src/components/button/Button";
+import { ButtonContainer } from "src/components/button";
 import { IconDelete } from "public/icons/Delete";
 import { IconEdit } from "public/icons/Edit";
 import { IconBack } from "public/icons/ArrowBack";
@@ -80,7 +80,7 @@ export default function ConsultarCategoria() {
               <ItemList key={category._id} p="px-2">
                 <p className="font-bold">{category.name}</p>
                 <div className="flex gap-4">
-                  <Button
+                  <ButtonContainer
                     style="buttonRed"
                     wFull="w-10"
                     hFull="h-9"
@@ -88,15 +88,15 @@ export default function ConsultarCategoria() {
                     onClick={() => handleDelete(category._id)}
                   >
                     <IconDelete size="h-[20px] w-[20px]" />
-                  </Button>
-                  <Button
+                  </ButtonContainer>
+                  <ButtonContainer
                     href={`/categoria/cadastrar/${category._id}`}
                     wFull="w-10"
                     hFull="h-9"
                     margin="mt-1"
                   >
                     <IconEdit size="h-[20px] w-[20px]" />
-                  </Button>
+                  </ButtonContainer>
                 </div>
               </ItemList>
             ))}

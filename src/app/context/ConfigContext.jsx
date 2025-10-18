@@ -1,139 +1,27 @@
 "use client";
-import { createContext, useState, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
+import { useCleaningTrigger } from "./CleaningContext";
 import { isEmpty } from "../utils/empty";
 
-export const ConfigContext = createContext();
-const defaultValue = {
-  hasVibrate: false,
-  // outros defaults
-};
+const ConfigContext = createContext();
 
 export function ConfigProvider({ children }) {
+  const { refreshKey } = useCleaningTrigger();
   const [hasVibrate, setHasVibrate] = useState("off");
-  const [commandSave, setcommandSave] = useState({ all: [], error: false, isLoading: true });
-  const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
-  const [menuSave, setMenuSave] = useState({ all: [], error: false, isLoading: true });
-  const [categorySave, setCategorySave] = useState({ all: [], error: false, isLoading: true });
-  const [cleaningTrigger, setCleaningTrigger] = useState(false);
 
-  const _handleCleaningTrigger = () => {
-    sessionStorage.removeItem("items-command");
-    setItemSave({ all: [], error: false, isLoading: true });
-    sessionStorage.removeItem("menu");
-    setMenuSave({ all: [], error: false, isLoading: true });
-    sessionStorage.removeItem("categories");
-    setCategorySave({ all: [], error: false, isLoading: true });
-
-    setCleaningTrigger(!cleaningTrigger);
-  }
-
-  const getComandas = async () => {
-    setcommandSave({ ...commandSave, isLoading: true });
-    const res = await fetch(`/api/comandas`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const comanda = await res.json();
-
-    if (isEmpty(comanda?.records)) {
-      setcommandSave({ ...commandSave, error: true, isLoading: false });
-      return;
-    }
-
-    setcommandSave({ all: comanda.records, error: false, isLoading: false });
-
-  };
-
-  const getItems = async () => {
-    if (itemSave.all.length > 0) {
-      return
-    } else {
-      setItemSave({ ...itemSave, loading: true });
-      const res = await fetch(`/api/items`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const itemsDaComanda = await res.json();
-
-      if (isEmpty(itemsDaComanda?.records)) {
-        setItemSave({ all: [], error: true, isLoading: false });
-        return;
-      }
-      sessionStorage.setItem("items-command", JSON.stringify(itemsDaComanda.records))
-      setItemSave({ all: itemsDaComanda.records, error: false, isLoading: false });
-    }
-
-  };
-
-  const getCategory = async () => {
-    try {
-      const res = await fetch(`/api/category`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const category = await res.json();
-
-      setCategorySave({ all: category.records, error: false, isLoading: false });
-      if (category?.records) {
-        sessionStorage.setItem("categories", JSON.stringify(category.records));
-      }
-
-    } catch (_) {
-      setCategorySave({ all: [], error: true, isLoading: false });
-    } finally {
-    }
-  };
-
-  const getMenu = async () => {
-    try {
-      const res = await fetch(`/api/menu`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const menuItems = await res.json();
-
-      setMenuSave({ all: menuItems.records, error: false, isLoading: false });
-      sessionStorage.setItem("menu", JSON.stringify(menuItems.records));
-    } catch (_) {
-      setMenuSave({ all: [], error: true, isLoading: false });
-    } finally {
-    }
-  };
-
-  const handleVibrate = (vibrate) => {
+  // 🔁 Função para alternar a vibração
+  const handleVibrate = useCallback((vibrate) => {
     setHasVibrate(vibrate);
     localStorage.setItem("vibrate-button", vibrate);
-  };
+  }, []);
 
+  // 🔄 Atualiza estado quando há limpeza (via CleaningTrigger)
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     const savedThemeButton = localStorage.getItem("theme-button");
     const savedVibrateButton = localStorage.getItem("vibrate-button");
 
-    const savedItemsCommand = JSON.parse(sessionStorage.getItem("items-command"))
-    if (savedItemsCommand?.length > 0) {
-      setItemSave({ all: savedItemsCommand, error: false, isLoading: false });
-    } else {
-      getItems();
-    }
-
-    const savedCategory = JSON.parse(sessionStorage.getItem("categories"))
-    if (savedCategory?.length > 0) {
-      setCategorySave({ all: savedCategory, error: false, isLoading: false });
-    } else {
-      getCategory();
-    }
-
-    const savedMenu = JSON.parse(sessionStorage.getItem("menu"))
-    if (!isEmpty(savedMenu)) {
-      setMenuSave({ all: savedMenu, error: false, isLoading: false });
-    } else {
-      getMenu();
-    }
-
-    const root = window.document.documentElement;
+    const root = document.documentElement;
 
     if (savedTheme) {
       root.classList.add(savedTheme);
@@ -148,42 +36,21 @@ export function ConfigProvider({ children }) {
 
     if (!isEmpty(savedVibrateButton)) {
       setHasVibrate(savedVibrateButton);
+    } else {
+      setHasVibrate("off");
     }
-  }, [cleaningTrigger]);
+  }, [refreshKey]);
 
-  const _command = useMemo(() => ({
-    get: getComandas,
-    ...commandSave
-  }), [commandSave]);
-
-  const _item = useMemo(() => ({
-    get: getItems,
-    ...itemSave
-  }), [itemSave]);
-
-  const _menu = useMemo(() => ({
-    get: getMenu,
-    ...menuSave
-  }), [menuSave]);
-
-  const _category = useMemo(() => ({
-    get: getCategory,
-    ...categorySave
-  }), [categorySave]);
+  const _config = useMemo(() => ({
+    handleVibrate,
+    hasVibrate,
+  }), [handleVibrate, hasVibrate]);
 
   return (
-    <ConfigContext.Provider value={{
-      _handleCleaningTrigger,
-      handleVibrate,
-      hasVibrate,
-      _command,
-      _item,
-      _menu,
-      _category
-    }}>
+    <ConfigContext.Provider value={{ _config }}>
       {children}
     </ConfigContext.Provider>
   );
 }
 
-export const useConfig = () => useContext(ConfigContext) || defaultValue
+export const useConfig = () => useContext(ConfigContext);

@@ -53,7 +53,7 @@ export function AccordionItem({ id, title, children, open, onToggle }) {
 
   return (
     <div className="border rounded-lg overflow-hidden w-full">
-      <button
+      <ButtonContainer
         onClick={onToggle}
         className="w-full flex items-center justify-between px-4 py-3 text-left bg-white hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
       >
@@ -75,7 +75,7 @@ export function AccordionItem({ id, title, children, open, onToggle }) {
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </ButtonContainer>
 
       <div
         ref={contentRef}

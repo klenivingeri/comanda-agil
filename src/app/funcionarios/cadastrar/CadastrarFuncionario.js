@@ -69,7 +69,7 @@ export default function CadastrarFuncionario({ employeeUUID }) {
           <FormComponent employee={employee[0]} />
         </Content>
       </div>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />

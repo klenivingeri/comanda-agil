@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useConfig } from "../../app/context/ConfigContext";
 import { isEmpty } from "../../app/utils/empty";
 import Link from "next/link";
 import { getButtonStyles } from "./constants";
@@ -27,8 +26,8 @@ export const Button = React.memo(
     press = false,
     inline = false,
     style = "buttonDefault",
+    _config,
   }) => {
-    const { hasVibrate } = useConfig();
     const [isPressed, setIsPressed] = useState(false);
     const Element = type || isEmpty(href) ? "button" : Link;
 
@@ -37,7 +36,7 @@ export const Button = React.memo(
         e.preventDefault();
         return;
       }
-      hasVibrate === "on" && vibrate();
+      _config.hasVibrate === "on" && vibrate();
 
       onClick(e);
     };

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { currency } from "../../app/utils/currency";
 import { SelectQuantity } from "./SelectQuantity";
 import { IconImageEmpty } from "public/icons/ImageEmpty";
-import { Button } from "src/components/button/Button";
+import { ButtonContainer } from "src/components/button";
 import { CenterModal } from "src/components/modal";
 import { IconDelete } from "public/icons/Delete";
 import { Select } from "src/components/form/FormComponents";
@@ -81,7 +81,7 @@ export const Item = ({
               style={{ width: "40px" }}
               className="flex justify-center content-center mr-2 mt-1"
             >
-              <Button
+              <ButtonContainer
                 onClick={handleDelete}
                 wFull="w-9"
                 hFull="h-8"
@@ -89,7 +89,7 @@ export const Item = ({
                 style="buttonRed"
               >
                 <IconDelete size="h-[20px] w-[20px]" />
-              </Button>
+              </ButtonContainer>
             </div>
           )
         )}
@@ -146,7 +146,7 @@ export const Item = ({
           </div>
           Esta ação é **irreversível**.
           <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
-            <Button
+            <ButtonContainer
               onClick={() => {
                 handlesTheAmountOfItemsToBeDeleted();
                 setOpenCenterModal(false);

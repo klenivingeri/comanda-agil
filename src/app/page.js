@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
-import { Button } from "src/components/button/Button";
+import { ButtonContainer } from "src/components/button";
 import { Loading } from "src/components/loading/Loading";
 
 export default function Login() {
@@ -67,13 +67,13 @@ export default function Login() {
                   Algo errado não esta certo, tente novamente.
                 </p>
               )}
-              <Button type="submit">
+              <ButtonContainer type="submit">
                 {!isLoading ? (
                   "Entrar"
                 ) : (
                   <Loading isLoading={isLoading} style="style3" />
                 )}
-              </Button>
+              </ButtonContainer>
             </form>
           </div>
         </Content>

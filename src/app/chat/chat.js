@@ -35,12 +35,12 @@ export const Chat = () => {
             </div>
 
             {/* Botão enviar */}
-            <button
+            <ButtonContainer
               className="flex justify-center items-center bg-[#075e54] rounded-full w-[54px] h-[48px] ml-2"
               type="submit"
             >
               {/* Ícone pode ir aqui */}
-            </button>
+            </ButtonContainer>
           </form>
         </div>
       </div>

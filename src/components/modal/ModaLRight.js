@@ -4,7 +4,7 @@ import { IconX } from "../../../public/icons/X";
 import { Footer } from "../layout/Footer";
 import { Header, HeaderGrid } from "../layout/Header";
 import { currency } from "../../app/utils/currency";
-import { Button } from "../button/Button";
+import { ButtonContainer } from "../button";
 import { Loading } from "../loading/Loading";
 import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
@@ -71,7 +71,7 @@ export const ModalRight = ({
             </div>
             {_user.all[0]?.role === "ADMIN" && (
               <div className="flex">
-                <Button
+                <ButtonContainer
                   onClick={handleShowDelete}
                   hFull="h-8"
                   wFull="w-16"
@@ -79,7 +79,7 @@ export const ModalRight = ({
                   style="buttonBlue"
                 >
                   <IconEdit size="h-[23px] w-[23px]" />
-                </Button>
+                </ButtonContainer>
               </div>
             )}
           </div>
@@ -131,7 +131,7 @@ export const ModalRight = ({
             </div>
           </div>
           <div className="relative w-full flex justify-center items-center ">
-            <Button
+            <ButtonContainer
               disabled={itemsSelected?.length == 0}
               margin="mx-2 mb-3"
               onClick={saveCommand}
@@ -141,8 +141,8 @@ export const ModalRight = ({
               ) : (
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
-            </Button>
-            <Button
+            </ButtonContainer>
+            <ButtonContainer
               disabled={
                 !itemsSelected?.length == 0 ||
                 isLoadingCloseCommand ||
@@ -158,7 +158,7 @@ export const ModalRight = ({
               ) : (
                 <Loading isLoading={isLoadingCloseCommand} style="style3" />
               )}
-            </Button>
+            </ButtonContainer>
           </div>
         </div>
       </Footer>

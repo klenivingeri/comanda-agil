@@ -1,10 +1,12 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
+import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
 
 const ItemContext = createContext();
 
 export function ItemProvider({ children }) {
+  const { refreshKey } = useCleaningTrigger();
   const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
 
   const getItems = useCallback(() => fetchAndCache("/api/items", "items-command", setItemSave), []);
@@ -16,10 +18,10 @@ export function ItemProvider({ children }) {
     } else {
       getItems();
     }
-  }, [getItems]);
+  }, [getItems, refreshKey]);
 
-  const value = useMemo(() => ({ get: getItems, ...itemSave }), [itemSave, getItems]);
-  return <ItemContext.Provider value={value}>{children}</ItemContext.Provider>;
+  const _item = useMemo(() => ({ get: getItems, ...itemSave }), [itemSave, getItems]);
+  return <ItemContext.Provider value={{ _item }}>{children}</ItemContext.Provider>;
 }
 
 export const useItem = () => useContext(ItemContext);

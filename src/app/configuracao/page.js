@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useConfig } from "../context/ConfigContext";
+import { useCleaningTrigger } from "../context/CleaningContext";
 import { SelectComponent } from "../../components/form/SelectComponent";
 
 import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
 import { Header, HeaderGrid } from "../../components/layout/Header";
 import { Content } from "../../components/layout/Content";
-import { Button } from "src/components/button/Button";
+import { ButtonContainer } from "src/components/button";
 import { IconBack } from "public/icons/ArrowBack";
 
 const optionsColors = [
@@ -20,7 +21,8 @@ const optionsColors = [
 ];
 
 export default function Configuracao() {
-  const { handleVibrate, hasVibrate, _handleCleaningTrigger } = useConfig();
+  const { triggerCleaning } = useCleaningTrigger();
+  const { _config } = useConfig();
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
   const router = useRouter();
 
@@ -29,7 +31,7 @@ export default function Configuracao() {
   };
 
   const handlesClearingCache = () => {
-    _handleCleaningTrigger();
+    triggerCleaning();
   };
 
   const handleButtonColor = (color) => {
@@ -54,11 +56,11 @@ export default function Configuracao() {
   };
 
   const handleResponseTouchOn = () => {
-    handleVibrate("on");
+    _config.handleVibrate("on");
   };
 
   const handleResponseTouchOff = () => {
-    handleVibrate("off");
+    _config.handleVibrate("off");
   };
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export default function Configuracao() {
       const colorCurrent = optionsColors.find((op) => op.type === themeButton);
       setItemDefault(colorCurrent);
     }
-  }, [hasVibrate]);
+  }, [_config.hasVibrate]);
 
   return (
     <Container>
@@ -102,18 +104,18 @@ export default function Configuracao() {
             <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
               <div className="mt-3.5">Resposta tatil</div>
               <div className="flex items-center gap-2 ml-4">
-                <Button
+                <ButtonContainer
                   wFull="w-12"
                   hFull="h-8"
                   text="Sim"
-                  press={hasVibrate === "on"}
+                  press={_config.hasVibrate === "on"}
                   onClick={handleResponseTouchOn}
                 />
-                <Button
+                <ButtonContainer
                   wFull="w-13"
                   hFull="h-8"
                   text="Não"
-                  press={hasVibrate === "off"}
+                  press={_config.hasVibrate === "off"}
                   onClick={handleResponseTouchOff}
                 />
               </div>
@@ -121,7 +123,7 @@ export default function Configuracao() {
             <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
               <div className="mt-3.5">Cache do aplicativo</div>
               <div className="flex items-center gap-2 ml-4">
-                <Button
+                <ButtonContainer
                   wFull="w-28"
                   hFull="h-8"
                   text="Limpa"

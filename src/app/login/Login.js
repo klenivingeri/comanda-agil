@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
-import { Button } from "../../components/button/Button";
+import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 export default function Login({ store }) {
@@ -82,13 +82,13 @@ export default function Login({ store }) {
                   Algo errado não esta certo, tente novamente.
                 </p>
               )}
-              <Button type="submit" style="buttonOrange">
+              <ButtonContainer type="submit" style="buttonOrange">
                 {!isLoading ? (
                   "Entrar"
                 ) : (
                   <Loading isLoading={isLoading} style="style3" />
                 )}
-              </Button>
+              </ButtonContainer>
             </form>
           </div>
         </Content>

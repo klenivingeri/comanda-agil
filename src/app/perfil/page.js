@@ -42,7 +42,7 @@ export default function Perfil() {
       </Header>
       <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
         <Content isLoading={isLoading} error={error}>
-          <button onClick={handleFetch}>busca</button>
+          <ButtonContainer onClick={handleFetch}>busca</ButtonContainer>
           <Construction />
         </Content>
       </div>

@@ -39,7 +39,7 @@ export default function RelatorioProdutos() {
           <Construction />
         </Content>
       </div>
-      <MenuMobile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />
