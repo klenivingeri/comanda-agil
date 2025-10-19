@@ -13,9 +13,11 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconCreate } from "../../../public/icons/Create";
 
-import { currency } from "../utils/currency";
+import { useUserConfig } from "src/app/context/UserContext";
+import { RULES } from "../utils/constants";
 
 export default function CommandView({ commandAll, isLoadingCommand, errorCommand }) {
+  const { _user } = useUserConfig();
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
@@ -85,27 +87,37 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
                   .includes(inputText.trim().toLowerCase());
               })
               .map((c, idx) => (
-                <ButtonContainer
-                  href={`/atendimento/${c.code}-${c._id}`}
-                  wFull="w-28"
-                  hFull="h-30"
-                  key={idx}
-                >
-                  <div className="h-30 w-28 p-3 text-white flex flex-col justify-between">
-                    <div className="flex justify-end text-sm leading-none">
-                      {currency(c.payment.amount)}
+                <div className="flex flex-col gap-1 p-1 border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+                  <ButtonContainer
+                    href={`/atendimento/${c.code}-${c._id}`}
+                    wFull="w-26"
+                    hFull="h-20"
+                    margin="mt-1"
+                    key={idx}
+                  >
+                    <div className="h-20 w-26 p-2 text-white flex flex-col justify-between">
+                      <div className="flex  text-3xl font-bold leading-none">
+                        {c.code}
+                      </div>
+                      <div className="flex justify-start text-sm leading-none">
+                        {dayjs(c.date).format("DD/MM")}
+                      </div>
+                      <span className="text-[var(--button-disabled)] absolute bottom-2 right-0">
+                        <IconMenuList size="h-[40px] w-[40px]" />
+                      </span>
                     </div>
-                    <div className="flex justify-center text-3xl font-bold leading-none">
-                      {c.code}
-                    </div>
-                    <div className="flex justify-start text-sm leading-none">
-                      {dayjs(c.date).format("DD/MM")}
-                    </div>
-                    <span className="text-[var(--button-disabled)] absolute bottom-2 right-0">
-                      <IconMenuList size="h-[40px] w-[40px]" />
-                    </span>
-                  </div>
-                </ButtonContainer>
+                  </ButtonContainer>
+                  {RULES.MODERATOR.includes(_user.all[0]?.role) && (
+                    <ButtonContainer
+                      href={`/atendimento/${c.code}-${c._id}-caixa`}
+                      hFull="h-8"
+                      wFull="w-full"
+                      margin="mt-1"
+                      style="buttonBlue"
+                    >
+                      Caixa
+                    </ButtonContainer>)}
+                </div>
               ))}
           </div>
         </Content>
@@ -117,3 +129,34 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
     </Container>
   );
 }
+
+// <div key={idx} className="grid grid-cols-12 p-2 w-full bg-[var(--bg-component)]">
+//   <span className="text-[var(--button-disabled)] bottom-2 right-0 col-span-2 items-center">
+//     <IconMenuList size="h-[40px] w-[40px]" />
+
+//   </span>
+//   <span className="col-span-2 flex items-center text-[var(--text-default)] font-bold"> {c.code}</span>
+//   <div className="col-span-3"></div>
+//   <div className="col-span-5 flex items-center text-sm">
+//     <ButtonContainer
+
+//       hFull="h-8"
+//       wFull="w-full"
+//       margin="mx-1 mt-1"
+//       style="buttonBlue"
+//     >
+//       Comanda
+//     </ButtonContainer>
+//     {RULES.MODERATOR.includes(_user.all[0]?.role) && (
+//       <ButtonContainer
+
+//         hFull="h-8"
+//         wFull="w-full"
+//         margin="mx-1 mt-1"
+//         style="buttonGreen"
+//       >
+//         Caixa
+//       </ButtonContainer>
+//     )}
+//   </div>
+// </div>

@@ -2,8 +2,16 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { isEmpty } from "../utils/empty";
+const DEFAULT_CONFIG = {
+  _config: {
+    handleVibrate: () => { },
+    hasVibrate: "off",
+  },
+};
 
-const ConfigContext = createContext();
+const ConfigContext = createContext(DEFAULT_CONFIG);
+
+
 
 export function ConfigProvider({ children }) {
   const { refreshKey } = useCleaningTrigger();

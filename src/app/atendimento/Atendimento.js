@@ -123,6 +123,10 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
     const fetchData = async () => {
       try {
         const _id = idComanda?.split("-")[1];
+        const caixa = idComanda?.split("-")[2];
+        if (caixa) {
+          setOpenModal(true);
+        }
         if (_id) {
           const hasCommand = _command.all.find((c) => c._id == _id);
           if (hasCommand?._id) {

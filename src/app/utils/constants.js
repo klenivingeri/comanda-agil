@@ -1,0 +1,9 @@
+const MASTER = "MASTER";
+const ADMIN = "ADMIN";
+const MODERATOR = "MODERATOR";
+const VIEWER = "VIEWER";
+
+export const RULES = {
+  MODERATOR: [MASTER, ADMIN, MODERATOR],
+  ADMIN: [MASTER, ADMIN],
+};

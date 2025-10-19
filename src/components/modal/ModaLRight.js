@@ -9,9 +9,9 @@ import { Loading } from "../loading/Loading";
 import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../layout/Container";
-import { useUserConfig } from "src/app/context/UserContext";
 import { isEmpty } from "src/app/utils/empty";
 import { useToast } from "src/hooks/useToast";
+import { useUserConfig } from "src/app/context/UserContext";
 
 export const ModalRight = ({
   handleOpenModal,
