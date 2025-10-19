@@ -314,3 +314,51 @@ export const getCommandsForUser = async ({
     );
   }
 };
+
+export const putCloseCommands = async ({
+  commands,
+  xTenant,
+  paymentMethod, // O novo método (ex: "PIX", "CARD")
+  statusId, // O novo status (ex: "PAID", "CANCELLED")
+  _id,
+}) => {
+  try {
+    const updateFields = {};
+
+    if (paymentMethod) {
+      updateFields["payment.method"] = paymentMethod;
+    }
+
+    if (statusId) {
+      updateFields["payment.status.id"] = statusId;
+    }
+
+    // Verificação de segurança para garantir que haja algo para atualizar
+    if (Object.keys(updateFields).length === 0) {
+      return Response.json(
+        { message: "Nenhum campo de pagamento fornecido para atualização" },
+        { status: 400 } // Requisição inválida
+      );
+    }
+    const response = await commands.findOneAndUpdate(
+      { _id, tenant: xTenant.id },
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (!response) {
+      return Response.json(
+        { message: "Comanda não encontrada ou pertence a outro inquilino" },
+        { status: 404 }
+      );
+    }
+
+    return Response.json({ records: response }, { status: 200 });
+  } catch (err) {
+    console.error(err);
+    return Response.json(
+      { message: "Ocorreu um erro ao atualizar o status de pagamento" },
+      { status: 500 }
+    );
+  }
+};

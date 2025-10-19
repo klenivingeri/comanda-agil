@@ -7,6 +7,7 @@ import { Content } from "src/components/layout/Content";
 import { Header, HeaderGrid } from "src/components/layout/Header";
 import { Construction } from "src/components/construction";
 import { IconBack } from "public/icons/ArrowBack";
+import { ButtonContainer } from "src/components/button";
 
 export default function Perfil() {
   const [error, setError] = useState(false);

@@ -7,7 +7,6 @@ import { IconImageEmpty } from "public/icons/ImageEmpty";
 import { ButtonContainer } from "src/components/button";
 import { CenterModal } from "src/components/modal";
 import { IconDelete } from "public/icons/Delete";
-import { Select } from "src/components/form/FormComponents";
 
 export const Item = ({
   item,
@@ -133,7 +132,7 @@ export const Item = ({
                 <select
                   onChange={(e) => setQuantityToBeDeleted(e.target.value)}
                   value={quantityToBeDeleted}
-                  className="w-full px-4 py-3 text-xl font-semibold h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:ring-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black text-center"
+                  className="w-full px-4 py-3 text-xl font-semibold h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black text-center"
                 >
                   {Array.from({ length: item.quantity }, (v, i) => (
                     <option key={i} value={i + 1}>

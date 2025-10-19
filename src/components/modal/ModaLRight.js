@@ -12,6 +12,7 @@ import { Container } from "../layout/Container";
 import { isEmpty } from "src/app/utils/empty";
 import { useToast } from "src/hooks/useToast";
 import { useUserConfig } from "src/app/context/UserContext";
+import { CenterModal } from "../../components/modal";
 
 export const ModalRight = ({
   handleOpenModal,
@@ -27,17 +28,25 @@ export const ModalRight = ({
   const { _user } = useUserConfig();
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
+  const [openCenterModal, setOpenCenterModal] = useState(false);
+
+  const [methodID, setMethodID] = useState("CARD");
+  const [statusID, setStatusID] = useState("PAID");
   const postCloseCommand = async () => {
     setisLoadingCloseCommand(true);
     try {
-      const resp = await fetch(`/api/comandas/close?_id=${commandID}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      const resp = await fetch(
+        `/api/comandas/close?_id=${commandID}&paymentMethod=${methodID}&statusId=${statusID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       const result = await resp.json();
 
-      toast.success("👷🏻 Deu bom, mas ainda está em test");
+      toast.success("Comanda finaliza com sucesso");
+      setOpenCenterModal(true);
     } catch (_) {
       toast.error("Ocorreu um erro fechar a comanda!");
     } finally {
@@ -162,6 +171,20 @@ export const ModalRight = ({
           </div>
         </div>
       </Footer>
+
+      <CenterModal
+        isOpen={openCenterModal}
+        onClose={() => setOpenCenterModal(false)}
+      >
+        <div className="p-6 sm:p-8 flex flex-col items-center text-center">
+          <span className="text-1xl  font-extrabold mt-4 mb-2">
+            Ir para seleção de comandas?
+          </span>
+          <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
+            <ButtonContainer href="/comandas" text="Sim" hFull="h-10" />
+          </div>
+        </div>
+      </CenterModal>
     </Container>
   );
 };

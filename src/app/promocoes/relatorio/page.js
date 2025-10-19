@@ -39,7 +39,7 @@ export default function RelatorioPromocoes() {
           <Construction />
         </Content>
       </div>
-      <MenuMoMenuMobileContainerbile
+      <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
       />

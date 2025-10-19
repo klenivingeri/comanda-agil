@@ -68,60 +68,59 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
           </div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[108px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoadingCommand} error={errorCommand}>
-          <div
-            className="flex flex-wrap justify-center gap-4"
-            style={{ alignContent: "flex-start" }}
-          >
-            {commandAll
-              ?.sort((a, b) => {
-                const codeA = a.code;
-                const codeB = b.code;
-                return codeA.localeCompare(codeB);
-              })
-              .filter((c) => {
-                if (!inputText.length) return true;
-                return c.code
-                  .toLowerCase()
-                  .includes(inputText.trim().toLowerCase());
-              })
-              .map((c, idx) => (
-                <div className="flex flex-col gap-1 p-1 border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-                  <ButtonContainer
-                    href={`/atendimento/${c.code}-${c._id}`}
-                    wFull="w-26"
-                    hFull="h-20"
-                    margin="mt-1"
-                    key={idx}
-                  >
-                    <div className="h-20 w-26 p-2 text-white flex flex-col justify-between">
-                      <div className="flex  text-3xl font-bold leading-none">
-                        {c.code}
-                      </div>
-                      <div className="flex justify-start text-sm leading-none">
-                        {dayjs(c.date).format("DD/MM")}
-                      </div>
-                      <span className="text-[var(--button-disabled)] absolute bottom-2 right-0">
-                        <IconMenuList size="h-[40px] w-[40px]" />
-                      </span>
+      <Content isLoading={isLoadingCommand} error={errorCommand} newDiv>
+        <div
+          className="flex flex-wrap justify-center gap-2"
+          style={{ alignContent: "flex-start" }}
+        >
+          {commandAll
+            ?.sort((a, b) => {
+              const codeA = a.code;
+              const codeB = b.code;
+              return codeA.localeCompare(codeB);
+            })
+            .filter((c) => c.payment.status.id === "PENDING")
+            .filter((c) => {
+              if (!inputText.length) return true;
+              return c.code
+                .toLowerCase()
+                .includes(inputText.trim().toLowerCase());
+            })
+            .map((c, idx) => (
+              <div key={idx} className="flex flex-col gap-1 p-1 border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+                <ButtonContainer
+                  href={`/atendimento/${c.code}-${c._id}`}
+                  wFull="w-26"
+                  hFull="h-20"
+                  margin="mt-1"
+                >
+                  <div className="h-20 w-26 p-2 text-white flex flex-col justify-between">
+                    <div className="flex  text-3xl font-bold leading-none">
+                      {c.code}
                     </div>
-                  </ButtonContainer>
-                  {RULES.MODERATOR.includes(_user.all[0]?.role) && (
-                    <ButtonContainer
-                      href={`/atendimento/${c.code}-${c._id}-caixa`}
-                      hFull="h-8"
-                      wFull="w-full"
-                      margin="mt-1"
-                      style="buttonBlue"
-                    >
-                      Caixa
-                    </ButtonContainer>)}
-                </div>
-              ))}
-          </div>
-        </Content>
-      </div>
+                    <div className="flex justify-start text-sm leading-none">
+                      {dayjs(c.date).format("DD/MM")}
+                    </div>
+                    <span className="text-[var(--button-disabled)] absolute bottom-2 right-0">
+                      <IconMenuList size="h-[40px] w-[40px]" />
+                    </span>
+                  </div>
+                </ButtonContainer>
+                {RULES.MODERATOR.includes(_user.all[0]?.role) && (
+                  <ButtonContainer
+                    href={`/atendimento/${c.code}-${c._id}-caixa`}
+                    hFull="h-8"
+                    wFull="w-full"
+                    margin="mt-1"
+                    style="buttonBlue"
+                  >
+                    Caixa
+                  </ButtonContainer>)}
+              </div>
+            ))}
+        </div>
+      </Content>
+
       <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}
