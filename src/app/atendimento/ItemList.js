@@ -58,7 +58,7 @@ function SubTitle({
             </div>
             <div className="flex col-span-3 justify-end content-center items-center ">
               {!!total && (
-                <div className="text-[var(--text-default)] px-3 mr-3 rounded-3xl bg-[var(--bg-alert)] shadow-md">
+                <div className="text-[var(--button-default)] px-3 mr-3 rounded-3xl bg-[var(--button-disabled)]/10 border-b-1 border-b-[var(--button-default)] shadow-md">
                   {total}
                 </div>
               )}

@@ -25,7 +25,7 @@ export const Content = ({
   if (newDiv) {
     return (
       <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div className="flex-1 overflow-auto mt-[100px] mb-[180px p-2">
+        <div className="flex-1 overflow-auto mt-[106px] mb-[180px p-2">
           {children}
         </div>
       </div>

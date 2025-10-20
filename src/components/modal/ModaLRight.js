@@ -186,12 +186,6 @@ export const ModalRight = ({
             <span className="text-2xl font-extrabold  mb-2">
               Método de Pagamento
             </span>
-            <div className="w-full bg-gray-100  p-4 rounded-lg my-4 border border-gray-200">
-              <p className="text-3xl font-semibold text-gray-900">
-                {currency(totalComanda)}
-              </p>
-            </div>
-
             <div className="flex w-full gap-2 mt-2">
               <ButtonContainer
                 onClick={() => setMethodID("CARD")}
@@ -214,6 +208,11 @@ export const ModalRight = ({
               >
                 Pix
               </ButtonContainer>
+            </div>
+            <div className="w-full bg-gray-100  p-4 rounded-lg mt-4 border border-gray-200">
+              <p className="text-3xl font-semibold text-gray-900">
+                {currency(totalComanda)}
+              </p>
             </div>
             <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
               <ButtonContainer

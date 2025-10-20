@@ -14,15 +14,14 @@ export const SelectQuantity = ({
         <>
           <div
             style={{ width: "40px" }}
-            className="flex justify-center content-center"
+            className="flex justify-center content-center mt-1"
             onClick={handleRemove}
           >
             <ButtonContainer
               wFull="w-9"
               hFull="h-8"
               text="-"
-              padding="py-4"
-              inline
+              style="buttonInline"
             />
           </div>
           {!hideValue ? (

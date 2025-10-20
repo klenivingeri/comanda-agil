@@ -74,7 +74,7 @@ export const Button = React.memo(
             margin ? margin : ""
           } flex text-[var(--text-default)] justify-center font-bold items-center rounded-md border-1 border-[var(--button-disabled)]`}
         >
-          {text}
+          {!isEmpty(text) ? text : children}
         </Element>
       );
     }
