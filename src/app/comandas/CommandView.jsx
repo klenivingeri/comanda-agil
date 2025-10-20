@@ -79,7 +79,6 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
               const codeB = b.code;
               return codeA.localeCompare(codeB);
             })
-            .filter((c) => c.payment.status.id === "PENDING")
             .filter((c) => {
               if (!inputText.length) return true;
               return c.code

@@ -67,6 +67,7 @@ export const getCommands = async ({
       response = await commands
         .find({
           tenant: xTenant.id,
+          "payment.status.id": "PENDING", //  { $ne: 'PENDING'} não igual a PENDING
         })
         .populate(populate(products, categories, users))
         .lean();
