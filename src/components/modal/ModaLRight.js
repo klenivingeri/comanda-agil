@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { IconX } from "../../../public/icons/X";
 import { Footer } from "../layout/Footer";
 import { Header, HeaderGrid } from "../layout/Header";
@@ -13,6 +13,7 @@ import { isEmpty } from "src/app/utils/empty";
 import { useToast } from "src/hooks/useToast";
 import { useUserConfig } from "src/app/context/UserContext";
 import { CenterModal } from "../../components/modal";
+import { IconChecked } from "public/icons/Checked";
 
 export const ModalRight = ({
   handleOpenModal,
@@ -29,9 +30,14 @@ export const ModalRight = ({
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
   const [openCenterModal, setOpenCenterModal] = useState(false);
-
   const [methodID, setMethodID] = useState("CARD");
   const [statusID, setStatusID] = useState("PAID");
+  const [isFinish, setIsFinish] = useState(false);
+
+  const handleOpenCenterModal = () => {
+    setOpenCenterModal(true);
+  };
+
   const postCloseCommand = async () => {
     setisLoadingCloseCommand(true);
     try {
@@ -44,9 +50,8 @@ export const ModalRight = ({
       );
 
       const result = await resp.json();
-
+      setIsFinish(true);
       toast.success("Comanda finaliza com sucesso");
-      setOpenCenterModal(true);
     } catch (_) {
       toast.error("Ocorreu um erro fechar a comanda!");
     } finally {
@@ -157,7 +162,7 @@ export const ModalRight = ({
                 isLoadingCloseCommand ||
                 isEmpty(commandID)
               }
-              onClick={postCloseCommand}
+              onClick={handleOpenCenterModal}
               wFull="w-28"
               margin="mx-2 mb-3"
               style="buttonGreen"
@@ -176,14 +181,77 @@ export const ModalRight = ({
         isOpen={openCenterModal}
         onClose={() => setOpenCenterModal(false)}
       >
-        <div className="p-6 sm:p-8 flex flex-col items-center text-center">
-          <span className="text-1xl  font-extrabold mt-4 mb-2">
-            Ir para seleção de comandas?
-          </span>
-          <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
-            <ButtonContainer href="/comandas" text="Sim" hFull="h-10" />
+        {!isFinish ? (
+          <div className="p-4 pt-8 flex flex-col items-center text-center">
+            <span className="text-2xl font-extrabold  mb-2">
+              Método de Pagamento
+            </span>
+            <div className="w-full bg-gray-100  p-4 rounded-lg my-4 border border-gray-200">
+              <p className="text-3xl font-semibold text-gray-900">
+                {currency(totalComanda)}
+              </p>
+            </div>
+
+            <div className="flex w-full gap-2 mt-2">
+              <ButtonContainer
+                onClick={() => setMethodID("CARD")}
+                hFull="h-10"
+                press={methodID === "CARD"}
+              >
+                Cartão
+              </ButtonContainer>
+              <ButtonContainer
+                onClick={() => setMethodID("CASH")}
+                hFull="h-10"
+                press={methodID === "CASH"}
+              >
+                Dinheiro
+              </ButtonContainer>
+              <ButtonContainer
+                onClick={() => setMethodID("PIX")}
+                hFull="h-10"
+                press={methodID === "PIX"}
+              >
+                Pix
+              </ButtonContainer>
+            </div>
+            <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
+              <ButtonContainer
+                onClick={postCloseCommand}
+                text="Confirmar"
+                style="buttonGreen"
+                hFull="h-10"
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-4 pt-8 flex flex-col items-center text-center">
+            {!isLoadingCloseCommand ? (
+              <>
+                <div className="flex justify-center mb-4 items-center h-14 w-14 text-[var(--button-green-default)] rounded-2xl bg-[var(--button-green-disabled)] ">
+                  <IconChecked size="h-[40px] w-[40px]" />
+                </div>
+                <span className="text-2xl font-extrabold  mb-2">
+                  Comanda finalizada
+                </span>
+                <span className="text-sm  mb-2">
+                  Deseja ir para lista de comandas?
+                </span>
+
+                <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
+                  <ButtonContainer
+                    href="/comandas"
+                    text="Sim"
+                    style="buttonGreen"
+                    hFull="h-10"
+                  />
+                </div>
+              </>
+            ) : (
+              <Loading isLoading={isLoadingCloseCommand} style="style3" />
+            )}
+          </div>
+        )}
       </CenterModal>
     </Container>
   );
