@@ -37,7 +37,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
       setHasComanda(hasMatch);
     }
   }, [inputText]);
-
+  const columnsClass = RULES.MODERATOR.includes(_user.all[0]?.role) ? "grid-cols-1" : "grid-cols-2";
   return (
     <Container>
       <Header divider>
@@ -71,7 +71,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
       </Header>
       <Content isLoading={isLoadingCommand} error={errorCommand} newDiv>
         <div
-          className="flex flex-wrap justify-center gap-2"
+          className={`grid gap-2 ${columnsClass}`}
           style={{ alignContent: "flex-start" }}
         >
           {commandAll
@@ -87,35 +87,29 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
                 .includes(inputText.trim().toLowerCase());
             })
             .map((c, idx) => (
-              <div key={idx} className="grid grid-cols-12 p-2 w-full bg-[var(--bg-component)]">
-                <Link className=" flex text-[var(--button-default)] gap-1 bottom-2 right-0 col-span-3 items-center" href={`/atendimento/${c.code}-${c._id}`}>
-                  <IconMenuList size="h-[40px] w-[40px]" />
-                  <span className="flex items-center text-[var(--text-default)] text-2xl font-bold"> {c.code}</span>
+              <div key={idx} className="flex  p-1 border-2 border-[var(--button-default)] rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]">
+                <Link className="grid grid-cols-12 p-2 flex-col w-full bg-[var(--bg-component)] " href={`/atendimento/${c.code}-${c._id}`}>
+                  <div className=" flex text-[var(--button-default)] gap-1 bottom-2 right-0 col-span-3 items-center">
+                    <IconMenuList size="h-[40px] w-[40px]" />
+                  </div>
+                  <div className=" flex text-[var(--button-default)] gap-1 bottom-2 right-0 col-span-6 justify-center items-center">
+                    <span className="flex items-center text-[var(--text-default)] text-3xl font-bold"> {c.code}</span>
+                  </div>
+
+                  <div className="col-span-3 flex justify-center items-center text-sm leading-none text-[var(--text-default)]/50">
+                    {dayjs(c.date).format("DD/MM")}
+                  </div>
                 </Link>
-                <Link className="col-span-3 flex justify-center items-center text-sm leading-none text-[var(--text-default)]/50 " href={`/atendimento/${c.code}-${c._id}`}>
-                  {dayjs(c.date).format("DD/MM")}
-                </Link>
-                <div className="col-span-6 flex items-center text-sm">
+                {RULES.MODERATOR.includes(_user.all[0]?.role) && (
                   <ButtonContainer
-                    hFull="h-8"
-                    wFull="w-full"
-                    margin="mx-1 mt-1"
-                    style={RULES.MODERATOR.includes(_user.all[0]?.role) ? "buttonInline" : 'buttonDefault'}
-                    href={`/atendimento/${c.code}-${c._id}`}
+                    href={`/atendimento/${c.code}-${c._id}-caixa`}
+                    hFull="h-11"
+                    wFull="w-30"
+                    margin="mx-1 mt-2"
                   >
-                    Comanda
+                    <span className="font-normal">Comanda</span>
                   </ButtonContainer>
-                  {RULES.MODERATOR.includes(_user.all[0]?.role) && (
-                    <ButtonContainer
-                      href={`/atendimento/${c.code}-${c._id}-caixa`}
-                      hFull="h-8"
-                      wFull="w-full"
-                      margin="mx-1 mt-1"
-                    >
-                      <span className="font-normal">Caixa</span>
-                    </ButtonContainer>
-                  )}
-                </div>
+                )}
               </div>
             ))}
         </div>

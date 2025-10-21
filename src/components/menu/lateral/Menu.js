@@ -11,6 +11,7 @@ import { IconSearch } from "../../../../public/icons/Search";
 import { IconChart } from "../../../../public/icons/Chart";
 import { IconCompany } from "public/icons/Company";
 import { IconGraphic } from "public/icons/Graphic";
+import { IconExit } from "public/icons/Exit";
 
 const icons = {
   IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
@@ -24,9 +25,10 @@ const icons = {
   IconChart: <IconChart size="h-[20px] w-[20px]" />,
   IconCompany: <IconCompany size="h-[30px] w-[30px]" />,
   IconGraphic: <IconGraphic size="h-[28px] w-[28px]" />,
+  IconExit: <IconExit size="h-[28px] w-[28px]" />,
 };
 
-const Menu = ({ menuItems }) => {
+const Menu = ({ menuItems, user }) => {
   const [activeLink, setActiveLink] = useState("");
   const [subActiveLink, setSubActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -105,6 +107,14 @@ const Menu = ({ menuItems }) => {
             )}
           </li>
         ))}
+        <li onClick={() => {}} className="mb-2">
+          <a
+            onClick={() => user.clear()}
+            className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors hover:bg-[var(--button-hover)]`}
+          >
+            <span className="pl-6">{icons["IconExit"]}</span>Sair
+          </a>
+        </li>
       </ul>
       <div id="version" className="text-[12px] ml-10 pb-2 text-gray-500">
         version: 0.0.10

@@ -1,4 +1,6 @@
 "use client";
+
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
@@ -6,10 +8,11 @@ import { fetchAndCache } from "../utils/fetchAndCache";
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
+  const router = useRouter();
   const { refreshKey } = useCleaningTrigger();
   const [userSave, setUserSave] = useState({ all: [], error: false, isLoading: true });
 
-  const getUser = useCallback(() => fetchAndCache("/api/user", "user", setUserSave, true), []);
+  const getUser = useCallback(() => fetchAndCache("/api/user/perfil", "user", setUserSave, true), []);
 
   useEffect(() => {
     const saved = JSON.parse(sessionStorage.getItem("user"));
@@ -21,7 +24,15 @@ export function UserProvider({ children }) {
   }, [getUser, refreshKey]);
 
 
+  const clear = () => {
+
+    sessionStorage.removeItem("user");
+    setUserSave({ all: [], error: false, isLoading: false });
+    router.push('/login/empresa');
+  }
+
   const _user = useMemo(() => ({
+    clear,
     get: getUser,
     ...userSave
   }), [getUser, userSave]);

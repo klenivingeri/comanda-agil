@@ -66,6 +66,34 @@ export const getUser = async ({ users, xTenant, _id }) => {
   }
 };
 
+export const getUserPerfil = async ({ users, xTenant, _id }) => {
+  try {
+    const user = await users
+      .findOne({
+        _id: xTenant.userId,
+        tenant: xTenant.id,
+      })
+      .select("-password")
+      .lean();
+
+    const response = [user];
+
+    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
+      return Response.json({ records: response }, { status: 200 });
+    }
+
+    return Response.json(
+      { message: "Nenhum funcionario encontrado" },
+      { status: 404 }
+    );
+  } catch (_) {
+    return Response.json(
+      { message: "Erro ao buscar funcionario" },
+      { status: 500 }
+    );
+  }
+};
+
 export const postUser = async ({ users, xTenant, body }) => {
   try {
     body.tenant = xTenant.id;

@@ -34,7 +34,9 @@ export const MenuMobile = ({ handleOpenModal, openModal, menuItems, user }) => {
             <div className="rounded-full border-1 p-[1px] mb-4">
               <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
             </div>
-            <span className="px-2 shadow-2xl font-bold ">{user?.name}</span>
+            <span className="px-2 shadow-2xl font-bold ">
+              {user.all[0]?.name}
+            </span>
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
           </Link>
           <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
@@ -51,7 +53,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, menuItems, user }) => {
 
           <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
         </div>
-        {menuItems.length > 0 && <Menu menuItems={menuItems} />}
+        {menuItems.length > 0 && <Menu menuItems={menuItems} user={user} />}
       </div>
     </SideModal>
   );
