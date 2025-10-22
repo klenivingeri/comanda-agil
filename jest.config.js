@@ -1,12 +1,20 @@
-export default {
+import nextJest from "next/jest.js";
+
+const createJestConfig = nextJest({
+  dir: "./",
+});
+
+const customJestConfig = {
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["@testing-library/jest-dom"],
-  transform: {
-    "^.+\\.[jt]sx?$": ["babel-jest", { configFile: "./babel-test.config.js" }],
-  },
-  moduleFileExtensions: ["js", "jsx"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+
   moduleNameMapper: {
     "^public/(.*)$": "<rootDir>/public/$1",
     "\\.css$": "identity-obj-proxy",
+    "^src/(.*)$": "<rootDir>/src/$1",
   },
 };
+
+export default async function jestConfig() {
+  return await createJestConfig(customJestConfig)();
+}
