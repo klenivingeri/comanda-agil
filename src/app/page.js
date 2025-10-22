@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
+import { useRouter } from "next/navigation";
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { ButtonContainer } from "src/components/button";
@@ -11,20 +12,35 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(e) {
-    setIsLoading(true);
     e.preventDefault();
+    setError(false);
+    setIsLoading(true);
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    if (email.trim() === "" || password.trim() === "") {
+      setError(true);
+      setIsLoading(false);
+      return;
+    }
 
-    if (res.ok) {
-      window.location.href = "/comandas";
-    } else if (email.trim() !== "" && password.trim() !== "") {
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        const user = await res.json();
+        router.push("/comandas");
+      } else {
+        setError(true);
+        setIsLoading(false);
+      }
+    } catch (err) {
       setError(true);
       setIsLoading(false);
     }

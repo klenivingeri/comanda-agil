@@ -12,18 +12,31 @@ import { ButtonContainer } from "../../components/button";
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { IconDotMenu } from "../../../public/icons/DotMenu";
 import { IconCreate } from "../../../public/icons/Create";
-
+import { useRouter } from "next/navigation";
 import { useUserConfig } from "src/app/context/UserContext";
 import { RULES } from "../utils/constants";
 import Link from "next/link";
+import { isEmpty } from "../utils/empty";
+
+const addZero = (text) => String(text?.trim()).padStart(3, 0)
 
 export default function CommandView({ commandAll, isLoadingCommand, errorCommand }) {
   const { _user } = useUserConfig();
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
+  const [oneComanda, setOneComanda] = useState({});
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
-  const comprimentoDesejado = 3;
-  const zero = "0";
+  const router = useRouter();
+
+  const handleCommandID = (e) => {
+    e.preventDefault();
+
+    let pathRouter = oneComanda?.code
+      ? `${addZero(oneComanda?.code)}-${oneComanda._id}`
+      : addZero(inputText);
+
+    router.push(`/atendimento/${pathRouter}`);
+  }
 
   const handleOpenMenuMobile = () => {
     setOpenMenuMobile(!openMenuMobile);
@@ -31,12 +44,18 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
 
   useEffect(() => {
     if (inputText.length) {
-      const hasMatch = commandAll?.some((c) => {
-        return c.code.toLowerCase().includes(inputText.trim().toLowerCase());
+      const hasMatch = commandAll?.filter((c) => {
+        return c.code.toLowerCase().includes(addZero(inputText));
       });
-      setHasComanda(hasMatch);
+      setHasComanda(hasMatch.length > 0);
+      setOneComanda(hasMatch.length === 1 ? hasMatch[0] : {})
+    } else {
+      setHasComanda(true);
+      setOneComanda({})
     }
   }, [inputText]);
+
+
   const columnsClass = RULES.MODERATOR.includes(_user.all[0]?.role) ? "grid-cols-1" : "grid-cols-2";
   return (
     <Container>
@@ -54,19 +73,18 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
           <div className="col-span-2 flex items-center"></div>
         </HeaderGrid>
         <HeaderGrid>
-          <div className="col-span-12 flex items-end gap-2">
+          <form onSubmit={handleCommandID} className="col-span-12 flex items-end gap-2">
+
             <InputSearch setInputText={setInputText} _isNumeric />
             <ButtonContainer
-              href={`/atendimento/${String(inputText).padStart(
-                comprimentoDesejado,
-                zero
-              )}`}
+              href={`/atendimento/${addZero(inputText)}`}
               disabled={hasComanda}
               wFull="w-[50px]"
             >
               <IconCreate size="h-[32px] w-[32px]" />
             </ButtonContainer>
-          </div>
+            <button type="submit" className="bg-transparent w-0 text-transparent border-none p-0 m-0 hidden" ></button>
+          </form>
         </HeaderGrid>
       </Header>
       <Content isLoading={isLoadingCommand} error={errorCommand} newDiv>
@@ -84,7 +102,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
               if (!inputText.length) return true;
               return c.code
                 .toLowerCase()
-                .includes(inputText.trim().toLowerCase());
+                .includes(addZero(inputText));
             })
             .map((c, idx) => (
               <div key={idx} className="flex  p-1 border-2 border-[var(--button-default)] rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]">
