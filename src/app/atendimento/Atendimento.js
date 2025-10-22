@@ -7,7 +7,7 @@ import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
 import { Header, HeaderGrid } from "../../components/layout/Header";
-import { ModalRight } from "../../components/modal/ModaLRight";
+import { Comanda } from "./Comanda";
 import { ItemList } from "./ItemList";
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
@@ -250,7 +250,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
     }
 
     return (
-      <ModalRight
+      <Comanda
         handleOpenModal={handleOpenModal}
         openModal={openModal}
         totalComanda={totalComanda}
@@ -311,7 +311,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
             />
           ))}
         </div>
-      </ModalRight>
+      </Comanda>
     );
   }
 

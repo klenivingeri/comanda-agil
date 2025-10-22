@@ -1,21 +1,21 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconX } from "../../../public/icons/X";
-import { Footer } from "../layout/Footer";
-import { Header, HeaderGrid } from "../layout/Header";
-import { currency } from "../../app/utils/currency";
-import { ButtonContainer } from "../button";
-import { Loading } from "../loading/Loading";
+import { Footer } from "../../components/layout/Footer";
+import { Header, HeaderGrid } from "../../components/layout/Header";
+import { currency } from "../utils/currency";
+import { ButtonContainer } from "../../components/button";
+import { Loading } from "../../components/loading/Loading";
 import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
-import { Container } from "../layout/Container";
+import { Container } from "../../components/layout/Container";
 import { isEmpty } from "src/app/utils/empty";
 import { useToast } from "src/hooks/useToast";
 import { useUserConfig } from "src/app/context/UserContext";
 import { CenterModal } from "../../components/modal";
 import { IconChecked } from "public/icons/Checked";
 
-export const ModalRight = ({
+export const Comanda = ({
   handleOpenModal,
   totalComanda,
   children,
