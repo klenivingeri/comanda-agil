@@ -88,9 +88,8 @@ export const Comanda = ({
                 <ButtonContainer
                   onClick={handleShowDelete}
                   hFull="h-8"
-                  wFull="w-16"
+                  wFull="w-14"
                   margin="mx-2 mt-1"
-                  style="buttonBlue"
                 >
                   <IconEdit size="h-[23px] w-[23px]" />
                 </ButtonContainer>

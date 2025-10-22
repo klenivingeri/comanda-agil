@@ -62,7 +62,6 @@
 }
 
 .btn-purple body {
-  
   --button-default: #9B59B6;   /* Roxo Amethyst */
   --button-hover: #AF7AC5;     /* Roxo claro para o hover */
   --button-focus: #8E44AD;     /* Roxo mais escuro para o focus */
@@ -135,12 +134,8 @@ body, input, textarea, button {
 }
 
 body {
-  background-color:var(--button-default);
+  background: var(--background);
   color: var(--text-default);
   font-family: 'Inter', sans-serif;
-}
-  
-.background {
-  background: var(--background);
 }
 

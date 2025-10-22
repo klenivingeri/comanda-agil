@@ -34,15 +34,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center`}
       >
-        <div className="w-full background antialiased m-0 p-0 h-full flex justify-center">
-          <div
-            id="container"
-            className="flex w-full md:max-w-[768px] relative h-full"
-          >
-            <Providers>
-              <main className="flex-1 h-full">{children}</main>
-            </Providers>
-          </div>
+        <div
+          id="container"
+          className="flex w-full md:max-w-[768px] relative h-full"
+        >
+          <Providers>
+            <main className="flex-1 h-full">{children}</main>
+          </Providers>
         </div>
       </body>
     </html>
