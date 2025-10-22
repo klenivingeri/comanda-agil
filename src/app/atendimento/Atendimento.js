@@ -356,16 +356,20 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
       <div className="mt-[104px] mb-[60px] flex-1 flex flex-col">
         <Content isLoading={isLoading || _item.isLoading} error={error}>
           {isEmpty(idComanda) ? (
-            <div>Selecione uma comanda antes de adiconar os produtos</div>
+            <>
+              <div>Selecione uma comanda antes de adiconar os produtos</div>
+            </>
           ) : (
-            <ItemList
-              items={items}
-              inputText={inputText}
-              handleUpdateItemsSelected={handleUpdateItemsSelected}
-              openModal={openModal}
-              openType={openType}
-              setOpenType={setOpenType}
-            />
+            <>
+              <ItemList
+                items={items}
+                inputText={inputText}
+                handleUpdateItemsSelected={handleUpdateItemsSelected}
+                openModal={openModal}
+                openType={openType}
+                setOpenType={setOpenType}
+              />
+            </>
           )}
         </Content>
       </div>

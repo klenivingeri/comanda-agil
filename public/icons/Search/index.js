@@ -1,3 +1,5 @@
+import React from "react";
+
 export const IconSearch = ({ size }) => {
   return (
     <svg
@@ -41,7 +43,7 @@ export const IconSearchGlass = ({ size }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={ size }
+      className={size}
     >
       <path
         fillRule="evenodd"

@@ -115,7 +115,7 @@
 }
 
 
-* {
+/* * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -127,7 +127,7 @@ input, textarea {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
-}
+} */
 
 body, input, textarea, button {
   font-family: 'Inter', sans-serif;

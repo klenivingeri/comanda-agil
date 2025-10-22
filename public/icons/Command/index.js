@@ -1,3 +1,4 @@
+import React from "react";
 export const IconCommand = ({ size }) => {
   return (
     <svg

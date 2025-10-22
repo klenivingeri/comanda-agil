@@ -6,6 +6,7 @@ export default {
   },
   moduleFileExtensions: ["js", "jsx"],
   moduleNameMapper: {
+    "^public/(.*)$": "<rootDir>/public/$1",
     "\\.css$": "identity-obj-proxy",
   },
 };
