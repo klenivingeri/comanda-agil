@@ -1,7 +1,27 @@
 import { Inter, Roboto } from "next/font/google";
-import { isMobile } from "react-device-detect";
+
 import Providers from "./providers";
 import "./globals.css";
+
+export const metadata = {
+  title: "ComandaGo",
+  description: "Aplicativo de gerenciamento de comandas",
+  manifest: "/manifest.json",
+  icons: {
+    apple: [
+      {
+        url: "/assets/logo.png", 
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "ComandaGo",
+  },
+};
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,11 +35,6 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-export const metadata = {
-  title: "ComandaGo",
-  description: "Aplicativo de gerenciamento de comandas",
-  manifest: "/manifest.json",
-};
 
 export const viewport = {
   width: "device-width",
