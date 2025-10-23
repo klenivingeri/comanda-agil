@@ -13,6 +13,7 @@ export const Input = ({
   isValid = false,
   isCurrency = false,
   type = "text",
+  onFocus = () => {}
 }) => {
   const handleSetValue = (_value) => {
     if (isCurrency) {
@@ -37,6 +38,7 @@ export const Input = ({
         id={id}
         value={displayValue}
         name={id}
+        onFocus={onFocus}
         type={type}
         className={`w-full pl-5 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
             ${

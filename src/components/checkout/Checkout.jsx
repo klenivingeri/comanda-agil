@@ -2,8 +2,16 @@ import { IconChecked } from "public/icons/Checked"
 import { ButtonContainer } from "../button"
 import { Loading } from "../loading/Loading"
 import { currency } from "src/app/utils/currency"
-import { Input, Select } from "../form/FormComponents"
-import { useMemo, useState } from "react"
+import { Input } from "../form/FormComponents"
+import { useMemo, useState, useRef } from "react"
+
+const paymentMethods = [
+  { name: 'Cartão', id: 'CARD' },
+  { name: 'Dinheiro', id: 'CASH' },
+  { name: 'Pix', id: 'PIX' },
+  { name: 'Outro', id: 'OTHER' }
+]
+
 
 const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   <div className="p-4 pt-8 flex flex-col items-center text-center">
@@ -34,7 +42,7 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   </div>
 )
 
-const CreateInput = ({ id, price, onPriceChange = () => { } }) => {
+const CreateInput = ({ id, price, testParaIniciarDivNoFim, onPriceChange = () => { } }) => {
   const handleSetPrice = (value) => onPriceChange(id, value)
 
   return (
@@ -46,11 +54,12 @@ const CreateInput = ({ id, price, onPriceChange = () => { } }) => {
       value={price}
       type="tel"
       isCurrency
+      onFocus={testParaIniciarDivNoFim}
     />
   );
 };
 
-const ComponentInputs = ({ payments, setPayments = () => { } }) => {
+const ComponentInputs = ({ payments, testParaIniciarDivNoFim, setPayments = () => { } }) => {
   const handleAddInput = () => {
     const nextId = payments.length + 1;
     setPayments(prevPayments => [
@@ -78,8 +87,8 @@ const ComponentInputs = ({ payments, setPayments = () => { } }) => {
             id={payment.id}
             price={payment.value}
             onPriceChange={handleUpdatePrice}
+            testParaIniciarDivNoFim={testParaIniciarDivNoFim}
           />
-
           <ButtonContainer
             onClick={handleAddInput}
             wFull="w-9"
@@ -99,7 +108,16 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
   const [pay, setPay] = useState(totalComanda)
   const [isSplitPayment, setIsSplitPayment] = useState(false)
   const [payments, setPayments] = useState([{ id: 1, value: 0 }]);
-  console.log(payments)
+  const refEndPage = useRef(null);
+
+  const testParaIniciarDivNoFim = () => {
+    if (refEndPage.current) {
+      setTimeout(() => {
+        refEndPage.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  };
+
   const handleCheckboxChange = () => {
     setIsSplitPayment(!isSplitPayment)
     if (!isSplitPayment) {
@@ -107,12 +125,7 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
       setPay(totalComanda)
     }
   }
-  const paymentMethods = [
-    { name: 'Cartão', id: 'CARD' },
-    { name: 'Dinheiro', id: 'CASH' },
-    { name: 'Pix', id: 'PIX' },
-    { name: 'Outro', id: 'OTHER' }
-  ]
+
   const installmentOptions = useMemo(() => {
     return Array.from({ length: 12 }, (_, index) => {
       const numero = (index + 1).toString();
@@ -124,7 +137,6 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
     setPay(totalComanda / e.target.value)
     setInstallment(e.target.value)
   }
-
 
   const totalPayments = useMemo(() => {
     return payments.reduce((sum, payment) => sum + payment.value, 0);
@@ -150,7 +162,8 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
           />
           <label htmlFor="scales">Pagamento Fragmentado</label>
         </div>
-        {isSplitPayment && <ComponentInputs payments={payments} setPayments={setPayments} />}
+
+        {isSplitPayment && <ComponentInputs payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} />}
       </span>
       <div className="flex w-full gap-2">
         {paymentMethods.map((method) => (
@@ -163,10 +176,8 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
             <span className={`text-xs border-b-2 transition-all duration-300 ease-in-out ${methodID === method.id ? "border-b-white" : "border-b-transparent"}`}>{method.name}</span>
           </ButtonContainer>
         ))}
-
       </div>
-
-
+      <div ref={refEndPage} id="endModal" ></div>
       <div className="flex flex-col w-full gap-1 items-center justify-center bg-gray-100  p-4 rounded-lg  border border-gray-200">
         {isSplitPayment && <span className="text-xs text-gray-700 ">Total a pagar:</span>}
         <div className="flex w-full gap-1 items-center justify-center">
