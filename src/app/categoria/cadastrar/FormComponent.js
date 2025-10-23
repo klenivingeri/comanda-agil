@@ -44,7 +44,7 @@ export const FormComponent = ({ category }) => {
   };
 
   return (
-    <div className="w-full max-w-[500px] mx-auto">
+    <div className="w-full max-w-[500px] mx-auto text-gray-700">
       <Form method="POST" create={handleSend} isLoading={isLoading}>
         <Input
           name="Nome da categoria"

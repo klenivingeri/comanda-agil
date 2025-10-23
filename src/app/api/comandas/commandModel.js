@@ -11,7 +11,7 @@ const commandsSchema = new mongoose.Schema(
     payment: {
       method: {
         type: String,
-        enum: ["CASH", "CARD", "PIX", "OTHER", ""], // pode adicionar mais métodos
+        enum: ["CASH", "CARD", "PIX", "OTHER"], // pode adicionar mais métodos
         required: true,
       },
       amount: { type: Number, required: true },

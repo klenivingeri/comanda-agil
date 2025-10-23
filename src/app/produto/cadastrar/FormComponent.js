@@ -71,7 +71,7 @@ export const FormComponent = ({ categories, product }) => {
   }, [product]);
 
   return (
-    <div className="w-full max-w-[500px] mx-auto">
+    <div className="w-full max-w-[500px] mx-auto text-gray-700">
       <Form method="POST" create={handleSend} isLoading={isLoading}>
         <InputFileComponent id="file" setValue={() => {}} />
         <Input

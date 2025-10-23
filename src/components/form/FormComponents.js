@@ -29,7 +29,7 @@ export const Input = ({
 
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="block text-sm font-medium ">
         {name}
       </label>
       <input
