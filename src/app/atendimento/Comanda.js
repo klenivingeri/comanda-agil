@@ -121,9 +121,10 @@ export const Comanda = ({
               disabled={itemsSelected?.length == 0}
               margin="mx-2 mb-3"
               onClick={saveCommand}
+              style='buttonInline'
             >
               {!isLoadingCreate ? (
-                "LANÇAR ITEMS NA COMANDA"
+                "Lançar itens na comanda"
               ) : (
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
@@ -136,15 +137,16 @@ export const Comanda = ({
               onClick={handleOpenCenterModal}
               wFull="w-28"
               margin="mx-2 mb-3"
-              style="buttonGreen"
             >
-              FINALIZAR
+              Pagamento
             </ButtonContainer>
           </div>
         </div>
       </Footer>
 
       <CenterModal
+        notCloseBg
+        showX
         isOpen={openCenterModal}
         onClose={() => setOpenCenterModal(false)}
       >

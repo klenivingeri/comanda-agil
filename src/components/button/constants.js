@@ -67,7 +67,7 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? "bg-[var(--button-disabled)] border-1 border-b-3 border-b-[var(--button-progress)]"
+      ? "bg-[var(--button-disabled)] border-1 border-b-3 border-[var(--button-disabled)]"
       : `
   ${
     isPressed || press
@@ -79,16 +79,16 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
 `;
 
 const buttonInline = ({ wFull, isPressed, press, disabled }) => `
-  relative text-[var(--text-default)] rounded-md shadow-sm
+  relative  rounded-md shadow-sm pt-[1px]
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? "border-1 border-b-3 border-[var(--button-progress)]"
+      ? "border-1 border-b-3 border-[var(--button-default)]/40 text-[var(--button-default)]/40"
       : `
   ${
     isPressed || press
-      ? "border-1 border-b-1 border-[var(--button-progress)] cursor-pointer"
-      : "border-1 border-b-3 border-[var(--button-progress)] border-b-[var(--button-progress)] cursor-pointer"
+      ? "bg-[var(--button-default)] text-white border-1-transparent border-b-3 border-b-[var(--button-default)] cursor-pointer"
+      : "text-[var(--button-default)] border-1 border-b-3 border-[var(--button-default)] border-b-[var(--button-default)] cursor-pointer"
   }
   transition-all duration-70 ease-in-out`
   }

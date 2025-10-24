@@ -1,4 +1,7 @@
-export function CenterModal({ isOpen, onClose, children }) {
+import { IconX } from "public/icons/X";
+
+export function CenterModal({ isOpen, onClose, children, notCloseBg = false, showX = false }) {
+  const onClosebg = notCloseBg ? () => {} : onClose 
   return (
     isOpen && (
       <>
@@ -8,7 +11,7 @@ export function CenterModal({ isOpen, onClose, children }) {
             // Z-index 40
             isOpen ? "opacity-100" : "opacity-0 hidden pointer-events-none"
           }`}
-          onClick={onClose}
+          onClick={onClosebg}
         ></div>
 
         {/* Modal Container: Centraliza o conteúdo (usando Flexbox) */}
@@ -19,7 +22,7 @@ export function CenterModal({ isOpen, onClose, children }) {
         >
           {/* Modal Content: O conteúdo real do modal com transição e largura */}
           <div
-            className={`bg-[var(--bg-component)] shadow-2xl rounded-lg w-10/12 max-w-sm 
+            className={`bg-[var(--bg-component)] relative shadow-2xl rounded-lg w-10/12 max-w-sm 
             overflow-hidden transition-all duration-300 ease-in-out pointer-events-auto
             ${
               isOpen
@@ -27,7 +30,7 @@ export function CenterModal({ isOpen, onClose, children }) {
                 : "opacity-0 scale-95 translate-y-4" // Fechado: invisível, menor e ligeiramente para baixo
             }`}
           >
-            {/* Conteúdo do Modal */}
+            {showX && <div className="absolute right-0 top-1 mx-2 mt-2 text-[var(--text-default)]" onClick={onClose}><IconX size="h-[32px] w-[32px]" /></div>}
             <div className="p-4">{children}</div>
           </div>
         </div>

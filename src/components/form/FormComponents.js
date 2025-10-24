@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ButtonContainer } from "../button";
 import { Loading } from "../loading/Loading";
 import { currency } from "../../app/utils/currency";
@@ -13,8 +13,18 @@ export const Input = ({
   isValid = false,
   isCurrency = false,
   type = "text",
-  onFocus = () => {}
+  onFocus = () => {},
+  autoFocus = false
 }) => {
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current && autoFocus) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   const handleSetValue = (_value) => {
     if (isCurrency) {
       const onlyNumbers = _value.replace(/\D/g, "");
@@ -36,6 +46,7 @@ export const Input = ({
       <input
         onChange={(e) => handleSetValue(e.target.value)}
         id={id}
+        ref={inputRef}
         value={displayValue}
         name={id}
         onFocus={onFocus}

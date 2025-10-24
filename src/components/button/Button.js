@@ -24,14 +24,14 @@ export const Button = React.memo(
     padding = "",
     disabled = false,
     press = false,
-    inline = false,
     style = "buttonDefault",
     vibre = "on",
+    inline,
     _config,
   }) => {
     const [isPressed, setIsPressed] = useState(false);
     const Element = type || isEmpty(href) ? "button" : Link;
-
+    const isInline = style === 'buttonInline'
     const handlerClick = (e) => {
       if (disabled) {
         e.preventDefault();
@@ -96,7 +96,7 @@ export const Button = React.memo(
           {...attrButton}
         >
           <div
-            className={`border-b-1 border-white/50 w-full flex justify-center items-center ${
+            className={`border-b-1 ${isInline ? 'border-b-transparent' : 'border-white/40' } w-full flex justify-center items-center ${
               !hFull ? "h-11" : hFull
             } rounded-md`}
           >

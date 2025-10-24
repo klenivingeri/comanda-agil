@@ -381,7 +381,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           text=""
         >
           {!isLoadingCreate ? (
-            "LANÇAR ITEMS NA COMANDA"
+            "Lançar itens na comanda"
           ) : (
             <Loading isLoading={isLoadingCreate} style="style3" />
           )}

@@ -12,12 +12,11 @@ const paymentMethods = [
   { name: 'Outro', id: 'OTHER' }
 ]
 
-
 const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   <div className="p-4 pt-8 flex flex-col items-center text-center">
     {!isLoadingCloseCommand ? (
       <>
-        <div className="flex justify-center mb-4 items-center h-14 w-14 text-[var(--button-green-default)] rounded-2xl bg-[var(--button-green-disabled)] ">
+        <div className="flex justify-center mb-8 items-center h-14 w-14 text-[var(--button-green-default)] rounded-2xl bg-[var(--button-green-disabled)]/50 ">
           <IconChecked size="h-[40px] w-[40px]" />
         </div>
         <span className="text-2xl font-extrabold  mb-2">
@@ -32,7 +31,6 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
             href="/comandas"
             text="Sim"
             style="buttonGreen"
-            hFull="h-10"
           />
         </div>
       </>
@@ -47,13 +45,13 @@ const CreateInput = ({ id, price, testParaIniciarDivNoFim, onPriceChange = () =>
 
   return (
     <Input
-      name={`Digite o valor do ${id}º pagamento`}
       id={`price-${id}`}
       setValue={handleSetPrice}
       placeholder="Preço do produto"
       value={price}
       type="tel"
       isCurrency
+      autoFocus
       onFocus={testParaIniciarDivNoFim}
     />
   );
@@ -77,12 +75,13 @@ const ComponentInputs = ({ payments, testParaIniciarDivNoFim, setPayments = () =
   };
 
   return (
-    <div>
+    <div className="max-h-[160px] overflow-y-auto">
       {payments.map((payment) => (
         <div
           key={payment.id}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 mb-1 py-2"
         >
+          <div className="w-7">{payment.id}º</div>
           <CreateInput
             id={payment.id}
             price={payment.value}
@@ -94,7 +93,7 @@ const ComponentInputs = ({ payments, testParaIniciarDivNoFim, setPayments = () =
             wFull="w-9"
             hFull="h-8"
             text="+"
-            margin="mt-6"
+            margin="mt-1"
           />
         </div>
       ))}
@@ -143,16 +142,49 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
   }, [payments]);
 
   return (
-    <div className="p-4 pt-0 flex gap-6 flex-col items-center ">
+    <div className="p-4 pt-0 flex gap-6 flex-col items-center justify-center ">
       <span className="text-md font-extrabold mb-2">
         Pagamento
       </span>
-      <span className="flex flex-col text-md justify-start w-full gap-2">
-        <div className={`flex items-center gap-2 border-b-1 transition-all duration-900 ease-in-out pb-2 ${isSplitPayment ? 'border-b-[var(--button-disabled)] ' : 'border-b-transparent'}`}>
+      <div className="flex flex-col w-full items-center justify-center">
+        <select
+          disabled={isSplitPayment}
+          onChange={(e) => handleSetInstallment(e)}
+          value={installment}
+          className=" text-center px-2 py-2 text-4xl font-bold text-[var(--button-default)]  rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+        >
+          {installmentOptions.map((op, i) => (
+            <option key={i} value={op._id}>
+              {op.name} × {isSplitPayment ? currency(pay - totalPayments) : currency(totalComanda / op._id)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div ref={refEndPage} id="endModal" className="h-0" ></div>
+      {isSplitPayment && (
+        <span className="flex flex-col text-md justify-start w-full">
+          <ComponentInputs payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} />
+        </span>
+      )}
+      
+      <div className="flex w-full gap-2">
+        {paymentMethods.map((method) => (
+          <ButtonContainer
+            key={method.id}
+            onClick={() => setMethodID(method.id)}
+            hFull="h-10"
+            press={methodID === method.id}
+            style='buttonInline'
+          >
+            <span className={`text-xs`}>{method.name}</span>
+          </ButtonContainer>
+        ))}
+      </div>
+        <div className={`flex items-center gap-2 pb-2`}>
           <input
             className={`
-                bg-[var(--button-disabled)] 
-                h-4 w-4 text-[var(--button-disabled)]
+              bg-[var(--button-disabled)] 
+              h-4 w-4 text-[var(--button-disabled)]
             `}
             type="checkbox"
             id="scales"
@@ -163,47 +195,10 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
           <label htmlFor="scales">Pagamento Fragmentado</label>
         </div>
 
-        {isSplitPayment && <ComponentInputs payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} />}
-      </span>
-      <div className="flex w-full gap-2">
-        {paymentMethods.map((method) => (
-          <ButtonContainer
-            key={method.id}
-            onClick={() => setMethodID(method.id)}
-            hFull="h-10"
-            press={methodID === method.id}
-          >
-            <span className={`text-xs border-b-2 transition-all duration-300 ease-in-out ${methodID === method.id ? "border-b-white" : "border-b-transparent"}`}>{method.name}</span>
-          </ButtonContainer>
-        ))}
-      </div>
-      <div ref={refEndPage} id="endModal" ></div>
-      <div className="flex flex-col w-full gap-1 items-center justify-center bg-gray-100  p-4 rounded-lg  border border-gray-200">
-        {isSplitPayment && <span className="text-xs text-gray-700 ">Total a pagar:</span>}
-        <div className="flex w-full gap-1 items-center justify-center">
-          <select
-            disabled={isSplitPayment}
-            onChange={(e) => handleSetInstallment(e)}
-            value={installment}
-            className="w-18 text-right  px-2 py-2 text-3xl text-gray-700 font-semibold h-12 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
-          >
-            {installmentOptions.map((op, i) => (
-              <option key={i} value={op._id}>
-                {op.name} ×
-              </option>
-            ))}
-          </select>
-          <p className="text-3xl font-semibold text-gray-900 mr-5">
-            {isSplitPayment ? currency(pay - totalPayments) : currency(pay)}
-          </p>
-        </div>
-      </div>
       <div className="flex flex-col sm:flex-row w-full gap-3 ">
         <ButtonContainer
           onClick={postCloseCommand}
-          text="Confirmar"
-          style="buttonGreen"
-          hFull="h-10"
+          text="Confirmar Pagamento"
         />
       </div>
     </div>
