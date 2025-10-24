@@ -4,6 +4,7 @@ import { Loading } from "../loading/Loading"
 import { currency } from "src/app/utils/currency"
 import { Input } from "../form/FormComponents"
 import { useMemo, useState, useRef } from "react"
+import { IconX } from "public/icons/X"
 
 const paymentMethods = [
   { name: 'Cartão', id: 'CARD' },
@@ -40,73 +41,75 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   </div>
 )
 
-const CreateInput = ({ id, price, testParaIniciarDivNoFim, onPriceChange = () => { } }) => {
-  const handleSetPrice = (value) => onPriceChange(id, value)
+const ComponentFragmentPayment = ({ payments, testParaIniciarDivNoFim, setPayments = () => { }, totalComanda }) => {
+  const [value, setValue] = useState(0)
 
-  return (
-    <Input
-      id={`price-${id}`}
-      setValue={handleSetPrice}
-      placeholder="Preço do produto"
-      value={price}
-      type="tel"
-      isCurrency
-      autoFocus
-      onFocus={testParaIniciarDivNoFim}
-    />
-  );
-};
-
-const ComponentInputs = ({ payments, testParaIniciarDivNoFim, setPayments = () => { } }) => {
-  const handleAddInput = () => {
-    const nextId = payments.length + 1;
-    setPayments(prevPayments => [
-      ...prevPayments,
-      { id: nextId, value: "" }
-    ]);
+  const handleUpdateValue = () => {
+    if (value <= 0) return;
+    setPayments(prevPayments => [...prevPayments, { id: prevPayments.length, value }]);
+    setValue(0)
   };
 
-  const handleUpdatePrice = (id, newValue) => {
-    setPayments(prevPayments =>
-      prevPayments.map(payment =>
-        payment.id === id ? { ...payment, value: newValue } : payment
-      )
-    );
-  };
+  const removerPrice = () => {
+
+  }
 
   return (
-    <div className="max-h-[160px] overflow-y-auto">
-      {payments.map((payment) => (
-        <div
-          key={payment.id}
-          className="flex items-center gap-2 mb-1 py-2"
-        >
-          <div className="w-7">{payment.id}º</div>
-          <CreateInput
-            id={payment.id}
-            price={payment.value}
-            onPriceChange={handleUpdatePrice}
-            testParaIniciarDivNoFim={testParaIniciarDivNoFim}
-          />
-          <ButtonContainer
-            onClick={handleAddInput}
-            wFull="w-9"
-            hFull="h-8"
-            text="+"
-            margin="mt-1"
-          />
-        </div>
-      ))}
+    <div>
+      {payments.length > 0 && (
+        <div className="mb-2">
+          <div className=" mb-2 grid gap-2 grid-cols-2">
+            {payments.map((payment) => (
+              <div
+                key={payment.id}
+                className="flex items-center px-2  border-1 border-[var(--button-default)] rounded-sm justify-between"
+              >
+                <p>{currency(payment.value)}</p>
+                <button className="flex w-10 h-10 items-center justify-end ">
+                  <IconX size="h-[16px] w-[16px]" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div>
+            <div className="flex justify-between">
+              <span>Falta Receber:</span>
+              <span>{currency(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Valor Recebido:</span>
+              <span>{currency(payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
+            </div>
+          </div>
+        </div>)}
+      <div className="flex items-center gap-2">
+        <Input
+          id="payment"
+          setValue={setValue}
+          placeholder="Preço do produto"
+          type="tel"
+          value={value}
+          isCurrency
+          onFocus={testParaIniciarDivNoFim}
+        />
+        <ButtonContainer
+          onClick={handleUpdateValue}
+          wFull="w-14"
 
+          text="+"
+          margin="mt-1"
+        />
+      </div>
     </div>
-  );
-};
+  )
+}
+
 
 const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseCommand }) => {
   const [installment, setInstallment] = useState("1");
   const [pay, setPay] = useState(totalComanda)
   const [isSplitPayment, setIsSplitPayment] = useState(false)
-  const [payments, setPayments] = useState([{ id: 1, value: 0 }]);
+  const [payments, setPayments] = useState([]);
   const refEndPage = useRef(null);
 
   const testParaIniciarDivNoFim = () => {
@@ -120,7 +123,6 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
   const handleCheckboxChange = () => {
     setIsSplitPayment(!isSplitPayment)
     if (!isSplitPayment) {
-      setInstallment("1")
       setPay(totalComanda)
     }
   }
@@ -137,36 +139,45 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
     setInstallment(e.target.value)
   }
 
-  const totalPayments = useMemo(() => {
-    return payments.reduce((sum, payment) => sum + payment.value, 0);
-  }, [payments]);
-
   return (
-    <div className="p-4 pt-0 flex gap-6 flex-col items-center justify-center ">
+    <div className="p-4 pt-0 flex gap-2 flex-col items-center justify-center ">
       <span className="text-md font-extrabold mb-2">
         Pagamento
       </span>
-      <div className="flex flex-col w-full items-center justify-center">
-        <select
-          disabled={isSplitPayment}
-          onChange={(e) => handleSetInstallment(e)}
-          value={installment}
-          className=" text-center px-2 py-2 text-4xl font-bold text-[var(--button-default)]  rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
-        >
-          {installmentOptions.map((op, i) => (
-            <option key={i} value={op._id}>
-              {op.name} × {isSplitPayment ? currency(pay - totalPayments) : currency(totalComanda / op._id)}
+      <div className="flex flex-col w-full items-center justify-center mb-3">
+        {isSplitPayment ? (
+          <select
+            disabled={isSplitPayment}
+            onChange={(e) => handleSetInstallment(e)}
+            value={installment}
+            className=" text-center px-4 py-2 text-4xl font-bold text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+          >
+            <option value="1">
+              {currency(totalComanda)}
             </option>
-          ))}
-        </select>
+          </select>
+        ) : (
+          <select
+            disabled={isSplitPayment}
+            onChange={(e) => handleSetInstallment(e)}
+            value={installment}
+            className=" text-center px-2 py-2 text-4xl font-bold text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+          >
+            {installmentOptions.map((op, i) => (
+              <option key={i} value={op._id}>
+                {op.name} × {currency(totalComanda / op._id)}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <div ref={refEndPage} id="endModal" className="h-0" ></div>
       {isSplitPayment && (
-        <span className="flex flex-col text-md justify-start w-full">
-          <ComponentInputs payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} />
+        <span className="flex flex-col text-md justify-start w-full mb-3">
+          <ComponentFragmentPayment payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} totalComanda={totalComanda} />
         </span>
       )}
-      
+
       <div className="flex w-full gap-2">
         {paymentMethods.map((method) => (
           <ButtonContainer
@@ -180,20 +191,20 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
           </ButtonContainer>
         ))}
       </div>
-        <div className={`flex items-center gap-2 pb-2`}>
-          <input
-            className={`
+      <div className={`flex items-center gap-2 pb-2 my-4`}>
+        <input
+          className={`
               bg-[var(--button-disabled)] 
               h-4 w-4 text-[var(--button-disabled)]
             `}
-            type="checkbox"
-            id="scales"
-            name="scales"
-            onChange={handleCheckboxChange}
-            checked={isSplitPayment}
-          />
-          <label htmlFor="scales">Pagamento Fragmentado</label>
-        </div>
+          type="checkbox"
+          id="scales"
+          name="scales"
+          onChange={handleCheckboxChange}
+          checked={isSplitPayment}
+        />
+        <label htmlFor="scales">Pagamento Fragmentado</label>
+      </div>
 
       <div className="flex flex-col sm:flex-row w-full gap-3 ">
         <ButtonContainer
