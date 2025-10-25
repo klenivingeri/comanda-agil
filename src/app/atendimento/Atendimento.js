@@ -19,7 +19,6 @@ import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
-import { toggleFullScreen } from "../utils/fullScreen";
 
 export function RotateImage({ rotated }) {
   return (
@@ -156,7 +155,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
   };
 
   const handleOpenModal = () => {
-    toggleFullScreen()
+
     if (!openModal) {
       setScrollPosition(window.scrollY);
     } else {
