@@ -45,13 +45,13 @@ export const viewport = {
 //select-none
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt" className="h-full ">
+    <html lang="pt" className="h-full overscroll-y-contain">
       <body
-        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
+        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center `}
       >
         <div
           id="container"
-          className="grid grid-cols-1 w-full md:max-w-[768px] relative h-full"
+          className="grid grid-cols-1 w-full md:max-w-[768px] relative h-full touch-pan-y"
         >
           <Providers>
             <main className="flex-1 h-full">{children}</main>

@@ -119,7 +119,6 @@
   --button-progress: #FFC066;
 }
 
-
 * {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -138,10 +137,11 @@ body, input, textarea, button {
   font-family: 'Inter', sans-serif;
 }
 
-body {
+html, body, #root {
   background: var(--background);
   color: var(--text-default);
   font-family: 'Inter', sans-serif;
+  overscroll-behavior-y: contain;
 }
 
 /* 1. Define o tamanho da barra de rolagem (largura) */

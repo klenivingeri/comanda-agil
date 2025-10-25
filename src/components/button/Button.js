@@ -4,10 +4,8 @@ import Link from "next/link";
 import { getButtonStyles } from "./constants";
 
 const vibrate = () => {
-  // Verifica se a API de Vibração é suportada pelo navegador
   if (window.navigator.vibrate) {
-    // Vibra por 50 milissegundos
-    window.navigator.vibrate(50);
+    window.navigator.vibrate(10);
   }
 };
 
