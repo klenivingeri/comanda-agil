@@ -121,7 +121,7 @@ export const Comanda = ({
               style='buttonInline'
             >
               {!isLoadingCreate ? (
-                "Lançar itens na comanda"
+                <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
               ) : (
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
@@ -135,7 +135,7 @@ export const Comanda = ({
               wFull="w-28"
               margin="mx-2 mb-3"
             >
-              Pagamento
+              <p className="text-sm">PAGAMENTO</p>
             </ButtonContainer>
           </div>
         </div>

@@ -11,8 +11,6 @@ const DEFAULT_CONFIG = {
 
 const ConfigContext = createContext(DEFAULT_CONFIG);
 
-
-
 export function ConfigProvider({ children }) {
   const { refreshKey } = useCleaningTrigger();
   const [hasVibrate, setHasVibrate] = useState("off");
