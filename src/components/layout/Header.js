@@ -5,7 +5,7 @@ import { IconBack } from "public/icons/ArrowBack";
 import { IconX } from "public/icons/X";
 import { IconDotMenu } from "public/icons/DotMenu";
 import { MenuMobileContainer } from "../menu/lateral";
-import { InputSearch } from "../input/inputSearch";
+import { InputSearch } from "../inputSearch/InputSearch";
 
 const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
   const router = useRouter();
