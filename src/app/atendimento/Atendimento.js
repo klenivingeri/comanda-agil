@@ -19,6 +19,7 @@ import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
+import { toggleFullScreen } from "../utils/fullScreen";
 
 export function RotateImage({ rotated }) {
   return (
@@ -155,6 +156,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
   };
 
   const handleOpenModal = () => {
+    toggleFullScreen()
     if (!openModal) {
       setScrollPosition(window.scrollY);
     } else {
@@ -376,10 +378,10 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           onClick={saveCommand}
           disabled={itemsSelected?.length == 0}
           margin="mx-2 mb-2"
-          text=""
+          style='buttonInline'
         >
           {!isLoadingCreate ? (
-            "Lançar itens na comanda"
+            <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
           ) : (
             <Loading isLoading={isLoadingCreate} style="style3" />
           )}

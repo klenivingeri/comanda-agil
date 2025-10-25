@@ -44,10 +44,12 @@ export const viewport = {
 };
 //select-none
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="pt" className="h-full overscroll-y-contain">
       <body
-        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center `}
+        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
       >
         <div
           id="container"
