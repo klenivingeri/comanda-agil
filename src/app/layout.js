@@ -47,11 +47,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="h-full ">
       <body
-        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center`}
+        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
       >
         <div
           id="container"
-          className="flex w-full md:max-w-[768px] relative h-full"
+          className="grid grid-cols-1 w-full md:max-w-[768px] relative h-full"
         >
           <Providers>
             <main className="flex-1 h-full">{children}</main>

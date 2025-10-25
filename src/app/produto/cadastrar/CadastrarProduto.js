@@ -80,11 +80,9 @@ export const ProdutoCadastrar = ({ productUUID }) => {
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content isLoading={isLoading} error={error} margin="mt-[30px] mb-[50px]">
           <FormComponent categories={categories} product={product} />
         </Content>
-      </div>
     </Container>
   );
 };

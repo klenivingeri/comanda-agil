@@ -13,6 +13,7 @@ import { isEmpty } from "src/app/utils/empty";
 import { useUserConfig } from "src/app/context/UserContext";
 import { CenterModal } from "../../components/modal";
 import { Checkout } from "src/components/checkout";
+import { Content } from "src/components/layout/Content";
 
 export const Comanda = ({
   handleOpenModal,
@@ -81,14 +82,10 @@ export const Comanda = ({
         </HeaderGrid>
       </Header>
 
-      <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div
-          className="flex-1 overflow-auto mt-[40px] mb-[180px] p-2"
-          id="minhaDiv"
-        >
+      <Content isLoading={isLoadingCreate} margin="mt-[50px] mb-[190px]" newDiv id="minhaDiv" endPage>
           {children}
-        </div>
-      </div>
+      </Content>
+      
 
       <Footer
         bg="bg-[var(--bg-component)]"

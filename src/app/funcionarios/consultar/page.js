@@ -79,8 +79,7 @@ export default function ConsultarCategoria() {
           </div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[100px] mb-[60px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content isLoading={isLoading} error={error} margin="mt-[100px] mb-[60px]">
           <div className="flex flex-col gap-2">
             {users?.map((user) => (
               <ItemList key={user._id} p="px-2">
@@ -108,7 +107,6 @@ export default function ConsultarCategoria() {
             ))}
           </div>
         </Content>
-      </div>
       <MenuMobileContainer
         handleOpenModal={handleOpenMenuMobile}
         openModal={openMenuMobile}

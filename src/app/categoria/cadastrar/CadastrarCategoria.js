@@ -58,11 +58,9 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
-        <Content isLoading={isLoading} error={error}>
+        <Content isLoading={isLoading} error={error} margin="mt-[30px] mb-[50px]">
           <FormComponent category={category} />
         </Content>
-      </div>
     </Container>
   );
 };

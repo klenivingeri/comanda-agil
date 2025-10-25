@@ -59,6 +59,11 @@
   --text-default: white;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
   --bg-alert: #FFDDAA;
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4); /* Cor principal da barra */
+    border-radius: 10px; /* Opcional: cantos arredondados no thumb */
+  }
 }
 
 .btn-purple body {
@@ -115,7 +120,7 @@
 }
 
 
-/* * {
+* {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -127,7 +132,7 @@ input, textarea {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
-} */
+}
 
 body, input, textarea, button {
   font-family: 'Inter', sans-serif;
@@ -139,3 +144,24 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* 1. Define o tamanho da barra de rolagem (largura) */
+::-webkit-scrollbar {
+    width: 0px; /* Largura para barras verticais */
+    height: 0px; /* Altura para barras horizontais */
+}
+
+/* 2. Estiliza a "Trilha" (Track) - o fundo da barra */
+::-webkit-scrollbar-track {/* Cor de fundo clara */
+    border-radius: 10px; /* Opcional: cantos arredondados na trilha */
+}
+
+/* 3. Estiliza o "Thumb" (o polegar) - o botão que você arrasta */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2); /* Cor principal da barra */
+    border-radius: 10px; /* Opcional: cantos arredondados no thumb */
+}
+
+/* 4. Estiliza o Thumb ao passar o mouse (Hover) */
+::-webkit-scrollbar-thumb:hover {
+    background: #888; /* Cor ligeiramente mais clara ao passar o mouse */
+}

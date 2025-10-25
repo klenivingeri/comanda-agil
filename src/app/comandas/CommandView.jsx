@@ -87,9 +87,9 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
           </form>
         </HeaderGrid>
       </Header>
-      <Content isLoading={isLoadingCommand} error={errorCommand} newDiv>
+      <Content isLoading={isLoadingCommand} error={errorCommand}>
         <div
-          className={`grid gap-2  ${columnsClass}`}
+          className={`grid gap-2 ${columnsClass}`}
           style={{ alignContent: "flex-start" }}
         >
           {commandAll

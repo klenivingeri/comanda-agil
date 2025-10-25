@@ -87,8 +87,7 @@ export default function Configuracao() {
           <div className="col-span-2"></div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[30px] mb-[50px] flex-1 flex flex-col">
-        <Content>
+        <Content margin="mt-[30px] mb-[50px]">
           <div className="w-full max-w-[500px] mx-auto">
             <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
               <div className="pt-3.5 ">Cor dos Botões</div>
@@ -135,7 +134,6 @@ export default function Configuracao() {
             </div>
           </div>
         </Content>
-      </div>
     </Container>
   );
 }

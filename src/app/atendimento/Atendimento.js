@@ -353,14 +353,13 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           </div>
         </HeaderGrid>
       </Header>
-      <div className="mt-[104px] mb-[60px] flex-1 flex flex-col">
-        <Content isLoading={isLoading || _item.isLoading} error={error}>
+        <Content isLoading={isLoading || _item.isLoading} error={error} margin="mt-[104px] mb-[60px]">
           {isEmpty(idComanda) ? (
-            <>
+            <div>
               <div>Selecione uma comanda antes de adiconar os produtos</div>
-            </>
+            </div>
           ) : (
-            <>
+            <div>
               <ItemList
                 items={items}
                 inputText={inputText}
@@ -369,10 +368,9 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
                 openType={openType}
                 setOpenType={setOpenType}
               />
-            </>
+            </div>
           )}
         </Content>
-      </div>
       <Footer>
         <ButtonContainer
           onClick={saveCommand}

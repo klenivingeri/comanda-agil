@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Loading } from "../loading/Loading";
 export const Content = ({
   isLoading,
@@ -6,7 +6,21 @@ export const Content = ({
   error,
   padding = "p-2",
   newDiv = false,
+  margin = "mt-[106px]",
+  endPage,
 }) => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const div = inputRef.current;
+    if (div && endPage) {
+      div.scrollTo({
+        top: div.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [children]);
+
   if (isLoading) {
     return (
       <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--backgroun)]">
@@ -22,17 +36,13 @@ export const Content = ({
       </div>
     );
   }
-  if (newDiv) {
-    return (
-      <div className="relative w-full h-full flex flex-col overflow-auto">
-        <div className="flex-1 overflow-auto mt-[106px] mb-[180px p-2">
-          {children}
-        </div>
-      </div>
-    );
-  }
+
   return (
-    <div className={`grid grid-cols-1 rounded ${padding} h-full `}>
+    <div
+      ref={inputRef}
+      className={`flex-1 overflow-auto ${margin} px-2 w-full min-w-0`}
+      style={{ overflowWrap: "break-word" }}
+    >
       {children}
     </div>
   );
