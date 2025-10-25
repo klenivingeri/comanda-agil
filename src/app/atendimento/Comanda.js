@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { IconX } from "../../../public/icons/X";
 import { Footer } from "../../components/layout/Footer";
-import { Header, HeaderGrid } from "../../components/layout/Header";
+import { Header } from "../../components/layout/Header";
 import { currency } from "../utils/currency";
 import { ButtonContainer } from "../../components/button";
 import { Loading } from "../../components/loading/Loading";
-import { RotateImage } from "src/app/atendimento/Atendimento";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../../components/layout/Container";
 import { isEmpty } from "src/app/utils/empty";
@@ -22,9 +20,9 @@ export const Comanda = ({
   saveCommand,
   itemsSelected,
   isLoadingCreate,
-  rotated,
   handleShowDelete,
   commandID,
+  commandCode,
 }) => {
   const { _user } = useUserConfig();
   const [openCenterModal, setOpenCenterModal] = useState(false);
@@ -32,8 +30,6 @@ export const Comanda = ({
   const handleOpenCenterModal = () => {
     setOpenCenterModal(true);
   };
-
-  const score = 200;
 
   const testParaIniciarDivNoFim = () => {
     const div = document.getElementById("minhaDiv");
@@ -51,41 +47,38 @@ export const Comanda = ({
 
   return (
     <Container>
-      <Header h="h-[50px]" divider>
-        <HeaderGrid>
-          <div className="flex col-span-2 gap-4">
-            <div onClick={handleOpenModal}>
-              <IconX size="h-[32px] w-[32px]" />
-            </div>
-            {_user.all[0]?.role === "ADMIN" && (
-              <div className="flex">
-                <ButtonContainer
-                  onClick={handleShowDelete}
-                  hFull="h-8"
-                  wFull="w-14"
-                  margin="mx-2 mt-1"
-                >
-                  <IconEdit size="h-[23px] w-[23px]" />
-                </ButtonContainer>
-              </div>
-            )}
+      <Header
+        divNew
+        divider
+        close
+        onClick={handleOpenModal}
+        titleComponent={
+          <span className="text-[var(--button-default)] h-8 p-1 px-2 text-xl border-1 border-[var(--button-default)] rounded-md">
+            {commandCode}
+          </span>
+        }
+      >
+        {_user.all[0]?.role === "ADMIN" && (
+          <div className="flex">
+            <ButtonContainer
+              onClick={handleShowDelete}
+              hFull="h-8"
+              wFull="w-14"
+              margin="mx-2 mt-1"
+            >
+              <IconEdit size="h-[23px] w-[23px]" />
+            </ButtonContainer>
           </div>
-          <div className="col-span-8 mt-2">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">COMANDA</span>
-            </div>
-          </div>
-          <div className="flex col-span-2 text-xs mt-2 justify-between">
-            <RotateImage rotated={rotated} />
-            {score}k
-          </div>
-        </HeaderGrid>
+        )}
       </Header>
 
-      <Content isLoading={isLoadingCreate} margin="mt-[50px] mb-[190px]" newDiv id="minhaDiv" endPage>
-          {children}
+      <Content
+        isLoading={isLoadingCreate}
+        margin="mt-[65px] mb-[190px]"
+        endPage
+      >
+        {children}
       </Content>
-      
 
       <Footer
         bg="bg-[var(--bg-component)]"
@@ -118,7 +111,7 @@ export const Comanda = ({
               disabled={itemsSelected?.length == 0}
               margin="mx-2 mb-3"
               onClick={saveCommand}
-              style='buttonInline'
+              style="buttonInline"
             >
               {!isLoadingCreate ? (
                 <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
@@ -127,10 +120,7 @@ export const Comanda = ({
               )}
             </ButtonContainer>
             <ButtonContainer
-              disabled={
-                !itemsSelected?.length == 0 ||
-                isEmpty(commandID)
-              }
+              disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
               onClick={handleOpenCenterModal}
               wFull="w-28"
               margin="mx-2 mb-3"

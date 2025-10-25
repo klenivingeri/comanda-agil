@@ -6,10 +6,10 @@ import { SelectComponent } from "../../components/form/SelectComponent";
 
 import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
-import { Header, HeaderGrid } from "../../components/layout/Header";
+import { Header } from "../../components/layout/Header";
 import { Content } from "../../components/layout/Content";
 import { ButtonContainer } from "src/components/button";
-import { IconBack } from "public/icons/ArrowBack";
+
 
 const optionsColors = [
   { type: "btn-blue", name: "Azul" },
@@ -24,11 +24,6 @@ export default function Configuracao() {
   const { triggerCleaning } = useCleaningTrigger();
   const { _config } = useConfig();
   const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
-  const router = useRouter();
-
-  const goBack = () => {
-    router.back();
-  };
 
   const handlesClearingCache = () => {
     triggerCleaning();
@@ -73,67 +68,54 @@ export default function Configuracao() {
 
   return (
     <Container>
-      <Header h="h-[30px]">
-        <HeaderGrid>
-          <div className="col-span-2 flex" onClick={goBack}>
-            <IconBack size="h-[26px] w-[26px]" />
+      <Header divider title="Configuração" />
+      <Content>
+        <div className="w-full max-w-[500px] mx-auto">
+          <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+            <div className="pt-3.5 ">Cor dos Botões</div>
+            <SelectComponent
+              id="colors"
+              value={itemDefault}
+              setValue={handleColorButton}
+              required
+              itemDefault={itemDefault}
+              options={optionsColors}
+            />
           </div>
-
-          <div className="col-span-8 mt-1">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">CADASTRAR PRODUTO</span>
-            </div>
-          </div>
-          <div className="col-span-2"></div>
-        </HeaderGrid>
-      </Header>
-        <Content margin="mt-[30px] mb-[50px]">
-          <div className="w-full max-w-[500px] mx-auto">
-            <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-              <div className="pt-3.5 ">Cor dos Botões</div>
-              <SelectComponent
-                id="colors"
-                value={itemDefault}
-                setValue={handleColorButton}
-                required
-                itemDefault={itemDefault}
-                options={optionsColors}
+          <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
+            <div className="mt-3.5">Resposta tatil</div>
+            <div className="flex items-center gap-2 ml-4">
+              <ButtonContainer
+                wFull="w-12"
+                hFull="h-8"
+                text="Sim"
+                press={_config.hasVibrate === "on"}
+                vibre="off"
+                onClick={handleResponseTouchOn}
+              />
+              <ButtonContainer
+                wFull="w-13"
+                hFull="h-8"
+                text="Não"
+                vibre="off"
+                press={_config.hasVibrate === "off"}
+                onClick={handleResponseTouchOff}
               />
             </div>
-            <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
-              <div className="mt-3.5">Resposta tatil</div>
-              <div className="flex items-center gap-2 ml-4">
-                <ButtonContainer
-                  wFull="w-12"
-                  hFull="h-8"
-                  text="Sim"
-                  press={_config.hasVibrate === "on"}
-                  vibre="off"
-                  onClick={handleResponseTouchOn}
-                />
-                <ButtonContainer
-                  wFull="w-13"
-                  hFull="h-8"
-                  text="Não"
-                  vibre="off"
-                  press={_config.hasVibrate === "off"}
-                  onClick={handleResponseTouchOff}
-                />
-              </div>
-            </div>
-            <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
-              <div className="mt-3.5">Cache do aplicativo</div>
-              <div className="flex items-center gap-2 ml-4">
-                <ButtonContainer
-                  wFull="w-28"
-                  hFull="h-8"
-                  text="Limpa"
-                  onClick={handlesClearingCache}
-                />
-              </div>
+          </div>
+          <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
+            <div className="mt-3.5">Cache do aplicativo</div>
+            <div className="flex items-center gap-2 ml-4">
+              <ButtonContainer
+                wFull="w-28"
+                hFull="h-8"
+                text="Limpa"
+                onClick={handlesClearingCache}
+              />
             </div>
           </div>
-        </Content>
+        </div>
+      </Content>
     </Container>
   );
 }

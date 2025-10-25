@@ -1,41 +1,98 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { IconBack } from "public/icons/ArrowBack";
+import { IconX } from "public/icons/X";
+import { IconDotMenu } from "public/icons/DotMenu";
+import { MenuMobileContainer } from "../menu/lateral";
+import { InputSearch } from "../input/inputSearch";
 
-export const HeaderGrid = ({ children }) => {
+const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
+  const router = useRouter();
+
+  if (close) {
+    return (
+      <div className="w-10" onClick={onClick}>
+        <IconX size="h-[26px] w-[26px]" />
+      </div>
+    );
+  }
+
+  if (menu) {
+    return (
+      <div className="w-10" onClick={handleOpenMenuMobile}>
+        <IconDotMenu size="h-[30px] w-[30px]" />
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full grid grid-cols-12 px-2 h-[40px]">{children}</div>
+    <div className="w-10" onClick={() => router.back()}>
+      <IconBack size="h-[26px] w-[26px]" />
+    </div>
   );
 };
 
-export const Header = ({ children, divider, h = "h-[104px]" }) => {
-  const [showDivider, setShowDivider] = useState(false);
+export const Header = ({
+  children,
+  divider,
+  title = "",
+  titleComponent = <>Titulo Padrão</>,
+  close = false,
+  menu = false,
+  onClick,
+  setInputText,
+  formSubmit,
+}) => {
+  const [searchFull, setSearchFull] = useState(false);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
+  const handleOpenMenuMobile = () => {
+    setOpenMenuMobile(!openMenuMobile);
+  };
 
-  const handleScroll = useCallback(() => {
-    const scrolled = window.scrollY > 4;
-    setShowDivider(scrolled);
-  }, []);
+  const handleFormSubmit = () => {
+    formSubmit();
+  };
 
-  useEffect(() => {
-    if (!children) return;
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [children, handleScroll]);
-
-  if (!children) return null;
   return (
     <header id="Header" className="fixed inset-x-0 w-full z-10">
-      <div className="flex justify-center">
+      <div className="flex justify-center  h-14">
         <div
-          className={`flex flex-col justify-start pt-2 w-full max-w-[768px] ${h} bg-[var(--foreground)] ${
-            (divider || showDivider) && "shadow"
+          className={`flex px-2 max-w-[768px] w-full  bg-[var(--foreground)] ${
+            divider && "shadow-md"
           }`}
         >
-          {children}
+          <div className="w-full flex gap-3 items-center">
+            <DefaultComponent
+              close={close}
+              menu={menu}
+              handleOpenMenuMobile={handleOpenMenuMobile}
+              onClick={onClick}
+            />
+            <div className="flex justify-between items-center w-full">
+              <span className="text-sm font-bold">
+                {!searchFull && (title.length ? title : titleComponent)}
+              </span>
+              {setInputText && (
+                <InputSearch
+                  handleFormSubmit={handleFormSubmit}
+                  setInputText={setInputText}
+                  setSearchFull={setSearchFull}
+                  searchFull={searchFull}
+                  mini
+                />
+              )}
+            </div>
+            <div className="items-center ">{children}</div>
+          </div>
         </div>
       </div>
+      {menu && (
+        <MenuMobileContainer
+          handleOpenModal={handleOpenMenuMobile}
+          openModal={openMenuMobile}
+        />
+      )}
     </header>
   );
 };

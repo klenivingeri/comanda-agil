@@ -2,19 +2,16 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 
-import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
-import { Header, HeaderGrid } from "../../components/layout/Header";
+import { Header } from "../../components/layout/Header";
 import { Comanda } from "./Comanda";
 import { ItemList } from "./ItemList";
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
-import { IconDotMenu } from "../../../public/icons/DotMenu";
 
 import { isEmpty } from "../utils/empty";
-import { MenuMobileContainer } from "../../components/menu/lateral";
 import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
@@ -48,7 +45,6 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openType, setOpenType] = useState(null);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [error, setError] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -155,17 +151,12 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
   };
 
   const handleOpenModal = () => {
-
     if (!openModal) {
       setScrollPosition(window.scrollY);
     } else {
       const t = setTimeout(() => window.scrollTo({ top: scrollPosition }), 50);
     }
     setOpenModal(!openModal);
-  };
-
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
   };
 
   const handleUpdateItemsSelected = (item, value) => {
@@ -261,6 +252,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
         rotated={rotated}
         handleShowDelete={handleShowDelete}
         commandID={comanda?._id}
+        commandCode={code}
         handleShowDetails={handleShowDetails}
       >
         <div>
@@ -318,66 +310,55 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
 
   return (
     <Container>
-      <Header>
-        <HeaderGrid>
-          <div className="col-span-2" onClick={handleOpenMenuMobile}>
-            <IconDotMenu size="h-[32px] w-[32px]" />
-          </div>
-          <div className="col-span-8 mt-2">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">CARDAPIO</span>
-            </div>
-          </div>
-          <div className="flex text-xs col-span-2 mt-2 pb-2 justify-between">
-            <RotateImage rotated={rotated} />
-            {score}k
-          </div>
-        </HeaderGrid>
-        <HeaderGrid>
-          <div className="relative col-span-12 flex items-end gap-2">
-            <ButtonContainer
-              href="/comandas"
-              wFull="w-[50px]"
-              text={code}
-            ></ButtonContainer>
-            <InputSearch setInputText={setInputText} mini />
-            <ButtonContainer onClick={handleOpenModal} wFull="w-[50px]">
-              <span className="pl-1">
-                <IconMenuList size="h-[32px] w-[32px]" />
-              </span>
-              {!!itemsSelected?.length && (
-                <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-                  {itemsSelected?.length}
-                </div>
-              )}
-            </ButtonContainer>
-          </div>
-        </HeaderGrid>
-      </Header>
-        <Content isLoading={isLoading || _item.isLoading} error={error} margin="mt-[104px] mb-[60px]">
-          {isEmpty(idComanda) ? (
-            <div>
-              <div>Selecione uma comanda antes de adiconar os produtos</div>
-            </div>
-          ) : (
-            <div>
-              <ItemList
-                items={items}
-                inputText={inputText}
-                handleUpdateItemsSelected={handleUpdateItemsSelected}
-                openModal={openModal}
-                openType={openType}
-                setOpenType={setOpenType}
-              />
+      <Header
+        divider
+        setInputText={setInputText}
+        title="CARDAPIO"
+      >
+        <ButtonContainer
+          onClick={handleOpenModal}
+          hFull="h-11"
+          wFull="w-24"
+          margin="mt-1"
+        >
+          <span className="pl-1 flex items-center gap-2">
+            {code} <IconMenuList size="h-[32px] w-[32px]" />
+          </span>
+          {!!itemsSelected?.length && (
+            <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
+              {itemsSelected?.length}
             </div>
           )}
-        </Content>
+        </ButtonContainer>
+      </Header>
+      <Content
+        isLoading={isLoading || _item.isLoading}
+        error={error}
+        margin="mt-[65px] mb-[60px]"
+      >
+        {isEmpty(idComanda) ? (
+          <div>
+            <div>Selecione uma comanda antes de adiconar os produtos</div>
+          </div>
+        ) : (
+          <div>
+            <ItemList
+              items={items}
+              inputText={inputText}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              openModal={openModal}
+              openType={openType}
+              setOpenType={setOpenType}
+            />
+          </div>
+        )}
+      </Content>
       <Footer>
         <ButtonContainer
           onClick={saveCommand}
           disabled={itemsSelected?.length == 0}
           margin="mx-2 mb-2"
-          style='buttonInline'
+          style={itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"}
         >
           {!isLoadingCreate ? (
             <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
@@ -386,10 +367,6 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           )}
         </ButtonContainer>
       </Footer>
-      <MenuMobileContainer
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 };

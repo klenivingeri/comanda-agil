@@ -1,22 +1,14 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
-import { Header, HeaderGrid } from "src/components/layout/Header";
+import { Header } from "src/components/layout/Header";
 import { Construction } from "src/components/construction";
-import { IconBack } from "public/icons/ArrowBack";
 import { ButtonContainer } from "src/components/button";
 
 export default function Perfil() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
-  const router = useRouter();
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
-  };
 
   const handleFetch = async () => {
     const res = await fetch("/api/comandas/user-status", {
@@ -27,24 +19,11 @@ export default function Perfil() {
 
   return (
     <Container>
-      <Header h="h-[30px]">
-        <HeaderGrid>
-          <div className="col-span-2 flex" onClick={() => router.back()}>
-            <IconBack size="h-[26px] w-[26px]" />
-          </div>
-
-          <div className="col-span-8 mt-1">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">PERFIL</span>
-            </div>
-          </div>
-          <div className="col-span-2"></div>
-        </HeaderGrid>
-      </Header>
-        <Content isLoading={isLoading} error={error} margin="mt-[30px] mb-[50px]">
-          <ButtonContainer onClick={handleFetch}>busca</ButtonContainer>
-          <Construction />
-        </Content>
+      <Header divider title="Perfil" />
+      <Content isLoading={isLoading} error={error}>
+        <ButtonContainer onClick={handleFetch}>busca</ButtonContainer>
+        <Construction />
+      </Content>
     </Container>
   );
 }

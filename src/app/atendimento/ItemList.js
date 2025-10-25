@@ -73,7 +73,7 @@ function SubTitle({
       )}
       <div
         ref={contentRef}
-        className={!inputText && "px-2"}
+        className={!inputText ? "px-2" : ""}
         style={{
           maxHeight: isOpen || inputText ? `${height || 999}px` : "0px",
           overflow: inputText ? "" : "hidden",

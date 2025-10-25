@@ -2,21 +2,17 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { InputSearch } from "../../components/input/inputSearch";
 import { Container } from "../../components/layout/Container";
 import { Content } from "../../components/layout/Content";
-import { Header, HeaderGrid } from "../../components/layout/Header";
-import { MenuMobileContainer } from "../../components/menu/lateral";
+import { Header } from "../../components/layout/Header";
 import { ButtonContainer } from "../../components/button";
-
 import { IconMenuList } from "../../../public/icons/MenuList";
-import { IconDotMenu } from "../../../public/icons/DotMenu";
+
 import { IconCreate } from "../../../public/icons/Create";
 import { useRouter } from "next/navigation";
 import { useUserConfig } from "src/app/context/UserContext";
 import { RULES } from "../utils/constants";
 import Link from "next/link";
-import { isEmpty } from "../utils/empty";
 
 const addZero = (text) => String(text?.trim()).padStart(3, 0)
 
@@ -25,22 +21,15 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
   const [oneComanda, setOneComanda] = useState({});
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const router = useRouter();
 
-  const handleCommandID = (e) => {
-    e.preventDefault();
-
+  const handleCommandID = () => {
     let pathRouter = oneComanda?.code
       ? `${addZero(oneComanda?.code)}-${oneComanda._id}`
       : addZero(inputText);
 
     router.push(`/atendimento/${pathRouter}`);
   }
-
-  const handleOpenMenuMobile = () => {
-    setOpenMenuMobile(!openMenuMobile);
-  };
 
   useEffect(() => {
     if (inputText.length) {
@@ -59,35 +48,24 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
   const columnsClass = RULES.MODERATOR.includes(_user.all[0]?.role) ? "grid-cols-1" : "grid-cols-2";
   return (
     <Container>
-      <Header divider>
-        <HeaderGrid>
-          <div onClick={handleOpenMenuMobile} className="col-span-2">
-            <IconDotMenu size="h-[32px] w-[32px]" />
-          </div>
-
-          <div className="col-span-8 mt-1">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">COMANDAS</span>
-            </div>
-          </div>
-          <div className="col-span-2 flex items-center"></div>
-        </HeaderGrid>
-        <HeaderGrid>
-          <form onSubmit={handleCommandID} className="col-span-12 flex items-end gap-2">
-
-            <InputSearch setInputText={setInputText} _isNumeric />
-            <ButtonContainer
-              href={`/atendimento/${addZero(inputText)}`}
-              disabled={hasComanda}
-              wFull="w-[50px]"
-            >
-              <IconCreate size="h-[32px] w-[32px]" />
-            </ButtonContainer>
-            <button type="submit" className="bg-transparent w-0 text-transparent border-none p-0 m-0 hidden" ></button>
-          </form>
-        </HeaderGrid>
+      <Header
+        menu
+        divider
+        title="Comandas"
+        setInputText={setInputText}
+        formSubmit={handleCommandID}
+      >
+        <ButtonContainer
+          href={`/atendimento/${addZero(inputText)}`}
+          disabled={hasComanda}
+          wFull="w-[50px]"
+          hFull="h-11"
+          margin="mt-1"
+        >
+          <IconCreate size="h-[32px] w-[32px]" />
+        </ButtonContainer>
       </Header>
-      <Content isLoading={isLoadingCommand} error={errorCommand}>
+      <Content isLoading={isLoadingCommand} error={errorCommand} margin="mt-[65px]">
         <div
           className={`grid gap-2 ${columnsClass}`}
           style={{ alignContent: "flex-start" }}
@@ -105,8 +83,8 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
                 .includes(addZero(inputText));
             })
             .map((c, idx) => (
-              <div key={idx} className="flex  p-1 border-2 border-[var(--button-default)] rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]">
-                <Link className="grid grid-cols-12 p-2 flex-col w-full bg-[var(--bg-component)] " href={`/atendimento/${c.code}-${c._id}`}>
+              <div key={idx} className="flex p-1 border-2 border-[var(--button-progress)] hover:bg-[var(--button-progress)]/10 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]">
+                <Link className="grid grid-cols-12 p-2 flex-col w-full" href={`/atendimento/${c.code}-${c._id}`}>
                   <div className=" flex text-[var(--button-default)] gap-1 bottom-2 right-0 col-span-3 items-center">
                     <IconMenuList size="h-[40px] w-[40px]" />
                   </div>
@@ -132,11 +110,6 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
             ))}
         </div>
       </Content>
-
-      <MenuMobileContainer
-        handleOpenModal={handleOpenMenuMobile}
-        openModal={openMenuMobile}
-      />
     </Container>
   );
 }

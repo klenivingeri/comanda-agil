@@ -4,9 +4,7 @@ export const Content = ({
   isLoading,
   children,
   error,
-  padding = "p-2",
-  newDiv = false,
-  margin = "mt-[106px]",
+  margin = "mt-[65px]",
   endPage,
 }) => {
   const inputRef = useRef(null);

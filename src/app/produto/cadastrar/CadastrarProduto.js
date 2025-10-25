@@ -1,20 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useToast } from "../../../hooks/useToast";
 import { Container } from "../../../components/layout/Container";
-import { Header, HeaderGrid } from "../../../components/layout/Header";
+import { Header } from "../../../components/layout/Header";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
-import { IconBack } from "public/icons/ArrowBack";
 
 export const ProdutoCadastrar = ({ productUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(false);
-  const router = useRouter();
   const toast = useToast();
 
   useEffect(() => {
@@ -66,21 +63,8 @@ export const ProdutoCadastrar = ({ productUUID }) => {
 
   return (
     <Container>
-      <Header h="h-[30px]">
-        <HeaderGrid>
-          <div className="col-span-2" onClick={() => router.back()}>
-            <IconBack size="h-[26px] w-[26px]" />
-          </div>
-
-          <div className="col-span-8 mt-1">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">CADASTRAR PRODUTO</span>
-            </div>
-          </div>
-          <div className="col-span-2"></div>
-        </HeaderGrid>
-      </Header>
-        <Content isLoading={isLoading} error={error} margin="mt-[30px] mb-[50px]">
+      <Header divider title="Cadastro de produto" />
+        <Content isLoading={isLoading} error={error}>
           <FormComponent categories={categories} product={product} />
         </Content>
     </Container>

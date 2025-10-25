@@ -6,7 +6,14 @@ import { IconKeyBoard } from "../../../public/icons/KeyBoard";
 import { IconKeyBoardNumeric } from "../../../public/icons/KeyBoardNumeric";
 import { IconX } from "../../../public/icons/X";
 
-export const InputSearch = ({ setInputText, _isNumeric = false }) => {
+export const InputSearch = ({
+  setInputText,
+  _isNumeric = false,
+  searchFull,
+  setSearchFull,
+  handleFormSubmit,
+  mini = false,
+}) => {
   const [isNumeric, setIsNumeric] = useState(_isNumeric);
   const [text, setText] = useState("");
   const inputRef = useRef(null);
@@ -31,6 +38,7 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
   const handleFocusInput = () => {
     if (inputRef.current) {
       inputRef.current.focus();
+      setSearchFull(true);
     }
   };
 
@@ -39,9 +47,26 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
     setTimeout(handleFocusInput, 100);
   };
 
+  const handleOnblur = () => {
+    setSearchFull(false);
+  };
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    handleFormSubmit();
+  };
+
   return (
-    <div className="relative w-full h-12">
-      <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-black">
+    <form
+      onSubmit={handleForm}
+      className={`relative transition-all duration-70 ease-in-out h-11  ${
+        !mini || searchFull ? "w-full" : "w-11"
+      }`}
+    >
+      <span
+        className="absolute inset-y-0 left-0 flex items-center pl-2 text-[var(--button-default)]"
+        onClick={handleFocusInput}
+      >
         <MagnifyingGlass size="h-[25px] w-[25px]" />
       </span>
 
@@ -49,10 +74,15 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
         autoComplete="off"
         ref={inputRef}
         type={isNumeric ? "tel" : "text"}
-        placeholder="Pesquisar..."
+        placeholder={searchFull ? "Filtrar..." : ""}
+        onBlur={handleOnblur}
         onChange={handleInputText}
-        value={text || ""}
-        className="w-full pl-10 pr-10 py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+        value={mini && !searchFull ? "" : text || ""}
+        className={` ${
+          searchFull
+            ? "pl-10 pr-10 py-2 bg-[var(--input-default)]"
+            : "bg-transparent border-transparent"
+        } w-full h-11 border  rounded-lg focus:ring-1 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none  text-black`}
       />
       {!!text.length && (
         <span
@@ -62,16 +92,22 @@ export const InputSearch = ({ setInputText, _isNumeric = false }) => {
           <IconX size="h-[15px] w-[15px]" />
         </span>
       )}
-      <span
-        onClick={handleNumericAndFocus}
-        className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 w-10"
-      >
-        {isNumeric ? (
-          <IconKeyBoard size="h-[25px] w-[25px]" />
-        ) : (
-          <IconKeyBoardNumeric size="h-[18px] w-[18px]" />
-        )}
-      </span>
-    </div>
+      {!mini || searchFull && (
+        <span
+          onClick={handleNumericAndFocus}
+          className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 w-10"
+        >
+          {isNumeric ? (
+            <IconKeyBoard size="h-[25px] w-[25px]" />
+          ) : (
+            <IconKeyBoardNumeric size="h-[18px] w-[18px]" />
+          )}
+        </span>
+      )}
+      <button
+        type="submit"
+        className="bg-transparent w-0 text-transparent border-none p-0 m-0 hidden"
+      ></button>
+    </form>
   );
 };

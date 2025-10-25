@@ -1,14 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { Container } from "../../../components/layout/Container";
-import { Header, HeaderGrid } from "../../../components/layout/Header";
-import { IconDotMenu } from "../../../../public/icons/DotMenu";
+import { Header } from "../../../components/layout/Header";
 import { Content } from "../../../components/layout/Content";
 import { FormComponent } from "./FormComponent";
 import { isEmpty } from "../../utils/empty";
-import { IconBack } from "public/icons/ArrowBack";
 
 export const CategoriaCadastrar = ({ categoryUUID }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,23 +41,10 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
 
   return (
     <Container>
-      <Header h="h-[30px]">
-        <HeaderGrid>
-          <div className="col-span-2 flex" onClick={goBack}>
-            <IconBack size="h-[26px] w-[26px]" />
-          </div>
-
-          <div className="col-span-8 mt-1">
-            <div className="w-full flex justify-center">
-              <span className="text-xs font-bold">CADASTRAR CATEGORIA</span>
-            </div>
-          </div>
-          <div className="col-span-2"></div>
-        </HeaderGrid>
-      </Header>
-        <Content isLoading={isLoading} error={error} margin="mt-[30px] mb-[50px]">
-          <FormComponent category={category} />
-        </Content>
+      <Header divNew divider title="Cadastrar Categoria" />
+      <Content isLoading={isLoading} error={error}>
+        <FormComponent category={category} />
+      </Content>
     </Container>
   );
 };

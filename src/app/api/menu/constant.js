@@ -94,7 +94,7 @@ const ADMIN = [
   },
   {
     title: "Relatórios",
-    path: "/relatarios",
+    path: "/relatorios",
     icon: "IconGraphic",
   },
   {
@@ -183,7 +183,7 @@ const EDITOR = [
   },
   {
     title: "Relatórios",
-    path: "/relatarios",
+    path: "/relatorios",
     icon: "IconGraphic",
   },
   {

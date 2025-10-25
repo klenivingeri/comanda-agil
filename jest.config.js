@@ -1,4 +1,4 @@
-import nextJest from "next/jest.js";
+const nextJest = require("next/jest");
 /** @type {import('jest').Config} */
 const createJestConfig = nextJest({
   dir: "./",
@@ -15,6 +15,4 @@ const customJestConfig = {
   },
 };
 
-export default async function jestConfig() {
-  return await createJestConfig(customJestConfig)();
-}
+module.exports = createJestConfig(customJestConfig);
