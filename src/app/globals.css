@@ -141,7 +141,7 @@ html, body, #root {
   background: var(--background);
   color: var(--text-default);
   font-family: 'Inter', sans-serif;
-  overscroll-behavior-y: contain;
+  /* overscroll-behavior-y: contain; */
 }
 
 /* 1. Define o tamanho da barra de rolagem (largura) */
