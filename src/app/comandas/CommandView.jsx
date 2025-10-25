@@ -65,7 +65,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
           <IconCreate size="h-[32px] w-[32px]" />
         </ButtonContainer>
       </Header>
-      <Content isLoading={isLoadingCommand} error={errorCommand} margin="mt-[65px]">
+      <Content isLoading={isLoadingCommand} error={errorCommand}>
         <div
           className={`grid gap-2 ${columnsClass}`}
           style={{ alignContent: "flex-start" }}

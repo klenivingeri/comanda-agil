@@ -45,17 +45,6 @@ export default function Login({ store }) {
     }
   }
 
-  const testParaIniciarDivNoFim = () => {
-    if (refEndPage.current) {
-      setTimeout(() => {
-        refEndPage.current.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }, 100);
-    }
-  };
-
   return (
     <Container>
       <div className="flex-1 flex flex-col">
@@ -75,7 +64,6 @@ export default function Login({ store }) {
                 </span>
               </div>
               <input
-                ref={inputRef}
                 type="email"
                 className="w-full text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
                 value={email}
@@ -84,7 +72,6 @@ export default function Login({ store }) {
               />{" "}
               <div ref={refEndPage} id="endModal" className="h-0"></div>
               <input
-                ref={inputRef}
                 type="password"
                 value={password}
                 className="w-full mb-1 text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"

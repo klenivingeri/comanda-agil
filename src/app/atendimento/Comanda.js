@@ -12,6 +12,7 @@ import { useUserConfig } from "src/app/context/UserContext";
 import { CenterModal } from "../../components/modal";
 import { Checkout } from "src/components/checkout";
 import { Content } from "src/components/layout/Content";
+import { CenterTop } from "src/components/modal/ModalTop";
 
 export const Comanda = ({
   handleOpenModal,
@@ -74,7 +75,7 @@ export const Comanda = ({
 
       <Content
         isLoading={isLoadingCreate}
-        margin="mt-[65px] mb-[190px]"
+        mb="mb-[190px]"
         endPage
       >
         {children}
@@ -131,14 +132,14 @@ export const Comanda = ({
         </div>
       </Footer>
 
-      <CenterModal
+      <CenterTop
         notCloseBg
         showX
         isOpen={openCenterModal}
         onClose={() => setOpenCenterModal(false)}
       >
         <Checkout totalComanda={totalComanda} commandID={commandID} />
-      </CenterModal>
+      </CenterTop>
     </Container>
   );
 };

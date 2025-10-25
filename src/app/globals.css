@@ -165,3 +165,22 @@ html, body, #root {
 ::-webkit-scrollbar-thumb:hover {
     background: #888; /* Cor ligeiramente mais clara ao passar o mouse */
 }
+
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.95); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fade-out 0.25s ease-in forwards;
+}

@@ -255,7 +255,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
         commandCode={code}
         handleShowDetails={handleShowDetails}
       >
-        <div>
+        <span>
           {showDetails
             ? comanda?.subOrders?.map((item, idx) => (
                 <Item
@@ -303,7 +303,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
               hideValue
             />
           ))}
-        </div>
+        </span>
       </Comanda>
     );
   }
@@ -334,7 +334,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
       <Content
         isLoading={isLoading || _item.isLoading}
         error={error}
-        margin="mt-[65px] mb-[60px]"
+        mb="mb-[60px]"
       >
         {isEmpty(idComanda) ? (
           <div>

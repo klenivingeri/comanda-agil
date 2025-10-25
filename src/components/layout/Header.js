@@ -58,7 +58,7 @@ export const Header = ({
     <header id="Header" className="fixed inset-x-0 w-full z-10">
       <div className="flex justify-center  h-14">
         <div
-          className={`flex px-2 max-w-[768px] w-full  bg-[var(--foreground)] ${
+          className={`flex px-2 max-w-[768px] w-full bg-[var(--foreground)] ${
             divider && "shadow-md"
           }`}
         >

@@ -5,6 +5,7 @@ import { currency } from "src/app/utils/currency"
 import { Input } from "../form/FormComponents"
 import { useMemo, useState, useRef } from "react"
 import { IconX } from "public/icons/X"
+import { FakeButton } from "src/app/utils/FakeButton"
 
 const paymentMethods = [
   { name: 'Cartão', id: 'CARD' },
@@ -41,48 +42,119 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   </div>
 )
 
-const ComponentFragmentPayment = ({ payments, testParaIniciarDivNoFim, setPayments = () => { }, totalComanda }) => {
-  const [value, setValue] = useState(0)
 
-  const handleUpdateValue = () => {
+function AnimatedNumber({ value, duration = 1000, format = (v) => v.toFixed(0) }) {
+  const [display, setDisplay] = useState(value);
+  const startValue = useRef(value);
+
+  useEffect(() => {
+    const start = startValue.current;
+    const end = value;
+    const diff = end - start;
+
+    if (diff === 0) return;
+
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1); // 0 → 1
+
+      // interpolação linear
+      const current = start + diff * progress;
+
+      setDisplay(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        startValue.current = end; // salva o novo ponto inicial
+      }
+    };
+
+    requestAnimationFrame(step);
+  }, [value, duration]);
+
+  return <span>{format(display)}</span>;
+}
+
+export function ResumoFinanceiro({ totalComanda, payments }) {
+
+  return (
+    <div className="flex w-full pb-2 justify-between gap-3 bg-">
+      <div className="relative flex flex-col w-full items-center justify-center h-8">
+        <span className="top-[-8px] left-2 text-xs bg-[var(--bg-component)] text-[var(--button-default)] px-1">Receber</span>
+        <span>{currency(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
+      </div>
+      <div className="relative flex flex-col w-full items-center justify-center h-8">
+        <span className="top-[-8px] left-2 text-xs bg-[var(--bg-component)] text-[var(--button-default)] px-1">Recebido</span>
+        <span>{currency(payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
+      </div>
+    </div>
+  );
+}
+
+export function ComponentFragmentPayment({
+  payments,
+  testParaIniciarDivNoFim,
+  setPayments = () => {},
+  totalComanda
+}) {
+  const [value, setValue] = useState(0);
+  const [removingId, setRemovingId] = useState(null); // 👈 controla o fade-out
+
+  const handleUpdateValue = (e) => {
+    e?.preventDefault();
     if (value <= 0) return;
-    setPayments(prevPayments => [...prevPayments, { id: prevPayments.length, value }]);
-    setValue(0)
+    setPayments((prevPayments) => [
+      ...prevPayments,
+      { id: Date.now(), value } // 👈 id único (melhor que length)
+    ]);
+    setValue(0);
   };
 
-  const removerPrice = () => {
-
-  }
+  const removerPrice = (id) => {
+    setRemovingId(id);
+    // espera o fade-out antes de remover
+    setTimeout(() => {
+      setPayments((prevPayments) =>
+        prevPayments.filter((payment) => payment.id !== id)
+      );
+      setRemovingId(null);
+    }, 250); // tempo igual ao da animação CSS
+  };
 
   return (
     <div>
-      {payments.length > 0 && (
-        <div className="mb-2">
-          <div className=" mb-2 grid gap-2 grid-cols-2">
+      <div className="min-h-[45px] mb-2">
+        {payments.length > 0 && (
+          <div className="mb-2 grid gap-2 grid-cols-2">
             {payments.map((payment) => (
               <div
                 key={payment.id}
-                className="flex items-center px-2  border-1 border-[var(--button-default)] rounded-sm justify-between"
+                className={`flex items-center px-2 border border-[var(--button-default)] rounded-sm justify-between relative
+                  transition-all duration-300
+                  ${removingId === payment.id ? "animate-fade-out" : "animate-fade-in"}`}
               >
+                <span className="absolute top-[-8px] left-2 text-xs bg-[var(--bg-component)] text-[var(--button-default)] px-1">
+                  Pago
+                </span>
                 <p>{currency(payment.value)}</p>
-                <button className="flex w-10 h-10 items-center justify-end ">
+                <button
+                  className="flex w-10 h-10 items-center justify-end"
+                  onClick={() => removerPrice(payment.id)}
+                >
                   <IconX size="h-[16px] w-[16px]" />
                 </button>
               </div>
             ))}
           </div>
-          <div>
-            <div className="flex justify-between">
-              <span>Falta Receber:</span>
-              <span>{currency(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Valor Recebido:</span>
-              <span>{currency(payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
-            </div>
-          </div>
-        </div>)}
-      <div className="flex items-center gap-2">
+        )}
+      </div>
+
+      <ResumoFinanceiro totalComanda={totalComanda} payments={payments} />
+
+      <form onSubmit={handleUpdateValue} className="flex items-center gap-2">
         <Input
           id="payment"
           setValue={setValue}
@@ -92,18 +164,12 @@ const ComponentFragmentPayment = ({ payments, testParaIniciarDivNoFim, setPaymen
           isCurrency
           onFocus={testParaIniciarDivNoFim}
         />
-        <ButtonContainer
-          onClick={handleUpdateValue}
-          wFull="w-14"
-
-          text="+"
-          margin="mt-1"
-        />
-      </div>
+        <ButtonContainer onClick={handleUpdateValue} wFull="w-14" text="+" margin="mt-1" />
+        <FakeButton />
+      </form>
     </div>
-  )
+  );
 }
-
 
 const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseCommand }) => {
   const [installment, setInstallment] = useState("1");
@@ -138,7 +204,7 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
     setPay(totalComanda / e.target.value)
     setInstallment(e.target.value)
   }
-
+  console.log(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0) <= 0)
   return (
     <div className="p-4 pt-0 flex gap-2 flex-col items-center justify-center ">
       <span className="text-md font-extrabold mb-2">
@@ -205,11 +271,11 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
         />
         <label htmlFor="scales">Pagamento Fragmentado</label>
       </div>
-
       <div className="flex flex-col sm:flex-row w-full gap-3 ">
         <ButtonContainer
           onClick={postCloseCommand}
           text="Confirmar Pagamento"
+          disabled={isSplitPayment && !(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0) <= 0)}
         />
       </div>
     </div>
