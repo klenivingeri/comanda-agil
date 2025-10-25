@@ -3,7 +3,16 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo } 
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
 
-const MenuContext = createContext();
+const DEFAULT_MENU_STATE = {
+  _menu: {
+    all: [],
+    error: false,
+    isLoading: true,
+    get: () => {}, // Função vazia como padrão
+  },
+};
+
+const MenuContext = createContext(DEFAULT_MENU_STATE);
 
 export function MenuProvider({ children }) {
   const { refreshKey } = useCleaningTrigger();

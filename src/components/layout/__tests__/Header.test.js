@@ -1,28 +1,63 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { Header } from "../Header";
 
-// Mock para o useRouter, já que o DefaultComponent dentro do Header o utiliza.
-jest.mock("next/navigation", () => ({
-  useRouter: () => ({
-    back: jest.fn(),
-  }),
+// Mock dos ícones para facilitar a busca nos testes
+jest.mock("public/icons/ArrowBack", () => ({
+  IconBack: () => <div data-testid="icon-back">Voltar</div>,
+}));
+jest.mock("public/icons/X", () => ({
+  IconX: () => <div data-testid="icon-close">Fechar</div>,
+}));
+jest.mock("public/icons/DotMenu", () => ({
+  IconDotMenu: () => <div data-testid="icon-menu">Menu</div>,
 }));
 
-// Mock para os contextos utilizados pelo MenuMobileContainer
+const mockRouterBack = jest.fn();
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({ back: mockRouterBack }),
+}));
+
 jest.mock("src/app/context/MenuContext", () => ({
   useMenu: () => ({
-    _menu: { all: [] }, // Fornece um valor padrão para o menu
+    _menu: { all: [] },
   }),
 }));
 
 jest.mock("src/app/context/UserContext", () => ({
   useUserConfig: () => ({
-    _user: { all: [{ name: "Usuário Teste" }] }, // Fornece um valor padrão para o usuário
+    _user: { all: [{ name: "Usuário Teste" }] },
   }),
 }));
 
-test("exibe o título da página", () => {
+test("Exibe o título da página", () => {
   render(<Header title="Titulo da pagina" menu={true} />);
   expect(screen.getByText(/Titulo da pagina/i)).toBeInTheDocument();
+});
+
+test("Exibe o ícone de voltar por padrão e chama router.back ao clicar", () => {
+  render(<Header />);
+  const backButton = screen.getByTestId("icon-back");
+  expect(backButton).toBeInTheDocument();
+
+  fireEvent.click(backButton);
+  expect(mockRouterBack).toHaveBeenCalledTimes(1);
+});
+
+test("Exibe o ícone de fechar e chama a função onClick ao ser clicado", () => {
+  const mockOnClick = jest.fn();
+  render(<Header close={true} onClick={mockOnClick} />);
+
+  const closeButton = screen.getByTestId("icon-close");
+  expect(closeButton).toBeInTheDocument();
+
+  fireEvent.click(closeButton);
+  expect(mockOnClick).toHaveBeenCalledTimes(1);
+});
+
+test("abre o menu mobile ao clicar no ícone de menu", () => {
+  render(<Header menu={true} />);
+
+  fireEvent.click(screen.getByTestId("icon-menu"));
+  expect(screen.getByText("Usuário Teste")).toBeInTheDocument();
 });

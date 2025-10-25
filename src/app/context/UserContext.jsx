@@ -5,7 +5,17 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo } 
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
 
-const UserContext = createContext();
+const DEFAULT_USER_STATE = {
+  _user: {
+    all: [],
+    error: false,
+    isLoading: true,
+    get: () => {},
+    clear: () => {},
+  },
+};
+
+const UserContext = createContext(DEFAULT_USER_STATE);
 
 export function UserProvider({ children }) {
   const router = useRouter();
@@ -25,7 +35,6 @@ export function UserProvider({ children }) {
 
 
   const clear = () => {
-
     sessionStorage.removeItem("user");
     setUserSave({ all: [], error: false, isLoading: false });
     router.push('/login/empresa');
