@@ -43,7 +43,9 @@ export const Content = ({
       className={`flex-1 overflow-auto ${margin} px-2 w-full min-w-0`}
       style={{ overflowWrap: "break-word" }}
     >
+      <div className="grid grid-cols-1 ">
       {children}
+    </div>
     </div>
   );
 };
