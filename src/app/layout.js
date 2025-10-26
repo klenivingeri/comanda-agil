@@ -42,18 +42,21 @@ export const viewport = {
   maximumScale: 1,
   userScalable: "no",
 };
-//select-none
+//
+
+//tag html select-none overscroll-y-contain
+//tag div touch-pan-y
 export default function RootLayout({ children }) {
 
 
   return (
-    <html lang="pt" className="h-full overscroll-y-contain">
+    <html lang="pt" className="h-full">
       <body
         className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
       >
         <div
           id="container"
-          className="flex w-full md:max-w-[768px] relative h-full touch-pan-y"
+          className="flex w-full md:max-w-[768px] relative h-full "
         >
           <Providers>
             <main className="flex flex-1 h-full">{children}</main>

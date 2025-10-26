@@ -1,5 +1,10 @@
 const ADMIN = [
   {
+    title: "Inicio",
+    path: "/home",
+    icon: "IconCommand",
+  },
+  {
     title: "Comandas",
     path: "/comandas",
     icon: "IconCommand",
@@ -107,9 +112,19 @@ const ADMIN = [
     path: "/configuracao",
     icon: "IconGear",
   },
+  {
+    title: "Ajuda",
+    path: "/help",
+    icon: "IconCommand",
+  },
 ];
 
 const EDITOR = [
+  {
+    title: "Inicio",
+    path: "/home",
+    icon: "IconCommand",
+  },
   {
     title: "Comandas",
     path: "/comandas",
@@ -191,9 +206,19 @@ const EDITOR = [
     path: "/configuracao",
     icon: "IconGear",
   },
+  {
+    title: "Ajuda",
+    path: "/help",
+    icon: "IconCommand",
+  },
 ];
 
 const MODERATOR = [
+  {
+    title: "Inicio",
+    path: "/home",
+    icon: "IconCommand",
+  },
   {
     title: "Comandas",
     path: "/comandas",
@@ -240,9 +265,19 @@ const MODERATOR = [
     path: "/configuracao",
     icon: "IconGear",
   },
+  {
+    title: "Ajuda",
+    path: "/help",
+    icon: "IconCommand",
+  },
 ];
 
 const VIEWER = [
+  {
+    title: "Inicio",
+    path: "/home",
+    icon: "IconCommand",
+  },
   {
     title: "Comandas",
     path: "/comandas",
@@ -252,6 +287,11 @@ const VIEWER = [
     title: "Configuração",
     path: "/configuracao",
     icon: "IconGear",
+  },
+  {
+    title: "Ajuda",
+    path: "/help",
+    icon: "IconCommand",
   },
 ];
 

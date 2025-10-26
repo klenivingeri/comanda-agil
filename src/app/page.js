@@ -36,7 +36,7 @@ export default function Login() {
 
       if (res.ok) {
         const user = await res.json();
-        router.push("/comandas");
+        router.push("/home");
       } else {
         setError(true);
         setIsLoading(false);
