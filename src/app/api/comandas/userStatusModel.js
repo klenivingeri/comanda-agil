@@ -23,6 +23,7 @@ const dailySalesReportSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",
       required: true,
+      index: true,
     },
     userStatistics: [
       {

@@ -17,6 +17,7 @@ const usersSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",
       required: true,
+      index: true,
     },
     branch: {
       type: String,

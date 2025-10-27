@@ -8,6 +8,7 @@ const categoriesSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",
       required: true,
+      index: true,
     },
   },
   { versionKey: false }

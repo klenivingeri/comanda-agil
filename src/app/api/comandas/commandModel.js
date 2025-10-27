@@ -20,6 +20,7 @@ const commandsSchema = new mongoose.Schema(
           type: String,
           enum: ["PAID", "PENDING", "CANCELLED"], // status possíveis
           default: "PENDING",
+          index: true,
         },
       },
     },
@@ -38,6 +39,7 @@ const commandsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",
       required: true,
+      index: true,
     },
   },
   {
