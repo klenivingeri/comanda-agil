@@ -8,7 +8,7 @@ test("exibe a saudação com o nome e expande o menu", () => {
     <MenuMobile
       handleOpenModal={() => {}}
       openModal={true}
-      menuItems={[
+      menu={{all:[
         {
           title: "Comandas",
           path: "/comandas",
@@ -36,7 +36,7 @@ test("exibe a saudação com o nome e expande o menu", () => {
             },
           ],
         },
-      ]}
+      ]}}
       user={{ all: [{ name: "Joãozin" }], get: () => {} }}
     ></MenuMobile>
   );

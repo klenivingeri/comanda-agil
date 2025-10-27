@@ -6,8 +6,12 @@ import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { ButtonContainer } from "src/components/button";
 import { Loading } from "src/components/loading/Loading";
-
+import { useUserConfig } from "../app/context/UserContext";
+import { useMenu } from "../app/context/MenuContext";
+  
 export default function Login() {
+  const { _menu } = useMenu();
+  const { _user } = useUserConfig();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -36,12 +40,18 @@ export default function Login() {
 
       if (res.ok) {
         const user = await res.json();
+        console.log(user)
+        if(_user.all[0].email !== user.email){
+          _user.get()
+          _menu.get()
+        }
         router.push("/home");
       } else {
         setError(true);
         setIsLoading(false);
       }
     } catch (err) {
+      console.log(err)
       setError(true);
       setIsLoading(false);
     }

@@ -6,12 +6,15 @@ import { Header } from "../../../components/layout/Header";
 import { Tabs } from "src/components/Tabs";
 import { ChartContent } from "src/components/ChartComponents";
 
-  const arrTabs = [
-    {title: 'Dia', id: 'dia'},
-    {title: 'Semana', id: 'semana'},
-    {title: 'Mês', id: 'mes'}
-  ]
+const arrTabs = [
+  {title: 'Dia', id: 'dia'},
+  {title: 'Semana', id: 'semana'},
+  {title: 'Mês', id: 'mes'}
+]
 
+const Ranking = ({ data }) => {
+  return null
+};
 
 export default function RelatorioCategoria() {
   const [error, setError] = useState(false);
@@ -46,6 +49,7 @@ export default function RelatorioCategoria() {
           <ChartContent dataRecords={response} type='rosca' />
           
         </div>
+        <Ranking data={response} />
       </Content>
     </Container>
   );

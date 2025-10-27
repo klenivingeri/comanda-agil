@@ -12,6 +12,6 @@ export const MenuMobileContainer = ({ handleOpenModal, openModal }) => {
     handleOpenModal={handleOpenModal}
     openModal={openModal}
     user={_user}
-    menuItems={_menu.all}
+    menu={_menu}
   />
 }

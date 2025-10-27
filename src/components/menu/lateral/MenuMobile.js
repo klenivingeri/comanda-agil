@@ -4,7 +4,7 @@ import Menu from "./Menu";
 import { SideModal } from "../../../components/modal/SideModal";
 import Link from "next/link";
 
-export const MenuMobile = ({ handleOpenModal, openModal, menuItems, user }) => {
+export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
   const [themeCurrent, setThemeCurrent] = useState("");
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, menuItems, user }) => {
 
           <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
         </div>
-        {menuItems.length > 0 && <Menu menuItems={menuItems} user={user} />}
+        {menu.all?.length > 0 && <Menu menu={menu} user={user} />}
       </div>
     </SideModal>
   );

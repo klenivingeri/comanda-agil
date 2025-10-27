@@ -36,7 +36,6 @@ export function UserProvider({ children }) {
 
   const clear = () => {
     sessionStorage.removeItem("user");
-    setUserSave({ all: [], error: false, isLoading: false });
     router.push('/login/empresa');
   }
 

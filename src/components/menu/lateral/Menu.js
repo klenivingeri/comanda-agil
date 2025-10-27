@@ -28,7 +28,7 @@ const icons = {
   IconExit: <IconExit size="h-[28px] w-[28px]" />,
 };
 
-const Menu = ({ menuItems, user }) => {
+const Menu = ({ menu, user }) => {
   const [activeLink, setActiveLink] = useState("");
   const [subActiveLink, setSubActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -55,7 +55,7 @@ const Menu = ({ menuItems, user }) => {
   return (
     <nav>
       <ul className="list-none p-0 m-0">
-        {menuItems.map((item) => (
+        {menu.all.map((item) => (
           <li key={item.path} className="mb-2">
             {item.sublink ? (
               <div

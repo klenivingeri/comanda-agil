@@ -47,7 +47,10 @@ export const postLogin = async ({ users, email, password }) => {
         { status: 401 }
       );
 
-    return new Response(JSON.stringify({ message: "Login bem-sucedido" }), {
+    return new Response(JSON.stringify({ 
+        message: "Login bem-sucedido",
+        email
+      }), {
       status: 200,
       headers: {
         "Set-Cookie": createCookie(user.tenant._id, user._id, user.role),

@@ -51,6 +51,10 @@ export const Input = ({
         name={id}
         onFocus={onFocus}
         type={type}
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="none"
+        spellcheck="false"
         className={`w-full pl-5 pr-10 py-2 h-12 ring-1 ring-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
             ${
               isValid && error
