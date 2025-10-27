@@ -119,12 +119,12 @@
   --button-progress: #FFC066;
 }
 
-* {
+/* * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
+} */
 
 input, textarea {
   -webkit-user-select: text;

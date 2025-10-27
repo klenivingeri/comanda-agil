@@ -1,14 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header } from "../../../components/layout/Header";
-import { Construction } from "../../../components/construction";
+import { Tabs } from "src/components/Tabs";
+import { ChartContent } from "src/components/ChartComponents";
+
+  const arrTabs = [
+    {title: 'Dia', id: 'dia'},
+    {title: 'Semana', id: 'semana'},
+    {title: 'Mês', id: 'mes'}
+  ]
+
 
 export default function RelatorioCategoria() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState(false);
+  const [response, setResponse] = useState([]);
+  const [tab, setTab] = useState('dia');
 
   const getCategoryItems = async () => {
     try {
@@ -32,11 +41,10 @@ export default function RelatorioCategoria() {
     <Container>
       <Header divider title="Relatório de categoria" />
       <Content isLoading={isLoading} error={error}>
-        <Construction />
-        <div>
-          <div>Dia</div>
-          <div>Semana</div>
-          <div>Mês</div>
+        <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
+        <div className="relative rounded-md flex justify-center items-center h-[350px] m-2">
+          <ChartContent dataRecords={response} type='rosca' />
+          
         </div>
       </Content>
     </Container>
