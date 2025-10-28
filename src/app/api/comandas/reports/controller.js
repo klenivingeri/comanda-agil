@@ -1,3 +1,4 @@
+import { aggregateCategories } from "./aggregations";
 import {
   startOfDay,
   endOfDay,
@@ -6,34 +7,42 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import { aggregateCategories } from "./aggregations";
+import { formatInTimeZone } from "date-fns-tz";
 
-// 1. Busca por Dia (Hoje)
-const hoje = new Date();
-const dataInicioDia = startOfDay(hoje);
-const dataFimDia = endOfDay(hoje);
+const TIME_ZONE = "America/Sao_Paulo";
 
-// 2. Busca por Semana (Esta Semana)
-const dataInicioSemana = startOfWeek(hoje, { weekStartsOn: 0 }); // 0 para Domingo
-const dataFimSemana = endOfWeek(hoje, { weekStartsOn: 0 });
+// Converte uma data para UTC, considerando o timezone
+const toUtcFromTimeZone = (date) => {
+  const isoString = formatInTimeZone(date, TIME_ZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+  return new Date(isoString);
+};
 
-// 3. Busca por Mês (Este Mês)
-const dataInicioMes = startOfMonth(hoje);
-const dataFimMes = endOfMonth(hoje);
+// Função helper para gerar períodos
+export const getPeriod = (type) => {
+  const hoje = new Date();
+
+  const map = {
+    day: {
+      start: toUtcFromTimeZone(startOfDay(hoje)),
+      end: toUtcFromTimeZone(endOfDay(hoje)),
+    },
+    week: {
+      start: toUtcFromTimeZone(startOfWeek(hoje, { weekStartsOn: 0 })),
+      end: toUtcFromTimeZone(endOfWeek(hoje, { weekStartsOn: 0 })),
+    },
+    month: {
+      start: toUtcFromTimeZone(startOfMonth(hoje)),
+      end: toUtcFromTimeZone(endOfMonth(hoje)),
+    },
+  };
+
+  return map[type] || map.day;
+};
 
 const periodos = {
-  day: {
-    start: dataInicioDia,
-    end: dataFimDia,
-  },
-  categoriesWeek: {
-    start: dataInicioSemana,
-    end: dataFimSemana,
-  },
-  categoriesMonth: {
-    start: dataInicioMes,
-    end: dataFimMes,
-  },
+  day: getPeriod("day"),
+  categoriesWeek: getPeriod("week"),
+  categoriesMonth: getPeriod("month"),
 };
 
 const populate = (products, categories) => [
@@ -74,7 +83,7 @@ export const reportCategories = async ({ commands, xTenant, period }) => {
         success: false,
         message: "Nenhum item encontrado",
       },
-      { status: 404 }
+      { status: 200 }
     );
   } catch (_) {
     return Response.json(

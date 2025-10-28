@@ -21,7 +21,7 @@ const Ranking = ({ data }) => {
   })
 };
 
-export default function RelatorioCategoriaView({getCategoryItems ,response, isLoading, error}) {
+export default function RelatorioCategoriaView({ getCategoryItems, response, isLoading, error }) {
   const [tab, setTab] = useState('day');
 
   useEffect(() => {
@@ -32,21 +32,20 @@ export default function RelatorioCategoriaView({getCategoryItems ,response, isLo
     <Container>
       <Header divider title="Relatório de categoria" />
       <Content isLoading={isLoading} error={error}>
+        <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
         {response.length === 0
           ? (
             <div className="flex justify-center items-center h-[350px] m-2">
-              <div>Nenhum dado encontrado.</div>
+              <div>Nenhum dado encontrado no momento.</div>
             </div>
           )
-          : (
-            <>
-              <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
-              <div className="relative rounded-md flex justify-center items-center h-[350px] m-2">
-                <ChartContent dataRecords={response} type='rosca' />
-              </div>
-              <Ranking data={response} />
+          : (<>
+            <div className="relative rounded-md flex justify-center items-center h-[350px] m-2">
+              <ChartContent dataRecords={response} type='rosca' />
+            </div>
+            <Ranking data={response} />
             </>
-          )
+            )
         }
       </Content>
     </Container>
