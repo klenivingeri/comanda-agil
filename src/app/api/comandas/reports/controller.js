@@ -1,4 +1,3 @@
-
 import {
   startOfDay,
   endOfDay,
@@ -23,17 +22,17 @@ const dataInicioMes = startOfMonth(hoje);
 const dataFimMes = endOfMonth(hoje);
 
 const periodos = {
-  dia: {
-    inicio: dataInicioDia,
-    fim: dataFimDia,
+  day: {
+    start: dataInicioDia,
+    end: dataFimDia,
   },
-  semana: {
-    inicio: dataInicioSemana,
-    fim: dataFimSemana,
+  categoriesWeek: {
+    start: dataInicioSemana,
+    end: dataFimSemana,
   },
-  mes: {
-    inicio: dataInicioMes,
-    fim: dataFimMes,
+  categoriesMonth: {
+    start: dataInicioMes,
+    end: dataFimMes,
   },
 };
 
@@ -49,32 +48,40 @@ const populate = (products, categories) => [
   },
 ];
 
-export const reportCategories = async ({
-  commands,
-  xTenant,
-  period
-}) => {
+export const reportCategories = async ({ commands, xTenant, period }) => {
   try {
-    let response;
 
     const periodo = {
       ...periodos[period],
     };
 
-    response = await commands.aggregate(aggregateCategories({xTenant, periodo}));
+    const response = await commands.aggregate(
+      aggregateCategories({ xTenant, periodo })
+    );
 
     if (response && (Array.isArray(response) ? response.length > 0 : true)) {
-      return Response.json({ records: response }, { status: 200 });
+      return Response.json(
+        {
+          success: true,
+          records: response,
+        },
+        { status: 200 }
+      );
     }
 
     return Response.json(
-      { message: "Nenhum item encontrado" },
+      {
+        success: false,
+        message: "Nenhum item encontrado",
+      },
       { status: 404 }
     );
   } catch (_) {
-    console.log(_);
     return Response.json(
-      { message: "Erro ao processar os itens" },
+      {
+        success: false,
+        message: "Erro ao processar os itens",
+      },
       { status: 500 }
     );
   }

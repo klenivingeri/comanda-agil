@@ -7,9 +7,9 @@ import { Tabs } from "src/components/Tabs";
 import { ChartContent } from "src/components/ChartComponents";
 
 const arrTabs = [
-  { title: 'Dia', id: 'dia' },
-  { title: 'Semana', id: 'semana' },
-  { title: 'Mês', id: 'mes' }
+  { title: 'Dia', id: 'day' },
+  { title: 'Semana', id: 'categoriesWeek' },
+  { title: 'Mês', id: 'categoriesMonth' }
 ]
 
 const Ranking = ({ data }) => {
@@ -22,7 +22,7 @@ const Ranking = ({ data }) => {
 };
 
 export default function RelatorioCategoriaView({getCategoryItems ,response, isLoading, error}) {
-  const [tab, setTab] = useState('dia');
+  const [tab, setTab] = useState('day');
 
   useEffect(() => {
     getCategoryItems(tab)
