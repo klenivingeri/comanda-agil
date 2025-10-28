@@ -15,7 +15,7 @@ export const getIndexdbOrApi = async ({
   try {
     if (period !== "day") {
       const cachedData = await dbManager.getAll(period);
-      const isCacheValid = cachedData?.length > 0 && cachedData[0]?.createdAt === today;
+      const isCacheValid = cachedData?.length > 0 && cachedData[0]?.requestDate === today;
 
       if (isCacheValid) {
         setResponse(cachedData);
@@ -39,7 +39,7 @@ export const getIndexdbOrApi = async ({
     if (period !== "day" && records.length > 0) {
       const dataToSave = records.map((item) => ({
         ...item,
-        createdAt: today,
+        requestDate: today,
       }));
       await saveCollectionToDB(period, dataToSave);
     }

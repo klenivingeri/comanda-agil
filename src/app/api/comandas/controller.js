@@ -78,7 +78,10 @@ export const getCommands = async ({
     }
 
     return Response.json(
-      { message: "Nenhum item encontrado" },
+      { 
+        success: false,
+        message: "Nenhum item encontrado"
+      },
       { status: 404 }
     );
   } catch {

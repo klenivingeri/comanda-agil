@@ -1,5 +1,22 @@
 import mongoose from "mongoose";
 
+
+const subOrderSchema = new mongoose.Schema(
+  {
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "products",
+      required: true,
+    },
+    quantity: { type: mongoose.Schema.Types.Number, default: 0 },
+    userId: { type: String },
+  },
+  {
+    timestamps: true, 
+  }
+);
+
+
 const commandsSchema = new mongoose.Schema(
   {
     code: { type: String, required: true },
@@ -24,17 +41,7 @@ const commandsSchema = new mongoose.Schema(
         },
       },
     },
-    subOrders: [
-      {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "products",
-          required: true,
-        },
-        quantity: { type: mongoose.Schema.Types.Number, default: 0 },
-        userId: { type: String },
-      },
-    ],
+    subOrders: [subOrderSchema],
     tenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",

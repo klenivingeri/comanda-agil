@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { CORES_FIXAS } from 'src/app/utils/constants';
 
 const ChartPizza = dynamic(() => import('./ChartPizza'), {
   ssr: false,
@@ -14,18 +15,6 @@ const ChartRosca = dynamic(() => import('./Doughnut'), {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CORES_FIXAS = [
-  '#007BFF', // Azul vibrante
-  '#28A745', // Verde
-  '#DC3545', // Vermelho
-  '#FFC107', // Amarelo (laranja)
-  '#6F42C1', // Roxo
-  '#20C997', // Verde Água
-  '#FD7E14', // Laranja
-  '#17A2B8', // Ciano
-  '#E83E8C', // Rosa Choque
-  '#6C757D', // Cinza Chumbo
-];
 
 const gerarCorAleatoria = () => {
   const hue = Math.floor(Math.random() * 360);

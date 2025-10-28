@@ -30,7 +30,7 @@ export const Content = ({
   if (error) {
     return (
       <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--backgroun)]">
-        Ocorreu um erro durante o processamento, por favor dente novamente.
+        Nenhum retorno encontrado.
       </div>
     );
   }
