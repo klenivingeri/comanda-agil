@@ -1,0 +1,54 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { Container } from "../../../components/layout/Container";
+import { Content } from "../../../components/layout/Content";
+import { Header } from "../../../components/layout/Header";
+import { Tabs } from "src/components/Tabs";
+import { ChartContent } from "src/components/ChartComponents";
+
+const arrTabs = [
+  { title: 'Dia', id: 'dia' },
+  { title: 'Semana', id: 'semana' },
+  { title: 'Mês', id: 'mes' }
+]
+
+const Ranking = ({ data }) => {
+  return data.map((category, i) => {
+
+    return (
+      <div key={i}>{category.name}</div>
+    )
+  })
+};
+
+export default function RelatorioCategoriaView({getCategoryItems ,response, isLoading, error}) {
+  const [tab, setTab] = useState('dia');
+
+  useEffect(() => {
+    getCategoryItems(tab)
+  }, [tab])
+
+  return (
+    <Container>
+      <Header divider title="Relatório de categoria" />
+      <Content isLoading={isLoading} error={error}>
+        {response.length === 0
+          ? (
+            <div className="flex justify-center items-center h-[350px] m-2">
+              <div>Nenhum dado encontrado.</div>
+            </div>
+          )
+          : (
+            <>
+              <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
+              <div className="relative rounded-md flex justify-center items-center h-[350px] m-2">
+                <ChartContent dataRecords={response} type='rosca' />
+              </div>
+              <Ranking data={response} />
+            </>
+          )
+        }
+      </Content>
+    </Container>
+  );
+}

@@ -3,7 +3,7 @@ export const aggregateCategories = ({xTenant, periodo}) =>([
     {
       $match: {
         tenant: new mongoose.Types.ObjectId(xTenant.id),
-        createdAt: { $gte: periodo.inicio, $lte: periodo.fim },
+        createdAt: { $gte: periodo.inicio, $lt: periodo.fim },
       },
     },
 

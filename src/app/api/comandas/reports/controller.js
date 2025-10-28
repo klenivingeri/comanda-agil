@@ -52,12 +52,13 @@ const populate = (products, categories) => [
 export const reportCategories = async ({
   commands,
   xTenant,
+  period
 }) => {
   try {
     let response;
 
     const periodo = {
-      ...periodos.semana,
+      ...periodos[period],
     };
 
     response = await commands.aggregate(aggregateCategories({xTenant, periodo}));
