@@ -10,6 +10,7 @@ export default function PageRelatorioCategoria() {
 
   const handlegetIndexdbOrApi = (period) => {
     getIndexdbOrApi({
+      name: 'categories',
       endpoint: `/api/comandas/reports/categories`,
       period,
       setResponse,

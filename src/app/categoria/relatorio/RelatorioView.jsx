@@ -9,8 +9,8 @@ import { CORES_FIXAS } from "src/app/utils/constants";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
-  { title: 'Semana', id: 'categoriesWeek' },
-  { title: 'Mês', id: 'categoriesMonth' }
+  { title: 'Semana', id: 'week' },
+  { title: 'Mês', id: 'month' }
 ]
 
 const Ranking = ({ data }) => {
@@ -19,7 +19,7 @@ const Ranking = ({ data }) => {
       key={i}
       className="grid grid-cols-12 mb-2 opacity-0 animate-fade-in"
       style={{
-        animationDelay: `${i * 0.2}s`, // ⏱️ cada item atrasa 0.2s a mais
+        animationDelay: `${i * 0.1}s`, // ⏱️ cada item atrasa 0.2s a mais
         animationFillMode: "forwards",
       }}
     >

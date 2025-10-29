@@ -7,14 +7,16 @@ export const getIndexdbOrApi = async ({
   setResponse,
   period,
   endpoint,
+  name
 }) => {
   setIsLoading(true);
-
+  const nameTable = `${name}${period.charAt(0).toUpperCase() + period.slice(1)}`
+  console.log(nameTable)
   const today = new Date().toISOString().split("T")[0];
 
   try {
     if (period !== "day") {
-      const cachedData = await dbManager.getAll(period);
+      const cachedData = await dbManager.getAll(nameTable);
       const isCacheValid = cachedData?.length > 0 && cachedData[0]?.requestDate === today;
 
       if (isCacheValid) {
@@ -41,20 +43,20 @@ export const getIndexdbOrApi = async ({
         ...item,
         requestDate: today,
       }));
-      await saveCollectionToDB(period, dataToSave);
+      await saveCollectionToDB(nameTable, dataToSave);
     }
   } catch (error) {
-    console.error(`Erro ao buscar dados (${period}):`, error);
+    console.error(`Erro ao buscar dados (${nameTable}):`, error);
     setError(true);
 
     // 🔹 5. Fallback pro cache se a API falhar
     try {
-      const cachedData = await dbManager.getAll(period);
+      const cachedData = await dbManager.getAll(nameTable);
       if (cachedData?.length > 0) {
         setResponse(cachedData);
       }
     } catch (cacheError) {
-      console.warn(`Erro ao tentar usar cache (${period}):`, cacheError);
+      console.warn(`Erro ao tentar usar cache (${nameTable}):`, cacheError);
     }
   } finally {
     setIsLoading(false);

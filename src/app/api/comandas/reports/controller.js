@@ -3,8 +3,8 @@ import { aggregateCategories } from "./aggregations";
 
 const periodos = {
   day: getPeriod("day"),
-  categoriesWeek: getPeriod("week"),
-  categoriesMonth: getPeriod("month"),
+  week: getPeriod("week"),
+  month: getPeriod("month"),
 };
 
 const populate = (products, categories) => [
@@ -20,6 +20,47 @@ const populate = (products, categories) => [
 ];
 
 export const reportCategories = async ({ commands, xTenant, period }) => {
+  try {
+
+    const periodo = {
+      ...periodos[period],
+    };
+
+    const response = await commands.aggregate(
+      aggregateCategories({ xTenant, periodo })
+    );
+
+    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
+      return Response.json(
+        {
+          success: true,
+          records: response,
+        },
+        { status: 200 }
+      );
+    }
+
+    return Response.json(
+      {
+        success: false,
+        message: "Nenhum item encontrado",
+      },
+      { status: 200 }
+    );
+  } catch (_) {
+    return Response.json(
+      {
+        success: false,
+        message: "Erro ao processar os itens",
+      },
+      { status: 500 }
+    );
+  }
+};
+
+
+
+export const reportProducts = async ({ commands, xTenant, period }) => {
   try {
 
     const periodo = {
