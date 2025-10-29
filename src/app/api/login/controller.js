@@ -43,11 +43,15 @@ export const postLogin = async ({ users, email, password }) => {
     const match = user.password === password;
     if (!match)
       return new Response(
-        JSON.stringify({ message: "Credenciais inválidas" }),
+        JSON.stringify({ 
+          success: false,
+          message: "Credenciais inválidas" 
+        }),
         { status: 401 }
       );
 
     return new Response(JSON.stringify({ 
+        success: true,
         message: "Login bem-sucedido",
         email
       }), {
@@ -58,7 +62,9 @@ export const postLogin = async ({ users, email, password }) => {
       },
     });
   } catch (_) {
-    return new Response(JSON.stringify({ message: "Erro no login" }), {
+    return new Response(JSON.stringify({ 
+      success: false,
+      message: "Erro no login" }), {
       status: 500,
     });
   }

@@ -35,13 +35,11 @@ export default function Login() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include",
       });
-
-      if (res.ok) {
-        const user = await res.json();
-        console.log(user)
-        if(_user.all[0].email !== user.email){
+      const user = await res.json();
+      if (user.success) {
+        
+        if(_user.all[0]?.email !== user.email){
           _user.get()
           _menu.get()
         }

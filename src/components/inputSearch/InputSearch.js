@@ -27,7 +27,7 @@ export const InputSearch = ({
     }
     debounceTimeout.current = setTimeout(() => {
       setInputText(text);
-    }, 500);
+    }, 250);
   };
 
   const handlerClearText = () => {

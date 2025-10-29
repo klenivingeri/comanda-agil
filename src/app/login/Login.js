@@ -13,6 +13,7 @@ export default function Login({ store }) {
   const [error, setError] = useState(false);
   const router = useRouter();
   const refEndPage = useRef(null);
+  
   async function handleSubmit(e) {
     e.preventDefault();
     setError(false);
@@ -25,15 +26,21 @@ export default function Login({ store }) {
     }
 
     try {
-      const res = await fetch("/api/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include",
       });
 
-      if (res.ok) {
-        const user = await res.json();
+      const userCache = sessionStorage.getItem("user");
+      const res = await response.json();
+
+      if (user.success) {
+        if(Array.isArray(userCache) && userCache[0]?.email !== res?.email){
+          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("menu");
+        }
+        
         router.push("/home");
       } else {
         setError(true);
