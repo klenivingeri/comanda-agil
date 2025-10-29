@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 export const aggregateCategories = ({xTenant, periodo}) =>([
     {
       $match: {
@@ -71,3 +72,61 @@ export const aggregateCategories = ({xTenant, periodo}) =>([
       },
     },
   ]);
+
+
+  export const aggregateProducts = ({xTenant, periodo}) =>([
+  {
+    $match: {
+      tenant: new mongoose.Types.ObjectId(xTenant.id),
+      createdAt: { $gte: periodo.start, $lte: periodo.end },
+    },
+  },
+
+  // 1. Separa cada subOrder como documento
+  { $unwind: "$subOrders" },
+
+  // 2. (Opcional) Filtra subOrders de um user específico
+  { $match: { "subOrders.userId": xTenant.userId } },
+
+  // 3. Busca detalhes do produto
+  {
+    $lookup: {
+      from: "products",
+      localField: "subOrders.product",
+      foreignField: "_id",
+      as: "productDetails",
+    },
+  },
+
+  // 4. Pega o produto direto (em vez de array)
+  { $unwind: "$productDetails" },
+
+  // 5. Pega também a categoria do produto (opcional)
+  {
+    $lookup: {
+      from: "categories",
+      localField: "productDetails.category",
+      foreignField: "_id",
+      as: "categoryDetails",
+    },
+  },
+
+  // 6. Pega o objeto da categoria (opcional)
+  { $unwind: { path: "$categoryDetails", preserveNullAndEmptyArrays: true } },
+
+  // 7. Define a saída final
+  {
+    $project: {
+      _id: 0,
+      subOrderId: "$subOrders._id",
+      quantity: "$subOrders.quantity",
+      product: {
+        _id: "$productDetails._id",
+        name: "$productDetails.name",
+        price: "$productDetails.price",
+        category: "$categoryDetails.name",
+      },
+    },
+  },
+]
+);

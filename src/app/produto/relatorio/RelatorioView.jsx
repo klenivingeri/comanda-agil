@@ -13,7 +13,7 @@ const arrTabs = [
   { title: 'Mês', id: 'month' }
 ]
 
-export default function RelatorioCategoriaView({ getCategoryItems, response, isLoading, error }) {
+export default function RelatorioProductsView({ getCategoryItems, response, isLoading, error }) {
   const [tab, setTab] = useState('day');
 
   useEffect(() => {
@@ -21,13 +21,12 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
   }, [tab])
 
   const orderData = useMemo(() => {
-    return [...response].sort((a, b) => b.quantity - a.quantity);
+    return [...response].sort((a, b) => b.totalQuantity - a.totalQuantity);
   }, [response]);
-
 
   return (
     <Container>
-      <Header divider title="Relatório de categoria" />
+      <Header divider title="Relatório de Products" />
       <Content isLoading={isLoading} error={error}>
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
         {response.length === 0

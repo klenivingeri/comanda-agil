@@ -46,8 +46,8 @@ class IndexedDBManager {
         // --- CRIAÇÃO DE TODAS AS 12 STORES ---
 
         // CATEGORIES
-        createStore("categoriesWeek");
-        createStore("categoriesMonth");
+        createStore("catalog_users");
+        createStore("catalog_products");
 
         // PRODUCTS
         createStore("productsWeek");

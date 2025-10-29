@@ -31,6 +31,7 @@ export const postLogin = async ({ users, email, password }) => {
   try {
     const user = await users
       .findOne({ email, active: true })
+      .select('+password')
       .populate({ path: "tenant", model: tenants, select: "name" })
       .lean();
 

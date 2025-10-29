@@ -2,7 +2,7 @@ import { connectToDatabase } from "../../../lib/dbConnect.js";
 import { commands } from "../../commandModel.js";
 import { getStoreXTenant } from "../../../utils/getStoreXTenant.js";
 import {
-  reportProducts,
+  reportUser,
 } from "../controller.js";
 
 export async function GET(request) {
@@ -11,7 +11,7 @@ export async function GET(request) {
   const period = searchParams.get("period");
   const xTenant = getStoreXTenant(request);
 
-  const response = reportProducts({
+  const response = reportUser({
     commands,
     xTenant,
     period,
