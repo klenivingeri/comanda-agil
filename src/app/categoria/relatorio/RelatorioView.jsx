@@ -62,10 +62,7 @@ const groupedSubOrdersForID = useMemo(() => {
               <div>Nenhum dado encontrado no momento.</div>
             </div>
           )
-          : (<div className="mt-10">
-            <Ranking data={sortSuborders} isCategory/>
-          </div>
-          )
+          : <Ranking data={sortSuborders} />
         }
       </Content>
     </Container>

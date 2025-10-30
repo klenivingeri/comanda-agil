@@ -1,14 +1,12 @@
 import { dbManager } from "src/db/IndexedDBManager";
 import { saveCollectionToDB } from "src/db/saveCollectionToDB";
 
-
 const serializer = (data) => {
   const addCategoryInProduct = data.catalog_products?.map((product) => {
     return {
       ...product,
       category: data.catalog_categories.find((c) => c._id === product.category),
   }})
-
 
   const orders = data.orders.map((order) => ({
     ...order,
@@ -56,7 +54,7 @@ export const getAllIndexdbOrApi = async ({
     }
 
     // 🔹 2. Busca da API
-    const res = await fetch(`${endpoint}`, {
+    const res = await fetch(`${endpoint}?period=${period}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

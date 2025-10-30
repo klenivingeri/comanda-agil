@@ -3,36 +3,36 @@ import {
   startOfDay,
   endOfDay,
   startOfWeek,
-  endOfWeek,
   startOfMonth,
-  endOfMonth,
+  subHours,
+  subDays,
 } from "date-fns";
 
 const TIME_ZONE = "America/Sao_Paulo";
 
-// Converte uma data para UTC, considerando o timezone
 const toUtcFromTimeZone = (date) => {
   const isoString = formatInTimeZone(date, TIME_ZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
   return new Date(isoString);
 };
 
-// Função helper para gerar períodos
 export const getPeriod = (type) => {
-  const hoje = new Date();
-
+  const agora = new Date();
+  const ontem = subDays(startOfDay(agora), 1);
+  
   const map = {
     day: {
-      start: toUtcFromTimeZone(startOfDay(hoje)),
-      end: toUtcFromTimeZone(endOfDay(hoje)),
+      start: toUtcFromTimeZone(subHours(agora, 24)), // últimas 24h
+      end: toUtcFromTimeZone(agora),
     },
     week: {
-      start: toUtcFromTimeZone(startOfWeek(hoje, { weekStartsOn: 0 })),
-      end: toUtcFromTimeZone(endOfWeek(hoje, { weekStartsOn: 0 })),
+      start: toUtcFromTimeZone(startOfWeek(ontem, { weekStartsOn: 0 })),
+      end: toUtcFromTimeZone(endOfDay(ontem)), // ontem às 23:59:59
     },
     month: {
-      start: toUtcFromTimeZone(startOfMonth(hoje)),
-      end: toUtcFromTimeZone(endOfMonth(hoje)),
+      start: toUtcFromTimeZone(startOfMonth(ontem)),
+      end: toUtcFromTimeZone(endOfDay(ontem)),
     },
   };
+
   return map[type] || map.day;
 };

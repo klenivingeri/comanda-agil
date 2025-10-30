@@ -10,6 +10,7 @@ export async function GET(request) {
   await connectToDatabase();
   const { searchParams } = new URL(request.url);
   const tenantParam = searchParams?.get("tenant");
+  const period = searchParams?.get("period");
   const xTenant = getStoreXTenant(request);
 
   const response = getData({
@@ -18,6 +19,7 @@ export async function GET(request) {
     products,
     users,
     xTenant,
+    period,
     tenantParam
   });
   return response;
