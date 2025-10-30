@@ -1,5 +1,5 @@
 // ⚠️ ATENÇÃO: Verifique e INCREMENTE esta versão se você já executou o código antes.
-const DB_NAME = "MyOfflineDB";
+const DB_NAME = "ComandaGoDB";
 const DB_VERSION = 1; // Use um número maior que qualquer versão anterior.
 
 class IndexedDBManager {
@@ -44,22 +44,6 @@ class IndexedDBManager {
         };
 
         // --- CRIAÇÃO DE TODAS AS 12 STORES ---
-
-        // CATEGORIES
-        createStore("catalog_users");
-        createStore("catalog_products");
-
-        // PRODUCTS
-        createStore("productsWeek");
-        createStore("productsMonth");
-
-        // COMMANDS
-        createStore("commandsWeek");
-        createStore("commandsMonth");
-
-        // USERS
-        createStore("usersWeek");
-        createStore("usersMonth");
 
         createStore("orders");
         createStore("catalog_products");
@@ -161,6 +145,43 @@ class IndexedDBManager {
       return store.clear();
     });
   }
+
+  /**
+ * Limpa todas as Object Stores (tabelas) da database.
+ * @returns {Promise<void>}
+ */
+ async recreateDatabase() {
+  // 1️⃣ Fecha a conexão atual se existir
+  if (this.db) {
+    this.db.close();
+    this.db = null;
+  }
+
+  // 2️⃣ Deleta o banco existente
+  await new Promise((resolve, reject) => {
+    const deleteRequest = indexedDB.deleteDatabase(DB_NAME);
+
+    deleteRequest.onsuccess = () => {
+      console.log(`🧹 Database "${DB_NAME}" deletada com sucesso.`);
+      resolve();
+    };
+
+    deleteRequest.onerror = (event) => {
+      console.error("Erro ao deletar database:", event.target.error);
+      reject(event.target.error);
+    };
+
+    deleteRequest.onblocked = () => {
+      console.warn("⚠️ Operação bloqueada — feche outras abas usando o app antes.");
+    };
+  });
+
+  // 3️⃣ Reabre o banco (isso aciona onupgradeneeded e recria as stores)
+  console.log("🔄 Recriando database...");
+  const db = await this.openDB();
+  console.log("✅ Database recriada com sucesso.");
+  return db;
+}
 }
 
 export const dbManager = new IndexedDBManager();

@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useCallback } from "react";
+import { dbManager } from "src/db/IndexedDBManager";
 
 const CleaningContext = createContext();
 
@@ -9,6 +10,7 @@ export function CleaningProvider({ children }) {
   const triggerCleaning = useCallback(() => {
     // 🔹 Limpa sessionStorage e localStorage
     sessionStorage.clear();
+    dbManager.recreateDatabase();
     // Mantém o tema e vibração se quiser
     const theme = localStorage.getItem("theme");
     const themeBtn = localStorage.getItem("theme-button");

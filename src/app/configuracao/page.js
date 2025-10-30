@@ -4,7 +4,6 @@ import { useConfig } from "../context/ConfigContext";
 import { useCleaningTrigger } from "../context/CleaningContext";
 import { SelectComponent } from "../../components/form/SelectComponent";
 
-import { useRouter } from "next/navigation";
 import { Container } from "../../components/layout/Container";
 import { Header } from "../../components/layout/Header";
 import { Content } from "../../components/layout/Content";
