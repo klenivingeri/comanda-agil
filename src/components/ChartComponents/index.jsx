@@ -34,10 +34,11 @@ const getChartColors = (numFatias) => {
   return coresFinais;
 };
 
-export const ChartContent = ({ dataRecords, type }) => {
+export const ChartContent = ({ grouped, type }) => {
   const [color, setColor] = useState('#000')
-  const labels = dataRecords.map(item => item.name);
-  const dataValues = dataRecords.map(item => item.totalQuantity);
+
+  const labels = grouped.map(item => item.product.name);
+  const dataValues = grouped.map(item => item.totalQuantity);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");

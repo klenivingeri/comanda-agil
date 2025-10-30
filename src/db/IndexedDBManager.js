@@ -61,7 +61,11 @@ class IndexedDBManager {
         createStore("usersWeek");
         createStore("usersMonth");
 
-        console.log("Estrutura do IndexedDB atualizada com sucesso.");
+        createStore("orders");
+        createStore("catalog_products");
+        createStore("catalog_categories");
+        createStore("catalog_users");
+
       };
     });
   }

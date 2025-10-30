@@ -20,9 +20,30 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
     getCategoryItems(tab)
   }, [tab])
 
-  const orderData = useMemo(() => {
-    return [...response].sort((a, b) => b.totalQuantity - a.totalQuantity);
-  }, [response]);
+  const allSubOrders = useMemo(
+    () => response.flatMap(order => order.subOrders || []),
+    [response]
+  );
+
+  const groupedSubOrdersForID = useMemo(() => {
+  return Object.values(
+    allSubOrders.reduce((acc, item) => {
+      const id = item.product?._id || item._id;
+      if (!id) return acc;
+
+      if (!acc[id]) {
+        acc[id] = { _id: id, totalQuantity: 0, product: item.product };
+      }
+
+      acc[id].totalQuantity += item.quantity || 0;
+      return acc;
+    }, {})
+  );
+}, [allSubOrders]);
+
+  const sortSuborders = useMemo(() => {
+    return [...groupedSubOrdersForID].sort((a, b) => b.totalQuantity - a.totalQuantity);
+  }, [groupedSubOrdersForID]);
 
   return (
     <Container>
@@ -35,12 +56,9 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
               <div>Nenhum dado encontrado no momento.</div>
             </div>
           )
-          : (<>
-            <div className="relative rounded-md flex justify-center items-center h-[350px] m-2">
-              <ChartContent dataRecords={orderData} type='rosca' />
-            </div>
-            <Ranking data={orderData} />
-          </>
+          : (<div className="mt-10">
+            <Ranking data={sortSuborders} />
+          </div>
           )
         }
       </Content>

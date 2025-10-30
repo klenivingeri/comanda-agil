@@ -9,10 +9,9 @@ export const getData = async ({
     tenantParam
 }) => {
     // 1. Validação do Tenant
-    console.log(xTenant)
-    const validTenant = xTenant?.id === tenantParam;
 
-    if (!validTenant) {
+
+    if (!xTenant?.isValid) {
         return Response.json(
             { message: "Tenant ID inválido ou não autorizado" },
             { status: 403 }
@@ -69,9 +68,9 @@ export const getData = async ({
             return Response.json(
                 {
                     orders: commandsData,
-                    products_catalog: productsData,
-                    users_catalog: usersData,
-                    categories_catalog: categoriesData,
+                    catalog_products: productsData,
+                    catalog_categories: categoriesData,
+                    catalog_users: usersData,
                 },
                 { status: 200 }
             );
@@ -82,9 +81,9 @@ export const getData = async ({
             { 
                 message: "Nenhuma comanda encontrada no período. Catálogos carregados.",
                 orders: [],
-                products_catalog: productsData,
-                users_catalog: usersData,
-                categories_catalog: categoriesData,
+                catalog_products: productsData,
+                catalog_categories: categoriesData,
+                catalog_users: usersData,
             },
             { status: 200 }
         );
@@ -96,4 +95,4 @@ export const getData = async ({
             { status: 500 }
         );
     }
-}
+}        

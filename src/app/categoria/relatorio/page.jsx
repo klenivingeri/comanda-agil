@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RelatorioCategoriaView from "./RelatorioView";
-import { getIndexdbOrApi } from "src/db/getIndexdbOrApi";
+import { getAllIndexdbOrApi } from "src/db/getIndexdbOrApi";
 
 export default function PageRelatorioCategoria() {
   const [error, setError] = useState(false);
@@ -9,9 +9,8 @@ export default function PageRelatorioCategoria() {
   const [response, setResponse] = useState([]);
 
   const handlegetIndexdbOrApi = (period) => {
-    getIndexdbOrApi({
-      name: 'categories',
-      endpoint: `/api/comandas/reports/categories`,
+    getAllIndexdbOrApi({
+      endpoint: `/api/data`,
       period,
       setResponse,
       setIsLoading,

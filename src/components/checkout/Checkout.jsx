@@ -204,7 +204,7 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
     setPay(totalComanda / e.target.value)
     setInstallment(e.target.value)
   }
-  console.log(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0) <= 0)
+
   return (
     <div className="p-4 pt-0 flex gap-2 flex-col items-center justify-center ">
       <span className="text-md font-extrabold mb-2">

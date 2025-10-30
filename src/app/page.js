@@ -49,7 +49,6 @@ export default function Login() {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
       setError(true);
       setIsLoading(false);
     }
