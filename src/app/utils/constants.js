@@ -53,3 +53,63 @@ export const generateCoresFixas = (total = 50) => {
 
 // Exemplo de uso
 export const CORES_FIXAS = generateCoresFixas(50);
+
+const optionsColors = [
+  { type: "btn-blue", name: "Azul" },
+  { type: "btn-purple", name: "Roxo" },
+  { type: "btn-green", name: "Verde" },
+  { type: "btn-gray", name: "Cinza" },
+  { type: "btn-orange", name: "Laranja" },
+  { type: "btn-red", name: "Vermelho" },
+];
+
+export const buttonThemes = {
+  'btn-purple': {
+    "--button-default": "#9B59B6",
+    "--button-hover": "#AF7AC5",     
+    "--button-focus": "#8E44AD",     
+    "--button-pressed": "#82589F",  
+    "--button-disabled": "#D2B4DE", 
+    "--button-progress": "#BB8FCE", 
+  },
+  'btn-green': {
+    "--button-default": "#2ECC71",  // Verde Esmeralda
+    "--button-hover": "#58D683",
+    "--button-focus": "#27AE60",
+    "--button-pressed": "#28B463",
+    "--button-disabled": "#A9DFBF",
+    "--button-progress": "#52BE80",
+  },
+  'btn-gray': {
+    "--button-default": "#95A5A6",  // Cinza neutro
+    "--button-hover": "#AABEB2",
+    "--button-focus": "#7F8C8D",
+    "--button-pressed": "#88999A",
+    "--button-disabled": "#D5DBDB",
+    "--button-progress": "#BFC9CA",
+  },
+  'btn-blue': {
+    "--button-default": "#3498DB",
+    "--button-hover": "#5DADE2",
+    "--button-focus": "#2E86C1",
+    "--button-pressed": "#2874A6",
+    "--button-disabled": "#A9CCE3",
+    "--button-progress": "#5DADE2",
+  },
+  'btn-blue': {
+    "--button-default": "#E74C3C",  // Vermelho Cereja
+    "--button-hover": "#EC7063",
+    "--button-focus": "#C0392B",
+    "--button-pressed": "#CD4235",
+    "--button-disabled": "#FADBD8",
+    "--button-progress": "#E56357",
+  },
+  'btn-orange': {
+    "--button-default": "#FF9900",
+    "--button-hover": "#FFB84D",
+    "--button-focus": "#CC7A00",
+    "--button-pressed": "#D98500",
+    "--button-disabled": "#FFDDAA",
+    "--button-progress": "#FFC066",
+  },
+};

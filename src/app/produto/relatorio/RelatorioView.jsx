@@ -6,6 +6,8 @@ import { Header } from "../../../components/layout/Header";
 import { Tabs } from "src/components/Tabs";
 import { ChartContent } from "src/components/ChartComponents";
 import { Ranking } from "src/components/Ranking";
+import DashboardOneLine from "src/components/ChartComponents/DashboardOneLine";
+import DashboardMultipleLine from "src/components/ChartComponents/DashboardMultipleLine";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -32,7 +34,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
       if (!id) return acc;
 
       if (!acc[id]) {
-        acc[id] = { _id: id, totalQuantity: 0, product: item.product };
+        acc[id] = { _id: id, totalQuantity: 0, product: item.product, createdAt: item.createdAt };
       }
 
       acc[id].totalQuantity += item.quantity || 0;
@@ -50,6 +52,8 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
       <Header divider title="Relatório de Products" />
       <Content isLoading={isLoading} error={error}>
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
+        <DashboardOneLine allSubOrders={allSubOrders} isDay={tab === 'day'} />
+        <DashboardMultipleLine allSubOrders={sortSuborders} isDay={tab === 'day'} />
         {response.length === 0
           ? (
             <div className="flex justify-center items-center h-[350px] m-2">

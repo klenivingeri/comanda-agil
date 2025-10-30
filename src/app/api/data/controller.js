@@ -21,6 +21,7 @@ export const getData = async ({
   }
 
   const { start, end } = getPeriod(period);
+  console.log({start, end})
   try {
     const tenantObjectId = new mongoose.Types.ObjectId(xTenant.id);
 

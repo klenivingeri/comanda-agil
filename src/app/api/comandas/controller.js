@@ -36,11 +36,11 @@ const getDayRangeBRT = (daysAgo = 0) => {
   const startUTC = new Date(startBRT.getTime() + 3 * 60 * 60 * 1000);
   const endUTC = new Date(endBRT.getTime() + 3 * 60 * 60 * 1000);
 
-  console.log(`🗓️ Dia ${daysAgo} atrás`);
-  console.log("Início BRT:", startBRT.toLocaleString("pt-BR"));
-  console.log("Fim BRT:", endBRT.toLocaleString("pt-BR"));
-  console.log("Início UTC:", startUTC.toISOString());
-  console.log("Fim UTC:", endUTC.toISOString());
+  // console.log(`🗓️ Dia ${daysAgo} atrás`);
+  // console.log("Início BRT:", startBRT.toLocaleString("pt-BR"));
+  // console.log("Fim BRT:", endBRT.toLocaleString("pt-BR"));
+  // console.log("Início UTC:", startUTC.toISOString());
+  // console.log("Fim UTC:", endUTC.toISOString());
 
   return { startUTC, endUTC };
 };
