@@ -7,52 +7,60 @@ export const RULES = {
   MODERATOR: [MASTER, ADMIN, MODERATOR],
   ADMIN: [MASTER, ADMIN],
 };
-// Paleta base (sem repetições)
-const BASE_CORES = [
-  "#007BFF", // Azul vibrante
-  "#28A745", // Verde
-  "#DC3545", // Vermelho
-  "#FFC107", // Amarelo
-  "#6F42C1", // Roxo
-  "#20C997", // Verde Água
-  "#FD7E14", // Laranja
-  "#17A2B8", // Ciano
-  "#E83E8C", // Rosa
-  "#6C757D", // Cinza
-];
-
-/**
- * Clareia uma cor em HEX.
- * @param {string} hex - Cor original.
- * @param {number} amount - Percentual de clareamento (0 a 1).
- */
-function lightenColor(hex, amount) {
-  const num = parseInt(hex.slice(1), 16);
-  const r = Math.min(255, Math.floor((num >> 16) + (255 - (num >> 16)) * amount));
-  const g = Math.min(255, Math.floor(((num >> 8) & 0x00ff) + (255 - ((num >> 8) & 0x00ff)) * amount));
-  const b = Math.min(255, Math.floor((num & 0x0000ff) + (255 - (num & 0x0000ff)) * amount));
-  return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, "0")}`;
-}
-
-/**
- * Gera a paleta completa com tons mais claros nas repetições.
- * @param {number} total - Quantidade total desejada.
- */
-export const generateCoresFixas = (total = 50) => {
-  const cores = [];
-  const repeatCount = Math.ceil(total / BASE_CORES.length);
-
-  for (let i = 0; i < repeatCount; i++) {
-    const lighten = i * 0.2; // quanto mais repete, mais claro
-    const set = BASE_CORES.map(color => i === 0 ? color : lightenColor(color, lighten));
-    cores.push(...set);
-  }
-
-  return cores.slice(0, total);
-};
 
 // Exemplo de uso
-export const CORES_FIXAS = generateCoresFixas(50);
+export const CORES_FIXAS = [
+  "#007BFF",
+  "#28A745",
+  "#DC3545",
+  "#FFC107",
+  "#6F42C1",
+  "#20C997",
+  "#FD7E14",
+  "#17A2B8",
+  "#E83E8C",
+  "#6C757D",
+  "#3393FF",
+  "#57B96E",
+  "#E65E6B",
+  "#FFD345",
+  "#956AD2",
+  "#4FDBB1",
+  "#FF9D4D",
+  "#4AADC7",
+  "#ED68A7",
+  "#8E959B",
+  "#66AFFF",
+  "#85CC98",
+  "#F08691",
+  "#FFE584",
+  "#BC93E4",
+  "#7EEFD0",
+  "#FFBC85",
+  "#7DE6D6",
+  "#F292C2",
+  "#AFAEB3",
+  "#99C6FF",
+  "#B4DEBD",
+  "#F6AFB7",
+  "#FFF2C2",
+  "#E2BDEE",
+  "#ACEFEA",
+  "#FFDCE0",
+  "#AFEBEC",
+  "#F7BBDD",
+  "#D0D1D4",
+  "#CCE2FF",
+  "#E3F2E8",
+  "#FBE0E3",
+  "#FFF9E1",
+  "#F0E0F7",
+  "#DAF8F4",
+  "#FFE2E0",
+  "#DAF5F7",
+  "#FAE6F1",
+  "#ECEDED",
+];
 
 const optionsColors = [
   { type: "btn-blue", name: "Azul" },
@@ -63,7 +71,7 @@ const optionsColors = [
   { type: "btn-red", name: "Vermelho" },
 ];
 
-export const buttonThemes = {
+export const BUTTON_THEMES = {
   'btn-purple': {
     "--button-default": "#9B59B6",
     "--button-hover": "#AF7AC5",     
@@ -73,7 +81,7 @@ export const buttonThemes = {
     "--button-progress": "#BB8FCE", 
   },
   'btn-green': {
-    "--button-default": "#2ECC71",  // Verde Esmeralda
+    "--button-default": "#2ECC71",
     "--button-hover": "#58D683",
     "--button-focus": "#27AE60",
     "--button-pressed": "#28B463",
@@ -81,7 +89,7 @@ export const buttonThemes = {
     "--button-progress": "#52BE80",
   },
   'btn-gray': {
-    "--button-default": "#95A5A6",  // Cinza neutro
+    "--button-default": "#95A5A6",
     "--button-hover": "#AABEB2",
     "--button-focus": "#7F8C8D",
     "--button-pressed": "#88999A",
@@ -96,14 +104,14 @@ export const buttonThemes = {
     "--button-disabled": "#A9CCE3",
     "--button-progress": "#5DADE2",
   },
-  'btn-blue': {
-    "--button-default": "#E74C3C",  // Vermelho Cereja
-    "--button-hover": "#EC7063",
-    "--button-focus": "#C0392B",
-    "--button-pressed": "#CD4235",
-    "--button-disabled": "#FADBD8",
-    "--button-progress": "#E56357",
-  },
+'btn-pink': {
+  "--button-default": "#E83E8C", 
+  "--button-hover": "#F06292",   
+  "--button-focus": "#C2185B",
+  "--button-pressed": "#D81B60", 
+  "--button-disabled": "#FCE4EC",
+  "--button-progress": "#EC407A",
+},
   'btn-orange': {
     "--button-default": "#FF9900",
     "--button-hover": "#FFB84D",

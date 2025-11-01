@@ -4,14 +4,99 @@ import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header } from "../../../components/layout/Header";
 import { Tabs } from "src/components/Tabs";
-import { ChartContent } from "src/components/ChartComponents";
+
 import { Ranking } from "src/components/Ranking";
+import { DashboardMultipleLine } from "src/components/ChartComponents/DashboardMultipleLine";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
   { title: 'Semana', id: 'week' },
   { title: 'Mês', id: 'month' }
 ]
+
+const ConfigRanking = ({allSubOrders, tab}) => {
+
+
+  const groupedSubOrdersForChart = useMemo(() => {
+  if (!allSubOrders?.length) return [];
+
+  if (tab === "day") {
+    return Object.values(
+      allSubOrders.reduce((acc, item) => {
+        const key = item.product?.category?.type || item.product?._id || item._id;
+        if (!key) return acc;
+
+        if (!acc[key]) {
+          acc[key] = {
+            key,
+            totalQuantity: 0,
+            category: item.product?.category || null,
+            product: item.product || null,
+            createdAt: item.createdAt || null,
+            displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
+          };
+        }
+
+        acc[key].totalQuantity += item.quantity || 0;
+
+        return acc;
+      }, {})
+    );
+  }
+
+  const acc = allSubOrders.reduce((acc, item) => {
+    const key = item.product?.category?.type || item.product?._id || item._id;
+    if (!key) return acc;
+
+    // 🔹 valida createdAt antes
+    if (!item.createdAt) return acc;
+
+    const dateObj = new Date(item.createdAt);
+    if (isNaN(dateObj.getTime())) return acc; // ignora datas inválidas
+
+    const data = dateObj.toISOString().split("T")[0];
+
+    if (!acc[key]) {
+      acc[key] = {
+        key,
+        totalQuantity: 0,
+        category: item.product?.category || null,
+        product: item.product || null,
+        datas: {},
+        dataMaisFrequente: data,
+        max: 0,
+        displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
+      };
+    }
+
+    acc[key].totalQuantity += item.quantity || 0;
+
+    // Conta datas
+    acc[key].datas[data] = (acc[key].datas[data] || 0) + 1;
+
+    // Atualiza data mais frequente
+    if (acc[key].datas[data] > acc[key].max) {
+      acc[key].max = acc[key].datas[data];
+      acc[key].dataMaisFrequente = data;
+    }
+
+    return acc;
+  }, {});
+
+  return Object.values(acc).map(({ datas, max, dataMaisFrequente, ...rest }) => ({
+    ...rest,
+    createdAt: dataMaisFrequente,
+  }));
+}, [allSubOrders, tab]);
+
+
+  const sortSuborders = useMemo(() => {
+    return [...groupedSubOrdersForChart].sort((a, b) => b.totalQuantity - a.totalQuantity);
+  }, [groupedSubOrdersForChart]);
+
+
+  return  <Ranking data={sortSuborders} />
+}
 
 export default function RelatorioCategoriaView({ getCategoryItems, response, isLoading, error }) {
   const [tab, setTab] = useState('day');
@@ -25,44 +110,30 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     [response]
   );
 
-const groupedSubOrdersForID = useMemo(() => {
-  if (!allSubOrders?.length) return [];
+    const LabelText = {
+    day: 'Categorias pedidas nas últimas 24h',
+    week: 'Categorias pedidas nos últimos 7 dias',
+    month: 'Categorias pedidas nos últimos 30 dias',
+  }
 
-  return Object.values(
-    allSubOrders.reduce((acc, item) => {
-      const type = item.product?.category?.type;
-      if (!type) return acc;
+  console.log(JSON.stringify(allSubOrders,null,2))
 
-      if (!acc[type]) {
-        acc[type] = {
-          categoryType: type,
-          totalQuantity: 0,
-          category: item.product?.category,
-        };
-      }
-
-      acc[type].totalQuantity += item.quantity || 0;
-      return acc;
-    }, {})
-  );
-}, [allSubOrders]);
-
-  const sortSuborders = useMemo(() => {
-    return [...groupedSubOrdersForID].sort((a, b) => b.totalQuantity - a.totalQuantity);
-  }, [groupedSubOrdersForID]);
-  
   return (
     <Container>
       <Header divider title="Relatório de categoria" />
       <Content isLoading={isLoading} error={error}>
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
+        <h2 className="mt-5" style={{ textAlign: "center" }}>
+          {LabelText[tab]}
+        </h2>
+        <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} />
         {allSubOrders.length === 0
           ? (
             <div className="flex justify-center items-center h-[350px] m-2">
               <div>Nenhum dado encontrado no momento.</div>
             </div>
           )
-          : <Ranking data={sortSuborders} />
+          : <ConfigRanking allSubOrders={allSubOrders} tab={tab} />
         }
       </Content>
     </Container>

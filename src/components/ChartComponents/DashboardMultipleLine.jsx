@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Chart as ChartJS,
   LineElement,
@@ -13,192 +13,162 @@ import {
 import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
 import { format } from "date-fns";
+import { BUTTON_THEMES, CORES_FIXAS } from "src/app/utils/constants";
 
-// Registrar os componentes necessários
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  TimeScale
-);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
-// 🚨 1. DEFINIÇÃO DAS CORES FIXAS
-// Você pode adicionar mais cores conforme necessário.
-const CORES_FIXAS = [
-  '#007BFF', // Azul
-  '#28A745', // Verde
-  '#DC3545', // Vermelho
-  '#FFC107', // Amarelo
-  '#17A2B8', // Ciano
-  '#6F42C1', // Roxo
-  '#FD7E14', // Laranja
-  '#20C997', // Turquesa
-  '#6C757D', // Cinza
-  '#000000', // Preto (para o 10º produto, se houver)
-];
-// 🚨 Se houver mais produtos do que cores, as cores se repetirão ciclicamente.
 
-// ❌ REMOÇÃO da função generateColor, pois não é mais necessária.
+const ChartLineMulti = ({ items = [], tab = 'day' }) => {
+  const [baseDate] = useState(() => new Date());
+  const [colorCurrent, setColorCurrent] = useState('default');
 
-/**
- * Componente de gráfico de linhas com múltiplas linhas, uma por produto.
- * @param {Array} items - Array de pedidos/itens com 'product.name', 'totalQuantity' e 'createdAt'.
- * @param {boolean} isDay - true para últimas 24h (por hora), false para últimos 7 dias (por dia).
- */
-const ChartLineMultiProduct = ({ items = [], isDay = true }) => {
-  const now = new Date();
+  useEffect(() => {
+    const color = localStorage.getItem('theme-button');
+    setColorCurrent(color);
+  }, []);
 
-  // 🔹 1. Gera labels (os pontos de tempo: horas ou dias)
-  const labels = useMemo(() => {
-    if (isDay) {
-      // Últimas 24h (hora inicial de cada intervalo)
-      return Array.from({ length: 24 }, (_, i) => {
-        const d = new Date(now);
-        // Garante que o rótulo da hora seja o início do intervalo
-        d.setHours(now.getHours() - (23 - i));
-        d.setMinutes(0, 0, 0);
-        return d;
-      });
-    } else {
-      // Últimos 7 dias (dia inicial de cada intervalo)
-      return Array.from({ length: 7 }, (_, i) => {
-        const d = new Date(now);
-        d.setDate(now.getDate() - (6 - i));
-        d.setHours(0, 0, 0, 0);
-        return d;
-      });
-    }
-  }, [isDay, now]);
+  const isDay = tab === 'day';
+  const isWeek = tab === 'week';
+  const isMonth = tab === 'month';
 
-  // 🔹 2. Processa os dados para agrupar por Produto e por Período
+
+  const getDisplayFormats = () => {
+    if (isDay) return { hour: 'HH:mm' };
+    if (isWeek) return { day: 'dd/MM' };
+    if (isMonth) return { day: 'dd' }; // Exibe apenas o dia (01, 02, 03...)
+    return { day: 'dd/MM' };
+  };
+
+  const getUnit = () => {
+    if (isDay) return 'hour';
+    if (isWeek || isMonth) return 'day';
+    return 'day';
+  };
+
+  const labelsObj = useMemo(() => {
+    const now = baseDate;
+    const dayLabels = Array.from({ length: 24 }, (_, i) => {
+      const d = new Date(now);
+      d.setHours(now.getHours() - (23 - i));
+      d.setMinutes(0, 0, 0);
+      return d;
+    });
+
+    const weekLabels = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }).reverse();
+
+    const monthLabels = Array.from({ length: 30 }, (_, i) => {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }).reverse();
+
+    return { day: dayLabels, week: weekLabels, month: monthLabels };
+  }, [baseDate]);
+
+  const labels = labelsObj[isDay ? 'day' : isWeek ? 'week' : 'month'];
+
+  // 🔹 Agrupa por categoria ou produto e calcula quantidade por label
   const processedData = useMemo(() => {
-    // Primeiro, cria um Set para obter todos os nomes de produtos únicos
-    const productNames = [...new Set(items.map(item => item.product?.name).filter(Boolean))];
+    if (!items?.length) return { keys: [], dataByKey: {} };
 
-    // Estrutura de dados para armazenar a quantidade de cada produto em cada ponto de tempo
-    const dataByProduct = productNames.reduce((acc, name) => {
-      acc[name] = new Array(labels.length).fill(0); // Inicializa com zeros
-      return acc;
-    }, {});
+    const keys = [...new Set(items.map(item => item.product?.category?.name || item.product?.name || 'Produto Desconhecido'))];
+    const dataByKey = {};
 
-    // Itera sobre os labels (intervalos de tempo) para preencher os dados
-    labels.forEach((start, labelIndex) => {
+    keys.forEach(k => {
+      dataByKey[k] = new Array(labels.length).fill(0);
+    });
+
+    labels.forEach((start, idx) => {
       const end = new Date(start);
-      // Define o final do intervalo: próxima hora ou próximo dia
       if (isDay) end.setHours(start.getHours() + 1);
       else end.setDate(start.getDate() + 1);
 
-      // Filtra os itens que caem neste intervalo de tempo
-      const itemsInInterval = items.filter(item => {
+      items.forEach(item => {
         const created = new Date(item.createdAt);
-        return created >= start && created < end;
-      });
-
-      // Soma a quantidade para cada produto neste intervalo
-      itemsInInterval.forEach(item => {
-        const productName = item.product?.name;
-        if (productName && dataByProduct[productName]) {
-          // Usa 'totalQuantity' se existir, caso contrário, conta como 1
-          dataByProduct[productName][labelIndex] += item.totalQuantity ?? 1;
+        if (created >= start && created < end) {
+          const key = item.product?.category?.name || item.product?.name || 'Produto Desconhecido';
+          dataByKey[key][idx] += item.quantity ?? 1;
         }
       });
     });
 
-    return { productNames, dataByProduct };
+    return { keys, dataByKey };
   }, [items, labels, isDay]);
 
-
-  // 🔹 3. Transforma os dados processados no formato que o Chart.js espera
+  // 🔹 Transformar em datasets do Chart.js
   const data = useMemo(() => {
-    const { productNames, dataByProduct } = processedData;
+    const { keys, dataByKey } = processedData;
+    const datasets = keys.map((key, i) => ({
+      label: key,
+      data: dataByKey[key],
+      borderColor: CORES_FIXAS[i % CORES_FIXAS.length],
+      backgroundColor: CORES_FIXAS[i % CORES_FIXAS.length],
+      tension: 0.3,
+      fill: false,
+      pointRadius: 4,
+    }));
 
-    const datasets = productNames.map((name, i) => {
-        const color = CORES_FIXAS[i]; // Cor fixa para cada produto
+    return { labels, datasets };
+  }, [processedData, labels]);
 
-        return {
-            label: name,
-            data: dataByProduct[name],
-            borderColor: color,
-            backgroundColor: color, // Cor um pouco transparente
-            tension: 0.3,
-            fill: false, // Não preencher a área abaixo da linha
-            pointRadius: 4,
-        };
-    });
-
-    return {
-      labels,
-      datasets,
-    };
-  }, [labels, processedData]);
-
-
-  // 🔹 4. Configurações do gráfico (opções) - Sem alterações aqui
+  // 🔹 Opções do gráfico
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Permite maior controle de tamanho
+    maintainAspectRatio: false,
     plugins: {
-      legend: { display: false, position: "bottom" },
+      legend: { display: true, position: 'bottom' },
       tooltip: {
         callbacks: {
           title: (ctx) => {
-            // Formato de data/hora no Tooltip
-            const date = ctx[0].parsed.x;
-            return isDay
-              ? format(date, "HH:mm") + "h" // Horário para 24h
-              : format(date, "dd/MM/yyyy"); // Data para 7 dias
+            const date = new Date(ctx[0].parsed.x);
+            return isDay ? format(date, 'HH:mm') + 'h' : format(date, 'dd/MM/yyyy');
           },
-          label: (ctx) => {
-            // Label no Tooltip: Nome do Produto: Quantidade
-            const label = ctx.dataset.label || '';
-            const value = ctx.parsed.y;
-            return `${label}: ${value}`;
-          },
+          label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}`,
         },
       },
     },
     scales: {
       x: {
-        type: "time",
+        type: 'time',
         time: {
-          unit: isDay ? "hour" : "day", // Unidade de tempo
-          displayFormats: isDay
-            ? { hour: "HH:mm" }
-            : { day: "dd/MM" },
+          unit: getUnit(),
+          displayFormats: getDisplayFormats(),
         },
-        title: {
-          display: true,
-          text: isDay ? "Hora" : "Dia",
+        title: { display: false },
+        grid: {
+          color: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
+          borderColor: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
         },
       },
       y: {
         beginAtZero: true,
-        title: { display: true, text: "Quantidade Total" },
+        ticks: { stepSize: 10 },
+        grid: {
+          color: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
+          borderColor: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
+        },
       },
+
     },
   };
 
   return (
-    <div style={{ width: "100%", maxWidth: 800, margin: "20px auto", height: isDay ? 400 : 350 }}>
+    <div style={{ width: "100%", maxWidth: 800, margin: "20px auto", height: 400 }}>
       <Line data={data} options={options} />
     </div>
   );
 };
 
-// ---
-// Exemplo de uso no seu Dashboard
-// ---
-
-export default function Dashboard({ allSubOrders = [], isDay }) {
+export const DashboardMultipleLine = ({ allSubOrders = [], tab }) => {
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}>
-        {isDay ? "Vendas por Produto (últimas 24h)" : "Vendas por Produto (últimos 7 dias)"}
-      </h2>
-      <ChartLineMultiProduct items={allSubOrders} isDay={isDay} />
+      <ChartLineMulti items={allSubOrders} tab={tab} />
     </div>
   );
 }
