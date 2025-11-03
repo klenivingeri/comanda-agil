@@ -6,7 +6,7 @@ import { Header } from "../../../components/layout/Header";
 import { Tabs } from "src/components/Tabs";
 
 import { Ranking } from "src/components/Ranking";
-import { DashBoardOneLine } from "src/components/ChartComponents/DashBoardOneLine";
+import { DashboardOneLine } from "src/components/ChartComponents/DashboardOneLine";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -78,7 +78,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
         <h2 className="mt-5" style={{ textAlign: "center" }}>
           {LabelText[tab]}
         </h2>
-        <DashBoardOneLine allSubOrders={allSubOrders} tab={tab} />
+        <DashboardOneLine allSubOrders={allSubOrders} tab={tab} />
         {response.length === 0
           ? (
             <div className="flex justify-center items-center h-[350px] m-2">

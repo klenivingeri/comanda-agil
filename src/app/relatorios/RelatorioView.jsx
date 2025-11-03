@@ -8,7 +8,7 @@ import { Tabs } from "src/components/Tabs";
 import { Ranking } from "src/components/Ranking";
 
 import { DashboardMultipleLine } from "src/components/ChartComponents/DashboardMultipleLine";
-import { DashBoardOneLine } from "src/components/ChartComponents/DashBoardOneLine";
+import { DashboardOneLine } from "src/components/ChartComponents/DashboardOneLine";
 
 
 const arrTabs = [
@@ -54,7 +54,7 @@ export default function RelatorioView({ getCategoryItems, response, isLoading, e
       <Header divider title="Relatório de Products" />
       <Content isLoading={isLoading} error={error}>
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
-        <DashBoardOneLine allSubOrders={allSubOrders} tab={tab} />
+        <DashboardOneLine allSubOrders={allSubOrders} tab={tab} />
         <DashboardMultipleLine allSubOrders={sortSuborders} isDay={tab === 'day'} />
         {response.length === 0
           ? (

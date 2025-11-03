@@ -179,7 +179,7 @@ const ChartLine = ({ items = [], tab = 'day' }) => {
   );
 };
 
-export const DashBoardOneLine = ({ allSubOrders = [], tab }) => {
+export const DashboardOneLine = ({ allSubOrders = [], tab }) => {
 
   return (
     <div className="">
