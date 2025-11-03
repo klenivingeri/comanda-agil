@@ -49,14 +49,14 @@ const ChartLine = ({ items = [], tab = 'day' }) => {
 
     const weekLabels = Array.from({ length: 7 }, (_, i) => {
       const d = new Date(now);
-      d.setDate(now.getDate() - i);
+      d.setDate(now.getDate() -1 - i);
       d.setHours(0, 0, 0, 0);
       return d;
     }).reverse();
 
     const monthLabels = Array.from({ length: 30 }, (_, i) => {
       const d = new Date(now);
-      d.setDate(now.getDate() - i); // hoje pra trás
+      d.setDate(now.getDate() -1 - i);
       d.setHours(0, 0, 0, 0);
       return d;
     }).reverse();

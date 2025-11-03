@@ -109,14 +109,14 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     () => response.flatMap(order => order.subOrders || []),
     [response]
   );
-
+  
     const LabelText = {
     day: 'Categorias pedidas nas últimas 24h',
     week: 'Categorias pedidas nos últimos 7 dias',
     month: 'Categorias pedidas nos últimos 30 dias',
   }
 
-  console.log(JSON.stringify(allSubOrders,null,2))
+
 
   return (
     <Container>

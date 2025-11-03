@@ -1,6 +1,6 @@
 import { CORES_FIXAS } from "src/app/utils/constants";
 
-export const Ranking = ({ data }) => {
+export const Ranking = ({ data, product = false }) => {
 
   return (
     <div className="my-5">
@@ -15,7 +15,7 @@ export const Ranking = ({ data }) => {
         >
           <div className="col-span-12 flex flex-col">
             <div className="flex text-sm items-center mr-2 whitespace-nowrap">
-              {totalQuantity} - {product?.category?.name || product?.name}
+              {totalQuantity} - {product ? product?.name : product?.category?.name }
             </div>
             <div
               className="rounded-r-full transition-all duration-700 ease-out"
