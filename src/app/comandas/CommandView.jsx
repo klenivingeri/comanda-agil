@@ -52,6 +52,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
         menu
         divider
         title="Comandas"
+        _isNumeric
         setInputText={setInputText}
         formSubmit={handleCommandID}
       >

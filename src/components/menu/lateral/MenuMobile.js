@@ -25,21 +25,19 @@ export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
 
   return (
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
-      <div className="relative flex flex-col w-[300px] gap-2 justify-start z-[10] rounded-sm m-2 bg-[var(--foreground)]">
-        <div className="w-full grid grid-cols-12 px-2 h-[200px]">
-          <Link
-            href="/perfil"
-            className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr"
-          >
+      <div className="relative flex flex-col w-[260px] h-full z-[10] rounded-sm bg-[var(--foreground)]">
+        {/* Seção do Perfil (Fixa no topo) */}
+        <div className="w-full grid grid-cols-12 px-2 h-[160px] flex-shrink-0">
+          <Link href="/perfil" className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">
             <div className="rounded-full border-1 p-[1px] mb-4">
-              <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)] "></div>
+              <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)]"></div>
             </div>
             <span className="px-2 shadow-2xl font-bold ">
               {user.all[0]?.name}
             </span>
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
           </Link>
-          <div className="col-span-2 flex items-start pt-5 flex-col w-full mr">
+          <div className="col-span-2 flex items-start pt-5 flex-col w-full ">
             {themeCurrent === "dark" ? (
               <button onClick={() => handleSetTheme("light")} className="p-3">
                 🌙
@@ -50,10 +48,13 @@ export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
               </button>
             )}
           </div>
-
-          <span className=" col-span-12 border-b-1 flex w-full border-gray-300 mt-4" />
+          <span className=" col-span-12 border-b-1 flex w-full border-gray-300" />
         </div>
-        {menu.all?.length > 0 && <Menu menu={menu} user={user} />}
+
+        {/* Seção do Menu (Rolável) */}
+        <div className="flex-1 overflow-y-auto">
+          {menu.all?.length > 0 && <Menu menu={menu} user={user} />}
+        </div>
       </div>
     </SideModal>
   );

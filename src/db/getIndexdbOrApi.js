@@ -6,17 +6,18 @@ const serializer = (data) => {
     return {
       ...product,
       category: data.catalog_categories.find((c) => c._id === product.category),
-  }})
+    };
+  });
 
   const orders = data.orders.map((order) => ({
     ...order,
     subOrders: order.subOrders.map((subOrder) => ({
       ...subOrder,
-      product: addCategoryInProduct.find((p) => p._id === subOrder.product)
-    }))
-  }))
+      product: addCategoryInProduct.find((p) => p._id === subOrder.product),
+    })),
+  }));
 
-  return orders
+  return orders;
 };
 
 export const getAllIndexdbOrApi = async ({
@@ -30,21 +31,28 @@ export const getAllIndexdbOrApi = async ({
   setIsLoading(true);
 
   try {
-      const today = new Date().toISOString().split("T")[0];
-      const date = localStorage.getItem('lastUpdate')
+    const today = new Date().toISOString().split("T")[0];
+    const date = localStorage.getItem("lastUpdate");
 
-    if (period !== "day" && today === date ) {
-
+    if (period !== "day" && today === date) {
       try {
         const [orders, catalog_products, catalog_categories, catalog_users] =
           await Promise.all(
-            ["orders", "catalog_products", "catalog_categories", "catalog_users"].map(
-              (table) => dbManager.getAll(table)
-            )
+            [
+              "orders",
+              "catalog_products",
+              "catalog_categories",
+              "catalog_users",
+            ].map((table) => dbManager.getAll(table))
           );
 
         if (orders.length) {
-          const dataFormatted = serializer({orders, catalog_products, catalog_categories, catalog_users})
+          const dataFormatted = serializer({
+            orders,
+            catalog_products,
+            catalog_categories,
+            catalog_users,
+          });
           setResponse(dataFormatted);
           return; // ✅ já retorna se tinha cache
         }
@@ -53,7 +61,6 @@ export const getAllIndexdbOrApi = async ({
       }
     }
 
-    // 🔹 2. Busca da API
     const res = await fetch(`${endpoint}?period=${period}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -64,9 +71,8 @@ export const getAllIndexdbOrApi = async ({
     }
 
     const data = await res.json();
-    const dataFormatted = serializer(data)
+    const dataFormatted = serializer(data);
     setResponse(dataFormatted);
-    localStorage.setItem('lastUpdate', today)
 
     if (period !== "day" && data && typeof data === "object") {
       for (const key of Object.keys(data)) {
@@ -74,6 +80,7 @@ export const getAllIndexdbOrApi = async ({
           await saveCollectionToDB(key, data[key]);
         }
       }
+      localStorage.setItem("lastUpdate", today);
     }
   } catch (error) {
     console.error(`Erro ao buscar dados (${name || endpoint}):`, error);
@@ -92,7 +99,6 @@ export const getAllIndexdbOrApi = async ({
     setIsLoading(false);
   }
 };
-
 
 export const getIndexdbOrApi = async ({
   setIsLoading,
@@ -147,10 +153,26 @@ export const getIndexdbOrApi = async ({
 
     // 🔹 5. Fallback pro cache se a API falhar
     try {
-      const cachedData = await dbManager.getAll(nameTable);
-      if (cachedData?.length > 0) {
-        setResponse(cachedData);
-      }
+        const [orders, catalog_products, catalog_categories, catalog_users] =
+          await Promise.all(
+            [
+              "orders",
+              "catalog_products",
+              "catalog_categories",
+              "catalog_users",
+            ].map((table) => dbManager.getAll(table))
+          );
+
+        if (orders.length) {
+          const dataFormatted = serializer({
+            orders,
+            catalog_products,
+            catalog_categories,
+            catalog_users,
+          });
+          setResponse(dataFormatted);
+          return; // ✅ já retorna se tinha cache
+        }
     } catch (cacheError) {
       console.warn(`Erro ao tentar usar cache (${nameTable}):`, cacheError);
     }

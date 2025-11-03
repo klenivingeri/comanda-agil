@@ -41,6 +41,7 @@ export const Header = ({
   close = false,
   menu = false,
   onClick,
+  _isNumeric,
   setInputText,
   formSubmit,
 }) => {
@@ -75,6 +76,7 @@ export const Header = ({
               </span>
               {setInputText && (
                 <InputSearch
+                  _isNumeric={_isNumeric}
                   handleFormSubmit={handleFormSubmit}
                   setInputText={setInputText}
                   setSearchFull={setSearchFull}

@@ -54,7 +54,7 @@ const Menu = ({ menu, user }) => {
 
   return (
     <nav>
-      <ul className="list-none p-0 m-0">
+      <ul className="list-none p-0 py-2 m-0">
         {menu.all.map((item) => (
           <li key={item.path} className="mb-2">
             {item.sublink ? (
@@ -116,7 +116,7 @@ const Menu = ({ menu, user }) => {
           </a>
         </li>
       </ul>
-      <div id="version" className="text-[12px] ml-10 pb-2 text-gray-500">
+      <div id="version" className="text-[12px] ml-10 pb-2 mb-5 text-gray-500">
         version: 0.0.10
       </div>
     </nav>
