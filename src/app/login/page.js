@@ -35,7 +35,7 @@ export default function Login({ store }) {
       const userCache = sessionStorage.getItem("user");
       const res = await response.json();
 
-      if (user.success) {
+      if (res.success) {
         if(Array.isArray(userCache) && userCache[0]?.email !== res?.email){
           sessionStorage.removeItem("user");
           sessionStorage.removeItem("menu");

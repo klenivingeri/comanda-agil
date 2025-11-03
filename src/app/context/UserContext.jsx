@@ -36,7 +36,7 @@ export function UserProvider({ children }) {
 
   const clear = () => {
     sessionStorage.removeItem("user");
-    router.push('/login/empresa');
+    router.push('/login');
   }
 
   const _user = useMemo(() => ({
