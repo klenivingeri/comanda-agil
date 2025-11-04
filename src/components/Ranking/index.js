@@ -1,7 +1,7 @@
 import { CORES_FIXAS } from "src/app/utils/constants";
 
-export const Ranking = ({ data, product = false }) => {
-
+export const Ranking = ({ data, isProduct = false, colorsMap ={} }) => {
+  console.log(data)
   return (
     <div className="my-5">
       {data.map(({ product, totalQuantity }, i) => (
@@ -15,12 +15,12 @@ export const Ranking = ({ data, product = false }) => {
         >
           <div className="col-span-12 flex flex-col">
             <div className="flex text-sm items-center mr-2 whitespace-nowrap">
-              {totalQuantity} - {product ? product?.name : product?.category?.name }
+              {totalQuantity} - {isProduct ? product?.name : product?.category?.name }
             </div>
             <div
               className="rounded-r-full transition-all duration-700 ease-out"
               style={{
-                background: CORES_FIXAS[i],
+                background: colorsMap[product?.category?.name] || CORES_FIXAS[i],
                 width: `${(totalQuantity / data[0].totalQuantity) * 100}%`,
                 minWidth: "fit-content",
               }}

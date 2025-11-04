@@ -7,6 +7,7 @@ import { Tabs } from "src/components/Tabs";
 
 import { Ranking } from "src/components/Ranking";
 import { DashboardMultipleLine } from "src/components/ChartComponents/DashboardMultipleLine";
+import { CORES_FIXAS } from "src/app/utils/constants";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -14,89 +15,100 @@ const arrTabs = [
   { title: 'Mês', id: 'month' }
 ]
 
-const ConfigRanking = ({allSubOrders, tab}) => {
+const ConfigRanking = ({ allSubOrders, tab }) => {
 
 
   const groupedSubOrdersForChart = useMemo(() => {
-  if (!allSubOrders?.length) return [];
+    if (!allSubOrders?.length) return [];
 
-  if (tab === "day") {
-    return Object.values(
-      allSubOrders.reduce((acc, item) => {
-        const key = item.product?.category?.type || item.product?._id || item._id;
-        if (!key) return acc;
+    if (tab === "day") {
+      return Object.values(
+        allSubOrders.reduce((acc, item) => {
+          const key = item.product?.category?.type || item.product?._id || item._id;
+          if (!key) return acc;
 
-        if (!acc[key]) {
-          acc[key] = {
-            key,
-            totalQuantity: 0,
-            category: item.product?.category || null,
-            product: item.product || null,
-            createdAt: item.createdAt || null,
-            displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
-          };
-        }
+          if (!acc[key]) {
+            acc[key] = {
+              key,
+              totalQuantity: 0,
+              category: item.product?.category || null,
+              product: item.product || null,
+              createdAt: item.createdAt || null,
+              displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
+            };
+          }
 
-        acc[key].totalQuantity += item.quantity || 0;
+          acc[key].totalQuantity += item.quantity || 0;
 
-        return acc;
-      }, {})
-    );
-  }
-
-  const acc = allSubOrders.reduce((acc, item) => {
-    const key = item.product?.category?.type || item.product?._id || item._id;
-    if (!key) return acc;
-
-    // 🔹 valida createdAt antes
-    if (!item.createdAt) return acc;
-
-    const dateObj = new Date(item.createdAt);
-    if (isNaN(dateObj.getTime())) return acc; // ignora datas inválidas
-
-    const data = dateObj.toISOString().split("T")[0];
-
-    if (!acc[key]) {
-      acc[key] = {
-        key,
-        totalQuantity: 0,
-        category: item.product?.category || null,
-        product: item.product || null,
-        datas: {},
-        dataMaisFrequente: data,
-        max: 0,
-        displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
-      };
+          return acc;
+        }, {})
+      );
     }
 
-    acc[key].totalQuantity += item.quantity || 0;
+    const acc = allSubOrders.reduce((acc, item) => {
+      const key = item.product?.category?.type || item.product?._id || item._id;
+      if (!key) return acc;
 
-    // Conta datas
-    acc[key].datas[data] = (acc[key].datas[data] || 0) + 1;
+      // 🔹 valida createdAt antes
+      if (!item.createdAt) return acc;
 
-    // Atualiza data mais frequente
-    if (acc[key].datas[data] > acc[key].max) {
-      acc[key].max = acc[key].datas[data];
-      acc[key].dataMaisFrequente = data;
-    }
+      const dateObj = new Date(item.createdAt);
+      if (isNaN(dateObj.getTime())) return acc; // ignora datas inválidas
 
-    return acc;
-  }, {});
+      const data = dateObj.toISOString().split("T")[0];
 
-  return Object.values(acc).map(({ datas, max, dataMaisFrequente, ...rest }) => ({
-    ...rest,
-    createdAt: dataMaisFrequente,
-  }));
-}, [allSubOrders, tab]);
+      if (!acc[key]) {
+        acc[key] = {
+          key,
+          totalQuantity: 0,
+          category: item.product?.category || null,
+          product: item.product || null,
+          datas: {},
+          dataMaisFrequente: data,
+          max: 0,
+          displayName: item.product?.category?.name || item.product?.name || "Produto Desconhecido",
+        };
+      }
 
+      acc[key].totalQuantity += item.quantity || 0;
+
+      // Conta datas
+      acc[key].datas[data] = (acc[key].datas[data] || 0) + 1;
+
+      // Atualiza data mais frequente
+      if (acc[key].datas[data] > acc[key].max) {
+        acc[key].max = acc[key].datas[data];
+        acc[key].dataMaisFrequente = data;
+      }
+
+      return acc;
+    }, {});
+
+    return Object.values(acc).map(({ datas, max, dataMaisFrequente, ...rest }) => ({
+      ...rest,
+      createdAt: dataMaisFrequente,
+    }));
+  }, [allSubOrders, tab]);
 
   const sortSuborders = useMemo(() => {
     return [...groupedSubOrdersForChart].sort((a, b) => b.totalQuantity - a.totalQuantity);
   }, [groupedSubOrdersForChart]);
 
+  const colorsMap = useMemo(() => {
+    return sortSuborders.reduce((acc, item, i) => {
+      const colorIndex = i % CORES_FIXAS.length;
+      acc[item.displayName] = CORES_FIXAS[colorIndex];
 
-  return  <Ranking data={sortSuborders} />
-}
+      return acc;
+    }, {});
+  }, [sortSuborders]);
+
+  return (
+    <>
+      <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} />
+      <Ranking data={sortSuborders} colorsMap={colorsMap} />
+    </>)
+  }
 
 export default function RelatorioCategoriaView({ getCategoryItems, response, isLoading, error }) {
   const [tab, setTab] = useState('day');
@@ -109,14 +121,12 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     () => response.flatMap(order => order.subOrders || []),
     [response]
   );
-  
-    const LabelText = {
+
+  const LabelText = {
     day: 'Categorias pedidas nas últimas 24h',
     week: 'Categorias pedidas nos últimos 7 dias',
     month: 'Categorias pedidas nos últimos 30 dias',
   }
-
-
 
   return (
     <Container>
@@ -126,7 +136,6 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
         <h2 className="mt-5" style={{ textAlign: "center" }}>
           {LabelText[tab]}
         </h2>
-        <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} />
         {allSubOrders.length === 0
           ? (
             <div className="flex justify-center items-center h-[350px] m-2">

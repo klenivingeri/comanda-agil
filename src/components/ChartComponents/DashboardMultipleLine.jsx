@@ -18,7 +18,7 @@ import { BUTTON_THEMES, CORES_FIXAS } from "src/app/utils/constants";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
 
-const ChartLineMulti = ({ items = [], tab = 'day' }) => {
+const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
   const [baseDate] = useState(() => new Date());
   const [colorCurrent, setColorCurrent] = useState('default');
 
@@ -100,15 +100,16 @@ const ChartLineMulti = ({ items = [], tab = 'day' }) => {
 
     return { keys, dataByKey };
   }, [items, labels, isDay]);
-
+ //colorsMap
   // 🔹 Transformar em datasets do Chart.js
   const data = useMemo(() => {
     const { keys, dataByKey } = processedData;
+    console.log(keys)
     const datasets = keys.map((key, i) => ({
       label: key,
       data: dataByKey[key],
-      borderColor: CORES_FIXAS[i % CORES_FIXAS.length],
-      backgroundColor: CORES_FIXAS[i % CORES_FIXAS.length],
+      borderColor: colorsMap[key] || CORES_FIXAS[i % CORES_FIXAS.length],
+      backgroundColor: colorsMap[key] || CORES_FIXAS[i % CORES_FIXAS.length],
       tension: 0.3,
       fill: false,
       pointRadius: 4,
@@ -165,10 +166,10 @@ const ChartLineMulti = ({ items = [], tab = 'day' }) => {
   );
 };
 
-export const DashboardMultipleLine = ({ allSubOrders = [], tab }) => {
+export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap }) => {
   return (
     <div>
-      <ChartLineMulti items={allSubOrders} tab={tab} />
+      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} />
     </div>
   );
 }

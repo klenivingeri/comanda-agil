@@ -85,7 +85,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
               <div>Nenhum dado encontrado no momento.</div>
             </div>
           )
-          : <Ranking data={sortSuborders} product />
+          : <Ranking data={sortSuborders} isProduct />
         }
       </Content>
     </Container>
