@@ -37,7 +37,7 @@ export function middleware(request) {
   const tenantData = getStoreXTenant(request);
 
   if (tenantData.status !== 200) {
-    return NextResponse.redirect(new URL("/login/funcionario", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();

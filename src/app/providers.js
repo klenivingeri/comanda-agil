@@ -12,7 +12,7 @@ import DBProvider from "./context/DBProvider";
 export default function Providers({ children }) {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/login")) {
+  if (pathname.startsWith("/login2")) {
     return children;
   }
 

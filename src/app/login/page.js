@@ -1,19 +1,26 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Container } from "../../components/layout/Container";
-import { Content } from "../../components/layout/Content";
-import { ButtonContainer } from "../../components/button";
-import { Loading } from "src/components/loading/Loading";
+import React, { useRef, useState } from "react";
 
-export default function Login({ store }) {
+import { useRouter } from "next/navigation";
+import { Container } from "src/components/layout/Container";
+import { Content } from "src/components/layout/Content";
+import { ButtonContainer } from "src/components/button";
+import { Loading } from "src/components/loading/Loading";
+import { useUserConfig } from "src/app/context/UserContext";
+import { useMenu } from "src/app/context/MenuContext";
+import { useItem } from "src/app/context/ItemContext";
+
+export default function Login() {
+  const { _item } = useItem();
+  const { _menu } = useMenu();
+  const { _user } = useUserConfig();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
   const refEndPage = useRef(null);
-  
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(false);
@@ -26,21 +33,18 @@ export default function Login({ store }) {
     }
 
     try {
-      const response = await fetch("/api/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
-      const userCache = sessionStorage.getItem("user");
-      const res = await response.json();
-
-      if (res.success) {
-        if(Array.isArray(userCache) && userCache[0]?.email !== res?.email){
-          sessionStorage.removeItem("user");
-          sessionStorage.removeItem("menu");
+      const user = await res.json();
+      if (user.success) {
+        if (_user.all[0]?.email !== user.email) {
+          _user.get();
+          _menu.get();
         }
-        
+        _item.get();
         router.push("/home");
       } else {
         setError(true);
@@ -56,7 +60,7 @@ export default function Login({ store }) {
     <Container>
       <div className="flex-1 flex flex-col">
         <Content padding="-">
-          <div className="relative w-full h-full flex justify-center items-center ">
+          <div className="relative w-full h-full flex justify-center items-center">
             <form
               onSubmit={handleSubmit}
               className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"
@@ -76,26 +80,41 @@ export default function Login({ store }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-              />{" "}
+              />
               <div ref={refEndPage} id="endModal" className="h-0"></div>
               <input
                 type="password"
                 value={password}
-                className="w-full mb-1 text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+                className="w-full mb-2 text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Senha"
               />
+              <div className="text-gray-500 flex justify-between items-center mb-2 gap-2"><input
+                className={`
+              bg-[var(--button-disabled)] 
+              h-4 w-4 
+            `}
+                type="checkbox"
+                id="scales"
+                name="scales"
+                onChange={() => {}}
+              />
+              <label htmlFor="scales" >Manter-me conectado</label></div>
               {error && (
                 <p className="mt-1 text-sm text-red-500">
                   Algo errado não esta certo, tente novamente.
                 </p>
               )}
-              <ButtonContainer type="submit" style="buttonOrange">
+              <ButtonContainer type="submit">
                 {!isLoading ? (
                   "Entrar"
                 ) : (
                   <Loading isLoading={isLoading} style="style3" />
                 )}
+              </ButtonContainer>
+
+              <ButtonContainer style="buttonInline" margin="mt-2" href="/">
+                Criar uma conta
               </ButtonContainer>
             </form>
           </div>
