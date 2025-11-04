@@ -76,8 +76,8 @@ const ADMIN = [
     ],
   },
   {
-    title: "Funcionários",
-    path: "/funcionarios",
+    title: "Colaboradores",
+    path: "/colaboradores",
     icon: "IconUsers",
     sublink: [
       {

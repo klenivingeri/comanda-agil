@@ -14,6 +14,7 @@ const serializer = (data) => {
     subOrders: order.subOrders.map((subOrder) => ({
       ...subOrder,
       product: addCategoryInProduct.find((p) => p._id === subOrder.product),
+      userId: data.catalog_users.find((u) => u._id === order.userId) || null,
     })),
   }));
 

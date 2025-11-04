@@ -49,6 +49,13 @@
   --button-orange-disabled: #FFDDAA;
   --button-orange-progress: #FFC066;
 
+  --button-pink-default: "#E83E8C";
+  --button-pink-hover: "#F06292"; 
+  --button-pink-focus: "#C2185B";
+  --button-pink-pressed: "#D81B60"; 
+  --button-pink-disabled: "#FCE4EC";
+  --button-pink-progress: "#EC407A";
+
 }
 
 
@@ -103,12 +110,21 @@
 }
 
 .btn-red body {
-  --button-default: #E74C3C; /* Vermelho Cereja */
+  --button-default: #E74C3C;
   --button-hover: #EC7063;
   --button-focus: #C0392B;
   --button-pressed: #CD4235;
   --button-disabled: #FADBD8;
   --button-progress: #E56357;
+}
+
+.btn-pink body {
+  --button-default: #E83E8C;
+  --button-hover: #F06292; 
+  --button-focus: #C2185B;
+  --button-pressed: #D81B60; 
+  --button-disabled: #FCE4EC;
+  --button-progress: #EC407A;
 }
 .btn-orange body {
   --button-default: #FF9900;

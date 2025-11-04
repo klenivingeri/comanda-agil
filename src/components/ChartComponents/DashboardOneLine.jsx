@@ -49,14 +49,14 @@ const ChartLine = ({ items = [], tab = 'day' }) => {
 
     const weekLabels = Array.from({ length: 7 }, (_, i) => {
       const d = new Date(now);
-      d.setDate(now.getDate() -1 - i);
+      d.setDate(now.getDate() - 1 - i);
       d.setHours(0, 0, 0, 0);
       return d;
     }).reverse();
 
     const monthLabels = Array.from({ length: 30 }, (_, i) => {
       const d = new Date(now);
-      d.setDate(now.getDate() -1 - i);
+      d.setDate(now.getDate() - 1 - i);
       d.setHours(0, 0, 0, 0);
       return d;
     }).reverse();
@@ -162,13 +162,21 @@ const ChartLine = ({ items = [], tab = 'day' }) => {
           autoSkip: true,
           maxTicksLimit: isMonth ? 15 : undefined,
         },
+        grid: {
+          color: "rgba(150, 150, 150,0.3)",
+          borderColor: "rgba(150, 150, 150,0.3)",
+        },
       },
       y: {
-  beginAtZero: true,
-  ticks: {
-    stepSize: 10, // define passos de 10 em 10
-  },
-},
+        beginAtZero: true,
+        ticks: {
+          stepSize: 10, // define passos de 10 em 10
+        },
+        grid: {
+          color: "rgba(150, 150, 150,0.3)",
+          borderColor: "rgba(150, 150, 150,0.3)",
+        },
+      },
     },
   };
 

@@ -44,6 +44,7 @@ export const getData = async ({
         "subOrders.product": 1,
         "subOrders.quantity": 1,
         "subOrders.createdAt": 1,
+        "subOrders.userId": 1,
       })
       .lean();
 

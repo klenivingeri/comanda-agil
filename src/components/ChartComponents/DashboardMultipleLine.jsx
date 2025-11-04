@@ -18,7 +18,7 @@ import { BUTTON_THEMES, CORES_FIXAS } from "src/app/utils/constants";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
 
-const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
+const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborators }) => {
   const [baseDate] = useState(() => new Date());
   const [colorCurrent, setColorCurrent] = useState('default');
 
@@ -77,7 +77,7 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
   const processedData = useMemo(() => {
     if (!items?.length) return { keys: [], dataByKey: {} };
 
-    const keys = [...new Set(items.map(item => item.product?.category?.name || item.product?.name || 'Produto Desconhecido'))];
+    const keys = [...new Set(items.map(item => isCollaborators ? item.userId?.name : item.product?.category?.name || 'Produto Desconhecido'))];
     const dataByKey = {};
 
     keys.forEach(k => {
@@ -92,7 +92,7 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
       items.forEach(item => {
         const created = new Date(item.createdAt);
         if (created >= start && created < end) {
-          const key = item.product?.category?.name || item.product?.name || 'Produto Desconhecido';
+          const key = isCollaborators ? item.userId?.name : item.product?.category?.name || 'Produto Desconhecido';
           dataByKey[key][idx] += item.quantity ?? 1;
         }
       });
@@ -104,7 +104,6 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
   // 🔹 Transformar em datasets do Chart.js
   const data = useMemo(() => {
     const { keys, dataByKey } = processedData;
-    console.log(keys)
     const datasets = keys.map((key, i) => ({
       label: key,
       data: dataByKey[key],
@@ -143,16 +142,16 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
         },
         title: { display: false },
         grid: {
-          color: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
-          borderColor: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
+          color:"rgba(150, 150, 150,0.3)",
+          borderColor: "rgba(150, 150, 150,0.3)",
         },
       },
       y: {
         beginAtZero: true,
         ticks: { stepSize: 10 },
         grid: {
-          color: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
-          borderColor: BUTTON_THEMES[colorCurrent]?.['--button-disabled'] || "#ccc",
+          color:"rgba(150, 150, 150,0.3)",
+          borderColor: "rgba(150, 150, 150,0.3)",
         },
       },
 
@@ -166,10 +165,10 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {} }) => {
   );
 };
 
-export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap }) => {
+export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap, isCollaborators }) => {
   return (
     <div>
-      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} />
+      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} isCollaborators />
     </div>
   );
 }

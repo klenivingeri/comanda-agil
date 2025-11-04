@@ -52,7 +52,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
         if (!acc[id]) {
           acc[id] = { _id: id, totalQuantity: 0, product: item.product, createdAt: item.createdAt };
         }
-
+        acc[id].displayName = item.product?.name || "Produto Desconhecido",
         acc[id].totalQuantity += item.quantity || 0;
         return acc;
       }, {})

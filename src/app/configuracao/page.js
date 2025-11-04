@@ -16,7 +16,7 @@ const optionsColors = [
   { type: "btn-green", name: "Verde" },
   { type: "btn-gray", name: "Cinza" },
   { type: "btn-orange", name: "Laranja" },
-  { type: "btn-red", name: "Vermelho" },
+  { type: "btn-pink", name: "Rosa" },
 ];
 
 export default function Configuracao() {
