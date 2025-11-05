@@ -2,10 +2,12 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
+import { usePathname } from 'next/navigation';
 
 const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
+  const pathname = usePathname()
   const { refreshKey } = useCleaningTrigger();
   const [categorySave, setCategorySave] = useState({ all: [], error: false, isLoading: true });
 
@@ -16,6 +18,7 @@ export function CategoryProvider({ children }) {
     if (saved?.length > 0) {
       setCategorySave({ all: saved, error: false, isLoading: false });
     } else {
+      if (pathname === '/login') return;
       getCategory();
     }
   }, [getCategory, refreshKey]);

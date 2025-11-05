@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
-
+import { usePathname } from 'next/navigation';
+ 
 const DEFAULT_USER_STATE = {
   _user: {
     all: [],
@@ -18,6 +19,7 @@ const DEFAULT_USER_STATE = {
 const UserContext = createContext(DEFAULT_USER_STATE);
 
 export function UserProvider({ children }) {
+  const pathname = usePathname()
   const router = useRouter();
   const { refreshKey } = useCleaningTrigger();
   const [userSave, setUserSave] = useState({ all: [], error: false, isLoading: true });
@@ -25,10 +27,12 @@ export function UserProvider({ children }) {
   const getUser = useCallback(() => fetchAndCache("/api/user/perfil", "user", setUserSave, true), []);
 
   useEffect(() => {
+    
     const saved = JSON.parse(sessionStorage.getItem("user"));
     if (saved?.length > 0) {
       setUserSave({ all: saved, error: false, isLoading: false });
     } else {
+      if( pathname === '/login' ) return;
       getUser();
     }
   }, [getUser, refreshKey]);

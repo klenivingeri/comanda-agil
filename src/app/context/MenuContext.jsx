@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
+import { usePathname } from 'next/navigation';
 
 const DEFAULT_MENU_STATE = {
   _menu: {
@@ -15,6 +16,7 @@ const DEFAULT_MENU_STATE = {
 const MenuContext = createContext(DEFAULT_MENU_STATE);
 
 export function MenuProvider({ children }) {
+  const pathname = usePathname()
   const { refreshKey } = useCleaningTrigger();
   const [menuSave, setMenuSave] = useState({ all: [], error: false, isLoading: true });
 
@@ -25,6 +27,7 @@ export function MenuProvider({ children }) {
     if (saved?.length > 0) {
       setMenuSave({ all: saved, error: false, isLoading: false });
     } else {
+      if( pathname === '/login' ) return;
       getMenu();
     }
   }, [getMenu, refreshKey]);

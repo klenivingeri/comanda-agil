@@ -2,20 +2,24 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
+import { usePathname } from 'next/navigation';
 
 const ItemContext = createContext();
 
 export function ItemProvider({ children }) {
+  const pathname = usePathname()
   const { refreshKey } = useCleaningTrigger();
   const [itemSave, setItemSave] = useState({ all: [], error: false, isLoading: true });
 
   const getItems = useCallback(() => fetchAndCache("/api/items", "items-command", setItemSave), []);
 
   useEffect(() => {
+    
     const saved = JSON.parse(sessionStorage.getItem("items-command"));
     if (saved?.length > 0) {
       setItemSave({ all: saved, error: false, isLoading: false });
     } else {
+      if( pathname === '/login' ) return;
       getItems();
     }
   }, [getItems, refreshKey]);

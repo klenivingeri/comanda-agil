@@ -15,13 +15,11 @@ export function ConfigProvider({ children }) {
   const { refreshKey } = useCleaningTrigger();
   const [hasVibrate, setHasVibrate] = useState("off");
 
-  // 🔁 Função para alternar a vibração
   const handleVibrate = useCallback((vibrate) => {
     setHasVibrate(vibrate);
     localStorage.setItem("vibrate-button", vibrate);
   }, []);
 
-  // 🔄 Atualiza estado quando há limpeza (via CleaningTrigger)
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     const savedThemeButton = localStorage.getItem("theme-button");

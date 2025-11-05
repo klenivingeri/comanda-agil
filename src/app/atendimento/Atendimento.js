@@ -16,6 +16,7 @@ import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
+import { IconChecked } from "public/icons/Checked";
 
 export function RotateImage({ rotated }) {
   return (
@@ -75,7 +76,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           return { ...item, quantity: 0 };
         })
       );
-      toast.success("Item enviado com sucesso!");
+      toast.success(<IconChecked size="h-[40px] w-[40px]" />);
     } catch (_) {
       toast.error("Ocorreu um erro ao enviar o items");
     } finally {

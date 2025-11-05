@@ -3,10 +3,9 @@
   top: 20px; /* no topo */
   left: 50%;
   transform: translateX(-50%) translateY(0); /* centralizado horizontal */
-  width: 400px; /* largura fixa */
   max-width: 90%; /* responsivo */
-  padding: 16px 32px;
-  border-radius: 12px;
+  padding: 16px 16px;
+  border-radius: 999px;
   font-weight: bold;
   color: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -20,7 +19,7 @@
   text-align: center;
 }
 /* tipos */
-.toast-success { background-color: #4caf50; }
+/*.toast-success { background-color: #4caf50; } */
 .toast-error { background-color: #f44336; }
 .toast-info { background-color: #2196f3; }
 .toast-warn { background-color: #ff9800; }

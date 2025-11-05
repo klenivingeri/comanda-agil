@@ -22,7 +22,6 @@ export const Checkout = ({totalComanda, commandID}) => {
 
       const result = await resp.json();
       setIsFinish(true);
-      toast.success("Comanda finaliza com sucesso");
     } catch (_) {
       toast.error("Ocorreu um erro fechar a comanda!");
     } finally {

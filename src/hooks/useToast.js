@@ -24,7 +24,7 @@ export const useToast = () => {
 
       if (!visible) return null;
 
-      return <div className={`toast toast-${type}`}>{message}</div>;
+      return <div className={`toast toast-${type} text-[var(--button-default)] bg-[var(--button-green-default)]/90`}>{message}</div>;
     };
 
     root.render(<Toast key={toastId} />);
