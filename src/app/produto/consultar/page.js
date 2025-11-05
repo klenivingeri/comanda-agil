@@ -7,7 +7,9 @@ import { Header } from "../../../components/layout/Header";
 import { ItemList } from "src/components/itemList";
 import { ButtonContainer } from "src/components/button";
 import { IconDelete } from "public/icons/Delete";
-import { IconEdit } from "public/icons/Edit";;
+import { IconEdit } from "public/icons/Edit";
+import { Footer } from "src/components/layout/Footer";
+import { ButtonCircle } from "src/components/button/ButtonCircle";
 
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
@@ -44,39 +46,42 @@ export default function ConsultarCategoria() {
 
   return (
     <Container>
-        <Header
-          divider
-          setInputText={setInputText}
-          title="Consultar funcionario"
-        />
-        <Content isLoading={isLoading} error={error}>
-          <div className="flex flex-col gap-2">
-            {products.map((product) => (
-              <ItemList key={product._id} p="px-2">
-                <p className="font-bold">{product.name}</p>
-                <div className="flex gap-4">
-                  <ButtonContainer
-                    style="buttonRed"
-                    wFull="w-10"
-                    hFull="h-9"
-                    margin="mt-1"
-                    onClick={() => handleDelete(product._id)}
-                  >
-                    <IconDelete size="h-[20px] w-[20px]" />
-                  </ButtonContainer>
-                  <ButtonContainer
-                    href={`/produto/cadastrar/${product._id}`}
-                    wFull="w-10"
-                    hFull="h-9"
-                    margin="mt-1"
-                  >
-                    <IconEdit size="h-[20px] w-[20px]" />
-                  </ButtonContainer>
-                </div>
-              </ItemList>
-            ))}
-          </div>
-        </Content>
+      <Header
+        divider
+        setInputText={setInputText}
+        title="Consultar funcionario"
+      />
+      <Content isLoading={isLoading} error={error} pb="pb-20" >
+        <div className="flex flex-col gap-2">
+          {products.map((product) => (
+            <ItemList key={product._id} p="px-2">
+              <p className="font-bold">{product.name}</p>
+              <div className="flex gap-4">
+                <ButtonContainer
+                  style="buttonRed"
+                  wFull="w-10"
+                  hFull="h-9"
+                  margin="mt-1"
+                  onClick={() => handleDelete(product._id)}
+                >
+                  <IconDelete size="h-[20px] w-[20px]" />
+                </ButtonContainer>
+                <ButtonContainer
+                  href={`/produto/cadastrar/${product._id}`}
+                  wFull="w-10"
+                  hFull="h-9"
+                  margin="mt-1"
+                >
+                  <IconEdit size="h-[20px] w-[20px]" />
+                </ButtonContainer>
+              </div>
+            </ItemList>
+          ))}
+        </div>
+      </Content>
+      <Footer bg="">
+        <ButtonCircle href="/produto/cadastrar/create" />
+      </Footer>
     </Container>
   );
 }

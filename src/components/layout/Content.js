@@ -6,6 +6,7 @@ export const Content = ({
   error,
   mb = "",
   endPage,
+  pb = "",
 }) => {
   const inputRef = useRef(null);
 
@@ -38,11 +39,12 @@ export const Content = ({
   return (
     <div
       ref={inputRef}
-      className={`flex-1 overflow-auto ${mb} mt-[56px] px-2 w-full min-w-0`}
+      className={`flex-1 overflow-auto ${mb} ${pb}pb mt-[56px] px-2 w-full min-w-0`}
       style={{ overflowWrap: "break-word" }}
     >
       <div className="grid grid-cols-1 pt-2">
       {children}
+      <div className="h-28"></div>
     </div>
     </div>
   );

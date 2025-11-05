@@ -9,6 +9,8 @@ import { ItemList } from "src/components/itemList";
 import { ButtonContainer } from "src/components/button";
 import { IconDelete } from "public/icons/Delete";
 import { IconEdit } from "public/icons/Edit";
+import { Footer } from "src/components/layout/Footer";
+import { ButtonCircle } from "src/components/button/ButtonCircle";
 
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
@@ -53,7 +55,7 @@ export default function ConsultarCategoria() {
   return (
     <Container>
       <Header divider setInputText={setInputText} title="Consultar Categoria" />
-      <Content isLoading={isLoading} error={error}>
+      <Content isLoading={isLoading} error={error} pb="pb-20">
         <div className="flex flex-col gap-2">
           {categories.map((category) => (
             <ItemList key={category._id} p="px-2">
@@ -81,6 +83,9 @@ export default function ConsultarCategoria() {
           ))}
         </div>
       </Content>
+      <Footer bg="">
+        <ButtonCircle href="/categoria/cadastrar/create" />
+      </Footer>
     </Container>
   );
 }
