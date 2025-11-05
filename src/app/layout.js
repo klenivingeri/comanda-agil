@@ -48,7 +48,6 @@ export const viewport = {
 //tag div touch-pan-y
 export default function RootLayout({ children }) {
 
-
   return (
     <html lang="pt" className="h-full">
       <body

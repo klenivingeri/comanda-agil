@@ -45,6 +45,7 @@ export default function Login() {
           _menu.get();
         }
         _item.get();
+        document.cookie = "isUser=true; path=/; samesite=strict";
         router.push("/home");
       } else {
         setError(true);
@@ -56,6 +57,11 @@ export default function Login() {
     }
   }
 
+  const handleGoToHome = () => {
+    document.cookie = 'isUser=false; path=/; samesite=strict;'
+    router.push("/");
+  }
+
   return (
     <Container>
       <div className="flex-1 flex flex-col">
@@ -65,15 +71,15 @@ export default function Login() {
               onSubmit={handleSubmit}
               className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"
             >
-              <div className="flex flex-col justify-center items-center text-gray-500 mb-6">
+              <a onClick={handleGoToHome} className="flex flex-col justify-center items-center text-gray-500 mb-6">
                 <div className="flex text-4xl ">
                   <span className="text-[var(--logo1)]">Comanda</span>
-                  <span className="text-[var(--logo2)]">Go</span>
+                  <span className="text-[var(--button-default)]">Go</span>
                 </div>
                 <span className="text-sm font-extralight">
                   Gestão de Pedidos Simplificada
                 </span>
-              </div>
+              </a>
               <input
                 type="email"
                 className="w-full text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
@@ -92,14 +98,14 @@ export default function Login() {
               <div className="text-gray-500 flex justify-between items-center mb-2 gap-2"><input
                 className={`
               bg-[var(--button-disabled)] 
-              h-4 w-4 
+              h-4 w-4  
             `}
                 type="checkbox"
                 id="scales"
                 name="scales"
                 onChange={() => {}}
               />
-              <label htmlFor="scales" >Manter-me conectado</label></div>
+              <label htmlFor="scales" className="font-normal text-black">Manter-me conectado</label></div>
               {error && (
                 <p className="mt-1 text-sm text-red-500">
                   Algo errado não esta certo, tente novamente.
@@ -112,10 +118,10 @@ export default function Login() {
                   <Loading isLoading={isLoading} style="style3" />
                 )}
               </ButtonContainer>
-
               <ButtonContainer style="buttonInline" margin="mt-2" href="/">
                 Criar uma conta
               </ButtonContainer>
+              <a onClick={handleGoToHome} className="text-black font-normal"> Ir para pagina inicial</a>
             </form>
           </div>
         </Content>

@@ -14,7 +14,6 @@ export default function ConsultarCategoria() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
   const getUsers = async () => {
     try {

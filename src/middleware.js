@@ -30,6 +30,12 @@ export function middleware(request) {
     pathname.startsWith(route)
   );
 
+  const isUser = request.cookies.get("isUser")?.value;
+
+  if (pathname === "/" && isUser === "true") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   if (!isProtected) {
     return NextResponse.next();
   }
@@ -45,11 +51,12 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
+    "/",
     "/caixa/:path*",
     "/comandas/:path*",
     "/produto/:path*",
     "/promocoes/:path*",
-    "/funcionarios/:path*",
+    "/colaboradores/:path*",
     "/relatarios/:path*",
     "/configuracao/:path*",
   ],

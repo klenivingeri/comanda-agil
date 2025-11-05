@@ -1,7 +1,5 @@
 import React from 'react';
-// Importa o arquivo CSS onde o Tailwind está configurado.
 
-// Componente principal da Landing Page da ComandaGo
 const ComandaGoLanding = () => {
   return (
     // O 'overflow-x-hidden' foi adicionado aqui para garantir que não haja barra de rolagem horizontal.
