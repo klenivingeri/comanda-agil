@@ -11,8 +11,7 @@ export const RULES = {
 // Exemplo de uso
 export const CORES_FIXAS = [
   "#007BFF",
-  "#28A745",
-  "#DC3545",
+  "#28A745",,
   "#FFC107",
   "#6F42C1",
   "#20C997",

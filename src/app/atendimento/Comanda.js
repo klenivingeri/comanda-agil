@@ -9,10 +9,10 @@ import { IconEdit } from "public/icons/Edit";
 import { Container } from "../../components/layout/Container";
 import { isEmpty } from "src/app/utils/empty";
 import { useUserConfig } from "src/app/context/UserContext";
-import { CenterModal } from "../../components/modal";
 import { Checkout } from "src/components/checkout";
 import { Content } from "src/components/layout/Content";
 import { CenterTop } from "src/components/modal/ModalTop";
+import { RULES } from "../utils/constants";
 
 export const Comanda = ({
   handleOpenModal,
@@ -112,7 +112,7 @@ export const Comanda = ({
               disabled={itemsSelected?.length == 0}
               margin="mx-2 mb-3"
               onClick={saveCommand}
-              style="buttonInline"
+              style={itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"}
             >
               {!isLoadingCreate ? (
                 <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
@@ -120,6 +120,7 @@ export const Comanda = ({
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
             </ButtonContainer>
+            {RULES.MODERATOR.includes(_user.all[0]?.role) && (
             <ButtonContainer
               disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
               onClick={handleOpenCenterModal}
@@ -127,7 +128,7 @@ export const Comanda = ({
               margin="mx-2 mb-3"
             >
               <p className="text-sm">PAGAMENTO</p>
-            </ButtonContainer>
+            </ButtonContainer>)}
           </div>
         </div>
       </Footer>

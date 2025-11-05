@@ -18,21 +18,26 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
   <div className="p-4 pt-8 flex flex-col items-center text-center">
     {!isLoadingCloseCommand ? (
       <>
-        <div className="flex justify-center mb-8 items-center h-14 w-14 text-[var(--button-green-default)] rounded-2xl bg-[var(--button-green-disabled)]/50 ">
+        <div className="flex justify-center mb-8 items-center h-14 w-14 text-[var(--button-default)] rounded-2xl bg-[var(--button-disabled)]/50 ">
           <IconChecked size="h-[40px] w-[40px]" />
         </div>
         <span className="text-2xl font-extrabold  mb-2">
           Comanda finalizada
         </span>
         <span className="text-sm  mb-2">
-          Deseja ir para lista de comandas?
+          Para onde deseja ir agora?
         </span>
 
         <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
           <ButtonContainer
             href="/comandas"
-            text="Sim"
-            style="buttonGreen"
+            text="Comandas"
+            style="buttonInline"
+          />
+
+          <ButtonContainer
+            href="/home"
+            text="Inicio"
           />
         </div>
       </>
@@ -41,42 +46,6 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
     )}
   </div>
 )
-
-
-function AnimatedNumber({ value, duration = 1000, format = (v) => v.toFixed(0) }) {
-  const [display, setDisplay] = useState(value);
-  const startValue = useRef(value);
-
-  useEffect(() => {
-    const start = startValue.current;
-    const end = value;
-    const diff = end - start;
-
-    if (diff === 0) return;
-
-    const startTime = performance.now();
-
-    const step = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1); // 0 → 1
-
-      // interpolação linear
-      const current = start + diff * progress;
-
-      setDisplay(current);
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        startValue.current = end; // salva o novo ponto inicial
-      }
-    };
-
-    requestAnimationFrame(step);
-  }, [value, duration]);
-
-  return <span>{format(display)}</span>;
-}
 
 export function ResumoFinanceiro({ totalComanda, payments }) {
 
