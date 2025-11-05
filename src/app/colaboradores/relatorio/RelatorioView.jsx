@@ -8,6 +8,7 @@ import { Tabs } from "src/components/Tabs";
 import { Ranking } from "src/components/Ranking";
 import { DashboardMultipleLine } from "src/components/ChartComponents/DashboardMultipleLine";
 import { CORES_FIXAS } from "src/app/utils/constants";
+import { last7days } from "src/app/utils/last7days";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -113,10 +114,16 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     getCategoryItems(tab)
   }, [tab])
 
-  const allSubOrders = useMemo(
-    () => response.flatMap(order => order.subOrders || []),
-    [response]
-  );
+  const allSubOrders = useMemo(() => {
+    const all = response.flatMap(order => order.subOrders || []);
+    const period = {
+      day: all,
+      week: last7days(all),
+      month: all,
+    }
+
+    return period[tab];
+  }, [response, tab]);
 
   const LabelText = {
     day: 'Atividade de colaboradores nas últimas 24h',

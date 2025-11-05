@@ -7,23 +7,13 @@ import { Tabs } from "src/components/Tabs";
 
 import { Ranking } from "src/components/Ranking";
 import { DashboardOneLine } from "src/components/ChartComponents/DashboardOneLine";
+import { last7days } from "src/app/utils/last7days";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
   { title: 'Semana', id: 'week' },
   { title: 'Mês', id: 'month' }
 ]
-
-function last7days(allSuborders) {
-  const dateCurrent = new Date();
-  const lastWeek = new Date();
-  lastWeek.setDate(dateCurrent.getDate() - 7);
-
-  return allSuborders.filter(item => {
-    const data = new Date(item.createdAt);
-    return data >= lastWeek && data <= dateCurrent;
-  });
-}
 
 export default function RelatorioProductsView({ getCategoryItems, response, isLoading, error }) {
   const [tab, setTab] = useState('day');

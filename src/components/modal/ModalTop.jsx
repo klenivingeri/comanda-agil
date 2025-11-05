@@ -34,7 +34,7 @@ export function CenterTop({ isOpen, onClose, children, notCloseBg = false, showX
                 className="absolute left-1/2 transform -translate-x-1/2 shadow-2xl rounded-lg"
                 onClick={onClose}
               >
-                <div className="flex w-fit mt-10 items-center justify-center">
+                <div className="flex w-fit mt-10 items-center justify-center text-white">
                   <IconX size="h-[34px] w-[34px]" />
                 </div>
               </div>

@@ -45,7 +45,7 @@ export default function Login() {
           _menu.get();
         }
         _item.get();
-        document.cookie = "isUser=true; path=/; samesite=strict";
+        document.cookie = "isUser=true; path=/; samesite=strict Secure";
         router.push("/home");
       } else {
         setError(true);
@@ -58,9 +58,13 @@ export default function Login() {
   }
 
   const handleGoToHome = () => {
-    document.cookie = 'isUser=false; path=/; samesite=strict;'
+    const date = new Date();
+    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const expires = date.toUTCString();
+    const cookieString = `isUserActive=true; path=/; samesite=strict; max-age=604800; expires=${expires}; Secure;`;
+    document.cookie = cookieString;
     router.push("/");
-  }
+  };
 
   return (
     <Container>
@@ -71,7 +75,10 @@ export default function Login() {
               onSubmit={handleSubmit}
               className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"
             >
-              <a onClick={handleGoToHome} className="flex flex-col justify-center items-center text-gray-500 mb-6">
+              <a
+                onClick={handleGoToHome}
+                className="flex flex-col justify-center items-center text-gray-500 mb-6"
+              >
                 <div className="flex text-4xl ">
                   <span className="text-[var(--logo1)]">Comanda</span>
                   <span className="text-[var(--button-default)]">Go</span>
@@ -95,17 +102,21 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Senha"
               />
-              <div className="text-gray-500 flex justify-between items-center mb-2 gap-2"><input
-                className={`
+              <div className="text-gray-500 flex justify-between items-center mb-2 gap-2">
+                <input
+                  className={`
               bg-[var(--button-disabled)] 
               h-4 w-4  
             `}
-                type="checkbox"
-                id="scales"
-                name="scales"
-                onChange={() => {}}
-              />
-              <label htmlFor="scales" className="font-normal text-black">Manter-me conectado</label></div>
+                  type="checkbox"
+                  id="scales"
+                  name="scales"
+                  onChange={() => {}}
+                />
+                <label htmlFor="scales" className="font-normal text-black">
+                  Manter-me conectado
+                </label>
+              </div>
               {error && (
                 <p className="mt-1 text-sm text-red-500">
                   Algo errado não esta certo, tente novamente.
@@ -121,7 +132,10 @@ export default function Login() {
               <ButtonContainer style="buttonInline" margin="mt-2" href="/">
                 Criar uma conta
               </ButtonContainer>
-              <a onClick={handleGoToHome} className="text-black font-normal"> Ir para pagina inicial</a>
+              <a onClick={handleGoToHome} className="text-black font-normal">
+                {" "}
+                Ir para pagina inicial
+              </a>
             </form>
           </div>
         </Content>
