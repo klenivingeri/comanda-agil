@@ -10,6 +10,14 @@ import { useUserConfig } from "src/app/context/UserContext";
 import { useMenu } from "src/app/context/MenuContext";
 import { useItem } from "src/app/context/ItemContext";
 
+const setCookie = (value) => {
+  const date = new Date();
+  date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const expires = date.toUTCString();
+  const cookieString = `isUserActive=${value}; path=/; samesite=strict; max-age=604800; expires=${expires}; Secure;`;
+  document.cookie = cookieString;
+};
+
 export default function Login() {
   const { _item } = useItem();
   const { _menu } = useMenu();
@@ -45,7 +53,7 @@ export default function Login() {
           _menu.get();
         }
         _item.get();
-        document.cookie = "isUser=true; path=/; samesite=strict Secure";
+        setCookie(true)
         router.push("/home");
       } else {
         setError(true);
@@ -58,11 +66,7 @@ export default function Login() {
   }
 
   const handleGoToHome = () => {
-    const date = new Date();
-    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const expires = date.toUTCString();
-    const cookieString = `isUserActive=true; path=/; samesite=strict; max-age=604800; expires=${expires}; Secure;`;
-    document.cookie = cookieString;
+    setCookie(false)
     router.push("/");
   };
 
