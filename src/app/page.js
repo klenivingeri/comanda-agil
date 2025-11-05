@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const ComandaGoLanding = () => {
@@ -13,24 +14,24 @@ const ComandaGoLanding = () => {
             {/* Logo/Marca */}
             <div className="text-2xl font-bold tracking-tight">
               <span className="text-gray-900">Comanda</span>
-              <span className="text-yellow-600">Go</span>
+              <span className="text-[var(--button-orange-default)]">Go</span>
               <p className="text-xs font-normal text-gray-500 mt-1">Gestão de Pedidos Simplificada</p>
             </div>
 
             {/* Links de Navegação */}
             <nav className="hidden md:flex space-x-6 items-center">
-              <a href="#quem-somos" className="text-gray-600 hover:text-yellow-600 transition duration-150 ease-in-out">Quem Somos</a>
-              <a href="#contatos" className="text-gray-600 hover:text-yellow-600 transition duration-150 ease-in-out">Contatos</a>
-              <a href="/login" className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-yellow-600 transition duration-150 ease-in-out shadow-lg">
+              <Link href="#quem-somos" className="text-gray-600 hover:text-yellow-600 transition duration-150 ease-in-out">Quem Somos</Link>
+              <Link href="#contatos" className="text-gray-600 hover:text-yellow-600 transition duration-150 ease-in-out">Contatos</Link>
+              <Link href="/login" className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-[var(--button-orange-default)] transition duration-150 ease-in-out shadow-lg">
                 Entrar
-              </a>
+              </Link>
             </nav>
 
             {/* Menu responsivo (exemplo simples) */}
             <div className="md:hidden">
-                <a href="/login" className="px-8 py-3 text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-yellow-600 shadow-lg">
+                <Link href="/login" className="px-8 py-3 text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-yellow-600 shadow-lg">
                     Entrar
-                </a>
+                </Link>
             </div>
           </div>
         </div>
@@ -41,21 +42,21 @@ const ComandaGoLanding = () => {
         <div className="py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
-              Revolucione a <span className="text-yellow-600">Gestão</span> do seu Restaurante
+              Revolucione a <span className="text-[var(--button-orange-default)]">Gestão</span> do seu Restaurante
             </h1>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              ComandaGo é a solução definitiva para **simplificar** o trabalho dos seus garçons, **organizar** suas mesas e garantir o **controle total** do seu negócio de alimentação.
+              ComandaGo é a solução definitiva para <strong>simplificar</strong> o trabalho dos seus garçons, <strong>organizar</strong> suas mesas e garantir o <strong>controle total</strong> do seu negócio.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a 
                 href="/demonstracao" 
-                className="w-full sm:w-auto px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 md:py-4 md:text-lg md:px-10 transition duration-150 ease-in-out shadow-xl"
+                className="w-full sm:w-auto px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--button-orange-default)] hover:[var(--button-orange-hover)] md:py-4 md:text-lg md:px-10 transition duration-150 ease-in-out shadow-xl"
               >
                 Agendar Demonstração Gratuita
               </a>
               <a 
                 href="#quem-somos" 
-                className="w-full sm:w-auto px-8 py-3 border border-2 border-yellow-600 text-base font-medium rounded-md text-yellow-600 bg-white hover:bg-yellow-50 md:py-4 md:text-lg md:px-10 transition duration-150 ease-in-out shadow-md"
+                className="w-full sm:w-auto px-8 py-3 border-2 border-[var(--button-orange-default)] text-base font-medium rounded-md text-[var(--button-orange-default)] bg-white hover:bg-yellow-50 md:py-4 md:text-lg md:px-10 transition duration-150 ease-in-out shadow-md"
               >
                 Saiba Mais
               </a>
@@ -75,13 +76,13 @@ const ComandaGoLanding = () => {
             </p>
             <ul className="mt-6 space-y-3 text-lg text-gray-600">
               <li className="flex items-start">
-                <span className="text-yellow-600 mr-2 font-bold">✓</span> **Gestão Completa:** Controle de mesas, pedidos e caixa em um só lugar.
+                <span className="text-[var(--button-orange-default)] mr-2 font-bold">✓</span> **Gestão Completa:** Controle de mesas, pedidos e caixa em um só lugar.
               </li>
               <li className="flex items-start">
-                <span className="text-yellow-600 mr-2 font-bold">✓</span> **Agilidade:** Garçons enviam pedidos diretamente do celular para a cozinha.
+                <span className="text-[var(--button-orange-default)] mr-2 font-bold">✓</span> **Agilidade:** Garçons enviam pedidos diretamente do celular para a cozinha.
               </li>
               <li className="flex items-start">
-                <span className="text-yellow-600 mr-2 font-bold">✓</span> **Zero Erros:** Pedidos claros e sem rasuras, aumentando a satisfação do cliente.
+                <span className="text-[var(--button-orange-default)] mr-2 font-bold">✓</span> **Zero Erros:** Pedidos claros e sem rasuras, aumentando a satisfação do cliente.
               </li>
             </ul>
           </div>
@@ -97,12 +98,12 @@ const ComandaGoLanding = () => {
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-8">
               <div className="w-full sm:w-64 p-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transition duration-300">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">📞 Atendimento Rápido</h3>
-                <p className="text-yellow-600 font-extrabold text-2xl">(XX) XXXX-XXXX</p>
+                <p className="text-[var(--button-orange-default)] font-extrabold text-2xl">(XX) XXXX-XXXX</p>
                 <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-gray-600 hover:text-yellow-600 font-medium">Falar por WhatsApp</a>
               </div>
               <div className="w-full sm:w-64 p-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transition duration-300">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">✉️ E-mail</h3>
-                <p className="text-yellow-600 font-extrabold text-lg truncate">contato@comandago.com</p>
+                <p className="text-[var(--button-orange-default)] font-extrabold text-lg truncate">contato@comandago.com</p>
                 <a href="mailto:contato@comandago.com" className="mt-3 inline-block text-sm text-gray-600 hover:text-yellow-600 font-medium">Enviar E-mail Agora</a>
               </div>
             </div>

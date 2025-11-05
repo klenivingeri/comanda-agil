@@ -18,14 +18,8 @@ import { BUTTON_THEMES, CORES_FIXAS } from "src/app/utils/constants";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
 
-const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborators }) => {
+const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborators = false }) => {
   const [baseDate] = useState(() => new Date());
-  const [colorCurrent, setColorCurrent] = useState('default');
-
-  useEffect(() => {
-    const color = localStorage.getItem('theme-button');
-    setColorCurrent(color);
-  }, []);
 
   const isDay = tab === 'day';
   const isWeek = tab === 'week';
@@ -168,7 +162,7 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborato
 export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap, isCollaborators }) => {
   return (
     <div>
-      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} isCollaborators />
+      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} isCollaborators={isCollaborators} />
     </div>
   );
 }
