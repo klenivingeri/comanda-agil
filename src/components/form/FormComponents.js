@@ -199,7 +199,7 @@ export const Select = ({
   );
 };
 
-export const Form = ({ children, create, isLoading }) => {
+export const Form = ({ children, create, isLoading, style, text= 'Cadastrar'  }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     create();
@@ -210,9 +210,9 @@ export const Form = ({ children, create, isLoading }) => {
       className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
     >
       {children}
-      <ButtonContainer onClick={handleSubmit}>
+      <ButtonContainer onClick={handleSubmit} style={style}>
         {!isLoading ? (
-          "Cadastrar Categoria"
+          text
         ) : (
           <Loading
             isLoading={isLoading}

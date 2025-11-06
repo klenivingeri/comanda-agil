@@ -9,7 +9,6 @@ import { Header } from "../../components/layout/Header";
 import { Content } from "../../components/layout/Content";
 import { ButtonContainer } from "src/components/button";
 
-
 const optionsColors = [
   { type: "btn-blue", name: "Azul" },
   { type: "btn-purple", name: "Roxo" },

@@ -118,7 +118,7 @@ export default function Login() {
                   <Loading isLoading={isLoading} style="style3" />
                 )}
               </ButtonContainer>
-              <ButtonContainer style="buttonInline" margin="mt-2" href="/">
+              <ButtonContainer style="buttonInline" margin="mt-2" href="/cadastrar-empresa">
                 Criar uma conta
               </ButtonContainer>
               <a onClick={handleGoToHome} className="text-black font-normal">

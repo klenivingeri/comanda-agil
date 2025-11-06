@@ -2,6 +2,16 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 import { MenuMobile } from "../MenuMobile";
+const mockRouterBack = jest.fn();
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({ back: mockRouterBack }),
+}));
+jest.mock("src/app/context/CleaningContext", () => ({
+  useCleaningTrigger: () => ({
+    triggerCleaning: jest.fn(),
+  }),
+}));
+
 
 test("exibe a saudação com o nome e expande o menu", () => {
   render(

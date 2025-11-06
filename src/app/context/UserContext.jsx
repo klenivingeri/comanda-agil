@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo } 
 import { useCleaningTrigger } from "./CleaningContext";
 import { fetchAndCache } from "../utils/fetchAndCache";
 import { usePathname } from 'next/navigation';
- 
+
 const DEFAULT_USER_STATE = {
   _user: {
     all: [],
@@ -21,6 +21,7 @@ const UserContext = createContext(DEFAULT_USER_STATE);
 export function UserProvider({ children }) {
   const pathname = usePathname()
   const router = useRouter();
+  
   const { refreshKey } = useCleaningTrigger();
   const [userSave, setUserSave] = useState({ all: [], error: false, isLoading: true });
 

@@ -12,7 +12,7 @@ import DBProvider from "./context/DBProvider";
 export default function Providers({ children }) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  if (pathname === "/" || pathname === "/cadastrar-empresa") {
     return children;
   }
 

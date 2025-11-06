@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { IconCommand } from "public/icons/Command";
 import { IconGear } from "public/icons/Gear";
@@ -12,6 +13,7 @@ import { IconChart } from "public/icons/Chart";
 import { IconCompany } from "public/icons/Company";
 import { IconGraphic } from "public/icons/Graphic";
 import { IconExit } from "public/icons/Exit";
+import { useCleaningTrigger } from "src/app/context/CleaningContext";
 
 const icons = {
   IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
@@ -29,6 +31,9 @@ const icons = {
 };
 
 const Menu = ({ menu, user }) => {
+  const router = useRouter();
+
+  const { triggerCleaning } = useCleaningTrigger();
   const [activeLink, setActiveLink] = useState("");
   const [subActiveLink, setSubActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -51,6 +56,11 @@ const Menu = ({ menu, user }) => {
   const toggleDropdown = (path) => {
     setOpenDropdown(openDropdown === path ? null : path);
   };
+
+  const handleExit = () => {
+    triggerCleaning();
+    router.push('/login');
+  }
 
   return (
     <nav>
@@ -109,7 +119,7 @@ const Menu = ({ menu, user }) => {
         ))}
         <li onClick={() => {}} className="mb-2">
           <a
-            onClick={() => user.clear()}
+            onClick={handleExit}
             className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors hover:bg-[var(--button-hover)]`}
           >
             <span className="pl-6">{icons["IconExit"]}</span>Sair

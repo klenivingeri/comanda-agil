@@ -53,7 +53,7 @@ export default function ConsultarCategoria() {
       />
       <Content isLoading={isLoading} error={error} pb="pb-20" >
         <div className="flex flex-col gap-2">
-          {products.map((product) => (
+          {products?.map((product) => (
             <ItemList key={product._id} p="px-2">
               <p className="font-bold">{product.name}</p>
               <div className="flex gap-4">

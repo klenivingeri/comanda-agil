@@ -1,4 +1,3 @@
-import { esperar } from "../utils/esperar";
 import bcrypt from "bcrypt";
 
 const saltRounds = 5;
@@ -113,6 +112,40 @@ export const putUser = async ({ users, xTenant, _id, body }) => {
     body.tenant = xTenant.id;
 
     await users.findByIdAndUpdate({ _id, tenant: xTenant.id }, { $set: body });
+    return Response.json(
+      { message: "sucesso ao fazer login" },
+      { status: 200 }
+    );
+  } catch (_) {
+    return Response.json({ message: "Rotas de items" }, { status: 500 });
+  }
+};
+
+export const createEnterprise = async ({ tenants, users, body }) => {
+  try {
+    const user = await users
+      .findOne({ email: body.email, active: true })
+      .lean();
+
+    let created;
+    if (!user) {
+      const createdTenant = await tenants.create({name: body.enterprise});
+      const payload = {
+        name: body.name,
+        email: body.email,
+        password: body.password,
+        tenant: createdTenant._id,
+        role: "ADMIN",
+        branch: "1",
+      };
+      created = await users.create(payload);
+    }else {
+      return Response.json(
+      { message: "Email já cadastrado" },
+      { status: 409 }
+    );
+    }
+    console.log(created)
     return Response.json(
       { message: "sucesso ao fazer login" },
       { status: 200 }

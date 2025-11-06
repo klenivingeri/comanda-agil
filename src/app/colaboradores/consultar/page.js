@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MenuMobileContainer } from "../../../components/menu/lateral";
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header } from "../../../components/layout/Header";

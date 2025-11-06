@@ -57,7 +57,7 @@ export default function ConsultarCategoria() {
       <Header divider setInputText={setInputText} title="Consultar Categoria" />
       <Content isLoading={isLoading} error={error} pb="pb-20">
         <div className="flex flex-col gap-2">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <ItemList key={category._id} p="px-2">
               <p className="font-bold">{category.name}</p>
               <div className="flex gap-4">
