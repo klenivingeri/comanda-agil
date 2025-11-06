@@ -39,7 +39,7 @@ export const Content = ({
   return (
     <div
       ref={inputRef}
-      className={`flex-1 overflow-auto ${mb} ${pb}pb mt-[56px] px-2 w-full min-w-0`}
+      className={`flex-1 overflow-auto ${mb} ${pb} mt-[56px] px-2 w-full min-w-0`}
       style={{ overflowWrap: "break-word" }}
     >
       <div className="grid grid-cols-1 pt-2">

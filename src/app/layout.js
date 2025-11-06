@@ -1,4 +1,4 @@
-import { Inter, Roboto } from "next/font/google";
+import { Inter, Roboto, Poppins } from "next/font/google";
 
 import Providers from "./providers";
 import "./globals.css";
@@ -35,6 +35,12 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "800", "900"],
+  variable: "--font-poppins",
+});
+
 
 export const viewport = {
   width: "device-width",
@@ -51,7 +57,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="h-full">
       <body
-        className={`${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
+        className={`${poppins.variable} ${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
       >
         <div
           id="container"

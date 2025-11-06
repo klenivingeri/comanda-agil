@@ -77,13 +77,13 @@ export default function Login() {
           <div className="relative w-full h-full flex justify-center items-center">
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col rounded-sm bg-white p-10  mb-4  w-80 justify-center items-center gap-2 relative font-bold"
+              className="flex flex-col rounded-sm bg-white p-10  mb-4  w-90 justify-center items-center gap-2 relative font-bold"
             >
               <a
                 onClick={handleGoToHome}
                 className="flex flex-col justify-center items-center text-gray-500 mb-6"
               >
-                <div className="flex text-4xl ">
+                <div className="flex text-5xl tracking-tight">
                   <span className="text-[var(--logo1)]">Comanda</span>
                   <span className="text-[var(--button-default)]">Go</span>
                 </div>
