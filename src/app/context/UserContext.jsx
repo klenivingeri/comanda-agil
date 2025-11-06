@@ -24,10 +24,9 @@ export function UserProvider({ children }) {
   const { refreshKey } = useCleaningTrigger();
   const [userSave, setUserSave] = useState({ all: [], error: false, isLoading: true });
 
-  const getUser = useCallback(() => fetchAndCache("/api/user/perfil", "user", setUserSave, true), []);
+  const getUser = useCallback(() => fetchAndCache("/api/user/perfil", "user", setUserSave, true), [] ,'catalog_users');
 
   useEffect(() => {
-    
     const saved = JSON.parse(sessionStorage.getItem("user"));
     if (saved?.length > 0) {
       setUserSave({ all: saved, error: false, isLoading: false });

@@ -9,7 +9,6 @@ function generateSignature(value) {
 }
 
 export function createCookie(tenantId, userId, rule) {
-  // adiciona timestamp ou nonce para tornar o cookie único
   const timestamp = Date.now();
   const nonce = randomUUID(); // ou só o timestamp já dá
 

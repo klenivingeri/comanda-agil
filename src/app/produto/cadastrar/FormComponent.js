@@ -103,15 +103,6 @@ export const FormComponent = ({ categories, product }) => {
           type="tel"
           isCurrency
         />
-        <Textarea
-          name="Descrição do produto"
-          id="description"
-          setValue={setDescription}
-          placeholder="Descrição do produto"
-          isValid={isValid}
-          error={description.trim() === ""}
-          value={description}
-        />
         <Select
           name="Categoria"
           id="select"
@@ -121,6 +112,15 @@ export const FormComponent = ({ categories, product }) => {
           options={categories}
           isValid={isValid}
           error={category.trim() === ""}
+        />
+        <Textarea
+          name="Descrição do produto"
+          id="description"
+          setValue={setDescription}
+          placeholder="Descrição do produto"
+          isValid={isValid}
+          error={description.trim() === ""}
+          value={description}
         />
       </Form>
     </div>

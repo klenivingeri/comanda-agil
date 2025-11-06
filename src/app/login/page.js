@@ -106,21 +106,6 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Senha"
               />
-              <div className="text-gray-500 flex justify-between items-center mb-2 gap-2">
-                <input
-                  className={`
-              bg-[var(--button-disabled)] 
-              h-4 w-4  
-            `}
-                  type="checkbox"
-                  id="scales"
-                  name="scales"
-                  onChange={() => {}}
-                />
-                <label htmlFor="scales" className="font-normal text-black">
-                  Manter-me conectado
-                </label>
-              </div>
               {error && (
                 <p className="mt-1 text-sm text-red-500">
                   Algo errado não esta certo, tente novamente.

@@ -29,7 +29,7 @@ const ComandaGoLanding = () => {
 
             {/* Menu responsivo (exemplo simples) */}
             <div className="md:hidden">
-                <Link href="/login" className="px-8 py-3 text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-yellow-600 shadow-lg">
+                <Link href="/login" className="px-8 py-3 text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-[var(--button-orange-default)] shadow-lg">
                     Entrar
                 </Link>
             </div>
