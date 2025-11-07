@@ -53,6 +53,8 @@ export const FormComponent = ({ categories, product }) => {
       category,
     });
 
+    if (product?._id) return;
+
     setCode("");
     setName("");
     setPrice("");

@@ -6,24 +6,16 @@ import React, { useState } from 'react';
  * @param {function} onChange - Função a ser chamada quando o estado muda.
  * @param {string} label - Rótulo opcional para o toggle.
  */
-export const ToggleSwitch = ({ initialChecked = true, onChange, label }) => {
-  // 1. Gerencia o estado do switch (true/false)
-  const [isChecked, setIsChecked] = useState(initialChecked);
-  console.log('aa',initialChecked)
-  // 2. Função que lida com a mudança de estado
-  const handleToggle = () => {
-    const newState = !isChecked;
-    setIsChecked(newState);
-    if (onChange) {
-      onChange(newState);
-    }
-  };
+export const ToggleSwitch = ({ initialChecked, onChange, label }) => {
 
-  // Classes dinâmicas do Tailwind
-  // Cor de fundo: verde (on) ou cinza (off)
-  const backgroundClass = isChecked ? 'bg-[var(--button-default)]' : 'bg-gray-300';
-  // Posição do "botão" (slider): move para a direita (on) ou esquerda (off)
-  const sliderTranslate = isChecked ? 'translate-x-full' : 'translate-x-0';
+  const handleToggle = () => {
+    const newState = !initialChecked;
+    onChange(newState);
+  };
+  console.log(initialChecked)
+
+  const backgroundClass = initialChecked ? 'bg-[var(--button-default)]' : 'bg-gray-300';
+  const sliderTranslate = initialChecked ? 'translate-x-full' : 'translate-x-0';
 
   return (
     <div className="flex items-center space-x-3 bg-">

@@ -4,7 +4,7 @@ const categoriesSchema = mongoose.Schema(
   {
     type: { type: mongoose.Schema.Types.String, required: true },
     name: { type: mongoose.Schema.Types.String, required: true },
-    enable: { type: mongoose.Schema.Types.String, required: true },
+    enable: { type: mongoose.Schema.Types.Boolean, required: true },
     tenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "tenants",

@@ -6,7 +6,7 @@ const productSchema = mongoose.Schema(
     description: { type: mongoose.Schema.Types.String },
     code: { type: mongoose.Schema.Types.String },
     price: { type: mongoose.Schema.Types.Number },
-    active: { type: mongoose.Schema.Types.Boolean },
+    enable: { type: mongoose.Schema.Types.Boolean, default: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "categories",

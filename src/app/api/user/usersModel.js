@@ -8,6 +8,7 @@ const usersSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     image: { type: String, default: "" },
     password: { type: String, required: true, select: false },
+    enable: { type: Boolean, default: true },
     role: {
       type: String,
       enum: ["MASTER", "ADMIN", "MODERATOR", "VIEWER"],
@@ -23,7 +24,7 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    active: { type: Boolean, default: true },
+    
     painel: {
       score: { type: Number, default: 0 },
     },

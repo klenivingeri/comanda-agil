@@ -48,6 +48,8 @@ export const FormComponent = ({ employee }) => {
       branch,
     });
 
+    if (employee?._id) return;
+
     setName("");
     setEmail("");
     sePassword("");
@@ -59,7 +61,6 @@ export const FormComponent = ({ employee }) => {
     if (employee?._id) {
       setName(employee.name);
       setEmail(employee.email);
-      sePassword("");
       setRole(employee.role);
       setBranch(employee.branch);
     }

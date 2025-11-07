@@ -7,7 +7,7 @@ export const FormComponent = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [name, setName] = useState(category?.name || "");
-  const [enable, setEnable] = useState(false);
+  const [enable, setEnable] = useState(true);
   const toast = useToast();
 
   useEffect(() => {
@@ -15,6 +15,7 @@ export const FormComponent = ({ category }) => {
       setName(category.name);
       setEnable(category.enable);
     }
+    console.log(category)
   }, [category]);
 
   const fetchCreateIUpdatetem = async (formDetails) => {
@@ -43,7 +44,8 @@ export const FormComponent = ({ category }) => {
     setIsValid(false);
 
     fetchCreateIUpdatetem({ _id: category?._id, name, enable });
-    setName("");
+    if(!category?._id){setName("");}
+    
   };
 
   return (

@@ -45,11 +45,12 @@ export const getCagetories = async ({ categories, xTenant, id }) => {
 
 export const postCagetories = async ({ categories, xTenant, body }) => {
   try {
-    const { name } = body;
+    const { name, enable } = body;
     const type = createType(name);
     const payload = {
       name,
       type,
+      enable,
       tenant: xTenant.id,
     };
 
