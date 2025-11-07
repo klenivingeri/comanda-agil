@@ -66,11 +66,12 @@ export const postCagetories = async ({ categories, xTenant, body }) => {
 
 export const putCagetories = async ({ categories, xTenant, body }) => {
   try {
-    const { name, _id } = body;
+    const { name, _id, enable } = body;
     const type = createType(name);
     const payload = {
       name,
       type,
+      enable,
     };
 
     await categories.findByIdAndUpdate(

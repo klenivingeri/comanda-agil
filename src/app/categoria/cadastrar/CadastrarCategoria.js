@@ -12,9 +12,6 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
   const [category, setCategory] = useState([]);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const goBack = () => {
-    router.back();
-  };
 
   const getCategoryItems = async (categoryUUID) => {
     const res = await fetch(`/api/category?id=${categoryUUID}`, {

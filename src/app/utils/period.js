@@ -24,9 +24,13 @@ export const getPeriod = (type) => {
       start: toUtcFromTimeZone(subHours(agora, 24)), // últimas 24h
       end: toUtcFromTimeZone(agora),
     },
+    //week: {
+    //  start: toUtcFromTimeZone(subDays(ontem, 6)), // 7 dias contando ontem
+    //  end: toUtcFromTimeZone(endOfDay(ontem)),     // até ontem 23:59:59
+    //},
     week: {
-      start: toUtcFromTimeZone(subDays(ontem, 6)), // 7 dias contando ontem
-      end: toUtcFromTimeZone(endOfDay(ontem)),     // até ontem 23:59:59
+      start: toUtcFromTimeZone(subDays(ontem, 29)), // últimos 30 dias contando ontem
+      end: toUtcFromTimeZone(endOfDay(ontem)),   // até ontem 23:59:59
     },
     month: {
       start: toUtcFromTimeZone(subDays(ontem, 29)), // últimos 30 dias contando ontem

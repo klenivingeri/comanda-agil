@@ -40,7 +40,7 @@ export const Input = ({
 
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium ">
+      <label htmlFor={id} className="block text-sm font-medium mb-1 ">
         {name}
       </label>
       <input

@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { Form, Input } from "../../../components/form/FormComponents";
 import { useToast } from "../../../hooks/useToast";
+import { ToggleSwitch } from "src/components/ToggleSwitch";
 
 export const FormComponent = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [name, setName] = useState(category?.name || "");
+  const [enable, setEnable] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
     if (category?.name) {
       setName(category.name);
+      setEnable(category.enable);
     }
   }, [category]);
 
@@ -39,7 +42,7 @@ export const FormComponent = ({ category }) => {
     }
     setIsValid(false);
 
-    fetchCreateIUpdatetem({ _id: category?._id, name });
+    fetchCreateIUpdatetem({ _id: category?._id, name, enable });
     setName("");
   };
 
@@ -55,6 +58,12 @@ export const FormComponent = ({ category }) => {
           error={name.trim() === ""}
           value={name}
         />
+        <div className=" flex">
+          <ToggleSwitch initialChecked={enable} onChange={setEnable} />{" "}
+          <p className="ml-4">
+            Categoria {enable ? "habilitada" : "desabilitada"}
+          </p>
+        </div>
       </Form>
     </div>
   );
