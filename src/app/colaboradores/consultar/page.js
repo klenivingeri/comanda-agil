@@ -51,7 +51,7 @@ export default function ConsultarCategoria() {
         setInputText={setInputText}
         title="Consulta de funcionario"
       />
-      <Content isLoading={isLoading} error={error} pb="pb-20">
+      <Content isLoading={isLoading} error={error} pb="pb-28">
         <div className="flex flex-col gap-2">
           {users?.map((user) => (
             <ItemList key={user._id} p="px-2">

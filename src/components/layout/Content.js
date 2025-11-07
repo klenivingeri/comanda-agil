@@ -44,7 +44,6 @@ export const Content = ({
     >
       <div className="grid grid-cols-1 pt-2">
       {children}
-      <div className="h-28"></div>
     </div>
     </div>
   );
