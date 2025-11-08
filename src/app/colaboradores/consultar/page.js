@@ -67,7 +67,7 @@ export default function ConsultarCategoria() {
                   <IconDelete size="h-[20px] w-[20px]" />
                 </ButtonContainer>
                 <ButtonContainer
-                  href={`/funcionarios/cadastrar/${user._id}`}
+                  href={`/colaboradores/cadastrar/${user._id}`}
                   wFull="w-10"
                   hFull="h-9"
                   margin="mt-1"

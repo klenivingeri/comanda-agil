@@ -9,6 +9,7 @@ import { Ranking } from "src/components/Ranking";
 import { DashboardMultipleLine } from "src/components/ChartComponents/DashboardMultipleLine";
 import { CORES_FIXAS } from "src/app/utils/constants";
 import { last7days } from "src/app/utils/last7days";
+import { Loading } from "src/components/loading/Loading";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -137,14 +138,16 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
   return (
     <Container>
       <Header divider title="Relatório de categoria" />
-      <Content isLoading={isLoading} error={error}>
+      <Content>
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
         <h2 className="mt-5" style={{ textAlign: "center" }}>
           {LabelText[tab]}
         </h2>
         {allSubOrders.length === 0
           ? (
-            <div className="flex justify-center items-center h-[350px] m-2">
+            isLoading 
+            ? <Loading isLoading={isLoading} />
+            : <div className="flex justify-center items-center h-[350px] m-2">
               <div>Nenhum dado encontrado no momento.</div>
             </div>
           )

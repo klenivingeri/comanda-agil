@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Form, Input } from "../../../components/form/FormComponents";
 import { useToast } from "../../../hooks/useToast";
 import { ToggleSwitch } from "src/components/ToggleSwitch";
+import { IconCategory } from "public/icons/Category";
 
-export const FormComponent = ({ category }) => {
+export const FormComponent = ({ category, title }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [name, setName] = useState(category?.name || "");
@@ -15,7 +16,7 @@ export const FormComponent = ({ category }) => {
       setName(category.name);
       setEnable(category.enable);
     }
-    console.log(category)
+    console.log(category);
   }, [category]);
 
   const fetchCreateIUpdatetem = async (formDetails) => {
@@ -44,8 +45,9 @@ export const FormComponent = ({ category }) => {
     setIsValid(false);
 
     fetchCreateIUpdatetem({ _id: category?._id, name, enable });
-    if(!category?._id){setName("");}
-    
+    if (!category?._id) {
+      setName("");
+    }
   };
 
   return (
@@ -59,12 +61,15 @@ export const FormComponent = ({ category }) => {
           isValid={isValid}
           error={name.trim() === ""}
           value={name}
+          icon={<IconCategory size="h-[20px] w-[20px]" />}
         />
-        <div className=" flex">
-          <ToggleSwitch initialChecked={enable} onChange={setEnable} />{" "}
-          <p className="ml-4">
-            Categoria {enable ? "habilitada" : "desabilitada"}
-          </p>
+        <div
+          className={`flex bg-white px-3 items-center justify-between mb-4 w-full pl-10 h-12 shadow-sm rounded-lg  ${
+            enable ? "text-black" : "text-gray-300"
+          }`}
+        >
+          <p className="">Categoria {enable ? "habilitada" : "desabilitada"}</p>
+          <ToggleSwitch initialChecked={enable} onChange={setEnable} />
         </div>
       </Form>
     </div>

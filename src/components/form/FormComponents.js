@@ -4,7 +4,6 @@ import { Loading } from "../loading/Loading";
 import { currency } from "../../app/utils/currency";
 
 export const Input = ({
-  name,
   id,
   setValue,
   placeholder,
@@ -14,7 +13,8 @@ export const Input = ({
   isCurrency = false,
   type = "text",
   onFocus = () => {},
-  autoFocus = false
+  autoFocus = false,
+  icon = (<></>)
 }) => {
 
   const inputRef = useRef(null);
@@ -39,10 +39,10 @@ export const Input = ({
   const displayValue = isCurrency ? currency(value) : value;
 
   return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-medium mb-1 ">
-        {name}
-      </label>
+    <div className="relative">
+      <div className="absolute top-3.5 left-3 text-gray-500">
+        {icon}
+      </div>
       <input
         onChange={(e) => handleSetValue(e.target.value)}
         id={id}
@@ -55,7 +55,7 @@ export const Input = ({
         autoCorrect="off"
         autoCapitalize="none"
         spellCheck="false"
-        className={`w-full pl-5 pr-10 py-2 h-12 ring-1 ring-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
+        className={`w-full pl-10 py-2 h-12 shadow-sm rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
             ${
               isValid && error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -169,19 +169,18 @@ export const Select = ({
   isValid,
   error,
   placeholder,
+  icon = (<></>),
 }) => {
   return (
-    <div className="">
-      <label
-        htmlFor="message"
-        className="block text-sm font-medium text-gray-700"
-      >
-        {name}
+    <div className="relative">
+      <div className="absolute top-3.5 left-3 text-gray-500">
+        {icon}
+      </div>
         <div className="flex flex-row items-center gap-2 ">
           <select
             onChange={(e) => setValue(e.target.value)}
             value={value}
-            className="w-full pl-5 pr-10 py-2 h-12 ring-1 ring-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+            className="w-full pl-10 py-2  h-12 shadow-sm rounded-lg ring-[var(--button-default)] focus:ring-1 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
           >
             {placeholder && <option value="">{placeholder}</option>}
             {options.map((op, i) => (
@@ -191,7 +190,6 @@ export const Select = ({
             ))}
           </select>
         </div>
-      </label>
       {isValid && error && (
         <p className="mt-1 text-sm text-red-500">{`O campo "${name}" é obrigatório`}</p>
       )}

@@ -36,11 +36,13 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
     setIsLoading(false);
   }, []);
 
+  const title = `${categoryUUID !== "create"  ? "Editar" : "Cadastrar" } Categoria`
+
   return (
     <Container>
-      <Header divNew divider title="Cadastrar Categoria" />
+      <Header divNew divider title={title} />
       <Content isLoading={isLoading} error={error}>
-        <FormComponent category={category} />
+        <FormComponent category={category} title={title} />
       </Content>
     </Container>
   );

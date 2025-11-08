@@ -3,6 +3,12 @@ import { InputFileComponent } from "../../../components/form/InputFileComponent"
 import { useToast } from "../../../hooks/useToast";
 
 import { Form, Input, Select } from "../../../components/form/FormComponents";
+import { IconPassword } from "public/icons/Password";
+import { ToggleSwitch } from "src/components/ToggleSwitch";
+import { IconUser } from "public/icons/User";
+import { IconEmail } from "public/icons/Email";
+import { IconCompanyLine } from "public/icons/Company";
+import { IconCredential } from "public/icons/Credential";
 
 export const FormComponent = ({ employee }) => {
   const [isValid, setIsValid] = useState(false);
@@ -12,7 +18,8 @@ export const FormComponent = ({ employee }) => {
   const [email, setEmail] = useState("");
   const [password, sePassword] = useState("");
   const [role, setRole] = useState("");
-  const [branch, setBranch] = useState("");
+  const [branch, setBranch] = useState("1");
+  const [enable, setEnable] = useState(true);
   const toast = useToast();
 
   const fetchCreateUpdateEmployee = async (id, payload) => {
@@ -46,6 +53,7 @@ export const FormComponent = ({ employee }) => {
       password,
       role,
       branch,
+      enable
     });
 
     if (employee?._id) return;
@@ -78,6 +86,7 @@ export const FormComponent = ({ employee }) => {
           isValid={isValid}
           error={name.trim() === ""}
           value={name}
+          icon={<IconUser size="h-[20px] w-[20px]" />}
         />
         <Input
           name="Email"
@@ -87,6 +96,7 @@ export const FormComponent = ({ employee }) => {
           isValid={isValid}
           error={email.trim() === ""}
           value={email}
+          icon={<IconEmail size="h-[20px] w-[20px]" />}
         />
         <Input
           type="password"
@@ -97,6 +107,7 @@ export const FormComponent = ({ employee }) => {
           isValid={isValid}
           error={!password}
           value={password}
+          icon={<IconPassword size="h-[20px] w-[20px]" />}
         />
         <Select
           name="Filial"
@@ -110,6 +121,7 @@ export const FormComponent = ({ employee }) => {
           ]}
           isValid={isValid}
           error={branch.trim() === ""}
+          icon={<IconCompanyLine size="h-[20px] w-[20px]" />}
         />
         <Select
           name="Nivel de acesso (Restringe opções no menu)"
@@ -137,7 +149,16 @@ export const FormComponent = ({ employee }) => {
           ]}
           isValid={isValid}
           error={role.trim() === ""}
+          icon={<IconCredential size="h-[20px] w-[20px]" />}
         />
+        <div
+          className={`flex bg-white px-3 items-center justify-between mb-4 w-full pl-10 h-12 shadow-sm rounded-lg  ${
+            enable ? "text-black" : "text-gray-300"
+          }`}
+        >
+          <p className="">Colaborador {enable ? "habilitado" : "desabilitado"}</p>
+          <ToggleSwitch initialChecked={enable} onChange={setEnable} />
+        </div>
       </Form>
     </div>
   );

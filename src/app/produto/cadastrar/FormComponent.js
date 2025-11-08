@@ -9,6 +9,11 @@ import {
   Select,
   Textarea,
 } from "../../../components/form/FormComponents";
+import { IconProduct } from "public/icons/Product";
+import { IconMoney } from "public/icons/Money";
+import { IconCode } from "public/icons/Codes";
+import { IconCategory } from "public/icons/Category";
+import { ToggleSwitch } from "src/components/ToggleSwitch";
 
 export const FormComponent = ({ categories, product }) => {
   const [isValid, setIsValid] = useState(false);
@@ -18,6 +23,7 @@ export const FormComponent = ({ categories, product }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [enable, setEnable] = useState(true);
   const toast = useToast();
 
   const fetchCreateUpdateProduct = async (id, payload) => {
@@ -51,6 +57,7 @@ export const FormComponent = ({ categories, product }) => {
       price,
       description,
       category,
+      enable,
     });
 
     if (product?._id) return;
@@ -84,6 +91,7 @@ export const FormComponent = ({ categories, product }) => {
           isValid={isValid}
           error={code.trim() === ""}
           value={code}
+          icon={<IconCode size="h-[20px] w-[20px]" />}
         />
         <Input
           name="Nome do produto"
@@ -93,6 +101,7 @@ export const FormComponent = ({ categories, product }) => {
           isValid={isValid}
           error={name.trim() === ""}
           value={name}
+          icon={<IconProduct size="h-[20px] w-[20px]" />}
         />
         <Input
           name="Preço do produto"
@@ -104,6 +113,7 @@ export const FormComponent = ({ categories, product }) => {
           value={price}
           type="tel"
           isCurrency
+          icon={<IconMoney size="h-[20px] w-[20px]" />}
         />
         <Select
           name="Categoria"
@@ -114,9 +124,17 @@ export const FormComponent = ({ categories, product }) => {
           options={categories}
           isValid={isValid}
           error={category.trim() === ""}
+          icon={<IconCategory size="h-[20px] w-[20px]" />}
         />
+        <div
+          className={`flex bg-white px-3 items-center justify-between mb-4 w-full pl-10 h-12 shadow-sm rounded-lg  ${
+            enable ? "text-black" : "text-gray-300"
+          }`}
+        >
+          <p className="">Categoria {enable ? "habilitada" : "desabilitada"}</p>
+          <ToggleSwitch initialChecked={enable} onChange={setEnable} />
+        </div>
         <Textarea
-          name="Descrição do produto"
           id="description"
           setValue={setDescription}
           placeholder="Descrição do produto"

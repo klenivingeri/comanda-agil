@@ -40,13 +40,13 @@ export const IconCompanyLine = ({ size }) => (
     >
       <path
         id="company-small-24px-2"
-        dataName="company-small-24px"
+        dataname="company-small-24px"
         d="M16,4H2A2.006,2.006,0,0,0,0,6V24H18V6A2.006,2.006,0,0,0,16,4ZM8,22V18h2v4Zm8,0H12V17a.945.945,0,0,0-1-1H7a.945.945,0,0,0-1,1v5H2V6H16ZM8,10H6V8H8Zm4,0H10V8h2ZM8,14H6V12H8Zm4,0H10V12h2Z"
         transform="translate(3 -2)"
       />
       <rect
         id="Retângulo_222"
-        dataName="Retângulo 222"
+        dataname="Retângulo 222"
         width="24"
         height="24"
         fill="none"

@@ -8,6 +8,7 @@ import { Tabs } from "src/components/Tabs";
 import { Ranking } from "src/components/Ranking";
 import { DashboardOneLine } from "src/components/ChartComponents/DashboardOneLine";
 import { last7days } from "src/app/utils/last7days";
+import { Loading } from "src/components/loading/Loading";
 
 const arrTabs = [
   { title: 'Dia', id: 'day' },
@@ -43,7 +44,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
           acc[id] = { _id: id, totalQuantity: 0, product: item.product, createdAt: item.createdAt };
         }
         acc[id].displayName = item.product?.name || "Produto Desconhecido",
-        acc[id].totalQuantity += item.quantity || 0;
+          acc[id].totalQuantity += item.quantity || 0;
         return acc;
       }, {})
     );
@@ -63,7 +64,7 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
   return (
     <Container>
       <Header divider title="Relatório de Products" />
-      <Content isLoading={isLoading} error={error}>
+      <Content >
         <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
         <h2 className="mt-5" style={{ textAlign: "center" }}>
           {LabelText[tab]}
@@ -71,9 +72,11 @@ export default function RelatorioProductsView({ getCategoryItems, response, isLo
         <DashboardOneLine allSubOrders={allSubOrders} tab={tab} />
         {response.length === 0
           ? (
-            <div className="flex justify-center items-center h-[350px] m-2">
-              <div>Nenhum dado encontrado no momento.</div>
-            </div>
+            isLoading
+              ? <Loading isLoading={isLoading} />
+              : <div className="flex justify-center items-center h-[350px] m-2">
+                <div>Nenhum dado encontrado no momento.</div>
+              </div>
           )
           : <Ranking data={sortSuborders} isProduct />
         }
