@@ -94,7 +94,7 @@ export const Button = React.memo(
           {...attrButton}
         >
           <div
-            className={`border-b-1 ${isInline ? 'border-b-transparent' : 'border-white/40' } w-full flex justify-center items-center ${
+            className={`border-b-1 ${isInline ? 'border-b-transparent' : 'border-white/20' } w-full flex justify-center items-center ${
               !hFull ? "h-11" : hFull
             } rounded-md`}
           >

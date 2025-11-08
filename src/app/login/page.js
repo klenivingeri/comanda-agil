@@ -9,6 +9,8 @@ import { Loading } from "src/components/loading/Loading";
 import { useUserConfig } from "src/app/context/UserContext";
 import { useMenu } from "src/app/context/MenuContext";
 import { useItem } from "src/app/context/ItemContext";
+import { IconUser } from "public/icons/User";
+import { IconPassword } from "public/icons/Password";
 
 const setCookie = (value) => {
   const date = new Date();
@@ -27,7 +29,6 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const refEndPage = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -53,7 +54,7 @@ export default function Login() {
           _menu.get();
         }
         _item.get();
-        setCookie(true)
+        setCookie(true);
         router.push("/home");
       } else {
         setError(true);
@@ -66,7 +67,7 @@ export default function Login() {
   }
 
   const handleGoToHome = () => {
-    setCookie(false)
+    setCookie(false);
     router.push("/");
   };
 
@@ -77,11 +78,11 @@ export default function Login() {
           <div className="relative w-full h-full flex justify-center items-center">
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col rounded-sm bg-white p-10  mb-4  w-90 justify-center items-center gap-2 relative font-bold"
+              className="flex flex-col bg-white rounded-3xl shadow-xl p-10 mb-4 w-90 justify-center items-center gap-2 relative font-normal"
             >
               <a
                 onClick={handleGoToHome}
-                className="flex flex-col justify-center items-center text-gray-500 mb-6"
+                className="flex flex-col justify-center items-center text-gray-500 mb-6 font-bold"
               >
                 <div className="flex text-5xl tracking-tight">
                   <span className="text-[var(--logo1)]">Comanda</span>
@@ -91,21 +92,30 @@ export default function Login() {
                   Gestão de Pedidos Simplificada
                 </span>
               </a>
-              <input
-                type="email"
-                className="w-full text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-              />
-              <div ref={refEndPage} id="endModal" className="h-0"></div>
-              <input
-                type="password"
-                value={password}
-                className="w-full mb-2 text-center placeholder:text-center placeholder:font-bold py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Senha"
-              />
+              <div className="relative w-full">
+                <div className="absolute top-3.5 left-3 text-gray-500">
+                  <IconUser size="h-[20px] w-[20px]" />
+                </div>
+                <input
+                  type="email"
+                  className="w-full ab pl-10 placeholder:font-extralight py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </div>
+              <div className="relative w-full">
+                <div className="absolute top-3.5 left-3 text-gray-500">
+                  <IconPassword size="h-[20px] w-[20px]" />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  className="w-full pl-10  mb-2 placeholder:font-extralight py-2 h-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black"
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Senha"
+                />
+              </div>
               {error && (
                 <p className="mt-1 text-sm text-red-500">
                   Algo errado não esta certo, tente novamente.
@@ -118,7 +128,11 @@ export default function Login() {
                   <Loading isLoading={isLoading} style="style3" />
                 )}
               </ButtonContainer>
-              <ButtonContainer style="buttonInline" margin="mt-2" href="/cadastrar-empresa">
+              <ButtonContainer
+                style="buttonInline"
+                margin="mt-2"
+                href="/cadastrar-empresa"
+              >
                 Criar uma conta
               </ButtonContainer>
               <a onClick={handleGoToHome} className="text-black font-normal">

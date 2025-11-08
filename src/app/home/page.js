@@ -15,7 +15,7 @@ export default function Empresa() {
 
   return (
     <Container>
-      <Header divider menu title={`Bem-vindo, ${_user.all[0]?.name}`} />
+      <Header divider menu title={`Bem-vindo, ${_user.all[0]?.name || ""}`} />
       <Content isLoading={isLoading} error={error}>
         <ButtonContainer href="/comandas" hFull="h-22" margin="mt-1">
           <span className="pl-1 flex items-center gap-2">

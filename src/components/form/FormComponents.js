@@ -207,7 +207,7 @@ export const Form = ({ children, create, isLoading, style, text= 'Cadastrar'  })
   return (
     <form
       method="POST"
-      className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
+      className="max-w-md mx-auto p-6 bg-[var(--fore-back)] rounded-3xl shadow-xl space-y-4"
     >
       {children}
       <ButtonContainer onClick={handleSubmit} style={style}>

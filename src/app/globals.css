@@ -4,6 +4,7 @@
 
 :root {
   --background: #D8DDE9;
+  --fore-back:    #F8FBFD;
   --foreground:  #F2F7FA;
   --bg-component: #FFFFFF;
   --text-default: black;

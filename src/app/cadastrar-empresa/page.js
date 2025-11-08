@@ -1,5 +1,9 @@
 "use client";
 import { IconChecked } from "public/icons/Checked";
+import { IconCompany, IconCompanyLine } from "public/icons/Company";
+import { IconEmail } from "public/icons/Email";
+import { IconPassword } from "public/icons/Password";
+import { IconUser } from "public/icons/User";
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonContainer } from "src/components/button";
 import { Form } from "src/components/form/FormComponents";
@@ -10,7 +14,6 @@ import { CenterTop } from "src/components/modal/ModalTop";
 import { useToast } from "src/hooks/useToast";
 
 export const Input = ({
-  name,
   id,
   setValue,
   placeholder,
@@ -21,6 +24,7 @@ export const Input = ({
   onFocus = () => {},
   autoFocus = false,
   errorMessage = "",
+  icon = (<></>)
 }) => {
   const inputRef = useRef(null);
 
@@ -35,10 +39,10 @@ export const Input = ({
   };
 
   return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-medium ">
-        {name}
-      </label>
+    <div className="relative">
+      <div className="absolute top-3.5 left-3 text-gray-500">
+        {icon}
+      </div>
       <input
         onChange={(e) => handleSetValue(e.target.value)}
         id={id}
@@ -51,7 +55,7 @@ export const Input = ({
         autoCorrect="off"
         autoCapitalize="none"
         spellCheck="false"
-        className={`w-full pl-5 pr-10 py-2 h-12 ring-1 ring-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
+        className={`w-full pl-10 py-2 h-12 rounded-lg  shadow-sm focus:ring-1 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
             ${
               isValid && error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -131,19 +135,6 @@ export default function Page() {
 
   return (
     <Container>
-      <header className="bg-white shadow-md sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="text-2xl font-bold tracking-tight">
-              <span className="text-gray-900">Comanda</span>
-              <span className="text-[var(--button-orange-default)]">Go</span>
-              <p className="text-xs font-normal text-gray-500 mt-1">
-                Gestão de Pedidos Simplificada
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
       <Content>
         <div className="w-full max-w-[500px] mx-auto text-gray-700">
           <Form
@@ -152,6 +143,16 @@ export default function Page() {
             isLoading={isLoading}
             style="buttonOrange"
           >
+            <a className="flex flex-col justify-center items-center text-gray-500 mb-6 font-bold">
+              <div className="flex text-5xl tracking-tight">
+                <span className="text-[var(--logo1)]">Comanda</span>
+                <span className="text-[var(--button-orange-default)]">Go</span>
+              </div>
+              <span className="text-sm font-extralight">
+                Gestão de Pedidos Simplificada
+              </span>
+            </a>
+            <div className="flex w-full items-center justify-center"><h1 className=" text-2xl font-medium">Criar Conta</h1></div>
             <Input
               name="Proprietário"
               id="name"
@@ -160,6 +161,7 @@ export default function Page() {
               isValid={isValid}
               error={name.trim() === ""}
               value={name}
+              icon={<IconUser size="h-[20px] w-[20px]" />}
             />
             <Input
               name="Nome da empresa"
@@ -169,6 +171,7 @@ export default function Page() {
               isValid={isValid}
               error={enterprise.trim() === ""}
               value={enterprise}
+              icon={<IconCompanyLine size="h-[20px] w-[20px]" />}
             />
             <Input
               name="Email"
@@ -178,6 +181,7 @@ export default function Page() {
               isValid={isValid}
               error={email.trim() === ""}
               value={email}
+              icon={<IconEmail size="h-[20px] w-[20px]" />}
             />
             <Input
               type="password"
@@ -189,6 +193,7 @@ export default function Page() {
               error={!password || password !== passwordConfirm}
               value={password}
               errorMessage="As senhas digitadas não coincidem. Por favor, verifique."
+              icon={<IconPassword size="h-[20px] w-[20px]" />}
             />
             <Input
               type="password"
@@ -200,6 +205,7 @@ export default function Page() {
               error={!passwordConfirm || password !== passwordConfirm}
               value={passwordConfirm}
               errorMessage="As senhas digitadas não coincidem. Por favor, verifique."
+              icon={<IconPassword size="h-[20px] w-[20px]" />}
             />
           </Form>
         </div>
