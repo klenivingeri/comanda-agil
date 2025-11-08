@@ -8,7 +8,7 @@ import { Footer } from "../../components/layout/Footer";
 import { Header } from "../../components/layout/Header";
 import { Comanda } from "./Comanda";
 
-import { IconMenuList } from "../../../public/icons/MenuList";
+import { IconMenu } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 
 import { isEmpty } from "../utils/empty";
@@ -316,21 +316,6 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
         setInputText={setInputText}
         title="CARDAPIO"
       >
-        <ButtonContainer
-          onClick={handleOpenModal}
-          hFull="h-11"
-          wFull="w-24"
-          margin="mt-1"
-        >
-          <span className="pl-1 flex items-center gap-2">
-            {code} <IconMenuList size="h-[32px] w-[32px]" />
-          </span>
-          {!!itemsSelected?.length && (
-            <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-              {itemsSelected?.length}
-            </div>
-          )}
-        </ButtonContainer>
       </Header>
       <Content
         isLoading={isLoading || _item.isLoading}
@@ -358,13 +343,28 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
         <ButtonContainer
           onClick={saveCommand}
           disabled={itemsSelected?.length == 0}
-          margin="mx-2 mb-2"
+          margin="mx-1 mb-2"
           style={itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"}
         >
           {!isLoadingCreate ? (
-            <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
+            <p className="text-sm">LANÇAR ITEM{itemsSelected?.length > 1 && "S"}</p>
           ) : (
             <Loading isLoading={isLoadingCreate} style="style3" />
+          )}
+        </ButtonContainer>
+        <ButtonContainer
+          onClick={handleOpenModal}
+          wFull="w-28"
+          margin="mx-1 mb-2"
+          style='buttonInline'
+        >
+          <span className="pl-1 flex items-center gap-2">
+            {code} <IconMenu size="h-[32px] w-[32px]" />
+          </span>
+          {!!itemsSelected?.length && (
+            <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
+              {itemsSelected?.length}
+            </div>
           )}
         </ButtonContainer>
       </Footer>

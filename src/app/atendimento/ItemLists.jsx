@@ -4,7 +4,12 @@ import { Item } from "./Item";
 import { IconArrowDown } from "public/icons/ArrowDown";
 import { IconArrowRight } from "public/icons/ArrowRight";
 
-const Title = ({ category, items, isOpen, onToggle }) => {
+const Title = ({
+  items,
+  isOpen, 
+  onToggle,
+  category,
+  }) => {
   const total = useMemo(() => {
     return items
       .filter((item) => item.category.type === category.type)
@@ -34,8 +39,16 @@ const Title = ({ category, items, isOpen, onToggle }) => {
   )
 }
 
-const ItemList = ({ items, inputText, handleUpdateItemsSelected, showListComanda, category, isOpen, onToggle }) => {
-  return <div className={`${!inputText ? 'bg-white mb-2 rounded-lg shadow-md py-1' : ''} `}>
+const ItemList = ({
+  items,
+  isOpen,
+  category,
+  onToggle,
+  inputText,
+  showListComanda,
+  handleUpdateItemsSelected,
+}) => {
+  return <div className={`${!inputText ? 'bg-[var(--bg-component)] mb-2 rounded-lg shadow-md py-1' : ''} `}>
     {!inputText && (
       <Title category={category} items={items} isOpen={isOpen} onToggle={onToggle} />
     )}
@@ -57,14 +70,13 @@ const ItemList = ({ items, inputText, handleUpdateItemsSelected, showListComanda
   </div>
 }
 
-
-export const ItemLists = ({ inputText,
+export const ItemLists = ({
   items,
-  handleUpdateItemsSelected,
-  showListComanda,
-  openModal,
   openType,
-  setOpenType
+  inputText,
+  setOpenType,
+  showListComanda,
+  handleUpdateItemsSelected,
 }) => {
   const { _category } = useCategory();
   const listagem = useMemo(() => {

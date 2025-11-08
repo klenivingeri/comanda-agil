@@ -13,6 +13,8 @@ import { Checkout } from "src/components/checkout";
 import { Content } from "src/components/layout/Content";
 import { CenterTop } from "src/components/modal/ModalTop";
 import { RULES } from "../utils/constants";
+import { IconMoney } from "public/icons/Money";
+import { IconQrcode } from "public/icons/QrCode";
 
 export const Comanda = ({
   handleOpenModal,
@@ -59,25 +61,28 @@ export const Comanda = ({
           </span>
         }
       >
-        {_user.all[0]?.role === "ADMIN" && (
-          <div className="flex">
+        <div className="flex">
+          {_user.all[0]?.role === "ADMIN" && (
             <ButtonContainer
               onClick={handleShowDelete}
               hFull="h-8"
               wFull="w-14"
-              margin="mx-2 mt-1"
+              margin="mx-1 mt-1"
             >
               <IconEdit size="h-[23px] w-[23px]" />
             </ButtonContainer>
-          </div>
-        )}
+          )}
+          <ButtonContainer
+            hFull="h-8"
+            wFull="w-14"
+            margin="mx-1 mt-1"
+          >
+            <IconQrcode size="h-[23px] w-[23px]" />
+          </ButtonContainer>
+        </div>
       </Header>
 
-      <Content
-        isLoading={isLoadingCreate}
-        mb="mb-[190px]"
-        endPage
-      >
+      <Content isLoading={isLoadingCreate} mb="mb-[190px]" endPage>
         {children}
       </Content>
 
@@ -107,28 +112,33 @@ export const Comanda = ({
               </span>
             </div>
           </div>
-          <div className="relative w-full flex justify-center items-center ">
+          <div className="relative w-full flex justify-center items-center">
             <ButtonContainer
               disabled={itemsSelected?.length == 0}
-              margin="mx-2 mb-3"
+              margin="mx-1 mb-1"
               onClick={saveCommand}
-              style={itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"}
+              style={
+                itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"
+              }
             >
               {!isLoadingCreate ? (
-                <p className="text-sm">LANÇAR ITEM NA COMANDA</p>
+                <p className="text-sm">
+                  LANÇAR ITEM{itemsSelected?.length > 1 && "S"}
+                </p>
               ) : (
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
             </ButtonContainer>
             {RULES.MODERATOR.includes(_user.all[0]?.role) && (
-            <ButtonContainer
-              disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
-              onClick={handleOpenCenterModal}
-              wFull="w-28"
-              margin="mx-2 mb-3"
-            >
-              <p className="text-sm">PAGAMENTO</p>
-            </ButtonContainer>)}
+              <ButtonContainer
+                disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
+                onClick={handleOpenCenterModal}
+                wFull="w-28"
+                margin="mx-1 mb-1"
+              >
+                <IconMoney size="h-[30px] w-[30px]" />
+              </ButtonContainer>
+            )}
           </div>
         </div>
       </Footer>

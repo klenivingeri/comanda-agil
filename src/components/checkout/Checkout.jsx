@@ -6,6 +6,7 @@ import { Input } from "../form/FormComponents"
 import { useMemo, useState, useRef } from "react"
 import { IconX } from "public/icons/X"
 import { FakeButton } from "src/app/utils/FakeButton"
+import { IconMoney } from "public/icons/Money"
 
 const paymentMethods = [
   { name: 'Cartão', id: 'CARD' },
@@ -132,6 +133,7 @@ export function ComponentFragmentPayment({
           value={value}
           isCurrency
           onFocus={testParaIniciarDivNoFim}
+          icon={<IconMoney size="h-[20px] w-[20px]" />}
         />
         <ButtonContainer onClick={handleUpdateValue} wFull="w-14" text="+" margin="mt-1" />
         <FakeButton />

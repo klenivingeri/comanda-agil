@@ -50,7 +50,7 @@ export const Item = ({
         } py-2 content-center bg-[var(--bg-component)] items-center justify-between border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50`}
       >
         {itemInNote ? (
-          <div className="text-3xl min-w-[50px] max-w-[50px] text-shadow-md shadow-[var(--bg-subTitle)]/50 flex justify-center content-center">
+          <div className="text-3xl min-w-[50px] max-w-[50px] mt-1 shadow-[var(--bg-subTitle)]/50 flex justify-center content-center font-bold">
             {item?.quantity}
           </div>
         ) : (
@@ -58,14 +58,29 @@ export const Item = ({
             <IconImageEmpty size="h-[32px] w-[32px]" />
           </div>
         )}
-        <div className="truncate w-full flex flex-col px-2 py-1 ">
-          <span className="font-semibold truncate text-sm mr-2">
-            {item.code} - {item.name}
-          </span>
-          <span className="text-xs mt-[-2px] text-gray-500">
-            {currency(item.price)}
-          </span>
-        </div>
+
+        {itemInNote ? (
+          <div className="truncate w-full flex items-center py-2 ">
+            <div className="truncate w-full flex flex-col ">
+              <span className="font-semibold truncate text-base mr-2">
+                {item.name} 
+            </span>
+            <span className="text-xs mt-[-1px] text-gray-500">
+              {currency(item.price)} / un
+            </span>
+            </div>
+            <div className="mr-2 font-semibold">{currency(item?.quantity* item.price)}</div>
+          </div>
+        ) : (
+          <div className="truncate w-full flex flex-col px-2 py-1 ">
+            <span className="font-semibold truncate text-base mr-2">
+              {item.name}
+            </span>
+            <span className="text-xs mt-[-1px] text-gray-500 flex items-center">
+              {item.code}  - {currency(item.price)} / un
+            </span>
+          </div>
+        )}
 
         {!hiddeSelectQuantity ? (
           <SelectQuantity
