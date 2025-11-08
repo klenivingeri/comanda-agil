@@ -33,6 +33,7 @@ export const InputSearch = ({
   const handlerClearText = () => {
     setText("");
     setInputText("");
+    setSearchFull(false);
   };
 
   const handleFocusInput = () => {
@@ -48,7 +49,10 @@ export const InputSearch = ({
   };
 
   const handleOnblur = () => {
-    setSearchFull(false);
+    if (!text.length){
+      setSearchFull(false);
+    }
+    
   };
 
   const handleForm = (e) => {

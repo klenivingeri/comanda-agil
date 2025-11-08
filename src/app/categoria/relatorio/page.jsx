@@ -18,7 +18,6 @@ export default function PageRelatorioCategoria() {
     })
   }
 
-  
   return (
     <RelatorioCategoriaView
       error={error}

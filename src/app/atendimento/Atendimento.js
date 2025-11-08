@@ -7,7 +7,7 @@ import { Content } from "../../components/layout/Content";
 import { Footer } from "../../components/layout/Footer";
 import { Header } from "../../components/layout/Header";
 import { Comanda } from "./Comanda";
-import { ItemList } from "./ItemList";
+
 import { IconMenuList } from "../../../public/icons/MenuList";
 import { Item } from "./Item";
 
@@ -17,6 +17,7 @@ import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
 import { IconChecked } from "public/icons/Checked";
+import { ItemLists } from "./ItemLists";
 
 export function RotateImage({ rotated }) {
   return (
@@ -38,7 +39,6 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
   const [scrollPosition, setScrollPosition] = useState(0);
   const [rotated, setRotated] = useState(false);
-  const score = 200;
   const [items, setItems] = useState([]);
   const [comanda, setComanda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -343,7 +343,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           </div>
         ) : (
           <div>
-            <ItemList
+            <ItemLists
               items={items}
               inputText={inputText}
               handleUpdateItemsSelected={handleUpdateItemsSelected}

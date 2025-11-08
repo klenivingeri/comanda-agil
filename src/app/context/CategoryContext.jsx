@@ -23,8 +23,8 @@ export function CategoryProvider({ children }) {
     }
   }, [getCategory, refreshKey]);
 
-  const value = useMemo(() => ({ get: getCategory, ...categorySave }), [categorySave, getCategory]);
-  return <CategoryContext.Provider value={value}>{children}</CategoryContext.Provider>;
+  const _category = useMemo(() => ({ get: getCategory, ...categorySave }), [categorySave, getCategory]);
+  return <CategoryContext.Provider value={{_category}}>{children}</CategoryContext.Provider>;
 }
 
 export const useCategory = () => useContext(CategoryContext);

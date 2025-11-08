@@ -1,6 +1,7 @@
+import { saveCollectionToDB } from "src/db/saveCollectionToDB";
 import { isEmpty } from "./empty";
 
-export async function fetchAndCache(url, storageKey, setState) {
+export async function fetchAndCache(url, storageKey, setState, catalog_name = null) {
   try {
     setState((prev) => ({ ...prev, isLoading: true }));
 
@@ -12,6 +13,10 @@ export async function fetchAndCache(url, storageKey, setState) {
 
     if (!isEmpty(data?.records)) {
       sessionStorage.setItem(storageKey, JSON.stringify(data.records));
+      if (catalog_name) {
+        await saveCollectionToDB(catalog_name, data.records);
+      }
+
       setState({ all: data.records, error: false, isLoading: false });
     } else {
       setState({ all: [], error: true, isLoading: false });
