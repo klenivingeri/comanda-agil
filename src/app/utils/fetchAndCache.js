@@ -1,4 +1,3 @@
-import { saveCollectionToDB } from "src/db/saveCollectionToDB";
 import { isEmpty } from "./empty";
 
 export async function fetchAndCache(url, storageKey, setState) {

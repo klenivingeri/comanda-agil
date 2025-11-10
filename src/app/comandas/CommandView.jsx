@@ -10,17 +10,16 @@ import { IconMenuList } from "../../../public/icons/MenuList";
 
 import { IconCreate } from "../../../public/icons/Create";
 import { useRouter } from "next/navigation";
-import { useUserConfig } from "src/app/context/UserContext";
 import { RULES } from "../utils/constants";
 import Link from "next/link";
 
 const addZero = (text) => String(text?.trim()).padStart(3, 0)
 
 export default function CommandView({ commandAll, isLoadingCommand, errorCommand }) {
-  const { _user } = useUserConfig();
   const [inputText, setInputText] = useState("");
   const [hasComanda, setHasComanda] = useState(true);
   const [oneComanda, setOneComanda] = useState({});
+  const [customer, setCustomer] = useState([]);
   const router = useRouter();
 
   const handleCommandID = () => {
@@ -44,8 +43,13 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
     }
   }, [inputText]);
 
+  useEffect(() => {
+    const customer = localStorage.getItem("customer");
+    setCustomer(JSON.parse(customer));
+  }, []);
 
-  const columnsClass = RULES.MODERATOR.includes(_user.all[0]?.role) ? "grid-cols-1" : "grid-cols-2";
+
+  const columnsClass = RULES.MODERATOR.includes(customer[0]?.role) ? "grid-cols-1" : "grid-cols-2";
   return (
     <Container>
       <Header
@@ -97,7 +101,7 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
                     {dayjs(c.date).format("DD/MM")}
                   </div>
                 </Link>
-                {RULES.MODERATOR.includes(_user.all[0]?.role) && (
+                {RULES.MODERATOR.includes(customer[0]?.role) && (
                   <ButtonContainer
                     href={`/atendimento/${c.code}-${c._id}-caixa`}
                     hFull="h-11"
@@ -114,68 +118,3 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
     </Container>
   );
 }
-
-// <div key={idx} className="grid grid-cols-12 p-2 w-full bg-[var(--bg-component)]">
-//   <span className="text-[var(--button-disabled)] bottom-2 right-0 col-span-2 items-center">
-//     <IconMenuList size="h-[40px] w-[40px]" />
-
-//   </span>
-//   <span className="col-span-2 flex items-center text-[var(--text-default)] font-bold"> {c.code}</span>
-//   <div className="col-span-3"></div>
-//   <div className="col-span-5 flex items-center text-sm">
-//     <ButtonContainer
-
-//       hFull="h-8"
-//       wFull="w-full"
-//       margin="mx-1 mt-1"
-//       style="buttonBlue"
-//     >
-//       Comanda
-//     </ButtonContainer>
-//     {RULES.MODERATOR.includes(_user.all[0]?.role) && (
-//       <ButtonContainer
-
-//         hFull="h-8"
-//         wFull="w-full"
-//         margin="mx-1 mt-1"
-//         style="buttonGreen"
-//       >
-//         Caixa
-//       </ButtonContainer>
-//     )}
-//   </div>
-// </div>
-
-
-
-
-{/* <div key={idx} className="flex flex-col gap-1 p-1 border-2 border-[var(--button-default)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-                <ButtonContainer
-                  href={`/atendimento/${c.code}-${c._id}`}
-                  wFull="w-26"
-                  hFull="h-20"
-                  inline
-                  bg='bg-[var(--button-default)]'
-                >
-                  <div className="h-20 w-26 p-2 text-white flex flex-col justify-between rounded-md">
-                    <div className="flex  text-3xl font-bold leading-none">
-                      {c.code}
-                    </div>
-                    <div className="flex justify-start text-sm leading-none">
-                      {dayjs(c.date).format("DD/MM")}
-                    </div>
-                    <span className="text-[var(--button-disabled)] absolute bottom-1 right-0">
-                      <IconMenuList size="h-[40px] w-[40px]" />
-                    </span>
-                  </div>
-                </ButtonContainer>
-                {RULES.MODERATOR.includes(_user.all[0]?.role) && (
-                  <ButtonContainer
-                    href={`/atendimento/${c.code}-${c._id}-caixa`}
-                    hFull="h-8"
-                    wFull="w-full"
-                    margin="mt-1"
-                  >
-                    <span className="">Caixa</span>
-                  </ButtonContainer>)}
-              </div> */}

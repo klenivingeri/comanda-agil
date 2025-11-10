@@ -53,7 +53,10 @@ export const postLogin = async ({ users, email, password }) => {
     return new Response(JSON.stringify({ 
         success: true,
         message: "Login bem-sucedido",
-        email
+        records: [{
+          name: user.name,
+          role: user.role
+        }]
       }), {
       status: 200,
       headers: {

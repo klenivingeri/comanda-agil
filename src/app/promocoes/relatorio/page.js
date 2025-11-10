@@ -1,18 +1,18 @@
 "use client";
-import { useState } from "react";
+
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header } from "../../../components/layout/Header";
 import { Construction } from "../../../components/construction";
 
+import { useCategory } from "src/app/context/CategoryContext";
 export default function RelatorioPromocoes() {
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { _category } = useCategory();
 
   return (
     <Container>
       <Header divider title="Relatório de Promoções" />
-      <Content isLoading={isLoading} error={error}>
+      <Content isLoading={_category.isLoading} error={_category.error}>
         <Construction />
       </Content>
     </Container>

@@ -35,7 +35,7 @@ export function RotateImage({ rotated }) {
   );
 }
 
-export const Atendimento = ({ idComanda, _command, _item }) => {
+export const Atendimento = ({ idComanda, _command, _item, _category }) => {
   const code = idComanda.includes("-") ? idComanda.split("-")[0] : idComanda;
   const [scrollPosition, setScrollPosition] = useState(0);
   const [rotated, setRotated] = useState(false);
@@ -330,6 +330,7 @@ export const Atendimento = ({ idComanda, _command, _item }) => {
           <div>
             <ItemLists
               items={items}
+              _category={_category}
               inputText={inputText}
               handleUpdateItemsSelected={handleUpdateItemsSelected}
               openModal={openModal}

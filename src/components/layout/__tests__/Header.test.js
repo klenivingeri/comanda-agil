@@ -20,15 +20,23 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("src/app/context/MenuContext", () => ({
   useMenu: () => ({
-    _menu: { all: [] },
+    _menu: { all: [], get: () => {} },
   }),
 }));
 
-jest.mock("src/app/context/UserContext", () => ({
-  useUserConfig: () => ({
-    _user: { all: [{ name: "Usuário Teste" }] },
-  }),
-}));
+
+let store = {
+  customer: JSON.stringify([{ name: "Usuário Teste" }]),
+};
+
+Object.defineProperty(global, "localStorage", {
+  value: {
+    getItem: jest.fn(function (key) {
+      return store[key] || null;
+    }),
+  },
+  writable: true,
+});
 
 test("Exibe o título da página", () => {
   render(<Header title="Titulo da pagina" menu={true} />);
@@ -43,6 +51,8 @@ test("Exibe o ícone de voltar por padrão e chama router.back ao clicar", () =>
   fireEvent.click(backButton);
   expect(mockRouterBack).toHaveBeenCalledTimes(1);
 });
+
+
 
 test("Exibe o ícone de fechar e chama a função onClick ao ser clicado", () => {
   const mockOnClick = jest.fn();

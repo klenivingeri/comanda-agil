@@ -12,7 +12,6 @@ export const ToggleSwitch = ({ initialChecked, onChange, label }) => {
     const newState = !initialChecked;
     onChange(newState);
   };
-  console.log(initialChecked)
 
   const backgroundClass = initialChecked ? 'bg-[var(--button-default)]' : 'bg-gray-300';
   const sliderTranslate = initialChecked ? 'translate-x-full' : 'translate-x-0';

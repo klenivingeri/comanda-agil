@@ -4,11 +4,14 @@ import Menu from "./Menu";
 import { SideModal } from "../../../components/modal/SideModal";
 import Link from "next/link";
 
-export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
+export const MenuMobile = ({ handleOpenModal, openModal, menu }) => {
   const [themeCurrent, setThemeCurrent] = useState("");
+  const [customer, setCustomer] = useState([]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
+    const user = localStorage.getItem("customer");
+    setCustomer(JSON.parse(user));
     setThemeCurrent(savedTheme);
   }, []);
 
@@ -33,7 +36,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
               <div className="bg-cover bg-center rounded-full h-15 w-15 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)]"></div>
             </div>
             <span className="px-2 shadow-2xl font-bold ">
-              {user.all[0]?.name}
+              {customer[0]?.name}
             </span>
             <span className="px-2 shadow-2xl text-gray-500">Atendente</span>
           </Link>
@@ -53,7 +56,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, menu, user }) => {
 
         {/* Seção do Menu (Rolável) */}
         <div className="flex-1 overflow-y-auto">
-          {menu.all?.length > 0 && <Menu menu={menu} user={user} />}
+          {menu.all?.length > 0 && <Menu menu={menu} />}
         </div>
       </div>
     </SideModal>

@@ -8,7 +8,6 @@ import { Loading } from "../../components/loading/Loading";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../../components/layout/Container";
 import { isEmpty } from "src/app/utils/empty";
-import { useUserConfig } from "src/app/context/UserContext";
 import { Checkout } from "src/components/checkout";
 import { Content } from "src/components/layout/Content";
 import { CenterTop } from "src/components/modal/ModalTop";
@@ -27,7 +26,7 @@ export const Comanda = ({
   commandID,
   commandCode,
 }) => {
-  const { _user } = useUserConfig();
+  const [customer, setCustomer] = useState([]);
   const [openCenterModal, setOpenCenterModal] = useState(false);
 
   const handleOpenCenterModal = () => {
@@ -44,6 +43,8 @@ export const Comanda = ({
     }
   };
   useEffect(() => {
+    const customer = localStorage.getItem("customer");
+    setCustomer(JSON.parse(customer));
     const a = setTimeout(() => testParaIniciarDivNoFim(), 50);
     return () => clearTimeout(a);
   }, []);
@@ -62,7 +63,7 @@ export const Comanda = ({
         }
       >
         <div className="flex">
-          {_user.all[0]?.role === "ADMIN" && (
+          {customer[0]?.role === "ADMIN" && (
             <ButtonContainer
               onClick={handleShowDelete}
               hFull="h-8"
@@ -72,11 +73,7 @@ export const Comanda = ({
               <IconEdit size="h-[23px] w-[23px]" />
             </ButtonContainer>
           )}
-          <ButtonContainer
-            hFull="h-8"
-            wFull="w-14"
-            margin="mx-1 mt-1"
-          >
+          <ButtonContainer hFull="h-8" wFull="w-14" margin="mx-1 mt-1">
             <IconQrcode size="h-[23px] w-[23px]" />
           </ButtonContainer>
         </div>
@@ -129,7 +126,7 @@ export const Comanda = ({
                 <Loading isLoading={isLoadingCreate} style="style3" />
               )}
             </ButtonContainer>
-            {RULES.MODERATOR.includes(_user.all[0]?.role) && (
+            {RULES.MODERATOR.includes(customer[0]?.role) && (
               <ButtonContainer
                 disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
                 onClick={handleOpenCenterModal}

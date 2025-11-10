@@ -16,7 +16,7 @@ export const FormComponent = ({ category, title }) => {
       setName(category.name);
       setEnable(category.enable);
     }
-    console.log(category);
+
   }, [category]);
 
   const fetchCreateIUpdatetem = async (formDetails) => {

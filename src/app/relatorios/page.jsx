@@ -2,10 +2,8 @@
 import React, { useState } from "react";
 import RelatorioView from "./RelatorioView";
 import { getAllIndexdbOrApi } from "src/db/getIndexdbOrApi";
-import { useUserConfig } from "src/app/context/UserContext";
 
 export default function PageRelatorioProduto() {
-  const { _user } = useUserConfig();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState([]);

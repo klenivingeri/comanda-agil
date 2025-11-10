@@ -17,7 +17,6 @@ export async function GET(request) {
 
   const response = getProducts({
     products,
-    categories,
     xTenant,
     id,
   });

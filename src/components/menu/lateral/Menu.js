@@ -30,10 +30,10 @@ const icons = {
   IconExit: <IconExit size="h-[28px] w-[28px]" />,
 };
 
-const Menu = ({ menu, user }) => {
+const Menu = ({ menu }) => {
   const router = useRouter();
 
-  const { triggerCleaning } = useCleaningTrigger();
+  const { logout } = useCleaningTrigger();
   const [activeLink, setActiveLink] = useState("");
   const [subActiveLink, setSubActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -58,7 +58,7 @@ const Menu = ({ menu, user }) => {
   };
 
   const handleExit = () => {
-    triggerCleaning();
+    logout();
     router.push('/login');
   }
 

@@ -1,16 +1,14 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { ButtonContainer } from "src/components/button";
 import { Loading } from "src/components/loading/Loading";
-import { useUserConfig } from "src/app/context/UserContext";
-import { useMenu } from "src/app/context/MenuContext";
-import { useItem } from "src/app/context/ItemContext";
 import { IconUser } from "public/icons/User";
 import { IconPassword } from "public/icons/Password";
+
 
 const setCookie = (value) => {
   const date = new Date();
@@ -21,9 +19,6 @@ const setCookie = (value) => {
 };
 
 export default function Login() {
-  const { _item } = useItem();
-  const { _menu } = useMenu();
-  const { _user } = useUserConfig();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -49,12 +44,8 @@ export default function Login() {
       });
       const user = await res.json();
       if (user.success) {
-        if (_user.all[0]?.email !== user.email) {
-          _user.get();
-          _menu.get();
-        }
-        _item.get();
         setCookie(true);
+        localStorage.setItem("customer", JSON.stringify(user.records));
         router.push("/home");
       } else {
         setError(true);

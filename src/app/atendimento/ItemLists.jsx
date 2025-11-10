@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import { useCategory } from "src/app/context/CategoryContext";
 import { Item } from "./Item";
 import { IconArrowDown } from "public/icons/ArrowDown";
 import { IconArrowRight } from "public/icons/ArrowRight";
@@ -77,8 +76,8 @@ export const ItemLists = ({
   setOpenType,
   showListComanda,
   handleUpdateItemsSelected,
+  _category
 }) => {
-  const { _category } = useCategory();
   const listagem = useMemo(() => {
     const calculatedList = [];
 
@@ -88,7 +87,11 @@ export const ItemLists = ({
 
     _category.all.forEach((category) => {
       const itemsFiltrados = items.filter(
-        (i) => i.category._id === category._id && category.enable
+        (i) => {
+          const payloadRequest = i.category === category._id
+          const payloadIndexDB = i.category._id === category._id
+          return (payloadRequest || payloadIndexDB) && category.enable
+        }
       );
 
       if (itemsFiltrados.length > 0) {

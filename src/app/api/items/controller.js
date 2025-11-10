@@ -1,25 +1,18 @@
-export const getProducts = async ({ products, categories, xTenant, id }) => {
+export const getProducts = async ({ products, xTenant, id }) => {
   try {
     let response;
-    const populate = {
-      path: "category",
-      model: categories,
-      select: "name type",
-    };
     if (id) {
       response = await products
         .findOne({
           _id: id,
           tenant: xTenant.id,
         })
-        .populate(populate)
         .lean();
     } else {
       response = await products
         .find({
           tenant: xTenant.id,
         })
-        .populate(populate)
         .lean();
     }
 
