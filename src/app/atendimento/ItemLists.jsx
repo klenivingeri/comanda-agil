@@ -89,7 +89,7 @@ export const ItemLists = ({
       const itemsFiltrados = items.filter(
         (i) => {
           const payloadRequest = i.category === category._id
-          const payloadIndexDB = i.category._id === category._id
+          const payloadIndexDB = i.category?._id === category._id
           return (payloadRequest || payloadIndexDB) && category.enable
         }
       );
