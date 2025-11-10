@@ -63,11 +63,11 @@ const buttonRed = ({ wFull, isPressed, press, disabled }) => `
 `;
 
 const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
-  relative text-white font-bold rounded-lg shadow-sm
+  relative font-bold rounded-lg shadow-sm
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? " border-1 border-b-3 border-[var(--button-default)]/40 text-white/40"
+      ? " border-1 border-b-3 border-[var(--button-default)]/40 text-[var(--button-default)]/40"
       : `
   ${
     isPressed || press

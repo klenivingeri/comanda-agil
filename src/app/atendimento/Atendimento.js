@@ -356,9 +356,8 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       <Footer>
         <ButtonContainer
           onClick={handleOpenModal}
-          wFull="w-28"
           hFull="h-12"
-          margin="mx-1 mb-1"
+          margin="mx-2 mb-1"
           style="buttonInline"
         >
           <span className="pl-1 flex items-center gap-2">
@@ -373,7 +372,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
         <ButtonContainer
           onClick={saveCommand}
           disabled={itemsSelected?.length == 0}
-          margin="mx-1 mb-1"
+          margin="mx-2 mb-1"
           hFull="h-12"
 
         >
