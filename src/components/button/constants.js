@@ -67,19 +67,19 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? "bg-[var(--button-disabled)] border-1 border-b-3 border-[var(--button-disabled)]"
+      ? " border-1 border-b-3 border-[var(--button-default)]/40 text-white/40"
       : `
   ${
     isPressed || press
-      ? "bg-[var(--button-hover)] border-1 border-[var(--button-hover)] border-b-1 border-b-[var(--button-focus)] cursor-pointer"
-      : "bg-gradient-to-br from-[var(--button-hover)] to-[var(--button-default)] border-1 border-[var(--button-default)] hover:bg-[var(--button-hover)] border-b-3 border-b-[var(--button-default)] cursor-pointer"
+      ? "text-white bg-[var(--button-hover)] border-1 border-[var(--button-hover)] border-b-1 border-b-[var(--button-focus)] cursor-pointer"
+      : "text-white bg-gradient-to-br from-[var(--button-hover)] to-[var(--button-default)] border-1 border-[var(--button-default)] hover:bg-[var(--button-hover)] border-b-3 border-b-[var(--button-default)] cursor-pointer"
   }
   transition-all duration-70 ease-in-out`
   }
 `;
 
 const buttonInline = ({ wFull, isPressed, press, disabled }) => `
-  relative  shadow-sm rounded-lg pt-[1px]
+  relative  shadow-sm font-bold rounded-lg pt-[1px]
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
@@ -88,7 +88,7 @@ const buttonInline = ({ wFull, isPressed, press, disabled }) => `
   ${
     isPressed || press
       ? "bg-[var(--button-default)] text-white border-1-transparent border-b-3 border-b-[var(--button-default)] cursor-pointer"
-      : "text-[var(--button-default)] border-1 border-b-3 border-[var(--button-default)] border-b-[var(--button-default)] cursor-pointer"
+      : "text-[var(--button-default)] border-1 border-b-2 border-[var(--button-default)] border-b-[var(--button-default)] cursor-pointer"
   }
   transition-all duration-70 ease-in-out`
   }

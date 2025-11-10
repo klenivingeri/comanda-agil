@@ -259,39 +259,57 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
         <span>
           {showDetails
             ? comanda?.subOrders?.map((item, idx) => (
-                <Item
+                <div
                   key={idx}
-                  item={{
-                    ...item.product,
-                    quantity: item.quantity,
-                    user: item.userId,
+                  className="opacity-0 animate-fade-in"
+                  style={{
+                    animationDelay: `${idx * 0.01}s`,
+                    animationFillMode: "forwards",
                   }}
-                  uuidItemInCommand={item._id}
-                  handleAddTotalItemsInTheCategiry={() => {}}
-                  handleRemoveTotalItemsInTheCategiry={() => {}}
-                  handleUpdateItemsSelected={handleUpdateItemsSelected}
-                  handleDeleteItemSelected={handleDeleteItemSelected}
-                  hiddeSelectQuantity
-                  itemInNote
-                  showDelete={showDelete}
-                />
+                >
+                  <Item
+                    key={idx}
+                    item={{
+                      ...item.product,
+                      quantity: item.quantity,
+                      user: item.userId,
+                    }}
+                    uuidItemInCommand={item._id}
+                    handleAddTotalItemsInTheCategiry={() => {}}
+                    handleRemoveTotalItemsInTheCategiry={() => {}}
+                    handleUpdateItemsSelected={handleUpdateItemsSelected}
+                    handleDeleteItemSelected={handleDeleteItemSelected}
+                    hiddeSelectQuantity
+                    itemInNote
+                    showDelete={showDelete}
+                  />
+                </div>
               ))
             : agruparSubOrdersEmanterEstrutura()?.map((item, idx) => (
-                <Item
+                <div
                   key={idx}
-                  item={{
-                    ...item.product,
-                    quantity: item.quantity,
+                  className="opacity-0 animate-fade-in"
+                  style={{
+                    animationDelay: `${idx * 0.01}s`,
+                    animationFillMode: "forwards",
                   }}
-                  uuidItemInCommand={item._id}
-                  handleAddTotalItemsInTheCategiry={() => {}}
-                  handleRemoveTotalItemsInTheCategiry={() => {}}
-                  handleUpdateItemsSelected={handleUpdateItemsSelected}
-                  handleDeleteItemSelected={handleDeleteItemSelected}
-                  hiddeSelectQuantity
-                  itemInNote
-                  showDelete={showDelete}
-                />
+                >
+                  <Item
+                    key={idx}
+                    item={{
+                      ...item.product,
+                      quantity: item.quantity,
+                    }}
+                    uuidItemInCommand={item._id}
+                    handleAddTotalItemsInTheCategiry={() => {}}
+                    handleRemoveTotalItemsInTheCategiry={() => {}}
+                    handleUpdateItemsSelected={handleUpdateItemsSelected}
+                    handleDeleteItemSelected={handleDeleteItemSelected}
+                    hiddeSelectQuantity
+                    itemInNote
+                    showDelete={showDelete}
+                  />
+                </div>
               ))}
           {itemsSelected?.map((item, idx) => (
             <Item
@@ -311,12 +329,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
 
   return (
     <Container>
-      <Header
-        divider
-        setInputText={setInputText}
-        title="CARDAPIO"
-      >
-      </Header>
+      <Header divider setInputText={setInputText} title="CARDAPIO"></Header>
       <Content
         isLoading={isLoading || _item.isLoading}
         error={error}
@@ -342,30 +355,34 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       </Content>
       <Footer>
         <ButtonContainer
-          onClick={saveCommand}
-          disabled={itemsSelected?.length == 0}
-          margin="mx-1 mb-2"
-          style={itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"}
-        >
-          {!isLoadingCreate ? (
-            <p className="text-sm">LANÇAR ITEM{itemsSelected?.length > 1 && "S"}</p>
-          ) : (
-            <Loading isLoading={isLoadingCreate} style="style3" />
-          )}
-        </ButtonContainer>
-        <ButtonContainer
           onClick={handleOpenModal}
           wFull="w-28"
-          margin="mx-1 mb-2"
-          style='buttonInline'
+          hFull="h-12"
+          margin="mx-1 mb-1"
+          style="buttonInline"
         >
           <span className="pl-1 flex items-center gap-2">
-            {code} <IconMenu size="h-[32px] w-[32px]" />
+            <IconMenu size="h-[32px] w-[32px]" /> {code} 
           </span>
           {!!itemsSelected?.length && (
             <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
               {itemsSelected?.length}
             </div>
+          )}
+        </ButtonContainer>
+        <ButtonContainer
+          onClick={saveCommand}
+          disabled={itemsSelected?.length == 0}
+          margin="mx-1 mb-1"
+          hFull="h-12"
+
+        >
+          {!isLoadingCreate ? (
+            <p className="text-sm">
+              LANÇAR ITEM{itemsSelected?.length > 1 && "S"}
+            </p>
+          ) : (
+            <Loading isLoading={isLoadingCreate} style="style3" />
           )}
         </ButtonContainer>
       </Footer>

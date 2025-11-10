@@ -88,7 +88,9 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
                 .includes(addZero(inputText));
             })
             .map((c, idx) => (
-              <div key={idx} className="flex p-1 border-2 border-[var(--button-progress)] hover:bg-[var(--button-progress)]/10 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]">
+              <div key={idx} className="flex opacity-0 animate-fade-in p-1 border-2 border-[var(--button-progress)] hover:bg-[var(--button-progress)]/10 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 bg-[var(--bg-component)]"
+                style={{ animationDelay: `${idx * 0.03}s`, animationFillMode: 'forwards' }}
+              >
                 <Link className="grid grid-cols-12 p-2 flex-col w-full" href={`/atendimento/${c.code}-${c._id}`}>
                   <div className=" flex text-[var(--button-default)] gap-1 bottom-2 right-0 col-span-3 items-center">
                     <IconMenuList size="h-[40px] w-[40px]" />

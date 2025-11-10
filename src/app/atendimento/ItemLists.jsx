@@ -5,10 +5,10 @@ import { IconArrowRight } from "public/icons/ArrowRight";
 
 const Title = ({
   items,
-  isOpen, 
+  isOpen,
   onToggle,
   category,
-  }) => {
+}) => {
   const total = useMemo(() => {
     return items
       .filter((item) => item.category.type === category.type)
@@ -58,12 +58,17 @@ const ItemList = ({
           .toLowerCase()
           .includes(inputText.trim().toLowerCase());
       })
-        .map((item) => (
+        .map((item, i) => (
+          <div
+          key={item._id}
+          className="opacity-0 animate-fade-in"
+          style={{ animationDelay: `${i * 0.05}s`, animationFillMode: 'forwards' }}>
           <Item
             key={item._id}
             item={item}
             handleUpdateItemsSelected={handleUpdateItemsSelected}
             showListComanda={showListComanda} />
+            </div>
         ))}
     </div>
   </div>
@@ -107,8 +112,10 @@ export const ItemLists = ({
 
   return (
     <div>
-      {listagem.map(({ category, items }) => (
-        <div key={category._id}>
+      {listagem.map(({ category, items }, i) => (
+        <div key={category._id}
+          className="opacity-0 animate-fade-in"
+          style={{ animationDelay: `${i * 0.04}s`, animationFillMode: 'forwards' }}>
           <ItemList
             isOpen={openType === category.type}
             items={items}

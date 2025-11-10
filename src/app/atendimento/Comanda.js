@@ -113,10 +113,8 @@ export const Comanda = ({
             <ButtonContainer
               disabled={itemsSelected?.length == 0}
               margin="mx-1 mb-1"
+              hFull="h-12"
               onClick={saveCommand}
-              style={
-                itemsSelected?.length == 0 ? "buttonInline" : "buttonDefault"
-              }
             >
               {!isLoadingCreate ? (
                 <p className="text-sm">
@@ -131,6 +129,7 @@ export const Comanda = ({
                 disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
                 onClick={handleOpenCenterModal}
                 wFull="w-28"
+                hFull="h-12"
                 margin="mx-1 mb-1"
               >
                 <IconMoney size="h-[30px] w-[30px]" />
