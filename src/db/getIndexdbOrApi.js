@@ -1,6 +1,8 @@
 import { dbManager } from "src/db/IndexedDBManager";
 import { saveCollectionToDB } from "src/db/saveCollectionToDB";
 
+const show_log = process.env.SHOW_LOG === "true";
+
 const serializer = (data) => {
   const addCategoryInProduct = data.catalog_products?.map((product) => {
     return {
@@ -22,14 +24,14 @@ const serializer = (data) => {
 };
 
 const serializerProduct = (data) => {
-  console.log({data})
+
   const addCategoryInProduct = data.catalog_products?.map((product) => {
     return {
       ...product,
       category: data.catalog_categories.find((c) => c._id === product.category),
     };
   });
-console.log({addCategoryInProduct})
+
   return addCategoryInProduct;
 };
 
@@ -67,13 +69,14 @@ export const getAllIndexdbOrApi = async ({
             catalog_users,
           });
           setResponse(dataFormatted);
-          return; // ✅ já retorna se tinha cache
+          return;
         }
       } catch (cacheError) {
-        console.warn("Erro ao ler IndexedDB:", cacheError);
+        if(show_log) console.warn("Erro ao ler IndexedDB:", cacheError);
       }
     }
 
+    if(show_log) console.log(`Cache miss for '${catalogName}'. Fetching from API...`);
     const res = await fetch(`${endpoint}?period=${period}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -96,7 +99,7 @@ export const getAllIndexdbOrApi = async ({
       localStorage.setItem("lastUpdate", today);
     }
   } catch (error) {
-    console.error(`Erro ao buscar dados (${name || endpoint}):`, error);
+    if(show_log) console.error(`Erro ao buscar dados (${name || endpoint}):`, error);
     setError(true);
 
     try {
@@ -115,61 +118,59 @@ export const getAllIndexdbOrApi = async ({
 export const getOneIndexdbOrApi = async (
   endpoint,
   catalogName,
+  setError,
   setResponse
 ) => {
   try {
-    let catalog;
     if (catalogName === "catalog_products") {
       const [catalog_products, catalog_categories] = await Promise.all(
         ["catalog_products", "catalog_categories"].map((table) =>
           dbManager.getAll(table)
         )
       );
-      if (catalog_products.length) {
+
+      if (catalog_products.length > 0 && catalog_categories.length > 0) {
         const dataFormatted = serializerProduct({
           catalog_products,
           catalog_categories,
         });
         setResponse({ all: dataFormatted, error: false, isLoading: false });
-        return;
+        return; 
       }
     } else {
-      catalog = await dbManager.getAll(catalogName);
+      const catalog = await dbManager.getAll(catalogName);
+      if (Array.isArray(catalog) && catalog.length > 0) {
+        setResponse({ all: catalog, error: false, isLoading: false });
+        return; 
+      }
     }
 
-    if (catalog?.length) {
-      setResponse({ all: catalog, error: false, isLoading: false });
-      return;
-    }
-
+    if(show_log) console.log(`Cache miss for '${catalogName}'. Fetching from API...`);
     const res = await fetch(`${endpoint}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-
+    
     if (!res.ok) {
       throw new Error(`Erro na API: ${res.status} - ${res.statusText}`);
     }
 
     const data = await res.json();
-    setResponse({ all: data.records, error: false, isLoading: false });
+    const records = data.records || [];
 
-    if (data && typeof data === "object") {
-      saveCollectionToDB(catalogName, data.records);
+    await saveCollectionToDB(catalogName, records);
+
+    if (catalogName === "catalog_products") {
+      const categories = await dbManager.getAll("catalog_categories");
+      const dataFormatted = serializerProduct({ catalog_products: records, catalog_categories: categories });
+      setResponse({ all: dataFormatted, error: false, isLoading: false });
+    } else {
+      setResponse({ all: records, error: false, isLoading: false });
     }
+
   } catch (error) {
-    console.error(`Erro ao buscar dados (${catalogName || endpoint}):`, error);
+    if(show_log) console.error(`Erro ao buscar dados  (${catalogName || endpoint}) 2:`, error);
     setError(true);
-
-    try {
-      const cached = await dbManager.getAll(catalogName || "orders");
-      if (cached?.length > 0) {
-        setResponse({ all: cached, error: false, isLoading: false });
-      }
-    } catch (cacheError) {
-      setResponse({ all: [], error: false, isLoading: false });
-      console.warn("Erro ao tentar usar cache:", cacheError);
-    }
-  } finally {
+    setResponse({ all: [], error: true, isLoading: false });
   }
 };

@@ -1,7 +1,7 @@
 // ⚠️ ATENÇÃO: Verifique e INCREMENTE esta versão se você já executou o código antes.
 const DB_NAME = "ComandaGoDB";
 const DB_VERSION = 1; // Use um número maior que qualquer versão anterior.
-
+const show_log = process.env.SHOW_LOG === "true";
 class IndexedDBManager {
   constructor() {
     this.db = null; // Instância do IDBDatabase
@@ -39,7 +39,7 @@ class IndexedDBManager {
             const store = db.createObjectStore(storeName, { keyPath: "_id" });
             // Assumimos que a propriedade para o índice é 'name' e não 'nome'
             // Mude 'name' para 'nome' se o seu objeto MongoDB usar 'nome'
-            console.log(`Object Store '${storeName}' criada.`);
+            if(show_log) console.log(`Object Store '${storeName}' criada.`);
           }
         };
 
@@ -162,7 +162,7 @@ class IndexedDBManager {
     const deleteRequest = indexedDB.deleteDatabase(DB_NAME);
 
     deleteRequest.onsuccess = () => {
-      console.log(`🧹 Database "${DB_NAME}" deletada com sucesso.`);
+      if(show_log) console.log(`🧹 Database "${DB_NAME}" deletada com sucesso.`);
       resolve();
     };
 
@@ -177,9 +177,9 @@ class IndexedDBManager {
   });
 
   // 3️⃣ Reabre o banco (isso aciona onupgradeneeded e recria as stores)
-  console.log("🔄 Recriando database...");
+  if(show_log) console.log("🔄 Recriando database...");
   const db = await this.openDB();
-  console.log("✅ Database recriada com sucesso.");
+  if(show_log) console.log("✅ Database recriada com sucesso.");
   return db;
 }
 }

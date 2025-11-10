@@ -12,23 +12,23 @@ export default function Page({ params }) {
   const { isDBReady } = useDB();
   const { id } = use(params);
   const [itemSave, setItemSave] = useState(state);
-  const [caregorySave, setCategorySave] = useState(state);
+  const [categorySave, setCategorySave] = useState(state);
+  const [error, setError] = useState(false);
   const { _command } = useCommand();
   
-  const getItems = useCallback(() => getOneIndexdbOrApi("/api/items", "catalog_products", setItemSave), []);
-  const getCategory = useCallback(() => getOneIndexdbOrApi("/api/category", "catalog_categories", setCategorySave), []);
+  const getItems = useCallback(() => getOneIndexdbOrApi("/api/items", "catalog_products", setError, setItemSave), []);
+  const getCategory = useCallback(() => getOneIndexdbOrApi("/api/category", "catalog_categories", setError, setCategorySave), []);
 
   useEffect(() => {
-    if(!isDBReady) return 
-      getItems()
-      getCategory()
-  }, [isDBReady])
+    if(!isDBReady) return;
+    getCategory();
+
+    if(!categorySave.isLoading) getItems();
+  }, [isDBReady, getCategory, getItems, categorySave.isLoading])
 
   return (
     <Suspense>
-      {(!caregorySave.isLoading && !itemSave.isLoading) && ( 
-        <Atendimento idComanda={id} _command={_command} _item={itemSave} _category={caregorySave} />
-      )}
+      <Atendimento idComanda={id} _command={_command} _item={itemSave} _category={categorySave} />
     </Suspense>
   );
 }

@@ -145,7 +145,7 @@ export const createEnterprise = async ({ tenants, users, body }) => {
       { status: 409 }
     );
     }
-    console.log(created)
+
     return Response.json(
       { message: "sucesso ao fazer login" },
       { status: 200 }

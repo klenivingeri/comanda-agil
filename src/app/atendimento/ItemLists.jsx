@@ -84,15 +84,12 @@ export const ItemLists = ({
     if (!_category || !_category.all) {
       return calculatedList;
     }
+    const categorySort = _category.all.sort((a, b) => {
+      return a.type.localeCompare(b.type);
+    });
 
-    _category.all.forEach((category) => {
-      const itemsFiltrados = items.filter(
-        (i) => {
-          const payloadRequest = i.category === category._id
-          const payloadIndexDB = i.category?._id === category._id
-          return (payloadRequest || payloadIndexDB) && category.enable
-        }
-      );
+    categorySort.forEach((category) => {
+      const itemsFiltrados = items.filter((i) => i.category?._id === category._id && category.enable);
 
       if (itemsFiltrados.length > 0) {
         calculatedList.push({ category: category, items: itemsFiltrados });
