@@ -72,9 +72,9 @@ export default function Perfil() {
             </div>
           </div>
 
-          <p className="font-bold my-4">Records</p>
+          <p className="font-bold mb-3 mt-4 ">Records</p>
           <div className="grid grid-cols-12 gap-2">
-            <div className="relative col-span-6 shadow-lg rounded-md px-6 py-2">
+            <div className="relative col-span-6 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Atendimeneto</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
@@ -93,7 +93,7 @@ export default function Perfil() {
                 <div> 0</div>
               </div>
             </div>
-            <div className="relative col-span-6 shadow-lg rounded-md px-6 py-2">
+            <div className="relative col-span-6 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Itens vendidos</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
@@ -114,9 +114,9 @@ export default function Perfil() {
             </div>
           </div>
 
-          <p className="font-bold my-4">Raking atendimentos</p>
+          <p className="font-bold mb-3 mt-4">Raking atendimentos</p>
           <div className="grid grid-cols-12 gap-2">
-            <div className="relative col-span-4 shadow-lg rounded-md px-6 py-2">
+            <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Diario</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
@@ -135,7 +135,7 @@ export default function Perfil() {
                 <div> 0</div>
               </div>
             </div>
-            <div className="relative col-span-4 shadow-lg rounded-md px-6 py-2">
+            <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Semanal</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
@@ -154,7 +154,7 @@ export default function Perfil() {
                 <div> 0</div>
               </div>
             </div>
-            <div className="relative col-span-4 shadow-lg rounded-md px-6 py-2">
+            <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Mensal</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
