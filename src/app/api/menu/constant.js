@@ -114,7 +114,7 @@ const MASTER = [
   },
     {
     title: "Assinatura",
-    path: "/assinaura",
+    path: "/assinatura",
     icon: "IconCommand",
   },
   {

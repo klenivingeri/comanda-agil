@@ -3,11 +3,18 @@ import { createContext, useContext, useState, useCallback } from "react";
 import { dbManager } from "src/db/IndexedDBManager";
 
 const CleaningContext = createContext();
+const getLogout = async () => {
+  const res = await fetch(`/api/login`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+};
 
 export function CleaningProvider({ children }) {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const logout = useCallback(async () => {
+    getLogout()
     sessionStorage.clear();
     await dbManager.recreateDatabase();
     localStorage.clear();

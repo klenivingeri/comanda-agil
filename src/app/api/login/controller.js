@@ -27,11 +27,21 @@ export function createCookie(tenantId, userId, rule) {
   });
 }
 
+export const removeTenantCookie = () => {
+  return serialize("x-tenant", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0, // <--- ESTE É O SEGREDO
+  });
+};
+
 export const postLogin = async ({ users, email, password, userAgent }) => {
   try {
     const user = await users
       .findOne({ email, active: true })
-      .select('+password')
+      .select("+password")
       .populate({ path: "tenant", model: tenants, select: "name" })
       .lean();
 
@@ -45,32 +55,57 @@ export const postLogin = async ({ users, email, password, userAgent }) => {
     const matchUserAgent = isEmpty(user?.userAgent) || user?.userAgent?.includes(userAgent);
     if (!matchUserAgent)
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           success: false,
-          message: "Dispositivo não autorizado" 
+          message: "Dispositivo não autorizado",
         }),
         { status: 401 }
       );
 
-    return new Response(JSON.stringify({ 
+    return new Response(
+      JSON.stringify({
         success: true,
         message: "Login bem-sucedido",
-        records: [{
-          name: user.name,
-          role: user.role
-        }]
-      }), {
+        records: [
+          {
+            name: user.name,
+            role: user.role,
+          },
+        ],
+      }),
+      {
+        status: 200,
+        headers: {
+          "Set-Cookie": createCookie(user.tenant._id, user._id, user.role),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (_) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: "Algo errado não esta certo, tente novamente.",
+      }),
+      {
+        status: 500,
+      }
+    );
+  }
+};
+
+export const getLogout = async () => {
+  const cookieHeader = removeTenantCookie();
+  return new Response(
+    JSON.stringify({
+      success: true,
+      message: "Logout bem-sucedido",
+    }),
+    {
       status: 200,
       headers: {
-        "Set-Cookie": createCookie(user.tenant._id, user._id, user.role),
-        "Content-Type": "application/json",
+        "Set-Cookie": cookieHeader,
       },
-    });
-  } catch (_) {
-    return new Response(JSON.stringify({ 
-      success: false,
-      message: "Algo errado não esta certo, tente novamente." }), {
-      status: 500,
-    });
-  }
+    }
+  );
 };

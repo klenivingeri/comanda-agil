@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../lib/dbConnect";
 import { users } from "../user/usersModel.js";
-import { postLogin } from "./controller.js";
+import { postLogin, getLogout } from "./controller.js";
 
 export async function POST(request) {
   await connectToDatabase();
@@ -12,3 +12,10 @@ export async function POST(request) {
 
   return response;
 }
+
+export async function GET() {
+  const response = getLogout();
+
+  return response;
+}
+

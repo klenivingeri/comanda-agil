@@ -9,7 +9,6 @@ import { getData } from "./controller.js";
 export async function GET(request) {
   await connectToDatabase();
   const { searchParams } = new URL(request.url);
-  const tenantParam = searchParams?.get("tenant");
   const period = searchParams?.get("period");
   const xTenant = getStoreXTenant(request);
 
@@ -20,7 +19,7 @@ export async function GET(request) {
     users,
     xTenant,
     period,
-    tenantParam
   });
+  
   return response;
 }

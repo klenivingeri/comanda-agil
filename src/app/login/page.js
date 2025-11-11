@@ -9,15 +9,6 @@ import { Loading } from "src/components/loading/Loading";
 import { IconUser } from "public/icons/User";
 import { IconPassword } from "public/icons/Password";
 
-
-const setCookie = (value) => {
-  const date = new Date();
-  date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
-  const expires = date.toUTCString();
-  const cookieString = `isUserActive=${value}; path=/; samesite=strict; max-age=604800; expires=${expires}; Secure;`;
-  document.cookie = cookieString;
-};
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +35,7 @@ export default function Login() {
       });
       const user = await res.json();
       if (user.success) {
-        setCookie(true);
+
         localStorage.setItem("customer", JSON.stringify(user.records));
         router.push("/home");
       } else {
@@ -58,7 +49,6 @@ export default function Login() {
   }
 
   const handleGoToHome = () => {
-    setCookie(false);
     router.push("/");
   };
 
@@ -127,7 +117,6 @@ export default function Login() {
                 Criar uma conta
               </ButtonContainer>
               <a onClick={handleGoToHome} className="text-black font-normal">
-                {" "}
                 Ir para pagina inicial
               </a>
             </form>
