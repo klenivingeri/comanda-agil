@@ -61,8 +61,10 @@
 
 
 .dark body {
-  --background: #282841;     /* fundo escuro */
+  --background: #282841;
+  --fore-back:  #202037 ;    /* fundo escuro */
   --foreground: #18172C;
+;
   --bg-component: #1F1E31;
   --text-default: white;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
@@ -136,14 +138,19 @@
   --button-progress: #FFC066;
 }
 
-/* * {
+* {
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale; 
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-} */
+  
+}
 
 input, textarea {
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale; 
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
@@ -152,6 +159,9 @@ input, textarea {
 
 body, input, textarea, button {
   font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale; 
+  
 }
 
 html, body, #root {
@@ -161,28 +171,23 @@ html, body, #root {
   /* overscroll-behavior-y: contain; */
 }
 
-/* 1. Define o tamanho da barra de rolagem (largura) */
 ::-webkit-scrollbar {
-    width: 0px; /* Largura para barras verticais */
-    height: 0px; /* Altura para barras horizontais */
+  width: 0px;
+  height: 0px;
 }
 
-/* 2. Estiliza a "Trilha" (Track) - o fundo da barra */
-::-webkit-scrollbar-track {/* Cor de fundo clara */
-    border-radius: 10px; /* Opcional: cantos arredondados na trilha */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
 }
 
-/* 3. Estiliza o "Thumb" (o polegar) - o botão que você arrasta */
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2); /* Cor principal da barra */
-    border-radius: 10px; /* Opcional: cantos arredondados no thumb */
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
-/* 4. Estiliza o Thumb ao passar o mouse (Hover) */
 ::-webkit-scrollbar-thumb:hover {
-    background: #888; /* Cor ligeiramente mais clara ao passar o mouse */
+  background: #888;
 }
-
 
 @keyframes fade-in {
   from { opacity: 0; transform: scale(0.95); }

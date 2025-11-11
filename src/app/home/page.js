@@ -28,7 +28,7 @@ export default function Empresa() {
       <Header divider menu title="Bem-vindo" />
       <Content isLoading={!customer[0]?.name} error={error}>
         <div
-          className="flex w-full opacity-0 animate-fade-in flex-col bg-white rounded-3xl gap-4 shadow-xl p-4 mb-4 relative font-normal"
+          className="flex w-full opacity-0 animate-fade-in flex-col bg-[var(--fore-back)] rounded-3xl gap-4 shadow-xl p-4 mb-4 relative font-normal"
           style={{
             animationDelay: `${0.01}s`,
             animationFillMode: "forwards",
