@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import DBProvider from "./context/DBProvider";
 import { ConfigProvider } from "./context/ConfigContext";
@@ -6,13 +7,18 @@ import { MenuProvider } from "./context/MenuContext";
 import { CommandProvider } from "./context/CommandContext";
 import { CleaningProvider } from "./context/CleaningContext";
 
-
 export default function Providers({ children }) {
   const pathname = usePathname();
 
   if (pathname === "/" || pathname === "/cadastrar-empresa") {
     return children;
   }
+
+  useEffect(() => {
+  const handleContextMenu = (e) => e.preventDefault();
+  document.addEventListener("contextmenu", handleContextMenu);
+  return () => document.removeEventListener("contextmenu", handleContextMenu);
+}, []);
 
   return (
     <DBProvider>

@@ -55,16 +55,16 @@ export const viewport = {
 export default function RootLayout({ children }) {
 
   return (
-    <html lang="pt" className="h-full">
+    <html lang="pt" className="h-full select-none overscroll-y-contain">
       <body
-        className={`${poppins.variable} ${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none overscroll-y-contain`}
+        className={`${poppins.variable} ${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center `}
       >
         <div
           id="container"
-          className="flex w-full md:max-w-[768px] relative h-full touch-pan-y "
+          className="flex w-full md:max-w-[768px] relative h-full touch-pan-y"
         >
           <Providers>
-            <main className="flex flex-1 h-full">{children}</main>
+            <main className="flex flex-1 h-full touch-pan-y">{children}</main>
           </Providers>
         </div>
       </body>

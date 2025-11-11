@@ -112,6 +112,11 @@ const MASTER = [
     path: "/configuracao",
     icon: "IconGear",
   },
+    {
+    title: "Assinatura",
+    path: "/assinaura",
+    icon: "IconCommand",
+  },
   {
     title: "Ajuda",
     path: "/help",

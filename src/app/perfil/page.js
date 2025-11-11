@@ -22,7 +22,8 @@ export default function Perfil() {
     <Container>
       <Header divider title="Perfil" />
       <Content isLoading={isLoading} error={error}>
-        <div className="col-span-10 flex justify-center items-center pt-5 pl-5 flex-col w-full mr">
+        <div className="col-span-10 flex justify-center items-center pt-5 pl-5 flex-col w-full opacity-0 animate-fade-in"
+        style={{ animationDelay: `${0.04}s`, animationFillMode: 'forwards' }}>
           <div className="rounded-full shadow-lg p-[1px] mb-4">
             <div className="bg-cover bg-center rounded-full h-20 w-20 shadow-sm bg-[url(https://uploads.metropoles.com/wp-content/uploads/2023/10/26123632/Design-sem-nome-26-29.jpg)]"></div>
           </div>
@@ -31,7 +32,8 @@ export default function Perfil() {
             Por aqui desde outubro de 2015
           </span>
         </div>
-        <div className="bg-[var(--fore-back)] w-full p-4  rounded-lg shadow-lg mt-4">
+        <div className="bg-[var(--fore-back)] w-full p-4  rounded-lg shadow-lg mt-4 opacity-0 animate-fade-in"
+          style={{ animationDelay: `${0.04}s`, animationFillMode: 'forwards' }}>
           <p className="font-bold">Estatísticas</p>
           <div className="grid grid-cols-12 gap-2">
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
@@ -55,7 +57,7 @@ export default function Perfil() {
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
               <p className="font-bold text-lg">0</p>
               <p className="text-sm font-medium text-[var(--text-default)]/50">
-                Mais vendito
+                Mais vendido
               </p>
               <span className="absolute top-5 left-4 ">
                 <IconEdit size="h-[23px] w-[23px]" />
@@ -75,7 +77,7 @@ export default function Perfil() {
           <p className="font-bold mb-3 mt-4 ">Records</p>
           <div className="grid grid-cols-12 gap-2">
             <div className="relative col-span-6 shadow-lg rounded-md px-4 py-2">
-              <p className="font-bold text-sm mb-1">Atendimeneto</p>
+              <p className="font-bold text-sm mb-1">Atendimento</p>
               <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
                 <div>Diario</div>
                 <div> 0</div>

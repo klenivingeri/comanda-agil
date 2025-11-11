@@ -21,7 +21,6 @@ export const Button = React.memo(
     margin = "",
     padding = "",
     disabled = false,
-    press = false,
     style = "buttonDefault",
     vibre = "on",
     inline,
@@ -57,7 +56,6 @@ export const Button = React.memo(
       style,
       wFull,
       isPressed,
-      press,
       disabled,
     });
 

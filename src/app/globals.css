@@ -94,13 +94,14 @@
   --button-progress: #52BE80;
 }
 
-.btn-gray body {
-  --button-default: #95A5A6; /* Cinza Neutro */
-  --button-hover: #AABEB2;
-  --button-focus: #7F8C8D;
-  --button-pressed: #88999A;
-  --button-disabled: #D5DBDB;
-  --button-progress: #BFC9CA;
+
+.btn-wood body {
+  --button-default: #8B5A2B;  /* Marrom madeira padrão */
+  --button-hover: #A97443;    /* Marrom claro (polido) */
+  --button-focus: #6E3E1C;    /* Tom mais escuro, foco */
+  --button-pressed: #5C3317;  /* Madeira profunda */
+  --button-disabled: #C8B49B; /* Bege amadeirado, apagado */
+  --button-progress: #B07A3D; /* Tom médio dourado, progresso */
 }
 
 .btn-blue body {

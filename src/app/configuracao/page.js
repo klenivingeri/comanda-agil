@@ -10,18 +10,18 @@ import { Content } from "../../components/layout/Content";
 import { ButtonContainer } from "src/components/button";
 
 const optionsColors = [
-  { type: "btn-blue", name: "Azul" },
-  { type: "btn-purple", name: "Roxo" },
-  { type: "btn-green", name: "Verde" },
-  { type: "btn-gray", name: "Cinza" },
-  { type: "btn-orange", name: "Laranja" },
-  { type: "btn-pink", name: "Rosa" },
+  { type: "btn-blue", name: "Azul", color:"#3498DB" },
+  { type: "btn-purple", name: "Roxo", color: "#9B59B6"},
+  { type: "btn-green", name: "Verde", color: "#2ECC71" },
+  { type: "btn-wood", name: "Marrom", color: "#8B5A2B" },
+  { type: "btn-orange", name: "Laranja", color: "#FF9900" },
+  { type: "btn-pink", name: "Rosa", color: "#E83E8C" },
 ];
 
 export default function Configuracao() {
   const { triggerCleaning } = useCleaningTrigger();
   const { _config } = useConfig();
-  const [itemDefault, setItemDefault] = useState({ type: "", name: "" });
+  const [itemDefault, setItemDefault] = useState({ type: "", name: "", color: "#FF9900" });
 
   const handlesClearingCache = () => {
     triggerCleaning();
@@ -43,7 +43,7 @@ export default function Configuracao() {
     }
   };
 
-  const handleColorButton = (id, value) => {
+  const handleColorButton = (value) => {
     handleButtonColor(value.type);
     setItemDefault(value);
   };
@@ -71,14 +71,15 @@ export default function Configuracao() {
         <div className="w-full max-w-[500px] mx-auto">
           <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
             <div className="pt-3.5 ">Cor dos Botões</div>
-            <SelectComponent
-              id="colors"
-              value={itemDefault}
-              setValue={handleColorButton}
-              required
-              itemDefault={itemDefault}
-              options={optionsColors}
-            />
+            <div className="flex gap-1 justify-center items-center">
+              {optionsColors.map((op) => <div key={op.type} className={` rounded-full ${itemDefault.type === op.type ? 'border-2 border-[var(--text-default)]/30  p-1' : 'border-2 border-transparent p-1'}`}>
+                <div 
+                  onClick={() => handleColorButton(op)} 
+                  className="w-5 h-5 rounded-full" style={{background: op.color}}>{}
+                </div>
+            </div>
+            )}
+          </div>
           </div>
           <div className="flex my-2 px-4 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50 ">
             <div className="mt-3.5">Resposta tatil</div>

@@ -114,7 +114,6 @@ export const Item = ({
             {item?.user?.image && (
               <div
                 className="bg-cover bg-center rounded-full w-7 h-7 shadow-sm"
-                // 💡 APLICAÇÃO DO ESTILO INLINE para a background-image
                 style={{ backgroundImage: `url('${item.user.image}')` }}
               ></div>
             )}
