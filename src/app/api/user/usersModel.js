@@ -24,10 +24,7 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    
-    painel: {
-      score: { type: Number, default: 0 },
-    },
+    userAgent: [{ type: String, default: "" }],
   },
   { versionKey: false }
 );

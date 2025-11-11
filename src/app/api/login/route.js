@@ -6,7 +6,9 @@ export async function POST(request) {
   await connectToDatabase();
   const body = await request.json();
   const { email, password } = body;
-  const response = postLogin({ users, email, password });
+  const userAgent = request.headers.get('user-agent');
+
+  const response = postLogin({ users, email, password, userAgent });
 
   return response;
 }

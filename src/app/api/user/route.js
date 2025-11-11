@@ -28,7 +28,8 @@ export async function PUT(request) {
   const { searchParams } = new URL(request.url);
   const _id = searchParams.get("_id");
   const body = await request.json();
+  const userAgent = request.headers.get('user-agent');
 
-  const response = putUser({ users, xTenant, _id, body });
+  const response = putUser({ users, xTenant, _id, body, userAgent });
   return response;
 }

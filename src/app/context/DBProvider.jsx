@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { dbManager } from 'src/db/IndexedDBManager';
-
+const show_log = process.env.SHOW_LOG === "true";
 const DBContext = createContext({ isDBReady: false });
 
 export default function DBProvider({ children }) {
@@ -11,11 +11,11 @@ export default function DBProvider({ children }) {
     if (typeof window !== 'undefined' && dbManager) {
       dbManager.openDB()
         .then(() => {
-          console.log("✅ IndexedDB pronto para uso.");
+          if(show_log) console.log("✅ IndexedDB pronto para uso.");
           setIsDBReady(true);
         })
         .catch(err => {
-          console.error("Falha ao iniciar o IndexedDB:", err);
+          if(show_log) console.error("Falha ao iniciar o IndexedDB:", err);
         });
     }
   }, []);

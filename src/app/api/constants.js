@@ -1,3 +1,15 @@
+const MASTER = "MASTER";
+const ADMIN = "ADMIN";
+const MODERATOR = "MODERATOR";
+const VIEWER = "VIEWER";
+
+export const RULES = {
+  MODERATOR: [MASTER, ADMIN, MODERATOR],
+  ADMIN: [MASTER, ADMIN],
+  MASTER: [MASTER]
+};
+
+
 export const items = [
   {
     _id: "68b90477e7b0db3283a8d274",

@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { RULES } from "../constants";
 
 const saltRounds = 5;
 
@@ -18,7 +19,7 @@ export const getUser = async ({ users, xTenant, _id }) => {
   try {
     let response;
 
-    if (xTenant.role === "ADMIN") {
+    if (RULES.ADMIN.includes(xTenant.role)) {
       if (_id) {
         const user = await users
           .findOne({
@@ -107,10 +108,16 @@ export const postUser = async ({ users, xTenant, body }) => {
   }
 };
 
-export const putUser = async ({ users, xTenant, _id, body }) => {
+export const putUser = async ({ users, xTenant, _id, body, userAgent }) => {
   try {
     body.tenant = xTenant.id;
 
+    if(RULES.MASTER.includes(xTenant.role)) {
+      body.userAgent = []
+    } else {
+      body.userAgent = userAgent;
+    }
+    
     await users.findByIdAndUpdate({ _id, tenant: xTenant.id }, { $set: body });
     return Response.json(
       { message: "sucesso ao fazer login" },

@@ -22,7 +22,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
   async function handleSubmit(e) {
@@ -48,11 +48,11 @@ export default function Login() {
         localStorage.setItem("customer", JSON.stringify(user.records));
         router.push("/home");
       } else {
-        setError(true);
+        setError(user.message);
         setIsLoading(false);
       }
     } catch (err) {
-      setError(true);
+      setError('Algo errado não esta certo, tente novamente.');
       setIsLoading(false);
     }
   }
@@ -107,9 +107,9 @@ export default function Login() {
                   placeholder="Senha"
                 />
               </div>
-              {error && (
-                <p className="mt-1 text-sm text-red-500">
-                  Algo errado não esta certo, tente novamente.
+              {error.length > 0 && (
+                <p className="mb-1 text-sm text-red-500">
+                  {error}
                 </p>
               )}
               <ButtonContainer type="submit">

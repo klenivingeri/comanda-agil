@@ -1,6 +1,7 @@
 import { serialize } from "cookie";
 import crypto, { randomUUID } from "crypto";
 import { tenants } from "../user/tenantModel";
+import { isEmpty } from "src/app/utils/empty";
 
 const SECRET = process.env.COOKIE_SECRET;
 
@@ -26,7 +27,7 @@ export function createCookie(tenantId, userId, rule) {
   });
 }
 
-export const postLogin = async ({ users, email, password }) => {
+export const postLogin = async ({ users, email, password, userAgent }) => {
   try {
     const user = await users
       .findOne({ email, active: true })
@@ -34,18 +35,19 @@ export const postLogin = async ({ users, email, password }) => {
       .populate({ path: "tenant", model: tenants, select: "name" })
       .lean();
 
-    if (!user)
+    const match = user?.password === password;
+    if (!match)
       return new Response(
         JSON.stringify({ message: "Credenciais inválidas" }),
         { status: 401 }
       );
 
-    const match = user.password === password;
-    if (!match)
+    const matchUserAgent = isEmpty(user?.userAgent) || user?.userAgent?.includes(userAgent);
+    if (!matchUserAgent)
       return new Response(
         JSON.stringify({ 
           success: false,
-          message: "Credenciais inválidas" 
+          message: "Dispositivo não autorizado" 
         }),
         { status: 401 }
       );
@@ -67,7 +69,7 @@ export const postLogin = async ({ users, email, password }) => {
   } catch (_) {
     return new Response(JSON.stringify({ 
       success: false,
-      message: "Erro no login" }), {
+      message: "Algo errado não esta certo, tente novamente." }), {
       status: 500,
     });
   }

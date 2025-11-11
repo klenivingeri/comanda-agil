@@ -57,11 +57,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt" className="h-full">
       <body
-        className={`${poppins.variable} ${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none`}
+        className={`${poppins.variable} ${inter.variable} ${roboto.variable} antialiased m-0 p-0 h-full flex justify-center select-none overscroll-y-contain`}
       >
         <div
           id="container"
-          className="flex w-full md:max-w-[768px] relative h-full "
+          className="flex w-full md:max-w-[768px] relative h-full touch-pan-y "
         >
           <Providers>
             <main className="flex flex-1 h-full">{children}</main>

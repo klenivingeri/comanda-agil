@@ -1,4 +1,4 @@
-const ADMIN = [
+const MASTER = [
   {
     title: "Inicio",
     path: "/home",
@@ -119,7 +119,7 @@ const ADMIN = [
   },
 ];
 
-const EDITOR = [
+const ADMIN = [
   {
     title: "Inicio",
     path: "/home",
@@ -296,8 +296,8 @@ const VIEWER = [
 ];
 
 export const menuItemsByRole = {
+  MASTER,
   ADMIN,
-  EDITOR,
   MODERATOR,
   VIEWER,
 };
