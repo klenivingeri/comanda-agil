@@ -9,7 +9,7 @@
   --bg-component: #FFFFFF;
   --text-default: black;
   --bg-subTitle: white; 
-
+  --text-menu: white;
 
   --logo1: #18172C;
   --logo2: #FF9900;
@@ -68,7 +68,7 @@
   --bg-component: #1F1E31;
   --text-default: white;     /* texto principal claro */ /* roxo mais escuro para hover */
   --bg-subTitle: #2A2A2A;    /* fundo secundário escuro */
-
+  /*--text-menu: black; */
 
   ::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.4); /* Cor principal da barra */

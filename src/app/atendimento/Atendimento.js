@@ -329,11 +329,15 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
 
   return (
     <Container>
-      <Header divider setInputText={setInputText} title="CARDAPIO"></Header>
+      <Header divider setInputText={setInputText} title="CARDAPIO">
+        <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+          {code}
+        </span>
+      </Header>
       <Content
         isLoading={isLoading || _item.isLoading}
         error={error}
-        mb="mb-[60px]"
+        pb="pb-[130px]"
       >
         {isEmpty(idComanda) ? (
           <div>
@@ -354,36 +358,33 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
         )}
       </Content>
       <Footer>
-        <ButtonContainer
-          onClick={handleOpenModal}
-          hFull="h-12"
-          margin="mx-2 mb-1"
-          style="buttonInline"
-        >
-          <span className="pl-1 flex items-center gap-2">
-            <IconMenu size="h-[32px] w-[32px]" /> {code} 
-          </span>
-          {!!itemsSelected?.length && (
-            <div className="absolute pt-[2px] text-xs text-white h-4 w-4 top-[2px] right-[1px] rounded-full flex justify-center items-center leading-none ">
-              {itemsSelected?.length}
+        <div className="flex flex-col w-full px-2">
+          {console.log(comanda)}
+          {(itemsSelected?.length === 0 || comanda?.subOrders?.length !== 0) && (
+            <div className="relative w-full h-1">
+              <button
+                onClick={handleOpenModal}
+                className="absolute right-6 top-[-20px] text-white mt-[-50px] bg-[var(--button-default)] hover:bg-[var(--button-hover)] rounded-2xl px-2 py-2"
+              >
+                <IconMenu size="h-[32px] w-[32px]" />
+              </button>
             </div>
           )}
-        </ButtonContainer>
-        <ButtonContainer
-          onClick={saveCommand}
-          disabled={itemsSelected?.length == 0}
-          margin="mx-2 mb-1"
-          hFull="h-12"
-
-        >
-          {!isLoadingCreate ? (
-            <p className="text-sm">
-              LANÇAR ITEM{itemsSelected?.length > 1 && "S"}
-            </p>
-          ) : (
-            <Loading isLoading={isLoadingCreate} style="style3" />
-          )}
-        </ButtonContainer>
+          <ButtonContainer
+            onClick={saveCommand}
+            disabled={itemsSelected?.length == 0}
+            margin="mb-1"
+            hFull="h-12"
+          >
+            {!isLoadingCreate ? (
+              <p className="text-sm">
+                LANÇAR ITEM{itemsSelected?.length > 1 && "S"}
+              </p>
+            ) : (
+              <Loading isLoading={isLoadingCreate} style="style3" />
+            )}
+          </ButtonContainer>
+        </div>
       </Footer>
     </Container>
   );

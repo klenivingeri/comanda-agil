@@ -8,6 +8,7 @@ import { Container } from "../../components/layout/Container";
 import { Header } from "../../components/layout/Header";
 import { Content } from "../../components/layout/Content";
 import { ButtonContainer } from "src/components/button";
+import { isEmpty } from "../utils/empty";
 
 const optionsColors = [
   { type: "btn-blue", name: "Azul", color:"#3498DB" },
@@ -16,6 +17,8 @@ const optionsColors = [
   { type: "btn-wood", name: "Marrom", color: "#8B5A2B" },
   { type: "btn-orange", name: "Laranja", color: "#FF9900" },
   { type: "btn-pink", name: "Rosa", color: "#E83E8C" },
+  { type: "btn-black" , name: "Preto", color: "#2C2C2C" },
+,
 ];
 
 export default function Configuracao() {
@@ -44,6 +47,7 @@ export default function Configuracao() {
   };
 
   const handleColorButton = (value) => {
+    console.log(value)
     handleButtonColor(value.type);
     setItemDefault(value);
   };
@@ -57,13 +61,16 @@ export default function Configuracao() {
   };
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
     const themeButton = localStorage.getItem("theme-button");
     if (themeButton) {
-      const colorCurrent = optionsColors.find((op) => op.type === themeButton);
+      const colorCurrent = optionsColors.find((op) => op?.type === themeButton);
+
       setItemDefault(colorCurrent);
     }
   }, [_config.hasVibrate]);
 
+  
   return (
     <Container>
       <Header divider title="Configuração" />
@@ -72,7 +79,7 @@ export default function Configuracao() {
           <div className="flex my-2 py-2 px-4 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
             <div className="pt-3.5 ">Cor dos Botões</div>
             <div className="flex gap-1 justify-center items-center">
-              {optionsColors.map((op) => <div key={op.type} className={` rounded-full ${itemDefault.type === op.type ? 'border-2 border-[var(--text-default)]/30  p-1' : 'border-2 border-transparent p-1'}`}>
+              {optionsColors.map((op) => <div key={op.type} className={` rounded-full ${itemDefault?.type === op?.type ? 'border-2 border-[var(--text-default)]/30  p-1' : 'border-2 border-transparent p-1'}`}>
                 <div 
                   onClick={() => handleColorButton(op)} 
                   className="w-5 h-5 rounded-full" style={{background: op.color}}>{}

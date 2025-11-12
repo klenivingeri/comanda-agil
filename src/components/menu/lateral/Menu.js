@@ -71,8 +71,8 @@ const Menu = ({ menu }) => {
               <div
                 className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
-                    ? "bg-[var(--button-default)] font-bold"
-                    : "hover:bg-[var(--button-hover)]"
+                    ? "bg-[var(--button-default)] font-bold text-[var(--text-menu)]"
+                    : "hover:bg-[var(--button-hover)] hover:text-[var(--text-menu)]"
                 }`}
                 onClick={() => toggleDropdown(item.path)}
               >
@@ -87,8 +87,8 @@ const Menu = ({ menu }) => {
                 href={item.path}
                 className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
-                    ? "bg-[var(--button-default)] font-bold"
-                    : "hover:bg-[var(--button-hover)]"
+                    ? "bg-[var(--button-default)] font-bold text-[var(--text-menu)]"
+                    : "hover:bg-[var(--button-hover)] hover:text-[var(--text-menu)]"
                 }`}
               >
                 <span className="pl-6">{icons[item.icon]}</span>
@@ -104,8 +104,8 @@ const Menu = ({ menu }) => {
                       href={item.path + sub.path}
                       className={`flex pl-18 items-center p-1.5 rounded transition-colors ${
                         subActiveLink === item.path + sub.path
-                          ? "bg-[var(--button-hover)] font-bold"
-                          : "hover:bg-[var(--button-hover)]/50"
+                          ? "bg-[var(--button-hover)] font-bold text-[var(--text-menu)] hover:text-[var(--text-menu)]"
+                          : "hover:bg-[var(--button-hover)]/50 hover:text-[var(--text-menu)]"
                       }`}
                     >
                       <span className="mr-2">{icons[sub.icon]}</span>
