@@ -17,6 +17,7 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "dayjs": "^1.11.13",
+    "mercadopago": "^2.10.0",
     "mongoose": "^8.17.1",
     "next": "15.4.3",
     "numeral": "^2.0.6",
