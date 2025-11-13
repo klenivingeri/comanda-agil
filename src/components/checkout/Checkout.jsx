@@ -3,16 +3,28 @@ import { ButtonContainer } from "../button"
 import { Loading } from "../loading/Loading"
 import { currency } from "src/app/utils/currency"
 import { Input } from "../form/FormComponents"
-import { useMemo, useState, useRef } from "react"
+import { useMemo, useState, useRef, useEffect } from "react"
 import { IconX } from "public/icons/X"
 import { FakeButton } from "src/app/utils/FakeButton"
 import { IconMoney } from "public/icons/Money"
+import { Container } from "../layout/Container"
+import { Header } from "../layout/Header"
+import { CenterTop } from "../modal/ModalTop"
+import { Content } from "../layout/Content"
+import { Footer } from "../layout/Footer"
+import { Tabs } from "../Tabs"
 
 const paymentMethods = [
   { name: 'Cartão', id: 'CARD' },
   { name: 'Dinheiro', id: 'CASH' },
   { name: 'Pix', id: 'PIX' },
   { name: 'Outro', id: 'OTHER' }
+]
+
+
+const arrTabs = [
+  { title: 'Pagamento Simples', id: 'simples' },
+  { title: 'Pagamento Fragmentado', id: 'fragmentado' },
 ]
 
 const ComponentFeedback = ({ isLoadingCloseCommand }) => (
@@ -26,19 +38,14 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
           Comanda finalizada
         </span>
         <span className="text-sm  mb-2">
-          Para onde deseja ir agora?
+          Você será redirecionar para o inicio
         </span>
 
         <div className="flex flex-col sm:flex-row w-full gap-3 mt-6">
           <ButtonContainer
-            href="/comandas"
-            text="Comandas"
-            style="buttonInline"
-          />
-
-          <ButtonContainer
+            hFull="h-12"
             href="/home"
-            text="Inicio"
+            text="Ir"
           />
         </div>
       </>
@@ -53,11 +60,11 @@ export function ResumoFinanceiro({ totalComanda, payments }) {
   return (
     <div className="flex w-full pb-2 justify-between gap-3 bg-">
       <div className="relative flex flex-col w-full items-center justify-center h-8">
-        <span className="top-[-8px] left-2 text-xs bg-[var(--bg-component)] text-[var(--button-default)] px-1">Receber</span>
+        <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm bg-[var(--bg-component)] text-[var(--button-default)] px-1 mb-1">Receber</span>
         <span>{currency(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
       </div>
       <div className="relative flex flex-col w-full items-center justify-center h-8">
-        <span className="top-[-8px] left-2 text-xs bg-[var(--bg-component)] text-[var(--button-default)] px-1">Recebido</span>
+        <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm bg-[var(--bg-component)] text-[var(--button-default)] px-1 mb-1">Recebido</span>
         <span>{currency(payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
       </div>
     </div>
@@ -67,7 +74,7 @@ export function ResumoFinanceiro({ totalComanda, payments }) {
 export function ComponentFragmentPayment({
   payments,
   testParaIniciarDivNoFim,
-  setPayments = () => {},
+  setPayments = () => { },
   totalComanda
 }) {
   const [value, setValue] = useState(0);
@@ -95,7 +102,7 @@ export function ComponentFragmentPayment({
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="min-h-[45px] mb-2">
         {payments.length > 0 && (
           <div className="mb-2 grid gap-2 grid-cols-2">
@@ -133,7 +140,7 @@ export function ComponentFragmentPayment({
           value={value}
           isCurrency
           onFocus={testParaIniciarDivNoFim}
-          icon={<IconMoney size="h-[20px] w-[20px]" />}
+          icon={<div className="text-[var(--button-default)]"><IconMoney size="h-[20px] w-[20px]" /></div>}
         />
         <ButtonContainer onClick={handleUpdateValue} wFull="w-14" text="+" margin="mt-1" />
         <FakeButton />
@@ -142,12 +149,13 @@ export function ComponentFragmentPayment({
   );
 }
 
-const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseCommand }) => {
+export const Checkout = ({ isFinish, setTabPayment, setOpenCenterModal, openCenterModal, setMethodID, methodID, totalComanda, postCloseCommand, isLoadingCloseCommand }) => {
   const [installment, setInstallment] = useState("1");
   const [pay, setPay] = useState(totalComanda)
-  const [isSplitPayment, setIsSplitPayment] = useState(false)
+  const [isSplitPayment, setIsSplitPayment] = useState(true)
   const [payments, setPayments] = useState([]);
   const refEndPage = useRef(null);
+  const [tab, setTab] = useState('simples');
 
   const testParaIniciarDivNoFim = () => {
     if (refEndPage.current) {
@@ -176,94 +184,91 @@ const ComponentPayment = ({ setMethodID, methodID, totalComanda, postCloseComman
     setInstallment(e.target.value)
   }
 
+    useEffect(() => {
+      handleCheckboxChange()
+    }, [tab])
+
   return (
-    <div className="p-4 pt-0 flex gap-2 flex-col items-center justify-center ">
-      <span className="text-md font-extrabold mb-2">
-        Pagamento
-      </span>
-      <div className="flex flex-col w-full items-center justify-center mb-3">
-        {isSplitPayment ? (
-          <select
-            disabled={isSplitPayment}
-            onChange={(e) => handleSetInstallment(e)}
-            value={installment}
-            className=" text-center px-4 py-2 text-4xl font-bold text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
-          >
-            <option value="1">
-              {currency(totalComanda)}
-            </option>
-          </select>
-        ) : (
-          <select
-            disabled={isSplitPayment}
-            onChange={(e) => handleSetInstallment(e)}
-            value={installment}
-            className=" text-center px-2 py-2 text-4xl font-bold text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
-          >
-            {installmentOptions.map((op, i) => (
-              <option key={i} value={op._id}>
-                {op.name} × {currency(totalComanda / op._id)}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-      <div ref={refEndPage} id="endModal" className="h-0" ></div>
-      {isSplitPayment && (
-        <span className="flex flex-col text-md justify-start w-full mb-3">
-          <ComponentFragmentPayment payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} totalComanda={totalComanda} />
-        </span>
-      )}
-
-      <div className="flex w-full gap-2">
-        {paymentMethods.map((method) => (
-          <ButtonContainer
-            key={method.id}
-            onClick={() => setMethodID(method.id)}
-            hFull="h-10"
-            press={methodID === method.id}
-            style='buttonInline'
-          >
-            <span className={`text-xs`}>{method.name}</span>
-          </ButtonContainer>
-        ))}
-      </div>
-      <div className={`flex items-center gap-2 pb-2 my-4`}>
-        <input
-          className={`
-              bg-[var(--button-disabled)] 
-              h-4 w-4 text-[var(--button-disabled)]
-            `}
-          type="checkbox"
-          id="scales"
-          name="scales"
-          onChange={handleCheckboxChange}
-          checked={isSplitPayment}
-        />
-        <label htmlFor="scales">Pagamento Fragmentado</label>
-      </div>
-      <div className="flex flex-col sm:flex-row w-full gap-3 ">
-        <ButtonContainer
-          onClick={postCloseCommand}
-          text="Confirmar Pagamento"
-          disabled={isSplitPayment && !(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0) <= 0)}
-        />
-      </div>
-    </div>
-  )
-}
-
-export const Checkout = ({ isFinish, setMethodID, methodID, totalComanda, postCloseCommand, isLoadingCloseCommand }) => {
-
-  if (!isFinish) return (
-    <ComponentPayment
-      setMethodID={setMethodID}
-      methodID={methodID}
-      totalComanda={totalComanda}
-      postCloseCommand={postCloseCommand}
+  <Container>
+    <Header 
+      divider
+      close
+      onClick={() => setTabPayment(false)} 
+      title="Pagamento"
     />
+    <Content >
+      <div className="p-4 pt-0 flex gap-2 flex-col items-center justify-center ">
+        <Tabs tabs={arrTabs} value={tab} setValue={setTab} />
+        <div className="flex flex-col w-full items-center justify-center mb-3 mt-20">
+          {isSplitPayment ? (
+            <select
+              disabled={isSplitPayment}
+              onChange={(e) => handleSetInstallment(e)}
+              value={installment}
+              className=" text-center px-4 py-2 text-6xl font-medium text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+            >
+              <option value="1">
+                {currency(totalComanda)}
+              </option>
+            </select>
+          ) : (
+            <select
+              disabled={isSplitPayment}
+              onChange={(e) => handleSetInstallment(e)}
+              value={installment}
+              className=" text-center mb-16 px-2 py-2 text-6xl font-medium text-[var(--button-default)] rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+            >
+              {installmentOptions.map((op, i) => (
+                <option key={i} value={op._id}>
+                  {op.name} × {currency(totalComanda / op._id)}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+        
+        {isSplitPayment && (
+          <span className="flex flex-col text-md w-full mb-3">
+            <ComponentFragmentPayment payments={payments} setPayments={setPayments} testParaIniciarDivNoFim={testParaIniciarDivNoFim} totalComanda={totalComanda} />
+          </span>
+        )}
+        <div ref={refEndPage} id="endModal" className="h-0" ></div>
+        <div className="grid w-full grid-cols-2 gap-4">
+          {paymentMethods.map((method) => (
+            <ButtonContainer
+              key={method.id}
+              onClick={() => setMethodID(method.id)}
+              hFull="h-20"
+              press={methodID === method.id}
+              style='buttonInline'
+            >
+              <span className={`text-xs`}>{method.name}</span>
+            </ButtonContainer>
+          ))}
+        </div>
+
+      </div>
+      <Footer>
+        <ButtonContainer
+            onClick={postCloseCommand}
+            text="Confirmar Pagamento"
+            margin="mx-2 mb-2"
+            hFull="h-12"
+            disabled={isSplitPayment && !(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0) <= 0)}
+          />
+        </Footer>
+    </Content>
+            {isFinish && (
+          <CenterTop
+            notCloseBg
+            showX
+            isOpen={openCenterModal}
+            onClose={() => setOpenCenterModal(false)}
+          >
+            <ComponentFeedback isLoadingCloseCommand={isLoadingCloseCommand} />
+          </CenterTop>)
+        }
+  </Container>
+
   )
-
-  return <ComponentFeedback isLoadingCloseCommand={isLoadingCloseCommand} />
-
 }

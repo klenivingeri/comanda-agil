@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useToast } from "src/hooks/useToast";
 import { Checkout as ComponentCheckout } from "./Checkout";
 
-export const Checkout = ({totalComanda, commandID}) => {
+export const Checkout = ({totalComanda, setTabPayment, commandID}) => {
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
   const [methodID, setMethodID] = useState("CARD");
   const [statusID, setStatusID] = useState("PAID");
   const [isFinish, setIsFinish] = useState(false);
+  const [openCenterModal, setOpenCenterModal] = useState(false);
 
   const postCloseCommand = async () => {
     setisLoadingCloseCommand(true);
@@ -22,6 +23,7 @@ export const Checkout = ({totalComanda, commandID}) => {
 
       const result = await resp.json();
       setIsFinish(true);
+      setOpenCenterModal(true);
     } catch (_) {
       toast.error("Ocorreu um erro fechar a comanda!");
     } finally {
@@ -31,12 +33,15 @@ export const Checkout = ({totalComanda, commandID}) => {
   
   return <ComponentCheckout
     isFinish={isFinish}
+    setTabPayment={setTabPayment}
     setMethodID={setMethodID}
     setStatusID={setStatusID}
     methodID={methodID}
     totalComanda={totalComanda}
     postCloseCommand={postCloseCommand}
     isLoadingCloseCommand={isLoadingCloseCommand}
+    openCenterModal={openCenterModal}
+    setOpenCenterModal={setOpenCenterModal}
   />;
 
 }

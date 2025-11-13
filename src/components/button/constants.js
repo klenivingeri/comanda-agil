@@ -63,7 +63,7 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
-      ? " border-1 border-b-3 border-[var(--button-default)]/40 text-[var(--button-default)]/40"
+      ? "bg-[var(--foreground)] border-1 border-b-3 border-[var(--button-default)]/40 text-[var(--button-default)]/40"
       : `
     ${
       isPressed || press

@@ -23,6 +23,7 @@ export const Button = React.memo(
     disabled = false,
     style = "buttonDefault",
     vibre = "on",
+    press = false,
     inline,
     _config,
   }) => {
@@ -55,6 +56,7 @@ export const Button = React.memo(
     const buttonStyles = getButtonStyles({
       style,
       wFull,
+      press,
       isPressed,
       disabled,
     });

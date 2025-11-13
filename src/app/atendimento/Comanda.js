@@ -25,13 +25,9 @@ export const Comanda = ({
   handleShowDelete,
   commandID,
   commandCode,
+  setTabPayment
 }) => {
   const [customer, setCustomer] = useState([]);
-  const [openCenterModal, setOpenCenterModal] = useState(false);
-
-  const handleOpenCenterModal = () => {
-    setOpenCenterModal(true);
-  };
 
   const testParaIniciarDivNoFim = () => {
     const div = document.getElementById("minhaDiv");
@@ -52,18 +48,13 @@ export const Comanda = ({
   return (
     <Container>
       <Header
-        divNew
         divider
         close
         onClick={handleOpenModal}
-        titleComponent={
-          <span className="text-[var(--button-default)] h-8 p-1 px-2 text-xl border-1 border-[var(--button-default)] rounded-md">
-            {commandCode}
-          </span>
-        }
+        title="Comanda"
       >
         <div className="flex">
-          {customer[0]?.role === "ADMIN" && (
+          { RULES.ADMIN.includes(customer[0]?.role) && (
             <ButtonContainer
               onClick={handleShowDelete}
               hFull="h-8"
@@ -76,6 +67,9 @@ export const Comanda = ({
           <ButtonContainer hFull="h-8" wFull="w-14" margin="mx-1 mt-1">
             <IconQrcode size="h-[23px] w-[23px]" />
           </ButtonContainer>
+                  <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+          {commandCode}
+        </span>
         </div>
       </Header>
 
@@ -127,25 +121,16 @@ export const Comanda = ({
             {RULES.MODERATOR.includes(customer[0]?.role) && (
               <ButtonContainer
                 disabled={!itemsSelected?.length == 0 || isEmpty(commandID)}
-                onClick={handleOpenCenterModal}
+                onClick={() =>setTabPayment(true)}
                 hFull="h-12"
                 margin="mx-2 mb-1"
               >
-                <IconMoney size="h-[30px] w-[30px]" />
+                <IconMoney size="h-[30px] w-[30px]" /> <p className="ml-2">Receber</p>
               </ButtonContainer>
             )}
           </div>
         </div>
       </Footer>
-
-      <CenterTop
-        notCloseBg
-        showX
-        isOpen={openCenterModal}
-        onClose={() => setOpenCenterModal(false)}
-      >
-        <Checkout totalComanda={totalComanda} commandID={commandID} />
-      </CenterTop>
     </Container>
   );
 };

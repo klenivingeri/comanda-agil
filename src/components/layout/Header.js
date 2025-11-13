@@ -64,17 +64,19 @@ export const Header = ({
           }`}
         >
           <div className="w-full flex gap-3 items-center">
-            <DefaultComponent
+            <div className="w-6">
+              <DefaultComponent
               close={close}
               menu={menu}
               handleOpenMenuMobile={handleOpenMenuMobile}
               onClick={onClick}
             />
+            </div>
             <div className="flex justify-between items-center w-full">
-              <span className="text-sm font-bold">
+              <span className="text-md font-bold">
                 {!searchFull && (title.length ? title : titleComponent)}
               </span>
-              {setInputText && (
+              {setInputText ? (
                 <InputSearch
                   _isNumeric={_isNumeric}
                   handleFormSubmit={handleFormSubmit}
@@ -83,7 +85,7 @@ export const Header = ({
                   searchFull={searchFull}
                   mini
                 />
-              )}
+              ): <a></a>}
             </div>
             <div className="items-center ">{children}</div>
           </div>

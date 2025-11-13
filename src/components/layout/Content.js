@@ -22,7 +22,7 @@ export const Content = ({
 
   if (isLoading) {
     return (
-      <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--backgroun)]">
+      <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--background)]">
         <Loading isLoading style="style4" />
       </div>
     );
@@ -30,7 +30,7 @@ export const Content = ({
 
   if (error) {
     return (
-      <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--backgroun)]">
+      <div className="flex rounded p-2 h-full w-full justify-center items-center bg-[var(--background)]">
         Nenhum retorno encontrado.
       </div>
     );

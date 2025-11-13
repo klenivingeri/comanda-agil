@@ -18,6 +18,7 @@ import { Loading } from "src/components/loading/Loading";
 import { useToast } from "src/hooks/useToast";
 import { IconChecked } from "public/icons/Checked";
 import { ItemLists } from "./ItemLists";
+import { Checkout } from "src/components/checkout";
 
 export function RotateImage({ rotated }) {
   return (
@@ -45,6 +46,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
   const [isLoadingCreate, setIsLoadingCreat] = useState(false);
   const [inputText, setInputText] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [tabPayment, setTabPayment] = useState(false);
   const [openType, setOpenType] = useState(null);
   const [error, setError] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -199,6 +201,18 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
     );
   }, [itemsSelected, comanda?.subOrders]);
 
+    const totalSelected = useMemo(() => {
+    if (!itemsSelected) return 0;
+
+    return itemsSelected.reduce(
+      (acc, item) => {
+        const quantity = item?.quantity || 0;
+        return acc + quantity
+      },
+      0
+    );
+  }, [itemsSelected, comanda?.subOrders]);
+
   const saveCommand = () => {
     const payload = {
       code,
@@ -242,6 +256,16 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       return finalGroupedArray;
     }
 
+    if(tabPayment){
+      return (
+        <Checkout
+        totalComanda={totalComanda}
+        commandID={comanda?._id}
+        setTabPayment={setTabPayment}
+      />
+      )
+    }
+
     return (
       <Comanda
         handleOpenModal={handleOpenModal}
@@ -255,6 +279,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
         commandID={comanda?._id}
         commandCode={code}
         handleShowDetails={handleShowDetails}
+        setTabPayment={setTabPayment}
       >
         <span>
           {showDetails
@@ -329,7 +354,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
 
   return (
     <Container>
-      <Header divider setInputText={setInputText} title="CARDAPIO">
+      <Header divider setInputText={setInputText} title="Cardapio">
         <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
           {code}
         </span>
@@ -337,7 +362,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       <Content
         isLoading={isLoading || _item.isLoading}
         error={error}
-        pb="pb-[130px]"
+        pb="pb-[140px]"
       >
         {isEmpty(idComanda) ? (
           <div>
@@ -357,16 +382,22 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
           </div>
         )}
       </Content>
-      <Footer>
+      <Footer bg="">
         <div className="flex flex-col w-full px-2">
           {console.log(comanda)}
-          {(itemsSelected?.length === 0 || comanda?.subOrders?.length !== 0) && (
+          {(itemsSelected?.length === 0 ||
+            comanda?.subOrders?.length !== 0) && (
             <div className="relative w-full h-1">
               <button
                 onClick={handleOpenModal}
-                className="absolute right-6 top-[-20px] text-white mt-[-50px] bg-[var(--button-default)] hover:bg-[var(--button-hover)] rounded-2xl px-2 py-2"
+                className="absolute shadow-md border-2 border-[var(--foreground)] right-4 top-[-70px]  text-white  bg-[var(--button-default)] hover:bg-[var(--button-hover)] rounded-2xl px-2 py-2"
               >
                 <IconMenu size="h-[32px] w-[32px]" />
+                {itemsSelected?.length > 0 && (
+                  <div className="absolute pt-[2px] text-sm font-semibold h-5 w-5 top-[4px] bg-[var(--button-default)] right-[6px] rounded-full flex justify-center items-center leading-none ">
+                    {totalSelected}
+                  </div>
+                )}
               </button>
             </div>
           )}
@@ -378,12 +409,13 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
           >
             {!isLoadingCreate ? (
               <p className="text-sm">
-                LANÇAR ITEM{itemsSelected?.length > 1 && "S"}
+                LANÇAR ITEM{itemsSelected?.length > 1 && `S`} 
               </p>
             ) : (
               <Loading isLoading={isLoadingCreate} style="style3" />
             )}
           </ButtonContainer>
+          
         </div>
       </Footer>
     </Container>
