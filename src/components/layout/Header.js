@@ -13,7 +13,7 @@ const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
   if (close) {
     return (
       <div className="w-10" onClick={onClick}>
-        <IconX size="h-[26px] w-[26px]" />
+        <IconBack size="h-[26px] w-[26px]" />
       </div>
     );
   }

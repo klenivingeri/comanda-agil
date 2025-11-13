@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useToast } from "src/hooks/useToast";
 import { Checkout as ComponentCheckout } from "./Checkout";
 
-export const Checkout = ({totalComanda, setTabPayment, commandID}) => {
+export const Checkout = ({totalComanda,commandCode, setTabPayment, commandID}) => {
   const toast = useToast();
   const [isLoadingCloseCommand, setisLoadingCloseCommand] = useState(false);
   const [methodID, setMethodID] = useState("CARD");
@@ -42,6 +42,7 @@ export const Checkout = ({totalComanda, setTabPayment, commandID}) => {
     isLoadingCloseCommand={isLoadingCloseCommand}
     openCenterModal={openCenterModal}
     setOpenCenterModal={setOpenCenterModal}
+    commandCode={commandCode}
   />;
 
 }

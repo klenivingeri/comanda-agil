@@ -262,6 +262,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
         totalComanda={totalComanda}
         commandID={comanda?._id}
         setTabPayment={setTabPayment}
+        commandCode={code}
       />
       )
     }
