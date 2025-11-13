@@ -8,9 +8,7 @@ import { Loading } from "../../components/loading/Loading";
 import { IconEdit } from "public/icons/Edit";
 import { Container } from "../../components/layout/Container";
 import { isEmpty } from "src/app/utils/empty";
-import { Checkout } from "src/components/checkout";
 import { Content } from "src/components/layout/Content";
-import { CenterTop } from "src/components/modal/ModalTop";
 import { RULES } from "../utils/constants";
 import { IconMoney } from "public/icons/Money";
 import { IconQrcode } from "public/icons/QrCode";
@@ -62,8 +60,8 @@ export const Comanda = ({
           <ButtonContainer hFull="h-8" wFull="w-14" margin="mx-1 mt-1">
             <IconQrcode size="h-[23px] w-[23px]" />
           </ButtonContainer>
-          <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
-            {commandCode}
+          <span className="flex mx-2 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+            {!commandID ? "*" : ""}{commandCode}
           </span>
         </div>
       </Header>

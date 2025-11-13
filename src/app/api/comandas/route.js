@@ -16,6 +16,7 @@ export async function GET(request) {
   await connectToDatabase();
   const { searchParams } = new URL(request.url);
   const _id = searchParams.get("_id");
+  const code = searchParams.get("code");
   const xTenant = getStoreXTenant(request);
 
   const response = getCommands({
@@ -25,6 +26,7 @@ export async function GET(request) {
     tenants,
     users,
     xTenant,
+    code,
     _id,
   });
   return response;

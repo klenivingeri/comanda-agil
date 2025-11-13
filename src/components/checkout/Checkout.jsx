@@ -195,7 +195,7 @@ export const Checkout = ({ isFinish, setTabPayment, commandCode, setOpenCenterMo
         onClick={() => setTabPayment(false)}
         title="Pagamento"
       >
-        <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+        <span className="flex mx-2 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
           {commandCode}
         </span>
       </Header>

@@ -47,7 +47,6 @@ export default function Configuracao() {
   };
 
   const handleColorButton = (value) => {
-    console.log(value)
     handleButtonColor(value.type);
     setItemDefault(value);
   };

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { getInfoPainelUser } from "./business";
+import { isEmpty } from "src/app/utils/empty";
 
 const populate = (products, categories, users) => [
   {
@@ -51,42 +52,57 @@ export const getCommands = async ({
   products,
   users,
   xTenant,
+  code,
   _id,
 }) => {
   try {
     let response;
+
     if (_id) {
       response = await commands
         .findOne({
           tenant: xTenant.id,
-          _id,
+          _id
         })
         .populate(populate(products, categories, users))
         .lean();
     } else {
+      const status = {"payment.status.id": "PENDING"} //  { $ne: 'PENDING'} não igual a PENDING
+      const search = code ? { code, ...status} : status
       response = await commands
         .find({
           tenant: xTenant.id,
-          "payment.status.id": "PENDING", //  { $ne: 'PENDING'} não igual a PENDING
+          ...search 
         })
         .populate(populate(products, categories, users))
         .lean();
     }
 
-    if (response && (Array.isArray(response) ? response.length > 0 : true)) {
-      return Response.json({ records: response }, { status: 200 });
+    if (!isEmpty(response)) {
+      return Response.json(
+        { 
+          success: true,
+          records: Array.isArray(response) ? response : [response] 
+        }, 
+        { status: 200 }
+      );
     }
 
     return Response.json(
       { 
         success: false,
-        message: "Nenhum item encontrado"
+        message: "Nenhuma comanda encontrada",
+        records: [],
       },
       { status: 404 }
     );
   } catch {
     return Response.json(
-      { message: "Erro ao processar os itens" },
+      { 
+        success: false,
+        message: "Erro ao processar os itens",
+        records: []
+      },
       { status: 500 }
     );
   }

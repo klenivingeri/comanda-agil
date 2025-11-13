@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { Header } from "src/components/layout/Header";
-import { Construction } from "src/components/construction";
-import { ButtonContainer } from "src/components/button";
+import { Loading } from "src/components/loading/Loading";
 
 export default function Assinatura() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAwait, setIsAwait] = useState(false);
   const [signs, setSigns] = useState([]);
 
   useEffect(() => {
@@ -45,14 +45,14 @@ export default function Assinatura() {
             <p className=" font-medium my-2">
             Acesso a conteúdo<br/> exclusivo e recursos.
             </p>
-                <ButtonContainer
+                <a
+                onClick={() => setIsAwait(true)}
                   href={sign.init_point}
-                  hFull="h-12"
-                  wFull="w-50"
-                  margin="mt-1"
+                  className="h-12 w-50 mt-1 relative font-bold rounded-lg shadow-sm transition-all duration-70 ease-in-out text-white bg-gradient-to-br from-[var(--button-hover)] to-[var(--button-default)] border-1 border-[var(--button-default)] will-change-transform will-change-background border-b-3 border-b-[var(--button-default)] cursor-pointer"
                 >
-                  Assinar
-            </ButtonContainer>
+                <div className="w-full h-full flex justify-center items-center">{!isAwait ? 'Assinar'  :
+                  <Loading isLoading={isAwait} style="style3" />}</div>
+            </a>
             
           </div>
         </div>
@@ -63,3 +63,4 @@ export default function Assinatura() {
     </Container>
   );
 }
+

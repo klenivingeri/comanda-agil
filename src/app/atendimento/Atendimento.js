@@ -71,7 +71,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       );
 
       const result = await resp.json();
-      setComanda(result?.records);
+      setComanda(result?.records[0]);
 
       setItems(
         items.map((item) => {
@@ -136,7 +136,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
               headers: { "Content-Type": "application/json" },
             });
             const comandasData = await comandasRes?.json();
-            if (comandasData) setComanda(comandasData?.records);
+            if (comandasData) setComanda(comandasData?.records[0]);
           }
         }
       } catch (err) {
@@ -356,8 +356,8 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
   return (
     <Container>
       <Header divider setInputText={setInputText} title="Cardapio">
-        <span className="flex mr-4 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
-          {code}
+        <span className="flex mx-2 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+          {!comanda?.code ? "*": ""}{code}
         </span>
       </Header>
       <Content
@@ -385,7 +385,6 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       </Content>
       <Footer bg="">
         <div className="flex flex-col w-full px-2">
-          {console.log(comanda)}
           {(itemsSelected?.length === 0 ||
             comanda?.subOrders?.length !== 0) && (
             <div className="relative w-full h-1">

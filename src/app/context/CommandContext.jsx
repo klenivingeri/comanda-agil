@@ -6,11 +6,11 @@ const CommandContext = createContext();
 export function CommandProvider({ children }) {
   const [commandSave, setCommandSave] = useState({ all: [], error: false, isLoading: true });
 
-  const getComandas = useCallback(async () => {
+  const getComandas = useCallback(async (params = "") => {
 
     try {
       setCommandSave((rest) => ({ ...rest, isLoading: true }));
-      const res = await fetch(`/api/comandas`, {
+      const res = await fetch(`/api/comandas${params}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });

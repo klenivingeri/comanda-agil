@@ -8,11 +8,22 @@ import { Input } from "src/components/form/FormComponents";
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { Header } from "src/components/layout/Header";
+import { Loading } from "src/components/loading/Loading";
+import { useCommand } from "../../app/context/CommandContext";
+import { useRouter } from "next/navigation";
+import { CenterTop } from "src/components/modal/ModalTop";
+import { currency } from "../utils/currency";
+
+const addZero = (text) => String(text?.trim()).padStart(3, 0);
 
 export default function Empresa() {
   const [error, setError] = useState(false);
   const [code, setCode] = useState("");
   const [customer, setCustomer] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { _command } = useCommand();
+  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const customer = localStorage.getItem("customer");
@@ -21,8 +32,33 @@ export default function Empresa() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    alert('Em construção')
+    if(code.length === 0) return;
+
+    try {
+      setIsLoading(true);
+      _command.get(`?code=${addZero(code)}`);
+    } catch (err) {
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
   }
+
+  useEffect(() => {
+    if (code) {
+      if (_command.all.length === 0) {
+        router.push(`/atendimento/${addZero(code)}`);
+      } else if(_command.all.length === 1){
+        const command = _command.all[0];
+        router.push(`/atendimento/${command.code}-${command?._id}`);
+      } 
+      else {
+        setOpenModal(true);
+      }
+    }
+    setIsLoading(false);
+  }, [_command.all]);
+
   return (
     <Container>
       <Header divider menu title="Seja bem-vindo" />
@@ -45,20 +81,25 @@ export default function Empresa() {
 
           <h3 className="font-medium text-xl">Pesquise por suas comandas</h3>
           <Input
-            name="Código da comanda"
             id="code"
             setValue={setCode}
-            placeholder="Código da comanda"
+            placeholder="Digite o numero da comanda"
             type="tel"
             error={code.trim() === ""}
             value={code}
-            icon={<IconCode size="h-[20px] w-[20px]" />}
+            icon={<IconCode size="h-[22px] w-[22px]" />}
           />
 
           <div className="flex w-full gap-4">
             <ButtonContainer onClick={handleSubmit} margin="mt-1">
               <span className="pl-1 flex items-center gap-2">
-                <IconSearch size="h-[32px] w-[32px]" /> Localizar
+                {isLoading ? (
+                  <Loading isLoading={isLoading} style="style3" />
+                ) : (
+                  <>
+                    <IconSearch size="h-[32px] w-[32px]" /> Localizar
+                  </>
+                )}
               </span>
             </ButtonContainer>
             <ButtonContainer href="/comandas" margin="mt-1">
@@ -69,6 +110,50 @@ export default function Empresa() {
           </div>
         </div>
       </Content>
+      <CenterTop
+        notCloseBg
+        showX
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+      >
+        <div className="flex w-full flex-col items-center justify-center">
+          <h1 className="text-2xl font-semibold text-center mb-2">OPS...</h1> 
+          <p className="font-medium">Existem {_command.all.length} com o codigo {_command.all[0]?.code}</p>
+          {_command.all?.map((command) => {
+            const totalComanda = command?.subOrders.reduce((acc, item) => {
+              const quantity = item?.quantity || 0;
+              const price = item?.product?.price ?? item?.price ?? 0;
+              return acc + quantity * price;
+            }, 0);
+
+            const allItems = command?.subOrders.reduce((acc, item) => {
+              const quantity = item?.quantity || 0;
+              return acc + quantity;
+            }, 0);
+
+            return (
+              <div
+                key={command._id}
+                className="w-full grid grid-cols-12 my-2 py-2 h-17 content-center bg-[var(--bg-component)] justify-between border-2 border-[var(--bg-subTitle)] border-l-4 rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50"
+              >
+                <div className="col-span-1 flex justify-center items-center">
+                  {allItems}
+                </div>
+
+                <div className="col-span-7 flex justify-center items-center">
+                  Itens = {currency(totalComanda)}
+                </div>
+                <div className="col-span-4 flex justify-end items-center pr-2">
+
+                  <ButtonContainer href={`/atendimento/${command.code}-${command._id}-caixa`} margin="mt-1" >
+                    Ver
+                  </ButtonContainer>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </CenterTop>
     </Container>
   );
 }
