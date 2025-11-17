@@ -18,7 +18,7 @@ import { Loading } from "src/components/loading/Loading";
 import { useToast } from "src/hooks/useToast";
 import { IconChecked } from "public/icons/Checked";
 import { ItemLists } from "./ItemLists";
-import { Checkout } from "src/components/Checkout";
+import { Checkout } from "src/components/checkout";
 
 export function RotateImage({ rotated }) {
   return (

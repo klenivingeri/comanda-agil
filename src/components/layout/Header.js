@@ -57,10 +57,10 @@ export const Header = ({
 
   return (
     <header id="Header" className="fixed inset-x-0 w-full z-10">
-      <div className="flex justify-center  h-14">
+      <div className="flex justify-center  h-16">
         <div
           className={`flex px-2 max-w-[768px] w-full bg-[var(--foreground)] ${
-            divider && "shadow-md"
+            !divider && "shadow-md"
           }`}
         >
           <div className="w-full flex gap-3 items-center">

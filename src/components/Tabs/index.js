@@ -22,7 +22,7 @@ export const Tabs = ({tabs, value, setValue}) => {
       } w-full col-span-1 px-4`}
       onClick={() => setValue(tab.id)}
     >
-      {tab.title}{}
+      {tab.title}
     </button>
   ))}</div>
   </div>

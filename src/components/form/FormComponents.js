@@ -14,7 +14,8 @@ export const Input = ({
   type = "text",
   onFocus = () => {},
   autoFocus = false,
-  icon = (<></>)
+  icon = (<></>),
+  isDisabled = false
 }) => {
 
   const inputRef = useRef(null);
@@ -37,7 +38,7 @@ export const Input = ({
   };
 
   const displayValue = isCurrency ? currency(value) : value;
-
+  
   return (
     <div className="relative">
       <div className="absolute top-3.5 left-3 text-gray-500">
@@ -50,12 +51,13 @@ export const Input = ({
         value={displayValue}
         name={id}
         onFocus={onFocus}
+        disabled={isDisabled}
         type={type}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="none"
         spellCheck="false"
-        className={`w-full pl-10 py-2 h-12 shadow-sm rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
+        className={`w-full pl-10 py-2 h-12 shadow-sm rounded-lg ${isDisabled ? 'bg-black/10': ''} focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none bg-[var(--input-default)] text-black
             ${
               isValid && error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -105,7 +107,7 @@ export const InputImagem = ({ name, id, images, setImage, placeholder }) => {
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
         {name}
       </label>
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-row items-center gap-2 pb-1">
         <input
           onChange={(e) => setImg(e.target.value)}
           value={img || ""}
