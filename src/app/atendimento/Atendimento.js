@@ -18,7 +18,7 @@ import { Loading } from "src/components/loading/Loading";
 import { useToast } from "src/hooks/useToast";
 import { IconChecked } from "public/icons/Checked";
 import { ItemLists } from "./ItemLists";
-import { Checkout } from "src/components/checkout";
+import { Checkout } from "src/components/Checkout";
 
 export function RotateImage({ rotated }) {
   return (
@@ -71,7 +71,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
       );
 
       const result = await resp.json();
-      setComanda(result?.records[0]);
+      setComanda(result?.records);
 
       setItems(
         items.map((item) => {

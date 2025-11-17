@@ -137,7 +137,7 @@ const ComandaGoLanding = () => {
                 <span className="text-[var(--button-orange-default)] mr-2 font-bold">
                   ✓
                 </span>
-                <b className="font-semibold">Facilidade:</b> Cliente podem
+                <b className="font-semibold">Facilidade:</b> Clientes podem
                 visualizar a comandas para tirar duvidas, e acessar o cardapio
                 pra conhecer as opções.
               </li>
@@ -152,7 +152,6 @@ const ComandaGoLanding = () => {
           </div>
         </section>
 
-        {/* 📞 Seção Contatos */}
         <section
           id="contatos"
           className="py-16 bg-gray-50 border-t border-gray-200"

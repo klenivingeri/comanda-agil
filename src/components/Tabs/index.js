@@ -1,9 +1,15 @@
 "use client";
 import React from "react";
 
+const COLS = {
+    1: 'grid-cols-1',
+    2: 'grid-cols-2',
+    3: 'grid-cols-3'
+  }
+
 export const Tabs = ({tabs, value, setValue}) => {
 
-  const gridCols = `grid-cols-${tabs.length}` 
+  const gridCols = COLS[tabs.length];
 
   return (
     <div className="relative">
