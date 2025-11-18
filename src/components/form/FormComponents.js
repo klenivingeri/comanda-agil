@@ -30,7 +30,7 @@ export const Input = ({
     if (isCurrency) {
       const onlyNumbers = _value.replace(/\D/g, "");
       const numericValue = Number(onlyNumbers) / 100;
-
+      console.log(onlyNumbers)
       setValue(numericValue);
     } else {
       setValue(_value);

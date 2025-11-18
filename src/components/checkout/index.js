@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useToast } from "src/hooks/useToast";
-import { Checkout as ComponentCheckout } from "./Checkout";
+import { Checkout as ComponentCheckout } from "./Checkouts";
 
 export const Checkout = ({totalComanda,commandCode, setTabPayment, commandID}) => {
   const toast = useToast();

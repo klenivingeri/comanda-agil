@@ -216,3 +216,17 @@ html, body, #root {
 .animate-fade-out {
   animation: fade-out 0.25s ease-in forwards;
 }
+
+.piscando {
+  margin-left: -15px;
+  animation: piscar 0.5s infinite alternate; 
+}
+
+@keyframes piscar {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
