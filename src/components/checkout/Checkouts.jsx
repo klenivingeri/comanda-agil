@@ -2,17 +2,13 @@ import { IconChecked } from "public/icons/Checked"
 import { ButtonContainer } from "../button"
 import { Loading } from "../loading/Loading"
 import { currency } from "src/app/utils/currency"
-import { Input } from "../form/FormComponents"
 import { useMemo, useState, useRef, useEffect } from "react"
 import { IconX } from "public/icons/X"
-import { FakeButton } from "src/app/utils/FakeButton"
-import { IconMoney } from "public/icons/Money"
 import { Container } from "../layout/Container"
 import { Header } from "../layout/Header"
 import { CenterTop } from "../modal/ModalTop"
 import { Content } from "../layout/Content"
 import { Footer } from "../layout/Footer"
-import { Tabs } from "../Tabs"
 import { KeyNumber } from "../KeyBoard/KeyNumber"
 
 const paymentMethods = [
@@ -20,12 +16,6 @@ const paymentMethods = [
   { name: 'Dinheiro', id: 'CASH' },
   { name: 'Pix', id: 'PIX' },
   { name: 'Outro', id: 'OTHER' }
-]
-
-
-const arrTabs = [
-  { title: 'Pagamento Simples', id: 'simples' },
-  { title: 'Pagamento Fragmentado', id: 'fragmentado' },
 ]
 
 const ComponentFeedback = ({ isLoadingCloseCommand }) => (
@@ -57,19 +47,56 @@ const ComponentFeedback = ({ isLoadingCloseCommand }) => (
 )
 
 export function ResumoFinanceiro({ totalComanda, payments }) {
-
+  const value = totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0)
+  const label = value > 0 ? 'Receber' : 'Troco'
+  const display = label === 'Receber'
+    ? currency(value)
+    : currency(Math.abs(value))
   return (
     <div className="flex w-full pb-2 justify-between gap-3 mb-1">
       <div className="relative flex flex w-full py-2 px-4 h-10 content-center bg-[var(--bg-component)] justify-between rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-        <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm text-[var(--button-default)]">Receber</span>
-        <span>{currency(totalComanda - payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
+        <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm text-[var(--button-default)]">
+          {label}</span>
+        <span>{display}</span>
       </div>
-      <div className="relative flex w-full py-2 px-4 h-10 content-center bg-[var(--bg-component)] justify-between rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+      <div className="relative flex flex w-full py-2 px-4 h-10 content-center bg-[var(--bg-component)] justify-between rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
         <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm  text-[var(--button-default)]">Recebido</span>
         <span>{currency(payments.reduce((sum, payment) => sum + payment.value, 0))}</span>
       </div>
     </div>
   );
+}
+
+const ComponentInstallment = ({ totalComanda }) => {
+  const [installment, setInstallment] = useState("1");
+
+  const installmentOptions = useMemo(() => {
+    return Array.from({ length: 12 }, (_, index) => {
+      const numero = (index + 1).toString();
+      return { name: numero, _id: numero };
+    });
+  }, []);
+
+  const handleSetInstallment = (e) => {
+    setInstallment(e.target.value)
+  }
+
+  return (
+    <div className="relative flex w-full mb-4 py-2 px-4 h-10 content-center bg-[var(--bg-component)] justify-between rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
+      <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm  text-[var(--button-default)]">Valor Total</span>
+      <select
+        onChange={(e) => handleSetInstallment(e)}
+        value={installment}
+        className="px-2 cursor-pointer rounded-lg focus:ring-2 focus:ring-[var(--button-default)] focus:border-[var(--button-focus)] outline-none appearance-none "
+      >
+        {installmentOptions.map((op, i) => (
+          <option key={i} value={op._id}>
+            {op.name} × {currency(totalComanda / op._id)}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
 }
 
 export function ComponentFragmentPayment({
@@ -132,11 +159,7 @@ export function ComponentFragmentPayment({
         )}
       </div>
       <ResumoFinanceiro totalComanda={totalComanda} payments={payments} />
-      
-        <div className="relative flex w-full mb-4 py-2 px-4 h-10 content-center bg-[var(--bg-component)] justify-between rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50">
-        <span className="top-[-8px] left-2 text-sm font-semibold rounded-sm  text-[var(--button-default)]">Valor Total</span>
-        <span>{currency(totalComanda)}</span>
-      </div>
+      <ComponentInstallment totalComanda={totalComanda} />
       <div className="grid w-full grid-cols-4 gap-4">
         {paymentMethods.map((method) => (
           <ButtonContainer
@@ -155,9 +178,19 @@ export function ComponentFragmentPayment({
   );
 }
 
-export const Checkout = ({ isFinish, setTabPayment, commandCode, setOpenCenterModal, openCenterModal, setMethodID, methodID, totalComanda, postCloseCommand, isLoadingCloseCommand }) => {
+export const Checkout = ({
+  isFinish,
+  setTabPayment,
+  commandCode,
+  setOpenCenterModal,
+  openCenterModal,
+  setMethodID,
+  methodID,
+  totalComanda,
+  postCloseCommand,
+  isLoadingCloseCommand
+}) => {
   const [payments, setPayments] = useState([]);
-  const [openModalSplitPayment, setOpenModalSplitPayment] = useState([]);
   const refEndPage = useRef(null);
   const [showValue, setShowValue] = useState(totalComanda)
 
@@ -168,14 +201,6 @@ export const Checkout = ({ isFinish, setTabPayment, commandCode, setOpenCenterMo
       }, 100);
     }
   };
-
-  const installmentOptions = useMemo(() => {
-    return Array.from({ length: 12 }, (_, index) => {
-      const numero = (index + 1).toString();
-      return { name: numero, _id: numero };
-    });
-  }, []);
-
 
   useEffect(() => {
     if (!payments.length) {
@@ -197,8 +222,9 @@ export const Checkout = ({ isFinish, setTabPayment, commandCode, setOpenCenterMo
       </Header>
       <Content pb="pb-28">
         <div className="flex justify-center items-center mt-6">
-          <div className=" text-center px-4 py-2 text-6xl font-medium text-[var(--button-default)]">
-            {currency(showValue)}
+          <div className="text-md font-medium text-[var(--button-default)] ">R$</div>
+          <div className=" text-center px-4 py-2 text-6xl  text-[var(--button-default)]">
+            {currency(showValue, false)}
           </div>
           <span className="piscando h-12 w-[2px] bg-[var(--button-default)] "></span>
         </div>
@@ -239,20 +265,6 @@ export const Checkout = ({ isFinish, setTabPayment, commandCode, setOpenCenterMo
           onClose={() => setOpenCenterModal(false)}
         >
           <ComponentFeedback isLoadingCloseCommand={isLoadingCloseCommand} />
-        </CenterTop>)
-      }
-      {isFinish && (
-        <CenterTop
-          notCloseBg
-          showX
-          isOpen={openCenterModal}
-          onClose={() => setOpenCenterModal(false)}
-        >
-          {installmentOptions.map((op, i) => (
-            <option key={i} value={op._id}>
-              {op.name === "1" ? '' : `${op.name} × `}  {currency(totalComanda / op._id)}
-            </option>
-          ))}
         </CenterTop>)
       }
 

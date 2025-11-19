@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { currency } from "src/app/utils/currency";
 
 const ShowKey = ({ keyPress }) => {
   const show = {
@@ -34,21 +33,23 @@ export const KeyNumber = ({ setValue, send }) => {
   ];
 
   const handleKeyPress = (pressedValue) => {
-    window.navigator.vibrate(10);
-    if (typeof pressedValue === "number") {
-      setValue((prevValue) => {
-        const currentCents = Math.round(Number(prevValue) * 100) || 0;
-        const currentDigits = String(currentCents);
-
-        const newDigits = currentDigits + String(pressedValue);
-
-        return Number(newDigits) / 100;
-      });
-    } else if (pressedValue === "clear") {
-      // Se o seu valor final for Number, é melhor limpar para 0.
+    if (pressedValue === "clear") {
       setValue(0);
     } else if (pressedValue === "send") {
       send();
+    } else {
+      setValue((prevValue) => {
+        const MAX_CENT_LIMIT = 9999999;
+        const currentCents = Math.round(Number(prevValue) * 100) || 0;
+        const currentDigits = String(currentCents);
+        const newDigits = currentDigits + String(pressedValue);
+        const newCentsValue = Number(newDigits);
+        if (newCentsValue > MAX_CENT_LIMIT) {
+          return prevValue;
+        }
+
+        return newCentsValue / 100;
+      });
     }
   };
 
@@ -57,7 +58,7 @@ export const KeyNumber = ({ setValue, send }) => {
       {key.map((keyPress, i) => (
         <button
           key={i}
-          className={`w-full h-16 col-span-3 border-t-1 border-[var(--button-default)]/20 px-4`}
+          className={`w-full h-16 col-span-3 border-t border-[var(--button-default)]/20 px-4 cursor-pointer hover:bg-[var(--button-default)]/10`}
           onClick={() => handleKeyPress(keyPress)}
         >
           <ShowKey keyPress={keyPress} />
