@@ -19,7 +19,7 @@ export const Tabs = ({tabs, value, setValue}) => {
       key={i}
       className={`${
         value === tab.id ? "bg-[var(--button-default)] text-[var(--bg-component)] rounded-full" : ""
-      } w-full col-span-1 px-4`}
+      } w-full col-span-1 px-4 h-10`}
       onClick={() => setValue(tab.id)}
     >
       {tab.title}

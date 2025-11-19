@@ -18,7 +18,7 @@ export const FormComponent = ({ employee }) => {
   const [email, setEmail] = useState("");
   const [password, sePassword] = useState("");
   const [role, setRole] = useState("");
-  const [branch, setBranch] = useState("1");
+  const [branch, setBranch] = useState("");
   const [enable, setEnable] = useState(true);
   const toast = useToast();
 
@@ -112,6 +112,7 @@ export const FormComponent = ({ employee }) => {
         <Select
           name="Filial"
           id="branch"
+          placeholder="Selecione a quantidade de filiais"
           value={branch}
           setValue={setBranch}
           options={[
