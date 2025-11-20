@@ -20,6 +20,8 @@ export const FormComponent = ({ employee }) => {
   const [role, setRole] = useState("");
   const [branch, setBranch] = useState("");
   const [enable, setEnable] = useState(true);
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState('');
   const toast = useToast();
 
   const fetchCreateUpdateEmployee = async (id, payload) => {
@@ -45,24 +47,38 @@ export const FormComponent = ({ employee }) => {
       return;
     }
     setIsValid(false);
-
     setIsLoading(true);
-    fetchCreateUpdateEmployee(employee?._id, {
-      name,
-      email,
-      password,
-      role,
-      branch,
-      enable
-    });
+
+    let imageUrl = null;
+
+    if (image) {
+      try {
+        const formData = new FormData();
+        formData.append("file", image);
+
+        const uploadResponse = await fetch(`/api/image?urlFile=${url}`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error("Falha no upload da imagem.");
+        }
+
+        const result = await uploadResponse.json();
+        imageUrl = result.url;
+      } catch (error) {
+        console.error(error);
+        toast.error("Ocorreu um erro ao enviar a imagem.");
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    const payload = { name, email, password, role, branch, enable, image: imageUrl };
+    fetchCreateUpdateEmployee(employee?._id, payload);
 
     if (employee?._id) return;
-
-    setName("");
-    setEmail("");
-    sePassword("");
-    setRole("");
-    setBranch("");
   };
 
   useEffect(() => {
@@ -71,13 +87,14 @@ export const FormComponent = ({ employee }) => {
       setEmail(employee.email);
       setRole(employee.role);
       setBranch(employee.branch);
+      setUrl(employee.image);
     }
   }, [employee]);
 
   return (
     <div className="w-full max-w-[500px] mx-auto text-gray-700">
       <Form method="POST" create={handleSend} isLoading={isLoading}>
-        <InputFileComponent id="file" setValue={() => {}} />
+        <InputFileComponent id="file" value={url} setValue={setImage} />
         <Input
           name="Nome"
           id="name"

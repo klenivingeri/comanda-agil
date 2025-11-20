@@ -5,16 +5,22 @@ export const InputFileComponent = ({
   label = "InputFile",
   value,
   setValue = () => {},
-  id,
 }) => {
+
   const [preview, setPreview] = useState(null);
   const contentRef = useRef(null);
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setValue(id, file);
-      const imageUrl = URL.createObjectURL(file);
+    const originalFile = e.target.files[0];
+    if (originalFile) {
+      const newFileName = `${Date.now()}-${originalFile.name}`;
+
+      const renamedFile = new File([originalFile], newFileName, {
+        type: originalFile.type,
+      });
+
+      setValue(renamedFile);
+      const imageUrl = URL.createObjectURL(renamedFile);
       setPreview(imageUrl);
     }
   };
@@ -30,7 +36,7 @@ export const InputFileComponent = ({
         ref={contentRef}
       />
 
-      {preview || value ? (
+      {preview || value?.length ? (
         <div
           onClick={() => {
             contentRef.current?.click();

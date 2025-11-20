@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../lib/dbConnect";
 import { users } from "./usersModel.js";
-import { postUser, getUser, putUser } from "./controller.js";
+import { postUser, getUser, putUser, deleteUser } from "./controller.js";
 import { getStoreXTenant } from "../utils/getStoreXTenant";
 
 export async function GET(request) {
@@ -31,5 +31,14 @@ export async function PUT(request) {
   const userAgent = request.headers.get('user-agent');
 
   const response = putUser({ users, xTenant, _id, body, userAgent });
+  return response;
+}
+
+export async function DELETE(request) {
+  await connectToDatabase();
+  const xTenant = getStoreXTenant(request);
+  const body = await request.json();
+
+  const response = deleteUser({ users, xTenant, body });
   return response;
 }

@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { RULES } from "../constants";
+import { deleteImage } from "../utils/deleteImage";
 
 const saltRounds = 5;
 
@@ -112,12 +113,12 @@ export const putUser = async ({ users, xTenant, _id, body, userAgent }) => {
   try {
     body.tenant = xTenant.id;
 
-    if(RULES.MASTER.includes(xTenant.role)) {
-      body.userAgent = []
+    if (RULES.MASTER.includes(xTenant.role)) {
+      body.userAgent = [];
     } else {
       body.userAgent = userAgent;
     }
-    
+
     await users.findByIdAndUpdate({ _id, tenant: xTenant.id }, { $set: body });
     return Response.json(
       { message: "sucesso ao fazer login" },
@@ -136,7 +137,7 @@ export const createEnterprise = async ({ tenants, users, body }) => {
 
     let created;
     if (!user) {
-      const createdTenant = await tenants.create({name: body.enterprise});
+      const createdTenant = await tenants.create({ name: body.enterprise });
       const payload = {
         name: body.name,
         email: body.email,
@@ -146,11 +147,8 @@ export const createEnterprise = async ({ tenants, users, body }) => {
         branch: "1",
       };
       created = await users.create(payload);
-    }else {
-      return Response.json(
-      { message: "Email já cadastrado" },
-      { status: 409 }
-    );
+    } else {
+      return Response.json({ message: "Email já cadastrado" }, { status: 409 });
     }
 
     return Response.json(
@@ -159,5 +157,26 @@ export const createEnterprise = async ({ tenants, users, body }) => {
     );
   } catch (_) {
     return Response.json({ message: "Rotas de items" }, { status: 500 });
+  }
+};
+
+export const deleteUser = async ({ users, xTenant, body }) => {
+  try {
+    const { _id, image } = body;
+    const hasDeletedImage = await deleteImage(image);
+
+    if (hasDeletedImage) {
+      const result = await users.findOneAndDelete({
+        _id,
+        tenant: xTenant.id,
+      });
+    }
+
+    return Response.json({ message: "Sucesso" }, { status: 200 });
+  } catch (_) {
+    return Response.json(
+      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
+      { status: 500 }
+    );
   }
 };

@@ -30,11 +30,11 @@ export default function ConsultarCategoria() {
     }
   };
 
-  const handleDelete = async (_id) => {
+  const handleDelete = async (user) => {
     const res = await fetch(`/api/user`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ _id }),
+      body: JSON.stringify(user),
     });
     getUsers();
   };
@@ -62,7 +62,7 @@ export default function ConsultarCategoria() {
                   wFull="w-10"
                   hFull="h-9"
                   margin="mt-1"
-                  onClick={() => handleDelete(user._id)}
+                  onClick={() => handleDelete(user)}
                 >
                   <IconDelete size="h-[20px] w-[20px]" />
                 </ButtonContainer>
@@ -80,7 +80,7 @@ export default function ConsultarCategoria() {
         </div>
       </Content>
           <Footer bg="">
-        <ButtonCircle href="/produto/cadastrar/create" />
+        <ButtonCircle href="/colaboradores/cadastrar/create" />
       </Footer>
     </Container>
   );
