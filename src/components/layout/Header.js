@@ -13,7 +13,7 @@ const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
   if (close) {
     return (
       <div className="w-10" onClick={onClick}>
-        <IconBack size="h-[26px] w-[26px]" />
+        <IconX size="h-[26px] w-[26px]" />
       </div>
     );
   }
@@ -21,7 +21,7 @@ const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
   if (menu) {
     return (
       <div className="w-10" onClick={handleOpenMenuMobile}>
-        <IconDotMenu size="h-[30px] w-[30px]" />
+        <IconDotMenu size="h-[32px] w-[32px]" />
       </div>
     );
   }
@@ -63,7 +63,7 @@ export const Header = ({
             !divider && "shadow-md"
           }`}
         >
-          <div className="w-full flex gap-3 items-center">
+          <div className="w-full flex gap-3 items-center text-[var(--button-default)]">
             <div className="w-6">
               <DefaultComponent
               close={close}
@@ -73,7 +73,7 @@ export const Header = ({
             />
             </div>
             <div className="flex justify-between items-center w-full">
-              <span className="text-md font-bold">
+              <span className="text-md font-light text-[var(--button-default)]">
                 {!searchFull && (title.length ? title : titleComponent)}
               </span>
               {setInputText ? (

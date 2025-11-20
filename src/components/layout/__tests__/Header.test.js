@@ -6,6 +6,7 @@ import { Header } from "../Header";
 jest.mock("public/icons/ArrowBack", () => ({
   IconBack: () => <div data-testid="icon-back">Voltar</div>,
 }));
+
 jest.mock("public/icons/X", () => ({
   IconX: () => <div data-testid="icon-close">Fechar</div>,
 }));
@@ -59,7 +60,7 @@ test("Exibe o ícone de fechar e chama a função onClick ao ser clicado", () =>
   const mockOnClick = jest.fn();
   render(<Header close={true} onClick={mockOnClick} />);
 
-  const closeButton = screen.getByTestId("icon-back");
+  const closeButton = screen.getByTestId("icon-close");
   expect(closeButton).toBeInTheDocument();
 
   fireEvent.click(closeButton);

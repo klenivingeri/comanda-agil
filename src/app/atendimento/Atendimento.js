@@ -394,7 +394,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
               >
                 <IconMenu size="h-[32px] w-[32px]" />
                 {itemsSelected?.length > 0 && (
-                  <div className="absolute pt-[2px] text-sm font-semibold h-5 w-5 top-[4px] bg-[var(--button-default)] right-[6px] rounded-full flex justify-center items-center leading-none ">
+                  <div className="absolute pt-[1px] text-xs text-[var(--button-default)] border-3 border-[var(--button-default)] font-semibold h-[20px] w-[20px] top-[4px] bg-white right-[5px] rounded-full flex justify-center items-center leading-none ">
                     {totalSelected}
                   </div>
                 )}
