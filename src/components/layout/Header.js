@@ -63,7 +63,7 @@ export const Header = ({
             !divider && "shadow-md"
           }`}
         >
-          <div className="w-full flex gap-3 items-center text-[var(--button-default)]">
+          <div className="w-full flex gap-3 items-center ">
             <div className="w-6">
               <DefaultComponent
               close={close}
@@ -73,7 +73,7 @@ export const Header = ({
             />
             </div>
             <div className="flex justify-between items-center w-full">
-              <span className="text-md font-light text-[var(--button-default)]">
+              <span className="text-md font-light">
                 {!searchFull && (title.length ? title : titleComponent)}
               </span>
               {setInputText ? (

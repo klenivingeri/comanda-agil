@@ -56,7 +56,7 @@ export const FormComponent = ({ employee }) => {
         const formData = new FormData();
         formData.append("file", image);
 
-        const uploadResponse = await fetch(`/api/image?urlFile=${url}`, {
+        const uploadResponse = await fetch(`/api/image?folder=profiles`, {
           method: "POST",
           body: formData,
         });

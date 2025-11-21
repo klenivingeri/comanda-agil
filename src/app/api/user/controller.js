@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import { RULES } from "../constants";
-import { deleteImage } from "../utils/deleteImage";
 
 const saltRounds = 5;
 
@@ -160,23 +159,3 @@ export const createEnterprise = async ({ tenants, users, body }) => {
   }
 };
 
-export const deleteUser = async ({ users, xTenant, body }) => {
-  try {
-    const { _id, image } = body;
-    const hasDeletedImage = await deleteImage(image);
-
-    if (hasDeletedImage) {
-      const result = await users.findOneAndDelete({
-        _id,
-        tenant: xTenant.id,
-      });
-    }
-
-    return Response.json({ message: "Sucesso" }, { status: 200 });
-  } catch (_) {
-    return Response.json(
-      { message: "Ocorreu um erro ao Fazer o cadastro do item" },
-      { status: 500 }
-    );
-  }
-};

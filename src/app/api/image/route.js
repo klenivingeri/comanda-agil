@@ -1,46 +1,53 @@
 import { NextResponse } from "next/server";
-import { storage } from "../lib/bucketConnect";
-import { getStoreXTenant } from "../utils/getStoreXTenant";
+import { put } from '@vercel/blob';
+import { getStoreXTenant } from "../utils/getStoreXTenant"; 
 
 export async function POST(request) {
   const xTenant = getStoreXTenant(request);
   const { searchParams } = new URL(request.url);
-  const hasUrlFile = searchParams.get("urlFile");
-  const baseURl = `https://storage.googleapis.com/${process.env.GCP_BUCKET_NAME}/`;
-  let fileKey = null;
-  if (hasUrlFile) {
-    fileKey = hasUrlFile.replace(baseURl, "");
-  }
+  const folder = searchParams.get("folder");
+
+const folderPrefix = folder ? `${folder}/` : '';
+
 
   try {
     const form = await request.formData();
-    const file = form.get("file");
+    const file = form.get("file"); 
+
 
     if (!file) {
       return NextResponse.json(
         { message: "Nenhum arquivo enviado" },
-        { status: 400 }
+        { status: 400 } // Bad Request
       );
     }
+    
+    const originalFilename = file.name || '_file';
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = fileKey || `${xTenant.id}-${file.name}`;
+    const getFileExtension = (filename) => {
+      const parts = filename.split('.');
+      return parts.length > 1 ? '.' + parts.pop() : ''; 
+    };
 
-    const bucket = storage.bucket(process.env.GCP_BUCKET_NAME);
-    const savedFile = bucket.file(filename);
+    const fileExtension = getFileExtension(originalFilename);
+    const filename = `${folderPrefix}${xTenant.userId}_${new Date().getTime()}${fileExtension}`;
 
-    await savedFile.save(buffer, {
-      contentType: file.type,
-      public: true,
+    const { url } = await put(filename, file, { 
+      access: 'public',
+      contentType: file.type
     });
-
-    const publicUrl = `${baseURl}${filename}`;
-
+    
     return NextResponse.json({
-      url: publicUrl,
+      url, 
       filename,
-    });
+    }, { status: 200 });
+
   } catch (e) {
-    return NextResponse.json({ message: "Falha no upload" }, { status: 500 });
+    // 6. Tratamento de Erro
+    console.error("Erro no upload:", e); 
+    return NextResponse.json(
+      { message: "Falha no upload do arquivo. Tente novamente." }, 
+      { status: 500 } // Internal Server Error
+    );
   }
 }

@@ -13,7 +13,7 @@ export const InputFileComponent = ({
   const handleFileChange = (e) => {
     const originalFile = e.target.files[0];
     if (originalFile) {
-      const newFileName = `${Date.now()}-${originalFile.name}`;
+      const newFileName = `_${originalFile.name}`;
 
       const renamedFile = new File([originalFile], newFileName, {
         type: originalFile.type,
