@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { IconImageEmpty } from "../../../public/icons/ImageEmpty";
+import { resizeImage } from "src/app/utils/resizeImage";
 
 export const InputFileComponent = ({
   label = "InputFile",
@@ -10,23 +11,19 @@ export const InputFileComponent = ({
   const [preview, setPreview] = useState(null);
   const contentRef = useRef(null);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const originalFile = e.target.files[0];
-    if (originalFile) {
-      const newFileName = `_${originalFile.name}`;
-
-      const renamedFile = new File([originalFile], newFileName, {
-        type: originalFile.type,
-      });
-
-      setValue(renamedFile);
-      const imageUrl = URL.createObjectURL(renamedFile);
+    const processedFile = await resizeImage(originalFile);
+    if (processedFile) {
+      setValue(processedFile); 
+    
+      const imageUrl = URL.createObjectURL(processedFile); 
       setPreview(imageUrl);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mb-5 h-40 ">
+    <div className="flex flex-col items-center justify-center mb-5 h-[200px] ">
       <input
         type="file"
         id={label}
@@ -41,7 +38,7 @@ export const InputFileComponent = ({
           onClick={() => {
             contentRef.current?.click();
           }}
-          className={`w-full h-40 bg-cover bg-top rounded-t-2xl`}
+          className={`w-[200px] h-[200px] bg-cover bg-top rounded-full`}
           style={{ backgroundImage: `url(${preview || value})` }}
         ></div>
       ) : (
