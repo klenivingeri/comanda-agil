@@ -102,7 +102,7 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
 
   return (
     <>
-      <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} isCollaborators />
+            <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} type="collaborators" />
       <div className=" flex justify-center">Quantidade de itens adicionados nas comandas.</div>
       <Ranking data={sortSuborders} colorsMap={colorsMap} />
     </>)

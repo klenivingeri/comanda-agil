@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import RelatorioView from "./RelatorioView";
+import RelatorioProductsView from "./RelatorioView";
 import { getAllIndexdbOrApi } from "src/db/getIndexdbOrApi";
 
 export default function PageRelatorioProduto() {
+
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState([]);
@@ -19,7 +20,7 @@ export default function PageRelatorioProduto() {
   }
 
   return (
-    <RelatorioView
+    <RelatorioProductsView
       error={error}
       isLoading={isLoading}
       response={response}

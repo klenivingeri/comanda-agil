@@ -68,7 +68,6 @@ export const FormComponent = ({ employee }) => {
         const result = await uploadResponse.json();
         imageUrl = result.url;
       } catch (error) {
-        console.error(error);
         toast.error("Ocorreu um erro ao enviar a imagem.");
         setIsLoading(false);
         return;

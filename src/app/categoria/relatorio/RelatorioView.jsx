@@ -50,10 +50,10 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
       const key = item.product?.category?.type || item.product?._id || item._id;
       if (!key) return acc;
 
-      // 🔹 valida createdAt antes
       if (!item.createdAt) return acc;
 
       const dateObj = new Date(item.createdAt);
+      
       if (isNaN(dateObj.getTime())) return acc; // ignora datas inválidas
 
       const data = dateObj.toISOString().split("T")[0];
@@ -96,7 +96,11 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
   }, [groupedSubOrdersForChart]);
 
   const colorsMap = useMemo(() => {
-    return sortSuborders.reduce((acc, item, i) => {
+    const sortSubordersName = groupedSubOrdersForChart.sort((a, b) => 
+        a.displayName.localeCompare(b.displayName)
+      );
+
+    return sortSubordersName.reduce((acc, item, i) => {
       const colorIndex = i % CORES_FIXAS.length;
       acc[item.displayName] = CORES_FIXAS[colorIndex];
 
@@ -106,7 +110,7 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
 
   return (
     <>
-      <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} />
+      <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} type='categorys' />
       <Ranking data={sortSuborders} colorsMap={colorsMap} />
     </>)
   }

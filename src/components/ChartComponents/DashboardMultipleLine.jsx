@@ -18,7 +18,7 @@ import { BUTTON_THEMES, CORES_FIXAS } from "src/app/utils/constants";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
 
-const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborators = false }) => {
+const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, type = '' }) => {
   const [baseDate] = useState(() => new Date());
 
   const isDay = tab === 'day';
@@ -70,32 +70,53 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborato
   // 🔹 Agrupa por categoria ou produto e calcula quantidade por label
   const processedData = useMemo(() => {
     if (!items?.length) return { keys: [], dataByKey: {} };
-
-    const keys = [...new Set(items.map(item => isCollaborators ? item.userId?.name : item.product?.category?.name || 'Produto Desconhecido'))];
+  
+    // Calcula o total de quantidade para cada chave (categoria, colaborador, etc.)
+    const totals = items.reduce((acc, item) => {
+      const displayName = {
+        categorys: item.product?.category?.name,
+        collaborators: item.userId?.name,
+        products: item.product?.name
+      };
+      const key = displayName[type] || 'Informação Desconhecido';
+      acc[key] = (acc[key] || 0) + (item.quantity ?? 1);
+      return acc;
+    }, {});
+  
+    // Ordena as chaves pela quantidade total e pega o top 10
+    const topKeys = Object.keys(totals)
+      .sort((a, b) => totals[b] - totals[a])
+      .slice(0, 10);
+  
     const dataByKey = {};
-
-    keys.forEach(k => {
+  
+    topKeys.forEach(k => {
       dataByKey[k] = new Array(labels.length).fill(0);
     });
-
+  
     labels.forEach((start, idx) => {
       const end = new Date(start);
       if (isDay) end.setHours(start.getHours() + 1);
       else end.setDate(start.getDate() + 1);
-
+  
       items.forEach(item => {
+        const displayName = {
+          categorys: item.product?.category?.name,
+          collaborators: item.userId?.name,
+          products: item.product?.name
+        };
+        const key = displayName[type] || 'Informação Desconhecido';
+  
         const created = new Date(item.createdAt);
-        if (created >= start && created < end) {
-          const key = isCollaborators ? item.userId?.name : item.product?.category?.name || 'Produto Desconhecido';
+        if (topKeys.includes(key) && created >= start && created < end) {
           dataByKey[key][idx] += item.quantity ?? 1;
         }
       });
     });
-
-    return { keys, dataByKey };
+  
+    return { keys: topKeys, dataByKey };
   }, [items, labels, isDay]);
- //colorsMap
-  // 🔹 Transformar em datasets do Chart.js
+
   const data = useMemo(() => {
     const { keys, dataByKey } = processedData;
     const datasets = keys.map((key, i) => ({
@@ -159,10 +180,10 @@ const ChartLineMulti = ({ items = [], tab = 'day', colorsMap = {}, isCollaborato
   );
 };
 
-export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap, isCollaborators }) => {
+export const DashboardMultipleLine = ({ allSubOrders = [], tab, colorsMap, type }) => {
   return (
     <div>
-      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} isCollaborators={isCollaborators} />
+      <ChartLineMulti items={allSubOrders} tab={tab} colorsMap={colorsMap} type={type} />
     </div>
   );
 }
