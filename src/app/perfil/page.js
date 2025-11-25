@@ -3,9 +3,6 @@ import { useState } from "react";
 import { Container } from "src/components/layout/Container";
 import { Content } from "src/components/layout/Content";
 import { Header } from "src/components/layout/Header";
-import { Construction } from "src/components/construction";
-import { ButtonContainer } from "src/components/button";
-import { IconEdit } from "public/icons/Edit";
 
 export default function Perfil() {
   const [error, setError] = useState(false);
@@ -20,7 +17,12 @@ export default function Perfil() {
 
   return (
     <Container>
-      <Header divider title="Perfil" />
+      <Header divider title="Perfil" >
+        <div className="flex justify-center items-center gap-2 mr-2 font-medium">
+          <img className="h-4 w-4" src="./assets/score.png" /> 
+          <p>321654</p>
+          </div>
+      </Header>
       <Content isLoading={isLoading} error={error}>
         <div className="col-span-10 flex justify-center items-center pt-5 pl-5 flex-col w-full opacity-0 animate-fade-in"
         style={{ animationDelay: `${0.04}s`, animationFillMode: 'forwards' }}>
@@ -32,44 +34,44 @@ export default function Perfil() {
             Por aqui desde outubro de 2015
           </span>
         </div>
-        <div className="bg-[var(--fore-back)] w-full p-4  rounded-lg shadow-lg mt-4 opacity-0 animate-fade-in"
+        <div className="bg-[var(--fore-back)] w-full  rounded-lg  mt-4 opacity-0 animate-fade-in"
           style={{ animationDelay: `${0.04}s`, animationFillMode: 'forwards' }}>
           <p className="font-bold">Estatísticas</p>
           <div className="grid grid-cols-12 gap-2">
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg mb-[-5px]">0</p>
               <p className="text-sm font-medium text-[var(--text-default)]/50">
                 Atendiemento
               </p>
-              <span className="absolute top-5 left-4 ">
-                <IconEdit size="h-[23px] w-[23px]" />
+              <span className="absolute top-4 left-4 ">
+                <img className="h-9 w-9" src="./assets/atendimento.png" />
               </span>
             </div>
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg mb-[-5px]">0</p>
               <p className="text-sm font-medium text-[var(--text-default)]/50">
                 Itens vendidos
               </p>
-              <span className="absolute top-5 left-4 ">
-                <IconEdit size="h-[23px] w-[23px]" />
+              <span className="absolute top-4 left-4 ">
+                <img className="h-8 w-8" src="./assets/flash-sale.png" />
               </span>
             </div>
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg mb-[-5px]">Coxinha</p>
               <p className="text-sm font-medium text-[var(--text-default)]/50">
                 Mais vendido
               </p>
-              <span className="absolute top-5 left-4 ">
-                <IconEdit size="h-[23px] w-[23px]" />
+              <span className="absolute top-4 left-4 ">
+                <img className="h-8 w-8" src="./assets/sale.png" />
               </span>
             </div>
             <div className="relative col-span-6 shadow-lg rounded-md pl-14 py-2">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg mb-[-5px]">0</p>
               <p className="text-sm font-medium text-[var(--text-default)]/50">
                 Pódios
               </p>
-              <span className="absolute top-5 left-4 ">
-                <IconEdit size="h-[23px] w-[23px]" />
+              <span className="absolute top-4 left-4 ">
+                <img className="h-8 w-8" src="./assets/podio.png" />
               </span>
             </div>
           </div>
@@ -120,59 +122,47 @@ export default function Perfil() {
           <div className="grid grid-cols-12 gap-2">
             <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Diario</p>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Diario</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div> <img className="h-5 w-5" src="./assets/medal1.png" /></div>
+                <div> Fulano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Semanal</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal2.png" /></div>
+                <div> Siclano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Mensal</div>
-                <div> 0</div>
-              </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Anual</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal3.png" /></div>
+                <div> Siclano</div>
               </div>
             </div>
             <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Semanal</p>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Diario</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div> <img className="h-5 w-5" src="./assets/medal1.png" /></div>
+                <div> Fulano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Semanal</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal2.png" /></div>
+                <div> Siclano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Mensal</div>
-                <div> 0</div>
-              </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Anual</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal3.png" /></div>
+                <div> Siclano</div>
               </div>
             </div>
             <div className="relative col-span-4 shadow-lg rounded-md px-4 py-2">
               <p className="font-bold text-sm mb-1">Mensal</p>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Diario</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div> <img className="h-5 w-5" src="./assets/medal1.png" /></div>
+                <div> Fulano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Semanal</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal2.png" /></div>
+                <div> Siclano</div>
               </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Mensal</div>
-                <div> 0</div>
-              </div>
-              <div className="flex justify-between text-sm text-[var(--text-default)]/50 ">
-                <div>Anual</div>
-                <div> 0</div>
+              <div className="flex mt-2 gap-2 text-sm text-[var(--text-default)]/50 ">
+                <div><img className="h-5 w-5" src="./assets/medal3.png" /></div>
+                <div> Siclano</div>
               </div>
             </div>
           </div>

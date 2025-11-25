@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useCallback, useMemo } from "react
 const CommandContext = createContext();
 
 export function CommandProvider({ children }) {
-  const [commandSave, setCommandSave] = useState({ all: [], error: false, isLoading: true });
+  const [commandSave, setCommandSave] = useState({ all: [], error: false, isLoading: false });
 
   const getComandas = useCallback(async (params = "") => {
 

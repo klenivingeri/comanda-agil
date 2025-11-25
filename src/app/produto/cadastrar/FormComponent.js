@@ -75,7 +75,7 @@ export const FormComponent = ({ categories, product }) => {
       setName(product.name);
       setPrice(product.price);
       setDescription(product.description);
-      setCategory(product.category?._id);
+      setCategory(product.category);
     }
   }, [product]);
 
@@ -123,7 +123,7 @@ export const FormComponent = ({ categories, product }) => {
           setValue={setCategory}
           options={categories}
           isValid={isValid}
-          error={category.trim() === ""}
+          error={category?.trim() === ""}
           icon={<IconCategory size="h-[20px] w-[20px]" />}
         />
         <div

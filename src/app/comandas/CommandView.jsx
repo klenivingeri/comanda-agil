@@ -53,7 +53,6 @@ export default function CommandView({ commandAll, isLoadingCommand, errorCommand
   return (
     <Container>
       <Header
-        menu
         divider
         title="Comandas"
         _isNumeric

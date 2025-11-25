@@ -69,7 +69,7 @@ export const Item = ({
               {currency(item.price)} / un
             </span>
             </div>
-            <div className="mr-2 font-semibold">{currency(item?.quantity* item.price)}</div>
+            <div className="mr-2 font-semibold">{currency(item?.quantity * item.price)}</div>
           </div>
         ) : (
           <div className="truncate w-full flex flex-col px-2 py-1 ">
@@ -118,7 +118,7 @@ export const Item = ({
               ></div>
             )}
 
-            <p className="ml-2  px-2">{item?.user?.name}</p>
+            <p className="px-2 text-sm pt-1">{item?.user?.name}</p>
           </div>
         </div>
       )}

@@ -13,7 +13,12 @@ export default function Empresa() {
     <Container>
       <Header divider title="Empresa" />
         <Content isLoading={isLoading} error={error}>
-          <Construction />
+          <div className="rounded-lg w-full shadow-lg h-30 flex justify-end items-end">
+
+            <div className="">
+                <div className="h-18 w-18 bg-red-100 rounded-full"></div>
+            </div>
+          </div>
         </Content>
     </Container>
   );

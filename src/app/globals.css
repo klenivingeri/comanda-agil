@@ -3,9 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #D8DDE9;
-  --fore-back:    #F8FBFD;
-  --foreground:  #F2F7FA;
+  /* --background: #D8DDE9; */
+  /* --fore-back:    #F8FBFD; */
+  /* --foreground:  #F2F7FA; */
+  --foreground:  #FFFFFF;
   --bg-component: #FFFFFF;
   --text-default: black;
   --bg-subTitle: white; 
@@ -61,8 +62,11 @@
 
 
 .dark body {
-  --background: #282841;
-  --fore-back:  #202037 ;    /* fundo escuro */
+    /* --background: #282841; */
+  /*  --fore-back:  #202037 ; */
+   /*  --foreground: #18172C; */
+     /* fundo escuro */
+  --background: #18172C;
   --foreground: #18172C;
 ;
   --bg-component: #1F1E31;

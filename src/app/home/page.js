@@ -20,7 +20,6 @@ export default function Empresa() {
   const [error, setError] = useState(false);
   const [code, setCode] = useState("");
   const [customer, setCustomer] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const { _command } = useCommand();
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
@@ -35,12 +34,9 @@ export default function Empresa() {
     if(code.length === 0) return;
 
     try {
-      setIsLoading(true);
       _command.get(`?code=${addZero(code)}`);
     } catch (err) {
       setError(true);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -56,7 +52,6 @@ export default function Empresa() {
         setOpenModal(true);
       }
     }
-    setIsLoading(false);
   }, [_command.all]);
 
   return (
@@ -64,7 +59,7 @@ export default function Empresa() {
       <Header divider menu title="Seja bem-vindo" />
       <Content isLoading={!customer[0]?.name} error={error}>
         <div
-          className="flex w-full opacity-0 animate-fade-in flex-col bg-[var(--fore-back)] rounded-3xl gap-4 shadow-xl p-4 mb-4 relative font-normal"
+          className="flex mt-1 w-full opacity-0 animate-fade-in flex-col rounded-2xl gap-4 shadow-lg p-4 mb-4 relative font-normal"
           style={{
             animationDelay: `${0.01}s`,
             animationFillMode: "forwards",
@@ -92,9 +87,9 @@ export default function Empresa() {
 
           <div className="flex w-full gap-4">
             <ButtonContainer onClick={handleSubmit} margin="mt-1">
-              <span className="pl-1 flex items-center gap-2">
-                {isLoading ? (
-                  <Loading isLoading={isLoading} style="style3" />
+              <span className="pl-1 flex items-center gap-2 font-normal">
+                {_command.isLoading ? (
+                  <Loading isLoading={_command.isLoading} style="style3" />
                 ) : (
                   <>
                     <IconSearch size="h-[32px] w-[32px]" /> Localizar
@@ -103,7 +98,7 @@ export default function Empresa() {
               </span>
             </ButtonContainer>
             <ButtonContainer href="/comandas" margin="mt-1">
-              <span className="pl-1 flex items-center gap-2">
+              <span className="pl-1 flex items-center gap-2 font-normal">
                 <IconCommand size="h-[32px] w-[32px]" /> Ver todas
               </span>
             </ButtonContainer>
