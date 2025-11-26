@@ -67,8 +67,8 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
       : `
     ${
       isPressed || press
-        ? "text-white bg-gradient-to-br from-[var(--button-hover)] to-[var(--button-default)] border-1 border-[var(--button-default)] border-b-1 border-b-[var(--button-default)] cursor-pointer"
-        : "text-white bg-gradient-to-br from-[var(--button-hover)] to-[var(--button-default)] border-1 border-[var(--button-default)] will-change-transform will-change-background border-b-3 border-b-[var(--button-default)] cursor-pointer"
+        ? "text-white bg-gradient-to-br from-[var(--button-hover)] via-[var(--button-default)] to-[var(--button-default)] border-1 border-[var(--button-default)] border-b-1 border-b-[var(--button-default)] cursor-pointer"
+        : "text-white bg-gradient-to-br from-[var(--button-hover)] via-[var(--button-default)] to-[var(--button-default)] border-1 border-[var(--button-default)] will-change-transform will-change-background border-b-3 border-b-[var(--button-default)] cursor-pointer"
     }`
   }
 `;

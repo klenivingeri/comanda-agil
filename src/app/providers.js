@@ -14,12 +14,6 @@ export default function Providers({ children }) {
     return children;
   }
 
-  useEffect(() => {
-  const handleContextMenu = (e) => e.preventDefault();
-  document.addEventListener("contextmenu", handleContextMenu);
-  return () => document.removeEventListener("contextmenu", handleContextMenu);
-}, []);
-
   return (
     <DBProvider>
       <CleaningProvider>

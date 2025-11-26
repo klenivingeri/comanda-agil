@@ -10,13 +10,13 @@ const serializer = (data) => {
       category: data.catalog_categories.find((c) => c._id === product.category),
     };
   });
-
+  console.log('catalog_users',data.catalog_users)
   const orders = data.orders.map((order) => ({
     ...order,
     subOrders: order.subOrders.map((subOrder) => ({
       ...subOrder,
       product: addCategoryInProduct.find((p) => p._id === subOrder.product),
-      userId: data.catalog_users.find((u) => u._id === order.userId) || null,
+      userId: data.catalog_users.find((u) => u._id === subOrder.userId) || null,
     })),
   }));
 

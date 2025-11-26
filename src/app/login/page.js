@@ -104,7 +104,7 @@ export default function Login() {
               )}
               <ButtonContainer type="submit">
                 {!isLoading ? (
-                  "Entrar"
+                  <span className="font-normal">Entrar</span>
                 ) : (
                   <Loading isLoading={isLoading} style="style3" />
                 )}
@@ -114,7 +114,7 @@ export default function Login() {
                 margin="mt-2"
                 href="/cadastrar-empresa"
               >
-                Criar uma conta
+                <span className="font-normal">Criar uma conta</span>
               </ButtonContainer>
               <a onClick={handleGoToHome} className="text-black font-normal">
                 Ir para pagina inicial

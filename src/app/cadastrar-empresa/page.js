@@ -145,7 +145,7 @@ export default function Page() {
           >
             <a className="flex flex-col justify-center items-center text-gray-500 mb-6 font-bold">
               <div className="flex text-5xl tracking-tight">
-                <span className="text-[var(--logo1)]">Comanda</span>
+                <span className="">Comanda</span>
                 <span className="text-[var(--button-orange-default)]">Go</span>
               </div>
               <span className="text-sm font-extralight">

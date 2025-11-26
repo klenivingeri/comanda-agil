@@ -212,7 +212,7 @@ export const Form = ({ children, create, isLoading, style, text= 'Cadastrar'  })
       {children}
       <ButtonContainer onClick={handleSubmit} style={style}>
         {!isLoading ? (
-          text
+          <span className="font-normal">{text}</span>
         ) : (
           <Loading
             isLoading={isLoading}

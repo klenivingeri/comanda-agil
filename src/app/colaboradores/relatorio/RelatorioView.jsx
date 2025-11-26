@@ -25,6 +25,7 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
       return Object.values(
         allSubOrders.reduce((acc, item) => {
           const key = item.userId?._id;
+          console.log(item.userId.name)
           if (!key) return acc;
 
           if (!acc[key]) {
@@ -102,7 +103,7 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
 
   return (
     <>
-            <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} type="collaborators" />
+      <DashboardMultipleLine allSubOrders={allSubOrders} tab={tab} colorsMap={colorsMap} type="collaborators" />
       <div className=" flex justify-center">Quantidade de itens adicionados nas comandas.</div>
       <Ranking data={sortSuborders} colorsMap={colorsMap} />
     </>)
@@ -122,7 +123,7 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
       week: last7days(all),
       month: all,
     }
-
+    
     return period[tab];
   }, [response, tab]);
 
@@ -131,7 +132,7 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     week: 'Atividade de colaboradores nos últimos 7 dias',
     month: 'Atividade de colaboradores nos últimos 30 dias',
   }
-
+  console.log(response)
   return (
     <Container>
       <Header divider title="Relatório de colaboradores" />

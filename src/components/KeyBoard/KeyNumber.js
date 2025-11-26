@@ -1,6 +1,12 @@
 "use client";
-
 import React from "react";
+
+const vibrate = () => {
+  if (window.navigator.vibrate) {
+    window.navigator.vibrate(10);
+  }
+};
+
 
 const ShowKey = ({ keyPress }) => {
   const show = {
@@ -33,6 +39,7 @@ export const KeyNumber = ({ setValue, send }) => {
   ];
 
   const handleKeyPress = (pressedValue) => {
+    vibrate()
     if (pressedValue === "clear") {
       setValue(0);
     } else if (pressedValue === "send") {
@@ -58,7 +65,7 @@ export const KeyNumber = ({ setValue, send }) => {
       {key.map((keyPress, i) => (
         <button
           key={i}
-          className={`w-full h-16 col-span-3 border-t border-[var(--button-default)]/20 px-4 cursor-pointer hover:bg-[var(--button-default)]/10`}
+          className={`w-full h-16 col-span-3 border-t border-[var(--button-default)]/20 px-4 cursor-pointer action:bg-[var(--button-default)]/10 md:hover:bg-[var(--button-default)]/10`}
           onClick={() => handleKeyPress(keyPress)}
         >
           <ShowKey keyPress={keyPress} />
