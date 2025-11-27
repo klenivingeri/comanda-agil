@@ -16,7 +16,7 @@ export function CenterTop({ isOpen, onClose, children, notCloseBg = false, showX
 
         {/* Modal Container: Centraliza o conteúdo (usando Flexbox) */}
         <div
-          className={`fixed inset-0 z-50 flex items-start mt-6 justify-center pointer-events-none ${isOpen ? "visible" : "hidden pointer-events-none"
+          className={`fixed inset-0 z-50 flex items-center mb-20 justify-center pointer-events-none ${isOpen ? "visible" : "hidden pointer-events-none"
             }`} // Z-index 50
         >
           {/* Modal Content: O conteúdo real do modal com transição e largura */}
