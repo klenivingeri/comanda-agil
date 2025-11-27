@@ -356,8 +356,8 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
   return (
     <Container>
       <Header divider setInputText={setInputText} title="Cardapio">
-        <span className="flex mx-2 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
-          {!comanda?.code ? "*": ""}{code}
+        <span className="flex mr-2 items-center text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
+          {code}{!comanda?.code ? "*": ""}
         </span>
       </Header>
       <Content

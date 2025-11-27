@@ -12,7 +12,7 @@ const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
 
   if (close) {
     return (
-      <div className="w-10" onClick={onClick}>
+      <div className="flex justify-center items-center w-10 h-10 rounded-full bg-gray-300/10" onClick={onClick}>
         <IconX size="h-[26px] w-[26px]" />
       </div>
     );
@@ -20,14 +20,14 @@ const DefaultComponent = ({ close, menu, onClick, handleOpenMenuMobile }) => {
 
   if (menu) {
     return (
-      <div className="w-10" onClick={handleOpenMenuMobile}>
+      <div className="flex justify-center items-center w-10 h-10 rounded-full bg-gray-300/10" onClick={handleOpenMenuMobile}>
         <IconDotMenu size="h-[32px] w-[32px]" />
       </div>
     );
   }
 
   return (
-    <div className="w-10" onClick={() => router.back()}>
+    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-gray-300/10 " onClick={() => router.back()}>
       <IconBack size="h-[26px] w-[26px]" />
     </div>
   );
@@ -63,8 +63,8 @@ export const Header = ({
             !divider && "shadow-md"
           }`}
         >
-          <div className="w-full flex gap-3 items-center ">
-            <div className="w-6">
+          <div className="w-full flex gap-3 items-center text-sm ">
+            <div className="w-8">
               <DefaultComponent
               close={close}
               menu={menu}
@@ -76,7 +76,7 @@ export const Header = ({
               <span className="text-md font-light">
                 {!searchFull && (title.length ? title : titleComponent)}
               </span>
-              {setInputText ? (
+              {setInputText && (
                 <InputSearch
                   _isNumeric={_isNumeric}
                   handleFormSubmit={handleFormSubmit}
@@ -85,9 +85,9 @@ export const Header = ({
                   searchFull={searchFull}
                   mini
                 />
-              ): <a></a>}
+              ) }
             </div>
-            <div className="items-center ">{children}</div>
+            <div className="items-center">{children}</div>
           </div>
         </div>
       </div>

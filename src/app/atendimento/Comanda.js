@@ -12,6 +12,7 @@ import { Content } from "src/components/layout/Content";
 import { RULES } from "../utils/constants";
 import { IconMoney } from "public/icons/Money";
 import { IconQrcode } from "public/icons/QrCode";
+import { IconX } from "public/icons/X";
 
 export const Comanda = ({
   handleOpenModal,
@@ -45,7 +46,7 @@ export const Comanda = ({
 
   return (
     <Container>
-      <Header divider close onClick={handleOpenModal} title="Comanda">
+      <Header divider title="Comanda">
         <div className="flex">
           {RULES.ADMIN.includes(customer[0]?.role) && (
             <ButtonContainer
@@ -61,8 +62,11 @@ export const Comanda = ({
             <IconQrcode size="h-[23px] w-[23px]" />
           </ButtonContainer>
           <span className="flex mx-2 items-center gap-2 text-4xl font-bold rounded-lg text-[var(--button-default)] cursor-pointer">
-            {!commandID ? "*" : ""}{commandCode}
+            {commandCode}{!commandID ? "*" : ""}
           </span>
+            <button onClick={handleOpenModal} className="flex justify-center items-center w-10 h-10 rounded-full bg-gray-400/10">
+              <IconX size="h-[26px] w-[26px]" />
+            </button>
         </div>
       </Header>
 

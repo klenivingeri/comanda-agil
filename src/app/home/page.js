@@ -95,7 +95,7 @@ export default function Empresa() {
             </ButtonContainer>
             <ButtonContainer href="/comandas" margin="mt-1">
               <span className="pl-1 flex items-center gap-2 font-normal">
-                <IconCommand size="h-[32px] w-[32px]" /> Ver todas
+                <IconCommand size="h-[22] w-[22px]" /> Ver todas
               </span>
             </ButtonContainer>
           </div>
