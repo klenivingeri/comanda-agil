@@ -408,7 +408,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
             hFull="h-12"
           >
             {!isLoadingCreate ? (
-              <p className="text-sm">
+              <p>
                 LANÇAR ITEM{itemsSelected?.length > 1 && `S`} 
               </p>
             ) : (

@@ -16,18 +16,18 @@ import { IconExit } from "public/icons/Exit";
 import { useCleaningTrigger } from "src/app/context/CleaningContext";
 
 const icons = {
-  IconMoney: <IconMoney size="h-[30px] w-[30px]" />,
-  IconCommand: <IconCommand size="h-[30px] w-[30px]" />,
-  IconShoppingCart: <IconShoppingCart size="h-[30px] w-[30px]" />,
-  IconGear: <IconGear size="h-30px] w-[30px]" />,
-  IconUsers: <IconUsers size="h-[30px] w-[30px]" />,
-  IconPercent: <IconPercent size="h-[30px] w-[30px]" />,
+  IconMoney: <IconMoney size="h-[22px] w-[22px]" />,
+  IconCommand: <IconCommand size="h-[22px] w-[22px]" />,
+  IconShoppingCart: <IconShoppingCart size="h-[22px] w-[22px]" />,
+  IconGear: <IconGear size="h-22px] w-[22px]" />,
+  IconUsers: <IconUsers size="h-[22px] w-[22px]" />,
+  IconPercent: <IconPercent size="h-[22px] w-[22px]" />,
   IconCreate: <IconCreate size="h-[20px] w-[20px]" />,
   IconSearch: <IconSearch size="h-[20px] w-[20px]" />,
   IconChart: <IconChart size="h-[20px] w-[20px]" />,
-  IconCompany: <IconCompany size="h-[30px] w-[30px]" />,
-  IconGraphic: <IconGraphic size="h-[28px] w-[28px]" />,
-  IconExit: <IconExit size="h-[28px] w-[28px]" />,
+  IconCompany: <IconCompany size="h-[22px] w-[22px]" />,
+  IconGraphic: <IconGraphic size="h-[20px] w-[20px]" />,
+  IconExit: <IconExit size="h-[20px] w-[20px]" />,
 };
 
 const Menu = ({ menu }) => {
@@ -69,15 +69,17 @@ const Menu = ({ menu }) => {
           <li key={item.path} className="mb-2">
             {item.sublink ? (
               <div
-                className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
+                className={`flex items-center text-sm gap-5 p-2 justify-between rounded cursor-pointer transition-colors ${
                   activeLink === item.path
                     ? "bg-[var(--button-default)] font-bold text-[var(--text-menu)]/50"
                     : "hover:bg-[var(--button-hover)] hover:text-[var(--text-menu)]"
                 }`}
                 onClick={() => toggleDropdown(item.path)}
               >
-                <span className="pl-6">{icons[item.icon]}</span>
+                <div className="flex gap-5 ">
+                                <span className="pl-6">{icons[item.icon]}</span>
                 {item.title}
+                </div>
                 <span className="ml-auto pr-6">
                   {openDropdown === item.path ? "▲" : "▼"}
                 </span>
@@ -85,7 +87,7 @@ const Menu = ({ menu }) => {
             ) : (
               <Link
                 href={item.path}
-                className={`flex items-center gap-5 p-2 rounded cursor-pointer transition-colors ${
+                className={`flex items-center text-sm gap-5 p-2 rounded cursor-pointer transition-colors ${
                   activeLink === item.path
                     ? "bg-[var(--button-default)] font-bold text-[var(--text-menu)]"
                     : "hover:bg-[var(--button-hover)] hover:text-[var(--text-menu)]"
@@ -102,7 +104,7 @@ const Menu = ({ menu }) => {
                   <li key={sub.path}>
                     <Link
                       href={item.path + sub.path}
-                      className={`flex pl-18 items-center p-1.5 rounded transition-colors ${
+                      className={`flex pl-18 text-sm items-center p-1.5 rounded transition-colors ${
                         subActiveLink === item.path + sub.path
                           ? "bg-[var(--button-hover)] font-bold text-[var(--text-menu)]/50 hover:text-[var(--text-menu)]"
                           : "hover:bg-[var(--button-hover)]/50 hover:text-[var(--text-menu)]"

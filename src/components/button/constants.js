@@ -59,7 +59,7 @@ const buttonRed = ({ wFull, isPressed, press, disabled }) => `
 `;
 
 const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
-  relative font-bold rounded-lg shadow-sm transition-all duration-70 ease-in-out
+  relative text-sm font-bold rounded-lg shadow-sm transition-all duration-70 ease-in-out
   ${!wFull ? "w-full" : wFull}
   ${
     disabled
@@ -74,7 +74,7 @@ const buttonDefault = ({ wFull, isPressed, press, disabled }) => `
 `;
 
 const buttonInline = ({ wFull, isPressed, press, disabled }) => `
-  relative  shadow-sm font-bold rounded-lg pt-[1px]
+  relative text-sm shadow-sm font-bold rounded-lg pt-[1px]
   ${!wFull ? "w-full" : wFull}
   ${
     disabled

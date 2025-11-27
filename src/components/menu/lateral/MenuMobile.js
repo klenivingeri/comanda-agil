@@ -28,7 +28,7 @@ export const MenuMobile = ({ handleOpenModal, openModal, menu }) => {
 
   return (
     <SideModal isOpen={openModal} onClose={() => handleOpenModal(false)}>
-      <div className="relative flex flex-col w-[260px] h-full z-[10] rounded-sm bg-[var(--foreground)]">
+      <div className="relative flex flex-col w-[300px] h-full z-[10] rounded-sm bg-[var(--foreground)]">
         {/* Seção do Perfil (Fixa no topo) */}
         <div className="w-full grid grid-cols-12 px-2 h-[160px] flex-shrink-0">
           <Link href="/perfil" className="col-span-10 flex items-start pt-5 pl-5 flex-col w-full mr">

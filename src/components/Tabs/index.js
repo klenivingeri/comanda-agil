@@ -18,7 +18,7 @@ export const Tabs = ({tabs, value, setValue}) => {
     <button
       key={i}
       className={`${
-        value === tab.id ? "bg-[var(--button-default)] rounded-full" : ""
+        value === tab.id ? "bg-[var(--button-default)] rounded-full text-white" : ""
       } w-full col-span-1 px-4 h-10`}
       onClick={() => setValue(tab.id)}
     >

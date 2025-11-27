@@ -13,6 +13,8 @@ import { useCommand } from "../../app/context/CommandContext";
 import { useRouter } from "next/navigation";
 import { CenterTop } from "src/components/modal/ModalTop";
 import { currency } from "../utils/currency";
+import { Box } from "src/components/Box";
+import { MagnifyingGlass } from "public/icons/MagnifyingGlass";
 
 const addZero = (text) => String(text?.trim()).padStart(3, 0);
 
@@ -58,13 +60,7 @@ export default function Empresa() {
     <Container>
       <Header divider menu title="Seja bem-vindo" />
       <Content isLoading={!customer[0]?.name} error={error}>
-        <div
-          className="flex mt-1 w-full opacity-0 animate-fade-in flex-col rounded-2xl gap-4 shadow-lg p-4 mb-4 relative font-normal"
-          style={{
-            animationDelay: `${0.01}s`,
-            animationFillMode: "forwards",
-          }}
-        >
+        <Box>
           <div className="my-2">
             <h1 className="text-4xl font-medium">{`Olá, ${
               customer[0]?.name || ""
@@ -92,7 +88,7 @@ export default function Empresa() {
                   <Loading isLoading={_command.isLoading} style="style3" />
                 ) : (
                   <>
-                    <IconSearch size="h-[32px] w-[32px]" /> Localizar
+                    <MagnifyingGlass size="h-[20px] w-[20px]" /> Localizar
                   </>
                 )}
               </span>
@@ -103,7 +99,7 @@ export default function Empresa() {
               </span>
             </ButtonContainer>
           </div>
-        </div>
+        </Box>
       </Content>
       <CenterTop
         notCloseBg
