@@ -143,6 +143,23 @@
   --button-progress: #FFC066;
 }
 
+.btn-black body {
+  --button-default: #FF9900;
+  --button-hover: #FFB84D;
+  --button-focus: #CC7A00;
+  --button-pressed: #D98500;
+  --button-disabled: #FFDDAA;
+  --button-progress: #FFC066;
+}
+.btn-black body {
+  --button-default: #1C1C1C;
+  --button-hover: #333333;
+  --button-focus: #000000;
+  --button-pressed: #000000;
+  --button-disabled: #AAAAAA;
+  --button-progress: #4D4D4D; 
+}
+
 * {
   -webkit-font-smoothing: antialiased; 
   -moz-osx-font-smoothing: grayscale; 
@@ -150,7 +167,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
 }
 
 input, textarea {
