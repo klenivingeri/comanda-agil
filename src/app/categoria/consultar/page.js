@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-
 import { Container } from "../../../components/layout/Container";
 import { Content } from "../../../components/layout/Content";
 import { Header } from "../../../components/layout/Header";
@@ -17,12 +15,6 @@ export default function ConsultarCategoria() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-
-  const router = useRouter();
-
-  const goBack = () => {
-    router.back();
-  };
 
   const getCategoryItems = async () => {
     try {

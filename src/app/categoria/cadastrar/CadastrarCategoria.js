@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Container } from "../../../components/layout/Container";
 import { Header } from "../../../components/layout/Header";
 import { Content } from "../../../components/layout/Content";
-import { FormComponent } from "./FormComponent";
+import { FormComponentCategory } from "./FormComponentCategory";
 import { isEmpty } from "../../utils/empty";
 
 export const CategoriaCadastrar = ({ categoryUUID }) => {
@@ -42,7 +42,7 @@ export const CategoriaCadastrar = ({ categoryUUID }) => {
     <Container>
       <Header divNew divider title={title} />
       <Content isLoading={isLoading} error={error}>
-        <FormComponent category={category} title={title} />
+        <FormComponentCategory category={category} title={title} />
       </Content>
     </Container>
   );

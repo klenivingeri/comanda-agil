@@ -4,7 +4,7 @@ import { useToast } from "../../../hooks/useToast";
 import { ToggleSwitch } from "src/components/ToggleSwitch";
 import { IconCategory } from "public/icons/Category";
 
-export const FormComponent = ({ category, title }) => {
+export const FormComponentCategory = ({ category, handleOnClick = () =>{} }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [name, setName] = useState(category?.name || "");
@@ -28,9 +28,10 @@ export const FormComponent = ({ category, title }) => {
         body: JSON.stringify(formDetails),
       });
       const result = await resp.json();
-
+      handleOnClick(false)
       toast.success("Categoria cadastrada com sucesso!");
     } catch (error) {
+      console.log(error)
       toast.error("Ocorreu um erro ao cadastrar a categoria.");
     } finally {
       setIsLoading(false);

@@ -5,7 +5,6 @@ import { useToast } from "../../../hooks/useToast";
 import {
   Form,
   Input,
-  InputImagem,
   Select,
   Textarea,
 } from "../../../components/form/FormComponents";
@@ -14,8 +13,12 @@ import { IconMoney } from "public/icons/Money";
 import { IconCode } from "public/icons/Codes";
 import { IconCategory } from "public/icons/Category";
 import { ToggleSwitch } from "src/components/ToggleSwitch";
+import { ButtonContainer } from "src/components/button";
+import { CenterTop } from "src/components/modal/ModalTop";
+import { FormComponentCategory } from "src/app/categoria/cadastrar/FormComponentCategory";
 
-export const FormComponent = ({ categories, product }) => {
+export const FormComponent = ({ categories, product, getCategories }) => {
+  const [openModal, setOpenModal] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
@@ -25,6 +28,16 @@ export const FormComponent = ({ categories, product }) => {
   const [category, setCategory] = useState("");
   const [enable, setEnable] = useState(true);
   const toast = useToast();
+
+  const handleSetOpenModal = (e) => {
+    e.preventDefault();
+    setOpenModal(true);
+  };
+
+  const handleGetCategories = () => {
+    getCategories()
+    setOpenModal(false);
+  };
 
   const fetchCreateUpdateProduct = async (id, payload) => {
     try {
@@ -115,17 +128,25 @@ export const FormComponent = ({ categories, product }) => {
           isCurrency
           icon={<IconMoney size="h-[20px] w-[20px]" />}
         />
-        <Select
-          name="Categoria"
-          id="select"
-          value={category}
-          placeholder="Selecione a categoria"
-          setValue={setCategory}
-          options={categories}
-          isValid={isValid}
-          error={category?.trim() === ""}
-          icon={<IconCategory size="h-[20px] w-[20px]" />}
-        />
+        <div className="flex w-full justify-between items-end">
+          <Select
+            name="Categoria"
+            id="select"
+            value={category}
+            placeholder="Selecione a categoria"
+            setValue={setCategory}
+            options={categories}
+            isValid={isValid}
+            error={category?.trim() === ""}
+            icon={<IconCategory size="h-[20px] w-[20px]" />}
+          />
+          <ButtonContainer
+            text="Criar"
+            margin="ml-2"
+            wFull="w-20"
+            onClick={handleSetOpenModal}
+          />
+        </div>
         <div
           className={`flex bg-white px-3 items-center justify-between mb-4 w-full pl-10 h-12 shadow-sm rounded-lg  ${
             enable ? "text-black" : "text-gray-300"
@@ -143,6 +164,14 @@ export const FormComponent = ({ categories, product }) => {
           value={description}
         />
       </Form>
+      <CenterTop
+        notCloseBg
+        showX
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+      >
+        <FormComponentCategory handleOnClick={handleGetCategories} />
+      </CenterTop>
     </div>
   );
 };

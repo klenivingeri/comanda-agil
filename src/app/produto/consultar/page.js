@@ -49,6 +49,15 @@ export default function ConsultarCategoria() {
     }
   };
 
+  const handleDeleteCategory = async (_id) => {
+    const res = await fetch(`/api/category`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id }),
+    });
+    getCategory();
+  };
+
   const handleDelete = async (_id) => {
     const res = await fetch(`/api/items`, {
       method: "DELETE",
@@ -87,6 +96,8 @@ export default function ConsultarCategoria() {
             setOpenType={setOpenType}
             isEdit
             handleDelete={handleDelete}
+            handleDeleteCategory={handleDeleteCategory}
+            getCategory={getCategory}
           />
         </div>
       </Content>

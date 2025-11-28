@@ -174,7 +174,7 @@ export const Select = ({
   icon = (<></>),
 }) => {
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div className="absolute top-3.5 left-3 text-gray-500">
         {icon}
       </div>
