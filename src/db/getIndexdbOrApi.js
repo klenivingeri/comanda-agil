@@ -23,7 +23,7 @@ const serializer = (data) => {
   return orders;
 };
 
-const serializerProduct = (data) => {
+export const serializerProduct = (data) => {
 
   const addCategoryInProduct = data.catalog_products?.map((product) => {
     return {

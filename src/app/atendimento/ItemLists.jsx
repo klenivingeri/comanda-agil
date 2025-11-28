@@ -2,6 +2,9 @@ import React, { useEffect, useMemo } from "react";
 import { Item } from "./Item";
 import { IconArrowDown } from "public/icons/ArrowDown";
 import { IconArrowRight } from "public/icons/ArrowRight";
+import { ButtonContainer } from "src/components/button";
+import { IconDelete } from "public/icons/Delete";
+import { IconEdit } from "public/icons/Edit";
 
 const Title = ({
   items,
@@ -46,6 +49,8 @@ const ItemList = ({
   inputText,
   showListComanda,
   handleUpdateItemsSelected,
+  isEdit,
+  handleDelete
 }) => {
   return <div className={`${!inputText ? 'bg-[var(--bg-component)] mb-2 rounded-lg shadow-md py-1' : ''} `}>
     {!inputText && (
@@ -60,15 +65,40 @@ const ItemList = ({
       })
         .map((item, i) => (
           <div
-          key={item._id}
-          className="opacity-0 animate-fade-in"
-          style={{ animationDelay: `${i * 0.05}s`, animationFillMode: 'forwards' }}>
-          <Item
             key={item._id}
-            item={item}
-            handleUpdateItemsSelected={handleUpdateItemsSelected}
-            showListComanda={showListComanda} />
-            </div>
+            className="opacity-0 animate-fade-in"
+            style={{ animationDelay: `${i * 0.05}s`, animationFillMode: 'forwards' }}>
+            {!isEdit ? <Item
+              key={item._id}
+              item={item}
+              handleUpdateItemsSelected={handleUpdateItemsSelected}
+              showListComanda={showListComanda} />
+              : <div
+                className={`flex p-2 my-2 content-center bg-[var(--bg-component)] items-center justify-between border-2 border-[var(--bg-subTitle)]  rounded-md shadow-lg shadow-[var(--bg-subTitle)]/50`}
+              >
+                <p className="font-semibold ">{item.name}</p>
+                <div className="flex gap-4">
+                  <ButtonContainer
+                    style="buttonRed"
+                    wFull="w-10"
+                    hFull="h-9"
+                    margin="mt-1"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    <IconDelete size="h-[20px] w-[20px]" />
+                  </ButtonContainer>
+                  <ButtonContainer
+                    href={`/produto/cadastrar/${item._id}`}
+                    wFull="w-10"
+                    hFull="h-9"
+                    margin="mt-1"
+                  >
+                    <IconEdit size="h-[20px] w-[20px]" />
+                  </ButtonContainer>
+                </div>
+              </div>
+            }
+          </div>
         ))}
     </div>
   </div>
@@ -81,7 +111,9 @@ export const ItemLists = ({
   setOpenType,
   showListComanda,
   handleUpdateItemsSelected,
-  _category
+  _category,
+  isEdit,
+  handleDelete
 }) => {
   const listagem = useMemo(() => {
     const calculatedList = [];
@@ -124,6 +156,8 @@ export const ItemLists = ({
             showListComanda={showListComanda}
             category={category}
             onToggle={() => setOpenType(openType === category.type ? null : category.type)}
+            isEdit={isEdit}
+            handleDelete={handleDelete}
           />
         </div>
       ))}

@@ -10,12 +10,16 @@ import { IconDelete } from "public/icons/Delete";
 import { IconEdit } from "public/icons/Edit";
 import { Footer } from "src/components/layout/Footer";
 import { ButtonCircle } from "src/components/button/ButtonCircle";
+import { ItemLists } from "src/app/atendimento/ItemLists";
+import { serializerProduct } from "src/db/getIndexdbOrApi";
 
 export default function ConsultarCategoria() {
   const [inputText, setInputText] = useState("");
   const [error, setError] = useState(false);
+  const [openType, setOpenType] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getProducts = async () => {
     try {
@@ -31,6 +35,20 @@ export default function ConsultarCategoria() {
     }
   };
 
+  const getCategory = async () => {
+    try {
+      const res = await fetch(`/api/category`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const resJSON = await res.json();
+      setCategories(resJSON.records);
+    } catch (_) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleDelete = async (_id) => {
     const res = await fetch(`/api/items`, {
       method: "DELETE",
@@ -40,8 +58,14 @@ export default function ConsultarCategoria() {
     getProducts();
   };
 
+  const productWithCategory = serializerProduct({
+    catalog_products: products,
+    catalog_categories: categories,
+  });
+
   useEffect(() => {
     getProducts();
+    getCategory();
   }, []);
 
   return (
@@ -49,34 +73,21 @@ export default function ConsultarCategoria() {
       <Header
         divider
         setInputText={setInputText}
-        title="Consultar funcionario"
+        title="Consultar Produto"
       />
-      <Content isLoading={isLoading} error={error} pb="pb-28" >
+      <Content isLoading={isLoading} error={error} pb="pb-28">
         <div className="flex flex-col gap-2">
-          {products?.map((product) => (
-            <ItemList key={product._id} p="px-2">
-              <p className="font-bold">{product.name}</p>
-              <div className="flex gap-4">
-                <ButtonContainer
-                  style="buttonRed"
-                  wFull="w-10"
-                  hFull="h-9"
-                  margin="mt-1"
-                  onClick={() => handleDelete(product._id)}
-                >
-                  <IconDelete size="h-[20px] w-[20px]" />
-                </ButtonContainer>
-                <ButtonContainer
-                  href={`/produto/cadastrar/${product._id}`}
-                  wFull="w-10"
-                  hFull="h-9"
-                  margin="mt-1"
-                >
-                  <IconEdit size="h-[20px] w-[20px]" />
-                </ButtonContainer>
-              </div>
-            </ItemList>
-          ))}
+          <ItemLists
+            items={productWithCategory}
+            _category={{all: categories}}
+            inputText=""
+            handleUpdateItemsSelected={() => {}}
+            openModal={() => {}}
+            openType={openType}
+            setOpenType={setOpenType}
+            isEdit
+            handleDelete={handleDelete}
+          />
         </div>
       </Content>
       <Footer bg="">
