@@ -25,7 +25,7 @@ const ConfigRanking = ({ allSubOrders, tab }) => {
       return Object.values(
         allSubOrders.reduce((acc, item) => {
           const key = item.userId?._id;
-          console.log(item.userId.name)
+          
           if (!key) return acc;
 
           if (!acc[key]) {
@@ -132,7 +132,7 @@ export default function RelatorioCategoriaView({ getCategoryItems, response, isL
     week: 'Atividade de colaboradores nos últimos 7 dias',
     month: 'Atividade de colaboradores nos últimos 30 dias',
   }
-  console.log(response)
+
   return (
     <Container>
       <Header divider title="Relatório de colaboradores" />

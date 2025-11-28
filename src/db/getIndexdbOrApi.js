@@ -10,7 +10,7 @@ const serializer = (data) => {
       category: data.catalog_categories.find((c) => c._id === product.category),
     };
   });
-  console.log('catalog_users',data.catalog_users)
+
   const orders = data.orders.map((order) => ({
     ...order,
     subOrders: order.subOrders.map((subOrder) => ({

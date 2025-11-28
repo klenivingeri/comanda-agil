@@ -31,7 +31,6 @@ export const FormComponentCategory = ({ category, handleOnClick = () =>{} }) => 
       handleOnClick(false)
       toast.success("Categoria cadastrada com sucesso!");
     } catch (error) {
-      console.log(error)
       toast.error("Ocorreu um erro ao cadastrar a categoria.");
     } finally {
       setIsLoading(false);

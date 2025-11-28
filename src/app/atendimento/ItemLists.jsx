@@ -144,7 +144,7 @@ export const ItemLists = ({
   showListComanda,
   handleUpdateItemsSelected,
   _category,
-  isEdit,
+  isEdit = false,
   handleDelete = () => {},
   handleDeleteCategory = () => {},
   getCategory = () => {}
@@ -172,7 +172,7 @@ export const ItemLists = ({
     const itemIdsCategorized = new Set();
 
     categorySort.forEach((category) => {
-      const itemsFiltrados = items.filter((i) => i.category?._id === category._id && (category.enable || isEdit));
+      const itemsFiltrados = items.filter((i) => i.category?._id === category._id);
       calculatedList.push({ category: category, items: itemsFiltrados });
 
       itemsFiltrados.forEach(item => itemIdsCategorized.add(item._id));
@@ -201,10 +201,15 @@ export const ItemLists = ({
       setOpenType(null);
     }
   }, [inputText]);
-
+  console.log(listagem)
   return (
     <div>
-      {listagem.map(({ category, items }, i) => (
+      {listagem.map(({ category, items }, i) => {
+        if(!category.enable && !isEdit) {
+          return null
+        }
+
+        return(
         <div key={category._id}
           className="opacity-0 animate-fade-in"
           style={{ animationDelay: `${i * 0.04}s`, animationFillMode: 'forwards' }}>
@@ -222,7 +227,8 @@ export const ItemLists = ({
             handleEditCategory={handleEditCategory}
           />
         </div>
-      ))}
+      )
+      })}
       <CenterTop
         notCloseBg
         showX
