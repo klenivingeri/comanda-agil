@@ -16,7 +16,6 @@ import { ButtonContainer } from "../../components/button";
 import { Loading } from "src/components/loading/Loading";
 
 import { useToast } from "src/hooks/useToast";
-import { IconChecked } from "public/icons/Checked";
 import { ItemLists } from "./ItemLists";
 import { Checkout } from "src/components/checkout";
 
@@ -78,7 +77,7 @@ export const Atendimento = ({ idComanda, _command, _item, _category }) => {
           return { ...item, quantity: 0 };
         })
       );
-      toast.success(<IconChecked size="h-[40px] w-[40px]" />);
+      toast.success('Os itens foram adiconados a comanda');
     } catch (_) {
       toast.error("Ocorreu um erro ao enviar o items");
     } finally {
