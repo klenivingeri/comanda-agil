@@ -40,7 +40,7 @@ export const removeTenantCookie = () => {
 export const postLogin = async ({ users, email, password, userAgent }) => {
   try {
     const user = await users
-      .findOne({ email, active: true })
+      .findOne({ email, enable: true })
       .select("+password")
       .populate({ path: "tenant", model: tenants, select: "name" })
       .lean();
