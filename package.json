@@ -20,7 +20,7 @@
     "dayjs": "^1.11.13",
     "mercadopago": "^2.10.0",
     "mongoose": "^8.17.1",
-    "next": "15.4.3",
+    "next": "15.4.10",
     "numeral": "^2.0.6",
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.0",
